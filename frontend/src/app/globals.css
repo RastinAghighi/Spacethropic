@@ -1,8 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: dark;
+  --background: #030406;
+  --foreground: #ececef;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @theme inline {
@@ -12,15 +14,81 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv11";
+}
+
+::selection {
+  background: rgb(255 255 255 / 0.18);
+}
+
+/* Spinner rotation */
+@keyframes orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Loader: moon on a tilted orbit. Transform/opacity only, so the compositor keeps it
+   smooth while the main thread is busy uploading textures and compiling shaders.
+   Phase φ: x' = -A·cos 2πφ (along the diagonal), y' = B·sin 2πφ (depth). */
+@keyframes loader-x {
+  0%, 100% { transform: translateX(calc(var(--orbit-a) * -1)); }
+  50% { transform: translateX(var(--orbit-a)); }
+}
+@keyframes loader-y {
+  0%, 100% { transform: translateY(var(--orbit-b)); }
+  50% { transform: translateY(calc(var(--orbit-b) * -1)); }
+}
+@keyframes loader-depth {
+  0%, 100% { scale: 1.16; }
+  50% { scale: 0.84; }
+}
+@keyframes loader-near {
+  0% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+@keyframes loader-far {
+  0% { opacity: 0; }
+  50%, 100% { opacity: 1; }
+}
+
+/* Search: rotating example prompts */
+@keyframes prompt-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+/* Search: travelling highlight on the border while a query runs */
+@keyframes sweep {
+  to {
+    --sweep-angle: 360deg;
+  }
+}
+
+@property --sweep-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

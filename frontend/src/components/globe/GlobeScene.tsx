@@ -1,11 +1,12 @@
 "use client";
 
-import { Suspense } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Suspense, useLayoutEffect, useRef } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import { advanceClock } from "@/lib/sim";
+import { areStarsLoaded, ui } from "@/lib/ui";
 import { Earth } from "./Earth";
 import { Sky } from "./Sky";
 import { Moon } from "./Moon";
@@ -14,6 +15,27 @@ import { Intro } from "./Intro";
 
 function Clock() {
   useFrame(() => advanceClock(), -1);
+  return null;
+}
+
+/**
+ * Mounted once every Suspense asset has resolved. Compiles all shaders up front, then
+ * lets a few frames render (texture uploads, post-processing) behind the loader before
+ * declaring the scene ready — so the reveal never hitches.
+ */
+function Warmup() {
+  const gl = useThree((s) => s.gl);
+  const scene = useThree((s) => s.scene);
+  const camera = useThree((s) => s.camera);
+  const frames = useRef(0);
+  useLayoutEffect(() => {
+    gl.compile(scene, camera);
+  }, [gl, scene, camera]);
+  useFrame(() => {
+    if (ui.get().ready || !areStarsLoaded()) return;
+    frames.current += 1;
+    if (frames.current >= 4) ui.setReady();
+  });
   return null;
 }
 
@@ -58,6 +80,7 @@ export default function GlobeScene() {
         <Earth />
         <Effects />
         <Intro />
+        <Warmup />
       </Suspense>
       <Controls />
     </Canvas>

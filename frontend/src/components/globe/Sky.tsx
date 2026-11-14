@@ -6,6 +6,7 @@ import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
 import { clock } from "@/lib/sim";
 import { DEG, equatorialDir } from "@/lib/astro";
+import { markStarsLoaded } from "@/lib/ui";
 
 const SKY_R = 4000;
 
@@ -116,6 +117,7 @@ function Stars() {
         g.setAttribute("aBright", new THREE.BufferAttribute(bright, 1));
         g.setAttribute("aColor", new THREE.BufferAttribute(color, 3));
         setGeo(g);
+        markStarsLoaded();
       });
     return () => {
       alive = false;

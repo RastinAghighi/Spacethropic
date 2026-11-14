@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Spacethropic",
-  description: "Earth analog explorer — NASA Space Apps",
+  title: "Spacethropic — Earth Analogs",
+  description: "Search Earth for analogs of permanent Moon-base locations and Mars landing sites. NASA Space Apps 2026.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -23,7 +23,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full overflow-hidden">{children}</body>
     </html>
   );
 }
