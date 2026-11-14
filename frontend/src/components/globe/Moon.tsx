@@ -21,6 +21,7 @@ export function Moon() {
   const [color, elev] = useTexture(["/textures/moon_4k.jpg", "/textures/moon_elev_1k.jpg"], (ts) => {
     const [c, e] = ts as THREE.Texture[];
     c.colorSpace = THREE.SRGBColorSpace;
+    e.format = THREE.RedFormat;
     for (const t of [c, e]) {
       t.wrapS = THREE.RepeatWrapping;
       t.anisotropy = 8;

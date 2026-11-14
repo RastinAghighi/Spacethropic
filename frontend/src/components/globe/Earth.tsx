@@ -30,16 +30,20 @@ function setU(m: THREE.ShaderMaterial, name: string, v: number) {
 
 export function Earth() {
   const gl = useThree((s) => s.gl);
-  const tex = useTexture(TEX, (t) => {
-    const all = t as unknown as Record<keyof typeof TEX, THREE.Texture>;
+  const tex = useTexture(TEX, (loaded) => {
+    // drei hands the onLoad callback an array in TEX's key order, not the keyed object.
+    const keys = Object.keys(TEX) as (keyof typeof TEX)[];
     const aniso = gl.capabilities.getMaxAnisotropy();
-    for (const k of Object.keys(all) as (keyof typeof TEX)[]) {
-      const x = all[k];
-      x.colorSpace = k === "day" ? THREE.SRGBColorSpace : THREE.NoColorSpace;
+    (loaded as unknown as THREE.Texture[]).forEach((x, i) => {
+      // The day map is deliberately sampled without sRGB decoding: the shading and grade
+      // were tuned on its lighter, softer response, and that is the intended look.
+      x.colorSpace = THREE.NoColorSpace;
+      // Data maps are single-channel: store as R8 rather than RGBA8 (¼ the VRAM, same values).
+      if (keys[i] !== "day") x.format = THREE.RedFormat;
       x.wrapS = THREE.RepeatWrapping;
       x.anisotropy = aniso;
       x.needsUpdate = true;
-    }
+    });
   });
 
   const surface = useRef<THREE.Mesh>(null!);
