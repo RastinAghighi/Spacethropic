@@ -6,8 +6,11 @@ import * as THREE from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import { clock } from "@/lib/sim";
 import { DEG, equatorialDir } from "@/lib/astro";
+import { ui } from "@/lib/ui";
 
 const DURATION = 7.5;
+/** Skip the slow wind-up: the reveal cuts straight into the move this far in (s). */
+const START_AT = 2.0;
 /** Azimuth before the eclipse at the start of the intro (radians). */
 const LEAD_IN = 1.4;
 const START_RADIUS = 1.35;
@@ -16,6 +19,8 @@ const ECLIPSE_RADIUS = 6.5;
 const END_RADIUS = 4.8;
 /** Cruising spin after the intro (rad/s); the intro starts and ends at this speed. */
 const SPIN_RATE = 0.06;
+/** Fraction of the intro after which the overlay UI starts coming in. */
+const LANDED_AT = 0.72;
 /** Seconds to ease the cruise spin back in after the user lets go. */
 const RESUME_TIME = 1.5;
 
@@ -86,7 +91,7 @@ function enableControls(controls: OrbitControlsImpl, onStart: () => void, onEnd:
 /** Page-load intro: zoom out while spinning, through an eclipse on the Milky Way, into daylight and a slow orbit. */
 export function Intro() {
   const t0 = useRef<number | null>(null);
-  const sweep = useRef(Math.PI);
+  const sweep = useRef<number | null>(null);
   const phase = useRef<"intro" | "cruise">("intro");
   const dragging = useRef(false);
   const releasedAt = useRef(-Infinity);
@@ -94,15 +99,21 @@ export function Intro() {
   useFrame(({ camera, controls, clock: rc }, delta) => {
     const c = controls as unknown as OrbitControlsImpl | null;
     if (!c) return;
-    if (t0.current === null) {
-      t0.current = rc.elapsedTime;
+    if (sweep.current === null) {
       sweep.current = sweepPastEclipse();
       c.enabled = false;
     }
+    // Hold the opening frame behind the loader until everything is ready.
+    if (!ui.get().ready) {
+      applyPose(camera, START_AT, sweep.current);
+      return;
+    }
+    if (t0.current === null) t0.current = rc.elapsedTime - START_AT;
     const elapsed = rc.elapsedTime - t0.current;
 
     if (phase.current === "intro") {
       applyPose(camera, elapsed, sweep.current);
+      if (elapsed >= DURATION * LANDED_AT) ui.setLanded();
       if (elapsed >= DURATION) {
         enableControls(
           c,
