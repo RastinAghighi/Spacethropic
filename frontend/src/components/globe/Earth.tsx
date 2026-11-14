@@ -104,9 +104,10 @@ export function Earth() {
     return { earth, cloud, atmosphere };
   }, [tex]);
 
-  useFrame(({ camera, clock: rclock }) => {
+  useFrame(({ camera }) => {
     const eph = clock.ephemeris;
-    const t = rclock.elapsedTime;
+    // Wall clock: R3F's clock resets whenever the frameloop is paused and resumed.
+    const t = performance.now() / 1000;
     const drift = t * 0.0035;
 
     surface.current.rotation.y = eph.earthRotation;

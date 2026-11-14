@@ -1,8 +1,9 @@
 // Natural-language analog search — the contract between the UI and the search backend.
 //
 // The UI POSTs an AnalogQuery to /api/search and expects AnalogResult[] back. Until a
-// route exists there, searchAnalogs() rejects with SearchUnavailableError and the
-// search bar says so; nothing is faked.
+// route exists there, findCandidates() falls back to the bundled sample set and says
+// so (source: "sample"), so the prototype UI can be exercised end to end.
+import { SITES, sampleCandidates, type Candidate } from "./candidates";
 
 export type AnalogTarget = "moon" | "mars";
 
@@ -69,3 +70,28 @@ export const QUICK_FILTERS: { label: string; prompt: string }[] = [
   { label: "Impact craters", prompt: "Well-preserved impact craters with shocked rock and breccia" },
   { label: "Dust & wind", prompt: "Regions dominated by dust storms, dunes and aeolian erosion" },
 ];
+
+export interface SearchOutcome {
+  candidates: Candidate[];
+  source: "live" | "sample";
+}
+
+/** Long enough for the search state to read, short enough to feel instant. */
+const SAMPLE_LATENCY_MS = 1100;
+
+export async function findCandidates(query: AnalogQuery, signal?: AbortSignal): Promise<SearchOutcome> {
+  try {
+    const results = await searchAnalogs(query, signal);
+    const byId = new Map(SITES.map((s) => [s.id, s]));
+    const candidates = results.flatMap((r) => {
+      const site = byId.get(r.id);
+      return site ? [site] : [];
+    });
+    return { candidates, source: "live" };
+  } catch (e) {
+    if (!(e instanceof SearchUnavailableError)) throw e;
+  }
+  await new Promise((r) => setTimeout(r, SAMPLE_LATENCY_MS));
+  if (signal?.aborted) throw new DOMException("Aborted", "AbortError");
+  return { candidates: sampleCandidates(), source: "sample" };
+}

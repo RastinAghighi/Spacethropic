@@ -6,6 +6,7 @@ import { Bloom, EffectComposer, ToneMapping } from "@react-three/postprocessing"
 import { BlendFunction, Effect, ToneMappingMode } from "postprocessing";
 import * as THREE from "three";
 import { clock } from "@/lib/sim";
+import { ui } from "@/lib/ui";
 
 const lensFrag = /* glsl */ `
 uniform vec2 uSun;
@@ -95,6 +96,32 @@ class GradeEffect extends Effect {
 }
 
 const sunPos = new THREE.Vector3();
+const camNorm = new THREE.Vector3();
+const GLOW_DAY = new THREE.Color(130 / 255, 176 / 255, 1);
+const GLOW_SUN = new THREE.Color(1, 196 / 255, 140 / 255);
+const glowColor = new THREE.Color();
+let glowFrame = 0;
+let lastGlow = "";
+
+/**
+ * Feeds the search bar's glow from the scene: brighter and bluer over the sunlit side,
+ * warm when the Sun itself is in view, shifted toward the Sun's side of the screen.
+ */
+function writeGlow(sunX: number, dayFacing: number, sunVis: number) {
+  if (glowFrame++ % 6 !== 0) return;
+  const mode = ui.get().mode;
+  if (mode !== "globe" && !(mode === "searching" && ui.get().searchFrom === "globe")) return;
+  const strength = THREE.MathUtils.clamp(0.18 + 0.5 * dayFacing + 0.55 * sunVis, 0, 1);
+  glowColor.copy(GLOW_DAY).lerp(GLOW_SUN, THREE.MathUtils.clamp(sunVis * 1.4, 0, 1));
+  const x = THREE.MathUtils.clamp(sunX * 0.5 + 0.5, 0.08, 0.92);
+  const key = `${glowColor.getHexString()}${strength.toFixed(2)}${x.toFixed(2)}`;
+  if (key === lastGlow) return;
+  lastGlow = key;
+  const root = document.documentElement.style;
+  root.setProperty("--glow-color", `#${glowColor.getHexString()}`);
+  root.setProperty("--glow-strength", strength.toFixed(2));
+  root.setProperty("--glow-x", `${(x * 100).toFixed(1)}%`);
+}
 const toSun = new THREE.Vector3();
 const camDir = new THREE.Vector3();
 
@@ -126,6 +153,7 @@ export function Effects({ exposure = 0.72 }: { exposure?: number }) {
     u.get("uVis")!.value = vis;
     u.get("uAspect")!.value = size.width / size.height;
     u.get("uExposure")!.value = exposure;
+    writeGlow(facing > 0 ? sunPos.x : -Math.sign(sunPos.x), Math.max(0, camNorm.copy(camera.position).normalize().dot(eph.sunDir)), vis);
   });
 
   return (
