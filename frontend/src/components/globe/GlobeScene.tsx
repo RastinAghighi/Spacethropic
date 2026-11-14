@@ -1,27 +1,20 @@
 "use client";
 
-import { Suspense, useMemo } from "react";
+import { Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
-import { advanceClock, clock } from "@/lib/sim";
+import { advanceClock } from "@/lib/sim";
 import { Earth } from "./Earth";
 import { Sky } from "./Sky";
 import { Moon } from "./Moon";
 import { Effects } from "./Effects";
+import { Intro } from "./Intro";
 
 function Clock() {
   useFrame(() => advanceClock(), -1);
   return null;
-}
-
-/** Start on a three-quarter view of the terminator so day, dusk and night are all in frame. */
-function initialCameraPosition() {
-  const s = clock.ephemeris.sunDir.clone();
-  const dir = s.applyAxisAngle(new THREE.Vector3(0, 1, 0), (-58 * Math.PI) / 180);
-  dir.y += 0.28;
-  return dir.normalize().multiplyScalar(3.4).toArray();
 }
 
 function Controls() {
@@ -46,11 +39,10 @@ function Controls() {
 }
 
 export default function GlobeScene() {
-  const camPos = useMemo(() => initialCameraPosition(), []);
   return (
     <Canvas
       dpr={[1, 2]}
-      camera={{ position: camPos as [number, number, number], fov: 35, near: 0.002, far: 20000 }}
+      camera={{ position: [0, 0, 6], fov: 35, near: 0.002, far: 20000 }}
       gl={{
         antialias: false,
         logarithmicDepthBuffer: true,
@@ -65,6 +57,7 @@ export default function GlobeScene() {
         <Moon />
         <Earth />
         <Effects />
+        <Intro />
       </Suspense>
       <Controls />
     </Canvas>
