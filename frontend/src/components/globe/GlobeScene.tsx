@@ -13,6 +13,7 @@ import { Moon } from "./Moon";
 import { Effects } from "./Effects";
 import { Intro } from "./Intro";
 import { AdaptiveResolution } from "./AdaptiveResolution";
+import { CameraDirector } from "./CameraDirector";
 
 function Clock() {
   useFrame(() => advanceClock(), -1);
@@ -81,6 +82,7 @@ export default function GlobeScene() {
         <Earth />
         <Effects />
         <Intro />
+        <CameraDirector />
         <Warmup />
         <AdaptiveResolution />
       </Suspense>

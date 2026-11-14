@@ -1,0 +1,655 @@
+[
+ {
+  "id": "craters-of-the-moon",
+  "name": "Craters of the Moon",
+  "region": "Idaho, USA",
+  "lat": 43.42,
+  "lon": -113.55,
+  "targets": [
+   "moon"
+  ],
+  "tags": "lava tube cave basalt flow volcanic regolith shelter habitat radiation spatter cone",
+  "summary": "Young basaltic lava field with open lava tubes and collapse pits.",
+  "why": [
+   "Basaltic flows chemically close to lunar mare basalts",
+   "Accessible lava tubes and collapse pits, like skylights imaged by LRO in Mare Tranquillitatis",
+   "Studied by NASA's FINESSE team for lunar volcanic field science"
+  ],
+  "breaks": [
+   "Weathered by water and vegetated in places",
+   "Flows are ~2,000–15,000 years old, versus billions for mare basalts"
+  ],
+  "imagery": {
+   "source": "NASA HLS (Harmonized Landsat Sentinel-2) via GIBS",
+   "layer": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+   "date": "2024-08-22",
+   "bbox": [
+    43.23809,
+    -113.99524,
+    43.60191,
+    -113.10476
+   ],
+   "metersPerPixel": 30.0
+  },
+  "avgColor": [
+   135,
+   120,
+   101
+  ],
+  "climate": {
+   "elevationM": 1891.71,
+   "meanTempC": 5.7,
+   "coldestMonthMinC": -32.6,
+   "hottestMonthMaxC": 36.9,
+   "precipMmYr": 416.0,
+   "solarKwhM2Day": 4.55,
+   "humidityPct": 60.0,
+   "windMs": 2.2,
+   "source": "NASA POWER climatology",
+   "period": "–"
+  }
+ },
+ {
+  "id": "lava-beds",
+  "name": "Lava Beds",
+  "region": "California, USA",
+  "lat": 41.71,
+  "lon": -121.51,
+  "targets": [
+   "moon",
+   "mars"
+  ],
+  "tags": "lava tube cave basalt volcanic shelter habitat radiation subsurface robot rover ice",
+  "summary": "Hundreds of basaltic lava tubes, some holding year-round ice.",
+  "why": [
+   "Over 700 lava tube caves in a single volcanic field",
+   "NASA's BRAILLE project tested cave-exploring robots and life-detection here",
+   "Perennial ice deposits in some tubes, like those hoped for in lunar and Martian caves"
+  ],
+  "breaks": [
+   "Caves host biofilms and a damp microclimate",
+   "Forested surroundings unlike any planetary surface"
+  ],
+  "imagery": {
+   "source": "NASA HLS (Harmonized Landsat Sentinel-2) via GIBS",
+   "layer": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+   "date": "2024-08-06",
+   "bbox": [
+    41.52809,
+    -121.9432,
+    41.89191,
+    -121.0768
+   ],
+   "metersPerPixel": 30.0
+  },
+  "avgColor": [
+   131,
+   117,
+   92
+  ],
+  "climate": {
+   "elevationM": 1446.8,
+   "meanTempC": 8.8,
+   "coldestMonthMinC": -23.9,
+   "hottestMonthMaxC": 39.4,
+   "precipMmYr": 675.0,
+   "solarKwhM2Day": 4.86,
+   "humidityPct": 64.0,
+   "windMs": 1.7,
+   "source": "NASA POWER climatology",
+   "period": "–"
+  }
+ },
+ {
+  "id": "lonar",
+  "name": "Lonar Crater",
+  "region": "Maharashtra, India",
+  "lat": 19.977,
+  "lon": 76.508,
+  "targets": [
+   "moon",
+   "mars"
+  ],
+  "tags": "impact crater basalt shock breccia ejecta lake",
+  "summary": "A ~1.8 km impact crater formed directly in Deccan flood basalt.",
+  "why": [
+   "One of very few well-preserved impact craters in basalt",
+   "Shock-metamorphosed basalt comparable to lunar and Martian crater targets",
+   "Ejecta blanket and rim structure are still readable"
+  ],
+  "breaks": [
+   "Crater floor holds a saline lake and vegetation",
+   "Monsoon weathering has softened fine features"
+  ],
+  "imagery": {
+   "source": "NASA HLS (Harmonized Landsat Sentinel-2) via GIBS",
+   "layer": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+   "date": "2024-03-01",
+   "bbox": [
+    19.79509,
+    76.1639,
+    20.15891,
+    76.8521
+   ],
+   "metersPerPixel": 30.0
+  },
+  "avgColor": [
+   130,
+   115,
+   87
+  ],
+  "climate": {
+   "elevationM": 530.02,
+   "meanTempC": 26.0,
+   "coldestMonthMinC": 6.1,
+   "hottestMonthMaxC": 45.5,
+   "precipMmYr": 843.0,
+   "solarKwhM2Day": 5.34,
+   "humidityPct": 53.0,
+   "windMs": 2.5,
+   "source": "NASA POWER climatology",
+   "period": "–"
+  }
+ },
+ {
+  "id": "pinacate",
+  "name": "El Pinacate",
+  "region": "Sonora, Mexico",
+  "lat": 31.8,
+  "lon": -113.5,
+  "targets": [
+   "moon"
+  ],
+  "tags": "volcanic maar crater cinder cone basalt astronaut training apollo desert arid",
+  "summary": "Volcanic field of maar craters and cinder cones in the Sonoran Desert.",
+  "why": [
+   "Apollo astronauts trained here in crater and volcanic geology",
+   "Large maar craters such as El Elegante resemble lunar crater morphology",
+   "Arid, sparsely vegetated basaltic terrain"
+  ],
+  "breaks": [
+   "Maars are explosive volcanic craters, not impact craters",
+   "Desert vegetation and wind erosion"
+  ],
+  "imagery": {
+   "source": "NASA HLS (Harmonized Landsat Sentinel-2) via GIBS",
+   "layer": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+   "date": "2024-08-04",
+   "bbox": [
+    31.61809,
+    -113.88051,
+    31.98191,
+    -113.11949
+   ],
+   "metersPerPixel": 30.0
+  },
+  "avgColor": [
+   182,
+   162,
+   137
+  ],
+  "climate": {
+   "elevationM": 197.65,
+   "meanTempC": 22.5,
+   "coldestMonthMinC": -3.7,
+   "hottestMonthMaxC": 48.5,
+   "precipMmYr": 139.0,
+   "solarKwhM2Day": 6.01,
+   "humidityPct": 41.0,
+   "windMs": 2.6,
+   "source": "NASA POWER climatology",
+   "period": "–"
+  }
+ },
+ {
+  "id": "kilbourne-hole",
+  "name": "Kilbourne Hole",
+  "region": "New Mexico, USA",
+  "lat": 31.97,
+  "lon": -106.97,
+  "targets": [
+   "moon"
+  ],
+  "tags": "maar crater volcanic astronaut training apollo desert regolith xenolith",
+  "summary": "A ~2 km maar crater used for Apollo astronaut field training.",
+  "why": [
+   "Apollo crews practised crater sampling and field geology here",
+   "Ejecta-like rim deposits and mantle xenoliths",
+   "Dry, open terrain suited to rover traverse tests"
+  ],
+  "breaks": [
+   "Volcanic, not impact, origin",
+   "Desert soils are biologically active"
+  ],
+  "imagery": {
+   "source": "NASA HLS (Harmonized Landsat Sentinel-2) via GIBS",
+   "layer": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+   "date": "2024-09-29",
+   "bbox": [
+    31.78809,
+    -107.35121,
+    32.15191,
+    -106.58879
+   ],
+   "metersPerPixel": 30.0
+  },
+  "avgColor": [
+   184,
+   161,
+   136
+  ],
+  "climate": {
+   "elevationM": 1275.56,
+   "meanTempC": 17.7,
+   "coldestMonthMinC": -13.6,
+   "hottestMonthMaxC": 42.5,
+   "precipMmYr": 230.0,
+   "solarKwhM2Day": 5.9,
+   "humidityPct": 39.0,
+   "windMs": 2.8,
+   "source": "NASA POWER climatology",
+   "period": "–"
+  }
+ },
+ {
+  "id": "haughton",
+  "name": "Haughton Crater",
+  "region": "Devon Island, Canada",
+  "lat": 75.38,
+  "lon": -89.68,
+  "targets": [
+   "moon",
+   "mars"
+  ],
+  "tags": "impact crater polar cold ice permafrost ground ice arctic desert breccia",
+  "summary": "A 23 km impact crater in a polar desert — home of NASA's Haughton-Mars Project.",
+  "why": [
+   "Well-preserved impact structure in a cold, dry, rocky polar desert",
+   "Permafrost and ground ice, like Mars' mid-latitudes",
+   "Two decades of NASA Haughton-Mars Project rover, suit and operations tests"
+  ],
+  "breaks": [
+   "Thick Earth atmosphere and a liquid-water summer",
+   "Glacial history shaped the terrain"
+  ],
+  "imagery": {
+   "source": "NASA HLS (Harmonized Landsat Sentinel-2) via GIBS",
+   "layer": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+   "date": "2022-07-15",
+   "bbox": [
+    75.19809,
+    -90.96123,
+    75.56191,
+    -88.39877
+   ],
+   "metersPerPixel": 30.0
+  },
+  "avgColor": [
+   171,
+   163,
+   145
+  ],
+  "climate": {
+   "elevationM": 173.12,
+   "meanTempC": -14.4,
+   "coldestMonthMinC": -48.5,
+   "hottestMonthMaxC": 16.8,
+   "precipMmYr": 310.0,
+   "solarKwhM2Day": 2.32,
+   "humidityPct": 94.0,
+   "windMs": 3.1,
+   "source": "NASA POWER climatology",
+   "period": "–"
+  }
+ },
+ {
+  "id": "yungay",
+  "name": "Yungay",
+  "region": "Atacama Desert, Chile",
+  "lat": -24.08,
+  "lon": -70.14,
+  "targets": [
+   "mars"
+  ],
+  "tags": "hyper-arid desert dry soil perchlorate nitrate uv life sterile oxidant regolith",
+  "summary": "The hyper-arid core of the Atacama, among the driest places on Earth.",
+  "why": [
+   "Decades without measurable rain at the driest sites",
+   "Perchlorate and nitrate-rich soils, like those found by Phoenix",
+   "Near the limit of detectable microbial life — a test bed for life-detection instruments"
+  ],
+  "breaks": [
+   "Warm surface temperatures and a dense atmosphere",
+   "Coastal fog brings trace moisture"
+  ],
+  "imagery": {
+   "source": "NASA HLS (Harmonized Landsat Sentinel-2) via GIBS",
+   "layer": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+   "date": "2024-11-16",
+   "bbox": [
+    -24.26191,
+    -70.49422,
+    -23.89809,
+    -69.78578
+   ],
+   "metersPerPixel": 30.0
+  },
+  "avgColor": [
+   183,
+   167,
+   147
+  ],
+  "climate": {
+   "elevationM": 1261.0,
+   "meanTempC": 17.1,
+   "coldestMonthMinC": -0.6,
+   "hottestMonthMaxC": 32.9,
+   "precipMmYr": 7.0,
+   "solarKwhM2Day": 5.96,
+   "humidityPct": 44.0,
+   "windMs": 2.3,
+   "source": "NASA POWER climatology",
+   "period": "–"
+  }
+ },
+ {
+  "id": "rio-tinto",
+  "name": "Río Tinto",
+  "region": "Andalusia, Spain",
+  "lat": 37.7,
+  "lon": -6.58,
+  "targets": [
+   "mars"
+  ],
+  "tags": "acid iron sulfate jarosite hematite mineral water extremophile life biosignature",
+  "summary": "Acidic, iron-rich river system with jarosite and hematite.",
+  "why": [
+   "Jarosite and hematite, the minerals Opportunity found at Meridiani Planum",
+   "Acidic, iron-rich waters host extremophile microbes",
+   "Site of NASA's MARTE drilling experiment"
+  ],
+  "breaks": [
+   "Flowing liquid water at the surface",
+   "Mining has heavily altered the landscape"
+  ],
+  "imagery": {
+   "source": "NASA HLS (Harmonized Landsat Sentinel-2) via GIBS",
+   "layer": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+   "date": "2024-08-08",
+   "bbox": [
+    37.51809,
+    -6.98872,
+    37.88191,
+    -6.17128
+   ],
+   "metersPerPixel": 30.0
+  },
+  "avgColor": [
+   131,
+   115,
+   80
+  ],
+  "climate": {
+   "elevationM": 161.98,
+   "meanTempC": 17.9,
+   "coldestMonthMinC": -4.5,
+   "hottestMonthMaxC": 45.0,
+   "precipMmYr": 453.0,
+   "solarKwhM2Day": 5.02,
+   "humidityPct": 64.0,
+   "windMs": 2.6,
+   "source": "NASA POWER climatology",
+   "period": "–"
+  }
+ },
+ {
+  "id": "dallol",
+  "name": "Dallol",
+  "region": "Danakil Depression, Ethiopia",
+  "lat": 14.24,
+  "lon": 40.3,
+  "targets": [
+   "mars"
+  ],
+  "tags": "salt hydrothermal acid brine extremophile hot volcanic mineral evaporite",
+  "summary": "Hydrothermal salt field below sea level, one of Earth's hottest places.",
+  "why": [
+   "Hyper-acidic, hypersaline hydrothermal pools",
+   "Evaporite and sulfate deposits like those mapped on Mars",
+   "Tests where the limits of life lie"
+  ],
+  "breaks": [
+   "Extreme heat — the opposite of Mars' cold",
+   "Active volcanism"
+  ],
+  "imagery": {
+   "source": "NASA HLS (Harmonized Landsat Sentinel-2) via GIBS",
+   "layer": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+   "date": "2023-12-29",
+   "bbox": [
+    14.05809,
+    39.96636,
+    14.42191,
+    40.63364
+   ],
+   "metersPerPixel": 30.0
+  },
+  "avgColor": [
+   176,
+   163,
+   139
+  ],
+  "climate": {
+   "elevationM": 1063.31,
+   "meanTempC": 26.0,
+   "coldestMonthMinC": 11.3,
+   "hottestMonthMaxC": 40.3,
+   "precipMmYr": 449.0,
+   "solarKwhM2Day": 5.96,
+   "humidityPct": 47.0,
+   "windMs": 2.6,
+   "source": "NASA POWER climatology",
+   "period": "–"
+  }
+ },
+ {
+  "id": "dalangtan",
+  "name": "Dalangtan Playa",
+  "region": "Qaidam Basin, China",
+  "lat": 38.45,
+  "lon": 91.9,
+  "targets": [
+   "mars"
+  ],
+  "tags": "hyper-arid salt playa evaporite sulfate chloride yardang wind cold high altitude",
+  "summary": "Hyper-arid, high-altitude salt playa ringed by wind-carved yardangs.",
+  "why": [
+   "Cold, dry, high plateau with low air pressure for Earth",
+   "Sulfate and chloride salts comparable to Martian evaporite basins",
+   "Extensive yardang fields shaped by wind"
+  ],
+  "breaks": [
+   "Still far warmer and wetter than Mars",
+   "Less studied, so ground truth is limited"
+  ],
+  "imagery": {
+   "source": "NASA HLS (Harmonized Landsat Sentinel-2) via GIBS",
+   "layer": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+   "date": "2024-05-23",
+   "bbox": [
+    38.26809,
+    91.48706,
+    38.63191,
+    92.31294
+   ],
+   "metersPerPixel": 30.0
+  },
+  "avgColor": [
+   204,
+   193,
+   174
+  ],
+  "climate": {
+   "elevationM": 2913.07,
+   "meanTempC": 3.6,
+   "coldestMonthMinC": -27.0,
+   "hottestMonthMaxC": 33.2,
+   "precipMmYr": 40.0,
+   "solarKwhM2Day": 5.19,
+   "humidityPct": 33.0,
+   "windMs": 2.6,
+   "source": "NASA POWER climatology",
+   "period": "–"
+  }
+ },
+ {
+  "id": "lut",
+  "name": "Lut Desert Kaluts",
+  "region": "Kerman, Iran",
+  "lat": 30.4,
+  "lon": 58.4,
+  "targets": [
+   "mars"
+  ],
+  "tags": "yardang wind dust aeolian erosion desert dune hot arid storm",
+  "summary": "Giant wind-carved yardangs in one of Earth's hottest deserts.",
+  "why": [
+   "Some of Earth's largest yardangs, like those of Mars' Medusae Fossae Formation",
+   "Landscape shaped almost entirely by wind",
+   "Dust and dune processes active today"
+  ],
+  "breaks": [
+   "Record surface heat, far from Martian temperatures",
+   "Yardangs carved in lake sediments rather than volcanic ash"
+  ],
+  "imagery": {
+   "source": "NASA HLS (Harmonized Landsat Sentinel-2) via GIBS",
+   "layer": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+   "date": "2024-09-09",
+   "bbox": [
+    30.21809,
+    58.02506,
+    30.58191,
+    58.77494
+   ],
+   "metersPerPixel": 30.0
+  },
+  "avgColor": [
+   190,
+   171,
+   151
+  ],
+  "climate": {
+   "elevationM": 321.27,
+   "meanTempC": 26.5,
+   "coldestMonthMinC": -5.5,
+   "hottestMonthMaxC": 51.8,
+   "precipMmYr": 84.0,
+   "solarKwhM2Day": 5.94,
+   "humidityPct": 21.0,
+   "windMs": 2.8,
+   "source": "NASA POWER climatology",
+   "period": "–"
+  }
+ },
+ {
+  "id": "hanksville",
+  "name": "Hanksville",
+  "region": "Utah, USA",
+  "lat": 38.41,
+  "lon": -110.79,
+  "targets": [
+   "mars"
+  ],
+  "tags": "sedimentary clay mudstone delta river channel inverted habitat crew operations rover",
+  "summary": "Red sedimentary badlands around the Mars Desert Research Station.",
+  "why": [
+   "Clay-rich mudstones and inverted channels resemble Martian sedimentary terrain",
+   "Mars Desert Research Station runs simulated crew missions here",
+   "Rover and EVA operations testing"
+  ],
+  "breaks": [
+   "Vegetation and seasonal rain",
+   "Iron oxide colouring is not Martian dust"
+  ],
+  "imagery": {
+   "source": "NASA HLS (Harmonized Landsat Sentinel-2) via GIBS",
+   "layer": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+   "date": "2024-07-30",
+   "bbox": [
+    38.22809,
+    -111.20271,
+    38.59191,
+    -110.37729
+   ],
+   "metersPerPixel": 30.0
+  },
+  "avgColor": [
+   198,
+   178,
+   154
+  ],
+  "climate": {
+   "elevationM": 1659.66,
+   "meanTempC": 11.8,
+   "coldestMonthMinC": -20.0,
+   "hottestMonthMaxC": 41.1,
+   "precipMmYr": 241.0,
+   "solarKwhM2Day": 5.29,
+   "humidityPct": 43.0,
+   "windMs": 2.5,
+   "source": "NASA POWER climatology",
+   "period": "–"
+  }
+ },
+ {
+  "id": "bockfjord",
+  "name": "Bockfjord Volcanic Complex",
+  "region": "Svalbard, Norway",
+  "lat": 79.45,
+  "lon": 13.3,
+  "targets": [
+   "mars"
+  ],
+  "tags": "volcanic carbonate ice cold polar arctic permafrost glacier biosignature",
+  "summary": "Arctic volcanic centres with carbonate globules like those in Martian meteorite ALH84001.",
+  "why": [
+   "Carbonate globules in basalt that closely match ALH84001",
+   "Volcano–ice interaction in a cold, dry polar setting",
+   "Used by the AMASE expedition to test Mars rover instruments"
+  ],
+  "breaks": [
+   "Glaciers and seasonal meltwater",
+   "Arctic vegetation and wildlife"
+  ],
+  "imagery": {
+   "source": "NASA HLS (Harmonized Landsat Sentinel-2) via GIBS",
+   "layer": "HLS_S30_Nadir_BRDF_Adjusted_Reflectance",
+   "date": "2024-08-01",
+   "bbox": [
+    79.26809,
+    11.53373,
+    79.63191,
+    15.06627
+   ],
+   "metersPerPixel": 30.0
+  },
+  "avgColor": [
+   133,
+   135,
+   122
+  ],
+  "climate": {
+   "elevationM": 343.29,
+   "meanTempC": -7.6,
+   "coldestMonthMinC": -40.1,
+   "hottestMonthMaxC": 11.8,
+   "precipMmYr": 664.0,
+   "solarKwhM2Day": 2.09,
+   "humidityPct": 95.0,
+   "windMs": 3.4,
+   "source": "NASA POWER climatology",
+   "period": "–"
+  }
+ }
+]
