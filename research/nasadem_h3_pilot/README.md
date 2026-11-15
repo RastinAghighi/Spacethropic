@@ -4,6 +4,12 @@ Validates one NASADEM_HGT V001 granule, read in place from its ZIP, and measures
 elevation, slope and roughness for a configurable area of interest (AOI).
 It writes JSON, CSV and a PNG overview.
 
+**Start here: [terrain database teammate handoff](docs/TERRAIN_DATABASE.md).**
+It covers fresh setup, regeneration of ignored `local/` files, real candidate
+rows, map joins, team contracts and copy-paste prompts, with links to integration,
+QGIS and benchmark details. No raw NASADEM ZIP is needed for that walkthrough.
+The older ingestion commands below require the separately downloaded ZIP.
+
 ## Setup
 
 ```powershell

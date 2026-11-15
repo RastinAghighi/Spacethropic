@@ -8,6 +8,7 @@ version = "0.1.0"
 description = "Terrestrial analog discovery for lunar and Martian environments: NASADEM ingestion and terrain analysis"
 requires-python = ">=3.10"
 dependencies = [
+    "duckdb==2.0.0",  # local terrain metadata database and Parquet export
     "numpy>=2.0",  # weighted percentiles (np.percentile(..., weights=...))
     "matplotlib>=3.7",
     "h3>=4.0,<5",  # H3 v4 API (latlng_to_cell, cell_to_boundary, ...) for hexagon aggregation
@@ -20,6 +21,7 @@ dev = ["pytest>=7"]
 [project.scripts]
 spacethropic-terrain = "spacethropic.cli:main"
 spacethropic-h3 = "spacethropic.h3_cli:main"
+spacethropic-db = "spacethropic.db_cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

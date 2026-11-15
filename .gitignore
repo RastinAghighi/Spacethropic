@@ -5,3 +5,12 @@ node_modules/
 Thumbs.db
 .vscode/
 .idea/
+.venv/
+__pycache__/
+.pytest_cache/
+*.egg-info/
+*.duckdb
+*.duckdb.wal
+*.parquet
+research/nasadem_h3_pilot/benchmarks/
+research/nasadem_h3_pilot/local/
