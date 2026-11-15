@@ -1,13 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import { DIVE, useUi } from "@/lib/ui";
 import { research, useResearch } from "@/lib/research";
 import { formatCoord, type Candidate } from "@/lib/candidates";
 import { BODY } from "@/lib/catalog";
-import { DIMS, matchProfile, overallScore, suggest, targetOf, type DimMatch, type Filters, type Tab } from "@/lib/profile";
+import { DIMS, FIELDS, matchProfile, overallScore, targetOf, type DimMatch, type Filters, type NumKey, type Tab } from "@/lib/profile";
 import type { AnalogQuery, Source } from "@/lib/search";
-import { Label, useRunSearch } from "./search/primitives";
+import { Label } from "./search/primitives";
 import { ShapeCompare } from "./ShapeCompare";
 
 const AMBER = "#f3b453";
@@ -133,90 +132,11 @@ function MatchTable({ match, weights, target, tint, deltas, hover }: { match: Di
   );
 }
 
-/** The tool's proposed next refine, stated as the limit itself and its measured effect. */
-function NextStep({ c, q, results, tint }: { c: Candidate; q: AnalogQuery; results: Candidate[]; tint: string }) {
-  const { run, busy } = useRunSearch();
-  const [i, setI] = useState(0);
-  const ideas = suggest(q, c, results);
-  if (!ideas.length) return null;
-  const s = ideas[i % ideas.length];
-  const tab = DIMS[s.dim].tab;
-  const enter = () => {
-    research.preview(s.filters);
-    research.hover(tab);
-  };
-  const leave = () => {
-    research.preview(null);
-    research.hover(null);
-  };
-  const go = () => {
-    leave();
-    run({ ...q, filters: s.filters, step: s.limit });
-  };
-
-  return (
-    <div className="mt-6" style={{ animation: "rise-in .7s var(--ease-out-expo) .35s both" }}>
-      <div className="mb-2 flex h-5 items-center justify-between">
-        <Label>Suggested refine</Label>
-        {ideas.length > 1 && (
-          <button
-            type="button"
-            onClick={() => setI((v) => v + 1)}
-            className="-mr-1.5 flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[10.5px] tabular-nums text-white/35 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
-            aria-label="Another suggestion"
-          >
-            {(i % ideas.length) + 1} / {ideas.length}
-            <svg width="11" height="11" viewBox="0 0 12 12" aria-hidden>
-              <path d="M10 6a4 4 0 1 1-1.2-2.85M10 1.75V4H7.75" stroke="currentColor" strokeWidth="1.2" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-        )}
-      </div>
-      {/* Gradient border with a single sheen on arrival */}
-      <div
-        className="rounded-[14px] p-px"
-        style={{
-          background: `linear-gradient(110deg, rgb(255 255 255 / 0.09) 30%, ${tint}aa 50%, rgb(255 255 255 / 0.09) 70%) 0 0 / 250% 100%`,
-          animation: "suggest-sheen 2.4s var(--ease-out-expo) .6s both",
-        }}
-      >
-        <button
-          key={s.limit}
-          type="button"
-          onClick={go}
-          disabled={busy}
-          onPointerEnter={enter}
-          onPointerLeave={leave}
-          onFocus={enter}
-          onBlur={leave}
-          title={`${s.title}. ${s.reason}.`}
-          className="group flex w-full items-center justify-between gap-3 rounded-[13px] bg-[rgb(14_15_19/0.92)] py-2.5 pl-3 pr-2.5 text-left transition-colors hover:bg-[rgb(22_23_28/0.95)] focus-visible:outline-none disabled:opacity-60"
-        >
-          <span className="min-w-0" style={{ animation: "rise-in .45s var(--ease-out-expo) both" }}>
-            <span className="block truncate font-mono text-[13px] text-white">{s.limit}</span>
-            <span className="mt-0.5 block truncate text-[11px] tabular-nums text-white/40">
-              {DIMS[s.dim].metric.toLowerCase()} match {pct(s.before)} → <span className="text-[#8fe3b0]">{pct(s.after)}</span>
-              <span className="text-white/20"> · </span>
-              {results.length} → {s.results.length} sites
-            </span>
-          </span>
-          <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white text-black transition-transform duration-300 group-hover:translate-x-0.5">
-            <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden>
-              <path d="M2.5 7h9M7.75 3.25L11.5 7l-3.75 3.75" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </span>
-        </button>
-      </div>
-    </div>
-  );
-}
-
 function Body({
   c,
   index,
   total,
   q,
-  results,
   source,
   applied,
   hover,
@@ -226,7 +146,6 @@ function Body({
   index: number;
   total: number;
   q: AnalogQuery;
-  results: Candidate[];
   source: Source;
   applied: Filters;
   hover: Tab | null;
@@ -260,6 +179,12 @@ function Body({
       <div className="mt-3 flex items-center justify-between gap-4" style={{ animation: "rise-in .6s var(--ease-out-expo) .03s both" }}>
         <div className="min-w-0">
           <h2 className="text-[26px] font-medium leading-[1.1] tracking-[-0.025em] text-white">{c.name}</h2>
+          {!!c.missed?.length && (
+            <p className="mb-1 flex items-center gap-1.5 text-[11px] text-[#f3b453]" title="Too few sites met every limit, so the closest ones are shown">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#f3b453]" />
+              Near miss · outside {c.missed.map((k) => (k in FIELDS ? FIELDS[k as NumKey].label.toLowerCase() : k)).join(", ")}
+            </p>
+          )}
           <p className="mt-1 truncate text-[12.5px] text-white/45">
             {c.region}
             <span className="ml-2 font-mono text-[10.5px] text-white/30">{formatCoord(c.lat, c.lon)}</span>
@@ -277,8 +202,6 @@ function Body({
       <section className="mt-6" style={{ animation: "rise-in .6s var(--ease-out-expo) .1s both" }}>
         <MatchTable match={match} weights={applied.weights} target={target.short} tint={tint} deltas={deltas} hover={hover} />
       </section>
-
-      <NextStep c={c} q={q} results={results} tint={tint} />
 
       <details className="group mt-6 border-t border-white/[0.06] pt-4 text-[12px]" style={{ animation: "rise-in .6s var(--ease-out-expo) .4s both" }}>
         <summary className="flex cursor-pointer list-none items-center justify-between text-white/40 transition-colors hover:text-white/70 [&::-webkit-details-marker]:hidden">
@@ -313,7 +236,7 @@ function Body({
   );
 }
 
-/** Right-third panel: measured values against the target, and the tool's suggested next refine. */
+/** Right-third panel: the terrain shape match, and measured values against the target. */
 export function EvidencePanel() {
   const { mode, results, active, query, source, searchFrom, trail, trailAt } = useUi();
   const { applied, hover } = useResearch();
@@ -335,7 +258,7 @@ export function EvidencePanel() {
       }}
     >
       <div className="min-h-0 overflow-y-auto overscroll-contain rounded-[22px] border border-white/[0.08] bg-[rgb(10_11_14/0.62)] p-5 shadow-[0_30px_80px_-30px_rgb(0_0_0/0.9),inset_0_1px_0_rgb(255_255_255/0.05)] backdrop-blur-2xl backdrop-saturate-150 [scrollbar-width:none]">
-        <Body key={`${c.id}:${trailAt}`} c={c} index={active} total={results.length} q={query} results={results} source={source} applied={applied} hover={hover} prev={prev} />
+        <Body key={`${c.id}:${trailAt}`} c={c} index={active} total={results.length} q={query} source={source} applied={applied} hover={hover} prev={prev} />
       </div>
     </aside>
   );

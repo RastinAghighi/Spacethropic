@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import { ui, useUi } from "@/lib/ui";
 import { groundFrame } from "@/lib/flight";
 
+/** Radius of the disk the shape search compares: an Earth-sized H3 res-7 cell's area, 5.16 km². */
+const CELL_RADIUS_M = 1281;
+
 /** A tidy scale bar length (km) near the target pixel width. */
 function scaleBar(metersPerCssPx: number, targetPx = 110) {
   const km = (metersPerCssPx * targetPx) / 1000;
@@ -16,6 +19,7 @@ export function SiteView() {
   const { mode, results, active } = useUi();
   const [bar, setBar] = useState({ km: 10, px: 110 });
   const [pos, setPos] = useState({ x: 0.36, y: 0.45 });
+  const [mPerPx, setMPerPx] = useState(30);
   const current = results[active];
 
   // Scale bar follows the cover-fit of the imagery at rest.
@@ -23,6 +27,7 @@ export function SiteView() {
     const update = () => {
       const f = groundFrame(window.innerWidth, window.innerHeight, current?.imagery.metersPerPixel);
       setBar(scaleBar((f.kmPerUnit * 1000) / window.innerHeight));
+      setMPerPx((f.kmPerUnit * 1000) / window.innerHeight);
       setPos({ x: f.anchorX, y: f.anchorY });
     };
     update();
@@ -35,6 +40,8 @@ export function SiteView() {
   // The grade comes in with the punch itself, not after landing.
   const shadeIn = chromeIn || mode === "diving";
   const at = { left: `${pos.x * 100}%`, top: `${pos.y * 100}%` };
+  // A search result's reticle traces the matched cell (the 5.16 km² disk the shapes were compared over)
+  const ring = current?.shape ? Math.round((2 * CELL_RADIUS_M) / mPerPx) : 48;
 
   return (
     <div aria-hidden={!visible} className="pointer-events-none fixed inset-0 z-10 overflow-hidden" style={{ visibility: visible ? "visible" : "hidden" }}>
@@ -48,9 +55,12 @@ export function SiteView() {
       <div className="transition-opacity duration-700" style={{ opacity: chromeIn ? 1 : 0 }}>
         {/* Site reticle */}
         <div className="absolute" style={at}>
-          <div className="absolute h-12 w-12 rounded-full border border-white/70 shadow-[0_0_0_1px_rgb(0_0_0/0.25)]" style={{ transform: "translate(-50%, -50%)" }}>
+          <div
+            className="absolute rounded-full border border-white/70 shadow-[0_0_0_1px_rgb(0_0_0/0.25)]"
+            style={{ width: ring, height: ring, transform: "translate(-50%, -50%)", transition: "width .8s var(--ease-out-expo), height .8s var(--ease-out-expo)" }}
+          >
             {[0, 90, 180, 270].map((r) => (
-              <span key={r} className="absolute left-1/2 top-1/2 h-px w-2.5 bg-white/80" style={{ transform: `rotate(${r}deg) translateX(30px)`, transformOrigin: "0 0" }} />
+              <span key={r} className="absolute left-1/2 top-1/2 h-px w-2.5 bg-white/80" style={{ transform: `rotate(${r}deg) translateX(${ring / 2 + 6}px)`, transformOrigin: "0 0" }} />
             ))}
           </div>
         </div>

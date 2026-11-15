@@ -144,6 +144,27 @@ export const ui = {
     });
   },
 
+  /** Drop a refine step and every step after it, landing on the step before. */
+  removeStep(i: number) {
+    if (state.mode !== "site" || i < 1 || i >= state.trail.length) return;
+    const keep = state.trail.slice(0, i);
+    if (state.trailAt < i) {
+      set({ trail: keep });
+      return;
+    }
+    const step = keep[keep.length - 1];
+    research.load(step.query.filters);
+    set({
+      trail: keep,
+      query: step.query,
+      results: step.results,
+      active: 0,
+      trailAt: keep.length - 1,
+      transitionAt: performance.now(),
+      switchSeq: state.switchSeq + 1,
+      switchDir: directionTo(state.results[state.active], step.results[0]),
+    });
+  },
   /** Revisit an earlier (or later) step of the research trail. */
   restore(i: number) {
     const step = state.trail[i];

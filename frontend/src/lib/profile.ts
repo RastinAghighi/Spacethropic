@@ -21,17 +21,16 @@ export const rockList = (gs: Geology[]) => gs.map((g, i) => (i ? GEOLOGY[g].shor
 /** Left-rail drawers. */
 export type Tab = "terrain" | "geology" | "thermal" | "weather" | "access";
 /** Scored similarity dimensions, shown in the right pane. */
-export type Dim = "terrain" | "geology" | "thermal" | "aridity" | "sun";
+export type Dim = "terrain" | "geology" | "thermal" | "sun";
 
 /** `metric` is the measured quantity each dimension is scored on, as shown in tables. */
 export const DIMS: Record<Dim, { label: string; metric: string; tab: Tab }> = {
   terrain: { label: "Terrain", metric: "Slope", tab: "terrain" },
   geology: { label: "Geology", metric: "Rock", tab: "geology" },
   thermal: { label: "Thermal", metric: "Mean temp", tab: "thermal" },
-  aridity: { label: "Aridity", metric: "Rainfall", tab: "weather" },
   sun: { label: "Illumination", metric: "Sunlight", tab: "weather" },
 };
-export const DIM_ORDER: Dim[] = ["terrain", "geology", "thermal", "aridity", "sun"];
+export const DIM_ORDER: Dim[] = ["terrain", "geology", "thermal", "sun"];
 
 /** Per-site traits the sample set doesn't carry yet. */
 type Traits = NonNullable<CandidateSite["traits"]>;
@@ -97,7 +96,7 @@ export function targetOf(q: AnalogQuery) {
 
 // ── Numeric fields: drawer readouts and limit sliders ───────────────────────
 
-export type NumKey = "slope" | "roughness" | "elevation" | "meanTemp" | "coldMin" | "precip" | "humidity" | "wind" | "solar" | "roadKm";
+export type NumKey = "slope" | "roughness" | "elevation" | "meanTemp" | "coldMin" | "humidity" | "wind" | "solar";
 
 interface Field {
   label: string;
@@ -119,11 +118,9 @@ export const FIELDS: Record<NumKey, Field> = {
   elevation: { label: "Elevation", unit: "m", min: 0, max: 3500, step: 50, digits: 0, get: (s) => s.climate.elevationM },
   meanTemp: { label: "Mean temperature", unit: "°C", min: -30, max: 35, step: 1, digits: 1, get: (s) => s.climate.meanTempC, target: (p) => p.meanTemp },
   coldMin: { label: "Coldest-month low", unit: "°C", min: -60, max: 15, step: 1, digits: 1, get: (s) => s.climate.coldestMonthMinC },
-  precip: { label: "Rainfall", unit: "mm/yr", min: 0, max: 1000, step: 10, digits: 0, scale: "sqrt", get: (s) => s.climate.precipMmYr, target: () => 0 },
   humidity: { label: "Humidity", unit: "%", min: 0, max: 100, step: 1, digits: 0, get: (s) => s.climate.humidityPct },
   wind: { label: "Wind", unit: "m/s", min: 0, max: 6, step: 0.1, digits: 1, get: (s) => s.climate.windMs },
   solar: { label: "Solar irradiance", unit: "kWh/m²·d", min: 0, max: 11, step: 0.1, digits: 1, get: (s) => s.climate.solarKwhM2Day, target: (p) => p.solar },
-  roadKm: { label: "Nearest road", unit: "km", min: 0, max: 500, step: 5, digits: 0, scale: "sqrt", get: (s) => traits(s).roadKm },
 };
 
 export function formatField(key: NumKey, v: number) {
@@ -147,7 +144,7 @@ export interface Filters {
 export const DEFAULT_FILTERS: Filters = {
   ranges: {},
   geology: [],
-  weights: { terrain: 1, geology: 1, thermal: 1, aridity: 1, sun: 1 },
+  weights: { terrain: 1, geology: 1, thermal: 1, sun: 1 },
   excludeProtected: false,
 };
 
@@ -185,11 +182,9 @@ export const FIELD_TAB: Record<NumKey, Tab> = {
   elevation: "terrain",
   meanTemp: "thermal",
   coldMin: "thermal",
-  precip: "weather",
   humidity: "weather",
   wind: "weather",
   solar: "weather",
-  roadKm: "access",
 };
 
 function describeRange(k: NumKey, r?: [number, number]) {
@@ -275,14 +270,6 @@ export function matchProfile(s: CandidateSite, q: AnalogQuery): DimMatch[] {
       brief: `${Math.abs(dT)} °C ${dT > 0 ? "warmer" : "colder"}`,
     },
     {
-      dim: "aridity",
-      score: Math.exp(-k.precipMmYr / 350),
-      earth: `${Math.round(k.precipMmYr)} mm`,
-      target: "0 mm",
-      gap: `${Math.round(k.precipMmYr)} mm of rain a year weathers the surface; ${short} has none.`,
-      brief: `${Math.round(k.precipMmYr)} mm of rain a year`,
-    },
-    {
       dim: "sun",
       score: gauss(k.solarKwhM2Day - p.solar, 2.4),
       earth: `${k.solarKwhM2Day.toFixed(1)} kWh`,
@@ -342,7 +329,6 @@ export interface Suggestion {
 const MOVES: Partial<Record<Dim, { key: NumKey; up: string; down: string; reason: (p: TargetProfile, short: string) => string }>> = {
   terrain: { key: "slope", up: "Look for steeper ground", down: "Look for gentler ground", reason: (p, s) => `${cap(s)} has ~${p.slope}° slopes` },
   thermal: { key: "meanTemp", up: "Look somewhere warmer", down: "Look somewhere colder", reason: (p, s) => `${cap(s)} averages ${formatField("meanTemp", p.meanTemp)}` },
-  aridity: { key: "precip", up: "Look somewhere wetter", down: "Look somewhere drier", reason: (_, s) => `${cap(s)} has never seen rain` },
   sun: { key: "solar", up: "Look for stronger sun", down: "Look for lower sun", reason: (p, s) => `${cap(s)} gets ~${formatField("solar", p.solar)}` },
 };
 const cap = (s: string) => s[0].toUpperCase() + s.slice(1);
@@ -372,7 +358,7 @@ export function suggest(q: AnalogQuery, site: CandidateSite, current: CandidateS
       const mv = MOVES[m.dim]!;
       const f = FIELDS[mv.key];
       const v = f.get(site);
-      const goal = mv.key === "precip" ? 0 : f.target!(p);
+      const goal = f.target!(p);
       const up = goal > v;
       // Thresholds at the values of the pool sites lying toward the target.
       const steps = [...new Set(pool.map(f.get).filter((x) => (up ? x > v : x < v)))];

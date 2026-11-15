@@ -11,7 +11,6 @@ import {
   FIELDS,
   GEOLOGY,
   describeChange,
-  formatField,
   limitsIn,
   matchProfile,
   passes,
@@ -29,40 +28,18 @@ import {
 import { FindButton, Icon, Label, useRunSearch } from "../search/primitives";
 import { RangeField } from "./RangeField";
 
-/** `fields` lead each drawer; `more` waits behind a disclosure with the weights. */
-export const TABS: { id: Tab; label: string; icon: string; fields: NumKey[]; more: NumKey[]; dims: Dim[] }[] = [
+/** `fields` lead each drawer; `more` waits behind a disclosure with the weights. `hidden` drawers
+ * stay wired up but off the rail until their data exists. */
+export const TABS: { id: Tab; label: string; icon: string; fields: NumKey[]; more: NumKey[]; dims: Dim[]; hidden?: boolean }[] = [
   { id: "terrain", label: "Terrain", icon: "M1.5 13.5l4.25-7.5 3 5 2-3 3.75 5.5z", fields: ["slope"], more: ["roughness", "elevation"], dims: ["terrain"] },
-  { id: "geology", label: "Geology", icon: "M8 1.75l5.75 4.5L8 14.25 2.25 6.25z M2.25 6.25h11.5 M6 6.25L8 14.25l2-8", fields: [], more: [], dims: ["geology"] },
+  { id: "geology", label: "Geology", icon: "M8 1.75l5.75 4.5L8 14.25 2.25 6.25z M2.25 6.25h11.5 M6 6.25L8 14.25l2-8", fields: [], more: [], dims: ["geology"], hidden: true }, // no geology dataset yet
   { id: "thermal", label: "Thermal", icon: "M8 2.25c.83 0 1.5.67 1.5 1.5v5.6a3 3 0 1 1-3 0v-5.6c0-.83.67-1.5 1.5-1.5z M8 7v4", fields: ["meanTemp"], more: ["coldMin"], dims: ["thermal"] },
-  { id: "weather", label: "Weather", icon: "M4.75 12.5h6.5a2.75 2.75 0 0 0 .4-5.47A3.75 3.75 0 0 0 4.5 8a2.25 2.25 0 0 0 .25 4.5z", fields: ["precip"], more: ["solar", "humidity", "wind"], dims: ["aridity", "sun"] },
-  { id: "access", label: "Access", icon: "M8 14.25s4.5-4.06 4.5-7.75a4.5 4.5 0 0 0-9 0c0 3.69 4.5 7.75 4.5 7.75z M8 8.25a1.75 1.75 0 1 0 0-3.5 1.75 1.75 0 0 0 0 3.5z", fields: ["roadKm"], more: [], dims: [] },
+  { id: "weather", label: "Weather", icon: "M4.75 12.5h6.5a2.75 2.75 0 0 0 .4-5.47A3.75 3.75 0 0 0 4.5 8a2.25 2.25 0 0 0 .25 4.5z", fields: ["solar"], more: ["humidity", "wind"], dims: ["sun"] },
 ];
 const tabById = (id: Tab) => TABS.find((t) => t.id === id)!;
 
 const AMBER = "#f3b453";
 const CLOSE = "M4 4l8 8M12 4l-8 8";
-
-function Tile({ label, value, unit, note }: { label: string; value: string; unit?: string; note?: string }) {
-  return (
-    <div className="flex items-baseline justify-between gap-4 py-2">
-      <p className="min-w-0 text-[12px] text-white/50">
-        {label}
-        {note && <span className="block truncate text-[10.5px] text-white/30">{note}</span>}
-      </p>
-      <p className="shrink-0 text-right text-[14px] font-medium tracking-[-0.01em] text-white tabular-nums">
-        {value}
-        {unit && <span className="ml-1 text-[10.5px] font-normal tracking-normal text-white/40">{unit}</span>}
-      </p>
-    </div>
-  );
-}
-
-/** Field value as tile parts: "−14.4" + "°C". */
-function parts(k: NumKey, v: number) {
-  const s = formatField(k, v);
-  const unit = FIELDS[k].unit;
-  return unit === "°" ? { value: s } : { value: s.slice(0, -unit.length - 1), unit };
-}
 
 function WeightControl({ dim, value }: { dim: Dim; value: Weight }) {
   const opts: { w: Weight; label: string }[] = [
@@ -96,50 +73,6 @@ function WeightControl({ dim, value }: { dim: Dim; value: Weight }) {
       </div>
     </div>
   );
-}
-
-function Readouts({ tab, c, q }: { tab: Tab; c: Candidate; q: AnalogQuery }) {
-  const { profile, short } = targetOf(q);
-  const t = traits(c);
-  const k = c.climate;
-  const tile = (key: NumKey, note?: string, label = FIELDS[key].label) => <Tile label={label} {...parts(key, FIELDS[key].get(c))} note={note} />;
-  const at = (v: string) => `${short}: ${v}`;
-  switch (tab) {
-    case "terrain":
-      return (
-        <div className="divide-y divide-white/[0.05]">
-          {tile("slope", at(formatField("slope", profile.slope)), "Typical slope")}
-          {tile("roughness", "RMS height at 30 m")}
-          {tile("elevation", "Above sea level")}
-        </div>
-      );
-    case "geology":
-      return null;
-    case "thermal":
-      return (
-        <div className="divide-y divide-white/[0.05]">
-          {tile("meanTemp", at(formatField("meanTemp", profile.meanTemp)))}
-          {tile("coldMin", "Night-time extreme")}
-          <Tile label="Hottest-month high" {...parts("meanTemp", k.hottestMonthMaxC)} note="Daytime extreme" />
-        </div>
-      );
-    case "weather":
-      return (
-        <div className="divide-y divide-white/[0.05]">
-          {tile("precip", at("none"))}
-          {tile("solar", at(formatField("solar", profile.solar)))}
-          {tile("humidity", "Relative, annual mean")}
-        </div>
-      );
-    case "access":
-      return (
-        <div className="divide-y divide-white/[0.05]">
-          {tile("roadKm", "Straight-line distance")}
-          <Tile label="Protected area" value={t.protectedArea ? "Yes" : "No"} note={t.protectedArea ? "Permits needed" : "Open land"} />
-          <Tile label="Field season" value={t.access.split(";")[0]} note={t.access.split(";")[1]?.trim() || "No seasonal restrictions noted"} />
-        </div>
-      );
-  }
 }
 
 function GeologyPicker({ draft, c, q, tint }: { draft: Filters; c: Candidate; q: AnalogQuery; tint: string }) {
@@ -186,29 +119,10 @@ function GeologyPicker({ draft, c, q, tint }: { draft: Filters; c: Candidate; q:
   );
 }
 
-function Toggle({ on, onChange, label, note }: { on: boolean; onChange: (v: boolean) => void; label: string; note: string }) {
-  return (
-    <button type="button" role="switch" aria-checked={on} onClick={() => onChange(!on)} className="flex w-full items-center justify-between gap-3 text-left focus-visible:outline-none">
-      <span>
-        <span className="block text-[12.5px] text-white/70">{label}</span>
-        <span className="block text-[10.5px] text-white/35">{note}</span>
-      </span>
-      <span className="relative h-[18px] w-[30px] shrink-0 rounded-full transition-colors duration-300" style={{ background: on ? "rgb(255 255 255 / 0.85)" : "rgb(255 255 255 / 0.1)" }}>
-        <span
-          className="absolute left-[2px] top-[2px] h-[14px] w-[14px] rounded-full shadow-[0_1px_3px_rgb(0_0_0/0.4)]"
-          style={{ background: on ? "#0b0c10" : "rgb(255 255 255 / 0.7)", transform: on ? "translateX(12px)" : "none", transition: "transform .4s var(--ease-out-expo), background-color .3s" }}
-        />
-      </span>
-    </button>
-  );
-}
-
-function Drawer({ tab, c, q, draft, applied }: { tab: Tab; c: Candidate; q: AnalogQuery; draft: Filters; applied: Filters }) {
+function Drawer({ tab, c, q, draft, applied, pool }: { tab: Tab; c: Candidate; q: AnalogQuery; draft: Filters; applied: Filters; pool: Candidate[] }) {
   const def = tabById(tab);
-  const { profile, name } = targetOf(q);
+  const { profile } = targetOf(q);
   const tint = BODY[q.target].tint;
-  const pool = poolFor(q);
-  const gaps = matchProfile(c, q).filter((m) => m.gap && def.dims.includes(m.dim));
   // Secondary limits start open only when something in them is already set.
   const [moreOpen, setMoreOpen] = useState(() => def.more.some((k) => draft.ranges[k]) || def.dims.some((d) => draft.weights[d] !== 1));
   const field = (k: NumKey) => (
@@ -223,48 +137,13 @@ function Drawer({ tab, c, q, draft, applied }: { tab: Tab; c: Candidate; q: Anal
     />
   );
 
-  // A target value no Earth surface reaches: say so, and name the closest candidate.
-  const thermalNote = (() => {
-    if (tab !== "thermal" || profile.meanTemp >= FIELDS.meanTemp.min) return null;
-    const best = [...pool].sort((a, b) => a.climate.meanTempC - b.climate.meanTempC)[0];
-    return `Nothing on Earth averages ${formatField("meanTemp", profile.meanTemp)}. Coldest here: ${best.name}.`;
-  })();
-
   return (
     <div key={tab} style={{ animation: "rise-in .45s var(--ease-out-expo) both" }}>
       <section>
-        <Label className="mb-2">At {c.name}</Label>
-        {tab === "geology" ? (
-          <p className="text-[13px] leading-snug text-white/75">
-            {traits(c)
-              .geology.map((g) => GEOLOGY[g].label)
-              .join(" and ")}
-            <span className="text-white/40">
-              {" "}
-              · {name} is {profile.geology.map((g) => GEOLOGY[g].label.toLowerCase()).join(" and ")}
-            </span>
-          </p>
-        ) : (
-          <Readouts tab={tab} c={c} q={q} />
-        )}
-      </section>
-
-      {(thermalNote ? [thermalNote] : gaps.map((g) => g.gap!)).slice(0, 1).map((note) => (
-        <p key={note} className="mt-2 flex gap-2 text-[11.5px] leading-snug text-white/55">
-          <span className="mt-[6px] h-1 w-1 shrink-0 rounded-full" style={{ background: AMBER }} />
-          {note}
-        </p>
-      ))}
-
-      <section className="mt-6">
-        <div className="mb-3 flex items-baseline justify-between">
-          <Label>{tab === "geology" ? "Require any of" : "Limits"}</Label>
-          {tab !== "geology" && <span className="text-[10.5px] text-white/30">Each dot is a candidate</span>}
-        </div>
+        {tab === "geology" && <Label className="mb-3">Require any of</Label>}
         <div className="space-y-5">
           {def.fields.map(field)}
           {tab === "geology" && <GeologyPicker draft={draft} c={c} q={q} tint={tint} />}
-          {tab === "access" && <Toggle on={draft.excludeProtected} onChange={research.setProtected} label="Exclude protected areas" note="Parks, reserves and heritage sites need permits" />}
         </div>
       </section>
 
@@ -302,7 +181,7 @@ function Drawer({ tab, c, q, draft, applied }: { tab: Tab; c: Candidate; q: Anal
 
 /** Left side of the site view: pull-out drawers of site data and the limits that steer the next search. */
 export function RefinePanel() {
-  const { mode, results, active, query, searchFrom } = useUi();
+  const { mode, results, active, query, searchFrom, source } = useUi();
   const { drawer, draft, applied, hover } = useResearch();
   const { run, busy } = useRunSearch();
   const [shownTab, setShownTab] = useState<Tab>("terrain");
@@ -312,7 +191,8 @@ export function RefinePanel() {
   const shown = mode === "site" || mode === "diving" || mode === "surfacing" || (mode === "searching" && searchFrom === "site");
   if (!c || !query || !shown) return null;
 
-  const pool = poolFor(query);
+  // Live results are the candidates on hand; the sample model ranks its whole bundled pool
+  const pool = source === "live" ? results : poolFor(query);
   const passing = pool.filter((s) => passes(s, draft));
   const dirty = !sameFilters(draft, applied);
   const shortTabs = new Set(matchProfile(c, query).flatMap((m) => (m.gap && applied.weights[m.dim] ? [DIMS[m.dim].tab] : [])));
@@ -338,7 +218,7 @@ export function RefinePanel() {
           <p aria-hidden className="pb-1 pt-1.5 text-center text-[8.5px] font-medium uppercase tracking-[0.12em] text-white/35">
             Refine
           </p>
-          {TABS.map((t) => {
+          {TABS.filter((t) => !t.hidden).map((t) => {
             const on = drawer === t.id;
             const n = limitsIn(t.id, draft);
             const short = shortTabs.has(t.id);
@@ -388,7 +268,7 @@ export function RefinePanel() {
         aria-label={`${tabById(shownTab).label} refine`}
         aria-hidden={!open}
         inert={!open}
-        className="fixed left-[84px] top-[72px] z-20 flex h-[min(592px,calc(100vh-170px))] w-[var(--drawer-w)] flex-col"
+        className="fixed left-[84px] top-[72px] z-20 flex max-h-[calc(100vh-170px)] w-[var(--drawer-w)] flex-col"
         style={{
           opacity: open ? 1 : 0,
           transform: open ? "none" : "translateX(-14px) scale(0.985)",
@@ -398,13 +278,10 @@ export function RefinePanel() {
           transition: "opacity .35s ease, transform .55s var(--ease-out-expo), filter .4s ease",
         }}
       >
-        <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[22px] border border-white/[0.08] bg-[rgb(10_11_14/0.62)] shadow-[0_30px_80px_-30px_rgb(0_0_0/0.9),inset_0_1px_0_rgb(255_255_255/0.05)] backdrop-blur-2xl backdrop-saturate-150">
+        <div className="flex min-h-0 flex-col overflow-hidden rounded-[22px] border border-white/[0.08] bg-[rgb(10_11_14/0.62)] shadow-[0_30px_80px_-30px_rgb(0_0_0/0.9),inset_0_1px_0_rgb(255_255_255/0.05)] backdrop-blur-2xl backdrop-saturate-150">
           <header className="flex items-start justify-between gap-3 px-5 pb-4 pt-5">
             <div className="min-w-0">
               <p className="text-[17px] font-medium tracking-[-0.015em] text-white">{tabById(shownTab).label}</p>
-              <p className="mt-0.5 truncate text-[11.5px] text-white/40">
-                {c.name} against {targetOf(query).short}
-              </p>
             </div>
             <button
               type="button"
@@ -417,7 +294,7 @@ export function RefinePanel() {
           </header>
 
           <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-5 [scrollbar-width:thin]">
-            <Drawer key={shownTab} tab={shownTab} c={c} q={query} draft={draft} applied={applied} />
+            <Drawer key={shownTab} tab={shownTab} c={c} q={query} draft={draft} applied={applied} pool={pool} />
           </div>
 
           {/* Live consequence of the draft, and the step that runs it */}

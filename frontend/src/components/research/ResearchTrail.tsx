@@ -61,21 +61,50 @@ export function ResearchTrail() {
               return (
                 <li key={i} className="flex items-center gap-1" style={{ animation: "rise-in .5s var(--ease-out-expo) both" }}>
                   {j > 0 && <Chevron />}
-                  <button
-                    type="button"
-                    onClick={() => ui.restore(i)}
-                    aria-current={on ? "step" : undefined}
-                    title={`${s.results.length} sites · ${limits.length ? limits.join(" · ") : "physical match, no limits"}`}
-                    className={`flex h-7 max-w-[220px] items-center gap-1.5 rounded-full border pl-1 pr-2.5 text-[11.5px] backdrop-blur-xl transition-[background-color,border-color,color] duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40 ${
+                  <span
+                    className={`group/pill relative flex h-7 max-w-[220px] items-center rounded-full border backdrop-blur-xl transition-[background-color,border-color,color] duration-300 ${
                       on ? "border-white/25 bg-white/[0.12] text-white" : "border-white/[0.07] bg-[rgb(10_11_14/0.5)] text-white/50 hover:border-white/20 hover:text-white/85"
                     }`}
                   >
-                    <span className={`grid h-5 w-5 shrink-0 place-items-center rounded-full text-[10px] font-semibold tabular-nums ${on ? "bg-white text-black" : "bg-white/10 text-white/60"}`}>{i + 1}</span>
-                    <span className="truncate">{s.label}</span>
-                    <span className="shrink-0 font-mono text-[10px] tabular-nums text-white/40">
-                      {s.results.length}
-                    </span>
-                  </button>
+                    {/* The number turns into a remove control on hover (not on the first, broad step) */}
+                    {i > 0 ? (
+                      <button
+                        type="button"
+                        onClick={() => ui.removeStep(i)}
+                        aria-label={`Remove step ${i + 1}${i < trail.length - 1 ? " and the steps after it" : ""}`}
+                        title={i < trail.length - 1 ? "Remove this step and the ones after it" : "Remove this step"}
+                        className={`group/x relative ml-1 grid h-5 w-5 shrink-0 place-items-center rounded-full text-[10px] font-semibold tabular-nums transition-colors duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/50 ${
+                          on ? "bg-white text-black hover:bg-[#ff6b5e] hover:text-white" : "bg-white/10 text-white/60 hover:bg-[#ff6b5e] hover:text-white"
+                        }`}
+                      >
+                        <span className="transition-[opacity,transform] duration-200 group-hover/x:scale-50 group-hover/x:opacity-0 group-focus-visible/x:scale-50 group-focus-visible/x:opacity-0" style={{ transitionTimingFunction: "var(--ease-out-expo)" }}>
+                          {i + 1}
+                        </span>
+                        <svg
+                          width="8"
+                          height="8"
+                          viewBox="0 0 8 8"
+                          aria-hidden
+                          className="absolute rotate-[-90deg] scale-50 opacity-0 transition-[opacity,transform] duration-300 group-hover/x:rotate-0 group-hover/x:scale-100 group-hover/x:opacity-100 group-focus-visible/x:rotate-0 group-focus-visible/x:scale-100 group-focus-visible/x:opacity-100"
+                          style={{ transitionTimingFunction: "var(--ease-out-expo)" }}
+                        >
+                          <path d="M1.5 1.5l5 5M6.5 1.5l-5 5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+                        </svg>
+                      </button>
+                    ) : (
+                      <span className={`ml-1 grid h-5 w-5 shrink-0 place-items-center rounded-full text-[10px] font-semibold tabular-nums ${on ? "bg-white text-black" : "bg-white/10 text-white/60"}`}>{i + 1}</span>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => ui.restore(i)}
+                      aria-current={on ? "step" : undefined}
+                      title={`${s.results.length} sites · ${limits.length ? limits.join(" · ") : "physical match, no limits"}`}
+                      className="flex h-full min-w-0 items-center gap-1.5 rounded-r-full pl-1.5 pr-2.5 text-[11.5px] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
+                    >
+                      <span className="truncate">{s.label}</span>
+                      <span className="shrink-0 font-mono text-[10px] tabular-nums text-white/40">{s.results.length}</span>
+                    </button>
+                  </span>
                 </li>
               );
             })}

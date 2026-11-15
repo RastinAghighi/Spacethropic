@@ -37,6 +37,8 @@ export interface CandidateSite {
   traits?: Traits;
   /** Terrain shape match against the target, from the shape search */
   shape?: ShapeMatch;
+  /** Limits this site falls outside of: returned only when too few sites met them all */
+  missed?: string[];
 }
 
 export interface Traits {
