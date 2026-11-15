@@ -291,6 +291,16 @@ valid. Outputs: `data/out/elevation_r8/<site>.tif` (band 1 `elevation_m`, band 2
 `data/export/elevation_r8_all_sites.zip`. Run: `uv run python analysis/elevation_r8.py all`
 (~9 min, remote range reads).
 
+## H3 r8 land-cover pilot (`../regional_pilot/`)
+
+A standalone pilot, separate from this pipeline and the 0.05° mask above. It computes exact
+area-weighted land-cover class fractions per real H3 r8 cell from one local categorical GeoTIFF
+(Dynamic World or Esri/IO codes). It then applies a configurable, uncalibrated mission rule
+(`excluded` / `review` / `retained`, default 80 %) and writes hive-partitioned Parquet plus a
+manifest. It has been tested on synthetic rasters only; no real land-cover raster has been run yet.
+Setup, input contract and the Dynamic World export recipe:
+[regional_pilot/README.md](../regional_pilot/README.md).
+
 ## Outputs (`data/out/`)
 
 - **`<site>.parquet`:** one row per H3 cell, with:

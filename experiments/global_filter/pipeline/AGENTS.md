@@ -2,7 +2,7 @@
 
 Read this before changing anything in `pipeline/`. [README.md](README.md) is the user-facing
 reproduction guide; this file records state, decisions, pitfalls, and what's next.
-Last updated: 2026-11-14.
+Last updated: 2026-11-15.
 
 **Standing rule (from the user): after every completed step, update this file and
 `README.md` before reporting back.**
@@ -49,6 +49,7 @@ the **feature dataset**; weighting and the searcher itself are out of scope so f
 | Git | Committed in `d2003e2` ("data so far"). Everything after it is uncommitted: elevation std-only, FeO, `allow_gaps`, albedo, `pystac-client` dependency, and the docs |
 | Global exclusion mask | **Built 2026-11-14** (`analysis/global_mask.py`, downloader `global_mask_download.py`). Pixel-by-pixel at 0.05° (user: no grid). Removes ocean, ≥ 50 people/km², 2023 peak NDVI ≥ 0.5. Kept 56.4 M km²: −88.9 % vs Earth, −61.6 % vs land. Sudbury is removed (vegetated). Lakes inside land polygons are kept (caveat). See README |
 | Elevation at Earth-r8 size | **Built 2026-11-14** (`analysis/elevation_r8.py`): 858.68 m square pixels (Earth r8 mean area) on all bodies, recomputed from the original DEMs; 17 sites, 100 % valid; zip in `data/export/`. Not wired into `grid`/`merge` (still r7 cells, 200 m baseline) |
+| H3 r8 land-cover pilot | **Integrated 2026-11-15, synthetic-tested only** in `../regional_pilot/` (standalone; doesn't import or change `pipeline/`, and the 0.05° mask stays the baseline). Exact pixel/hexagon area overlay, mission decision `excluded`/`review`/`retained` at an uncalibrated 80 %, hive Parquet + manifest. 25 tests pass, 1 skipped (see pitfalls: pyarrow dataset blocked). Fixed: an untagged Dynamic World raster used to count masked pixels as observed water; it is now refused. **No real land-cover raster exists locally**: next is a Dynamic World Jun–Aug 2025 export over the NASADEM Drumheller bbox (recipe in its README) |
 | Frontend link | None yet. `frontend/src/data/candidates.json` is a separate hand-made sample set, and the frontend's `/api/search` was deliberately set aside |
 
 ## Decisions
@@ -258,7 +259,14 @@ leftover gaps are reported in `coverage.csv` (`gaps_allowed` column) and don't f
   `rasterio.Env(AWS_NO_SIGN_REQUEST="YES")`; the bucket is public.
 - **New Earth sites need a Sentinel-2 season:** `Sentinel2Albedo.covers` is
   `site.id in SEASONS`, so a site missing from `SEASONS` silently gets no albedo.
-- **Windows tooling:** `uv` is run as `python -m uv`. There's no system GDAL; rasterio
+- **pyarrow dataset blocked on the dev laptop (2026-11-15):** Windows Application Control
+  blocks pyarrow 26.0.1's `_dataset_parquet` DLL in every environment, including the global
+  Python and `pipeline/.venv`. Single-file `pd.read_parquet` / `to_parquet` work, which is all
+  the pipeline uses. `pyarrow.dataset`, `ds.write_dataset` and directory reads fail. Don't
+  introduce directory-dataset reads without a per-file fallback.
+- **Windows tooling:** `uv` is run as `python -m uv`. On 2026-11-15, uv wasn't installed in the
+  global Python; it was installed into `../regional_pilot/.venv` and run from there
+  (`uv sync --frozen`). There's no system GDAL; rasterio
   bundles it. Piped Python stdout is buffered, so background logs appear only at the end.
 
 ## Credentials
