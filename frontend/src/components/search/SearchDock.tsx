@@ -8,7 +8,7 @@ import { Dots } from "./primitives";
 type Variant = "full" | "compressed" | "hidden";
 
 /** Clears the rail and an open drawer, so the tray centres in the free space. */
-const DRAWER_SPACE = "calc(108px + min(360px, 100vw - var(--panel-space) - 140px))";
+const DRAWER_SPACE = "calc(84px + min(360px, 100vw - var(--panel-space) - 116px))";
 
 /** Glass surface with the environment-tinted border. */
 function Glass({ children }: { children: React.ReactNode }) {

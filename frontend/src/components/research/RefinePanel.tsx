@@ -29,12 +29,13 @@ import {
 import { FindButton, Icon, Label, useRunSearch } from "../search/primitives";
 import { RangeField } from "./RangeField";
 
-export const TABS: { id: Tab; label: string; icon: string; fields: NumKey[]; dims: Dim[] }[] = [
-  { id: "terrain", label: "Terrain", icon: "M1.5 13.5l4.25-7.5 3 5 2-3 3.75 5.5z", fields: ["slope", "roughness", "elevation"], dims: ["terrain"] },
-  { id: "geology", label: "Geology", icon: "M8 1.75l5.75 4.5L8 14.25 2.25 6.25z M2.25 6.25h11.5 M6 6.25L8 14.25l2-8", fields: [], dims: ["geology"] },
-  { id: "thermal", label: "Thermal", icon: "M8 2.25c.83 0 1.5.67 1.5 1.5v5.6a3 3 0 1 1-3 0v-5.6c0-.83.67-1.5 1.5-1.5z M8 7v4", fields: ["meanTemp", "coldMin"], dims: ["thermal"] },
-  { id: "weather", label: "Weather", icon: "M4.75 12.5h6.5a2.75 2.75 0 0 0 .4-5.47A3.75 3.75 0 0 0 4.5 8a2.25 2.25 0 0 0 .25 4.5z", fields: ["precip", "humidity", "wind", "solar"], dims: ["aridity", "sun"] },
-  { id: "access", label: "Access", icon: "M8 14.25s4.5-4.06 4.5-7.75a4.5 4.5 0 0 0-9 0c0 3.69 4.5 7.75 4.5 7.75z M8 8.25a1.75 1.75 0 1 0 0-3.5 1.75 1.75 0 0 0 0 3.5z", fields: ["roadKm"], dims: [] },
+/** `fields` lead each drawer; `more` waits behind a disclosure with the weights. */
+export const TABS: { id: Tab; label: string; icon: string; fields: NumKey[]; more: NumKey[]; dims: Dim[] }[] = [
+  { id: "terrain", label: "Terrain", icon: "M1.5 13.5l4.25-7.5 3 5 2-3 3.75 5.5z", fields: ["slope"], more: ["roughness", "elevation"], dims: ["terrain"] },
+  { id: "geology", label: "Geology", icon: "M8 1.75l5.75 4.5L8 14.25 2.25 6.25z M2.25 6.25h11.5 M6 6.25L8 14.25l2-8", fields: [], more: [], dims: ["geology"] },
+  { id: "thermal", label: "Thermal", icon: "M8 2.25c.83 0 1.5.67 1.5 1.5v5.6a3 3 0 1 1-3 0v-5.6c0-.83.67-1.5 1.5-1.5z M8 7v4", fields: ["meanTemp"], more: ["coldMin"], dims: ["thermal"] },
+  { id: "weather", label: "Weather", icon: "M4.75 12.5h6.5a2.75 2.75 0 0 0 .4-5.47A3.75 3.75 0 0 0 4.5 8a2.25 2.25 0 0 0 .25 4.5z", fields: ["precip", "solar"], more: ["humidity", "wind"], dims: ["aridity", "sun"] },
+  { id: "access", label: "Access", icon: "M8 14.25s4.5-4.06 4.5-7.75a4.5 4.5 0 0 0-9 0c0 3.69 4.5 7.75 4.5 7.75z M8 8.25a1.75 1.75 0 1 0 0-3.5 1.75 1.75 0 0 0 0 3.5z", fields: ["roadKm"], more: [], dims: [] },
 ];
 const tabById = (id: Tab) => TABS.find((t) => t.id === id)!;
 
@@ -43,13 +44,15 @@ const CLOSE = "M4 4l8 8M12 4l-8 8";
 
 function Tile({ label, value, unit, note }: { label: string; value: string; unit?: string; note?: string }) {
   return (
-    <div className="rounded-xl border border-white/[0.07] bg-white/[0.025] px-3 py-2.5">
-      <p className="text-[10.5px] text-white/45">{label}</p>
-      <p className="mt-1 truncate text-[17px] font-medium leading-none tracking-[-0.02em] text-white tabular-nums">
-        {value}
-        {unit && <span className="ml-1 text-[11px] font-normal tracking-normal text-white/45">{unit}</span>}
+    <div className="flex items-baseline justify-between gap-4 py-2">
+      <p className="min-w-0 text-[12px] text-white/50">
+        {label}
+        {note && <span className="block truncate text-[10.5px] text-white/30">{note}</span>}
       </p>
-      {note && <p className="mt-1.5 truncate text-[10px] text-white/35">{note}</p>}
+      <p className="shrink-0 text-right text-[14px] font-medium tracking-[-0.01em] text-white tabular-nums">
+        {value}
+        {unit && <span className="ml-1 text-[10.5px] font-normal tracking-normal text-white/40">{unit}</span>}
+      </p>
     </div>
   );
 }
@@ -104,7 +107,7 @@ function Readouts({ tab, c, q }: { tab: Tab; c: Candidate; q: AnalogQuery }) {
   switch (tab) {
     case "terrain":
       return (
-        <div className="grid grid-cols-2 gap-2">
+        <div className="divide-y divide-white/[0.05]">
           {tile("slope", at(formatField("slope", profile.slope)), "Typical slope")}
           {tile("roughness", "RMS height at 30 m")}
           {tile("elevation", "Above sea level")}
@@ -115,7 +118,7 @@ function Readouts({ tab, c, q }: { tab: Tab; c: Candidate; q: AnalogQuery }) {
       return null;
     case "thermal":
       return (
-        <div className="grid grid-cols-2 gap-2">
+        <div className="divide-y divide-white/[0.05]">
           {tile("meanTemp", at(formatField("meanTemp", profile.meanTemp)))}
           {tile("coldMin", "Night-time extreme")}
           <Tile label="Hottest-month high" {...parts("meanTemp", k.hottestMonthMaxC)} note="Daytime extreme" />
@@ -124,7 +127,7 @@ function Readouts({ tab, c, q }: { tab: Tab; c: Candidate; q: AnalogQuery }) {
       );
     case "weather":
       return (
-        <div className="grid grid-cols-2 gap-2">
+        <div className="divide-y divide-white/[0.05]">
           {tile("precip", at("none"))}
           {tile("humidity", "Relative, annual mean")}
           {tile("wind", "At 10 m")}
@@ -133,12 +136,10 @@ function Readouts({ tab, c, q }: { tab: Tab; c: Candidate; q: AnalogQuery }) {
       );
     case "access":
       return (
-        <div className="grid grid-cols-2 gap-2">
+        <div className="divide-y divide-white/[0.05]">
           {tile("roadKm", "Straight-line distance")}
           <Tile label="Protected area" value={t.protectedArea ? "Yes" : "No"} note={t.protectedArea ? "Permits needed" : "Open land"} />
-          <div className="col-span-2">
-            <Tile label="Field season" value={t.access.split(";")[0]} note={t.access.split(";")[1]?.trim() || "No seasonal restrictions noted"} />
-          </div>
+          <Tile label="Field season" value={t.access.split(";")[0]} note={t.access.split(";")[1]?.trim() || "No seasonal restrictions noted"} />
         </div>
       );
   }
@@ -211,6 +212,19 @@ function Drawer({ tab, c, q, draft, applied }: { tab: Tab; c: Candidate; q: Anal
   const tint = BODY[q.target].tint;
   const pool = poolFor(q);
   const gaps = matchProfile(c, q).filter((m) => m.gap && def.dims.includes(m.dim));
+  // Secondary limits start open only when something in them is already set.
+  const [moreOpen, setMoreOpen] = useState(() => def.more.some((k) => draft.ranges[k]) || def.dims.some((d) => draft.weights[d] !== 1));
+  const field = (k: NumKey) => (
+    <RangeField
+      key={k}
+      k={k}
+      value={draft.ranges[k]}
+      onChange={(r) => research.setRange(k, r)}
+      tint={tint}
+      target={FIELDS[k].target?.(profile)}
+      dots={pool.map((s) => ({ id: s.id, name: s.name, v: FIELDS[k].get(s), pass: passes(s, draft), current: s.id === c.id }))}
+    />
+  );
 
   // A target value no Earth surface reaches: say so, and name the closest candidate.
   const thermalNote = (() => {
@@ -239,51 +253,51 @@ function Drawer({ tab, c, q, draft, applied }: { tab: Tab; c: Candidate; q: Anal
       </section>
 
       {gaps.map((g) => (
-        <div key={g.dim} className="mt-3 flex gap-2.5 rounded-xl border px-3 py-2.5 text-[12px] leading-snug" style={{ borderColor: `${AMBER}33`, background: `${AMBER}0d`, color: "rgb(255 255 255 / 0.75)" }}>
-          <span className="mt-[5px] h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: AMBER }} />
-          <span>
-            <span className="font-medium" style={{ color: AMBER }}>
-              {DIMS[g.dim].label} falls short.{" "}
-            </span>
-            {g.gap}
-          </span>
-        </div>
+        <p key={g.dim} className="mt-2 flex gap-2 text-[11.5px] leading-snug text-white/55">
+          <span className="mt-[6px] h-1 w-1 shrink-0 rounded-full" style={{ background: AMBER }} />
+          {g.gap}
+        </p>
       ))}
       {thermalNote && <p className="mt-3 text-[11.5px] leading-relaxed text-white/45">{thermalNote}</p>}
 
       <section className="mt-6">
         <div className="mb-3 flex items-baseline justify-between">
           <Label>{tab === "geology" ? "Require any of" : "Limits"}</Label>
-          {tab !== "geology" && <span className="text-[10.5px] text-white/30">Dots are candidates · drag to limit</span>}
+          {tab !== "geology" && <span className="text-[10.5px] text-white/30">Each dot is a candidate</span>}
         </div>
         <div className="space-y-5">
-          {def.fields.map((k) => (
-            <RangeField
-              key={k}
-              k={k}
-              value={draft.ranges[k]}
-              onChange={(r) => research.setRange(k, r)}
-              tint={tint}
-              target={FIELDS[k].target?.(profile)}
-              dots={pool.map((s) => ({ id: s.id, name: s.name, v: FIELDS[k].get(s), pass: passes(s, draft), current: s.id === c.id }))}
-            />
-          ))}
+          {def.fields.map(field)}
           {tab === "geology" && <GeologyPicker draft={draft} c={c} q={q} tint={tint} />}
           {tab === "access" && <Toggle on={draft.excludeProtected} onChange={research.setProtected} label="Exclude protected areas" note="Parks, reserves and heritage sites need permits" />}
         </div>
       </section>
 
-      {def.dims.length > 0 && (
-        <section className="mt-6">
-          <Label className="mb-3">Weight</Label>
-          <div className="space-y-2.5">
-            {def.dims.map((d) => (
-              <WeightControl key={d} dim={d} value={draft.weights[d]} />
-            ))}
+      {(def.more.length > 0 || def.dims.length > 0) && (
+        <section className="mt-5 border-t border-white/[0.06] pt-1">
+          <button
+            type="button"
+            onClick={() => setMoreOpen((v) => !v)}
+            aria-expanded={moreOpen}
+            className="flex w-full items-center justify-between py-2.5 text-[12px] text-white/45 transition-colors hover:text-white/80 focus-visible:outline-none focus-visible:text-white"
+          >
+            <span>{def.more.length ? `${def.more.map((k, i) => (i ? FIELDS[k].label.toLowerCase() : FIELDS[k].label)).join(", ")} and weight` : "Weight in the match"}</span>
+            <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden style={{ transform: moreOpen ? "rotate(90deg)" : "none", transition: "transform .3s var(--ease-out-expo)" }}>
+              <path d="M3.5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+          <div className="grid transition-[grid-template-rows] duration-500" style={{ gridTemplateRows: moreOpen ? "1fr" : "0fr", transitionTimingFunction: "var(--ease-out-expo)" }}>
+            <div className="min-h-0 overflow-hidden" inert={!moreOpen}>
+              <div className="space-y-5 pb-1 pt-2">
+                {def.more.map(field)}
+                {def.dims.map((d) => (
+                  <WeightControl key={d} dim={d} value={draft.weights[d]} />
+                ))}
+                {def.dims.some((d) => draft.weights[d] !== applied.weights[d]) && (
+                  <p className="-mt-3 text-[10.5px] text-white/35">Weights re-rank the candidates; they don&apos;t remove any.</p>
+                )}
+              </div>
+            </div>
           </div>
-          {def.dims.some((d) => draft.weights[d] !== applied.weights[d]) && (
-            <p className="mt-2 text-[10.5px] text-white/35">Weights re-rank the candidates; they don&apos;t remove any.</p>
-          )}
         </section>
       )}
     </div>
@@ -293,7 +307,7 @@ function Drawer({ tab, c, q, draft, applied }: { tab: Tab; c: Candidate; q: Anal
 /** Left side of the site view: pull-out drawers of site data and the limits that steer the next search. */
 export function RefinePanel() {
   const { mode, results, active, query, searchFrom } = useUi();
-  const { drawer, draft, applied } = useResearch();
+  const { drawer, draft, applied, hover } = useResearch();
   const { run, busy } = useRunSearch();
   const [shownTab, setShownTab] = useState<Tab>("terrain");
   if (drawer && drawer !== shownTab) setShownTab(drawer);
@@ -324,11 +338,12 @@ export function RefinePanel() {
         className="fixed left-5 top-24 z-20 sm:left-7"
         style={{ animation: mode === "diving" ? `rise-in .9s var(--ease-out-expo) ${DIVE.panel + 0.1}s both` : undefined }}
       >
-        <div className="flex flex-col gap-1 rounded-[20px] border border-white/[0.09] bg-[rgb(10_11_14/0.62)] p-1.5 shadow-[0_30px_80px_-30px_rgb(0_0_0/0.9),inset_0_1px_0_rgb(255_255_255/0.05)] backdrop-blur-2xl backdrop-saturate-150">
+        <div className="flex flex-col gap-0.5 rounded-[18px] border border-white/[0.08] bg-[rgb(10_11_14/0.55)] p-1 shadow-[0_30px_80px_-30px_rgb(0_0_0/0.9),inset_0_1px_0_rgb(255_255_255/0.05)] backdrop-blur-2xl backdrop-saturate-150">
           {TABS.map((t) => {
             const on = drawer === t.id;
             const n = limitsIn(t.id, draft);
             const short = shortTabs.has(t.id);
+            const lit = hover === t.id && !on;
             return (
               <button
                 key={t.id}
@@ -336,18 +351,27 @@ export function RefinePanel() {
                 aria-expanded={on}
                 aria-controls="refine-drawer"
                 onClick={() => research.toggle(t.id)}
-                title={short ? `${t.label}: this site falls short` : t.label}
-                className={`relative flex h-[54px] w-[54px] flex-col items-center justify-center gap-1 rounded-[14px] transition-[background-color,color] duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40 ${
-                  on ? "bg-white text-black" : "text-white/55 hover:bg-white/[0.06] hover:text-white"
+                aria-label={short ? `${t.label}: this site falls short` : t.label}
+                className={`group relative grid h-10 w-10 place-items-center rounded-[14px] transition-[background-color,color,box-shadow] duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40 ${
+                  on ? "bg-white text-black" : lit ? "bg-white/[0.1] text-white shadow-[0_0_0_1px_rgb(255_255_255/0.18)]" : "text-white/50 hover:bg-white/[0.06] hover:text-white"
                 }`}
               >
-                <Icon d={t.icon} size={17} strokeWidth={1.3} />
-                <span className="text-[9.5px] font-medium tracking-[0.02em]">{t.label}</span>
-                {short && <span aria-hidden className="absolute left-2 top-2 h-[5px] w-[5px] rounded-full" style={{ background: AMBER, boxShadow: `0 0 6px ${AMBER}` }} />}
+                <Icon d={t.icon} size={16} strokeWidth={1.3} />
+                {/* Name on hover, beside the rail */}
+                <span
+                  aria-hidden
+                  className={`pointer-events-none absolute left-full ml-3 whitespace-nowrap rounded-lg border border-white/10 bg-[rgb(10_11_14/0.85)] px-2 py-1 text-[11.5px] text-white/85 opacity-0 backdrop-blur-xl transition-[opacity,transform] duration-200 ${
+                    drawer ? "" : "group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:opacity-100"
+                  } -translate-x-1`}
+                >
+                  {t.label}
+                  {short && <span style={{ color: AMBER }}> · falls short</span>}
+                </span>
+                {short && <span aria-hidden className="absolute right-[7px] top-[7px] h-[4px] w-[4px] rounded-full" style={{ background: AMBER, boxShadow: `0 0 6px ${AMBER}` }} />}
                 {n > 0 && (
                   <span
                     key={n}
-                    className={`absolute right-1 top-1 grid h-4 min-w-4 place-items-center rounded-full px-1 text-[9px] font-semibold tabular-nums ${on ? "bg-black text-white" : "bg-white text-black"}`}
+                    className={`absolute -right-1 -top-1 grid h-[15px] min-w-[15px] place-items-center rounded-full px-1 text-[9px] font-semibold tabular-nums ring-2 ring-[rgb(10_11_14)] ${on ? "bg-black text-white" : "bg-white text-black"}`}
                     style={{ animation: "rise-in .35s var(--ease-out-expo) both" }}
                   >
                     {n}
@@ -365,7 +389,7 @@ export function RefinePanel() {
         aria-label={`${tabById(shownTab).label} refine`}
         aria-hidden={!open}
         inert={!open}
-        className="fixed left-[100px] top-24 z-20 flex max-h-[calc(100vh-13rem)] w-[min(360px,calc(100vw-var(--panel-space)-140px))] flex-col sm:left-[108px]"
+        className="fixed left-[76px] top-24 z-20 flex max-h-[calc(100vh-13rem)] w-[min(360px,calc(100vw-var(--panel-space)-116px))] flex-col sm:left-[84px]"
         style={{
           opacity: open ? 1 : 0,
           transform: open ? "none" : "translateX(-14px) scale(0.985)",
@@ -394,7 +418,7 @@ export function RefinePanel() {
           </header>
 
           <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-5 [scrollbar-width:thin]">
-            <Drawer tab={shownTab} c={c} q={query} draft={draft} applied={applied} />
+            <Drawer key={shownTab} tab={shownTab} c={c} q={query} draft={draft} applied={applied} />
           </div>
 
           {/* Live consequence of the draft, and the step that runs it */}

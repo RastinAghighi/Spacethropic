@@ -2,7 +2,7 @@
 
 import { ui, useUi } from "@/lib/ui";
 import { BODY } from "@/lib/catalog";
-import { DEFAULT_FILTERS, describeFilters, overallScore, targetOf } from "@/lib/profile";
+import { DEFAULT_FILTERS, describeFilters, targetOf } from "@/lib/profile";
 
 const MAX_STEPS = 4;
 
@@ -44,50 +44,52 @@ export function ResearchTrail() {
       <p className="flex items-center gap-2 text-[13px] font-medium tracking-[-0.01em] text-white/90">
         <span className="h-[7px] w-[7px] rounded-full" style={{ background: tint, boxShadow: `0 0 8px ${tint}` }} />
         Earth&apos;s mirror of {targetOf(first).short}
+        {trail.length === 1 && !pending && <span className="font-normal text-white/35">· {trail[0].results.length} sites</span>}
       </p>
-      <nav aria-label="Research trail" className="mt-2">
-        <ol className="flex items-center gap-1">
-          {shown.length < steps.length && (
-            <li className="flex items-center gap-1 text-[11px] text-white/30">
-              …<Chevron />
-            </li>
-          )}
-          {shown.map(({ s, i }, j) => {
-            const on = i === trailAt && !pending;
-            const best = Math.round(overallScore(s.results[0], s.query) * 100);
-            const limits = describeFilters(s.query.filters ?? DEFAULT_FILTERS);
-            return (
-              <li key={i} className="flex items-center gap-1" style={{ animation: "rise-in .5s var(--ease-out-expo) both" }}>
-                {j > 0 && <Chevron />}
-                <button
-                  type="button"
-                  onClick={() => ui.restore(i)}
-                  aria-current={on ? "step" : undefined}
-                  title={limits.length ? limits.join(" · ") : "Physical match, no limits"}
-                  className={`flex h-7 max-w-[220px] items-center gap-1.5 rounded-full border pl-1 pr-2.5 text-[11.5px] backdrop-blur-xl transition-[background-color,border-color,color] duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40 ${
-                    on ? "border-white/25 bg-white/[0.12] text-white" : "border-white/[0.07] bg-[rgb(10_11_14/0.5)] text-white/50 hover:border-white/20 hover:text-white/85"
-                  }`}
-                >
-                  <span className={`grid h-5 w-5 shrink-0 place-items-center rounded-full text-[10px] font-semibold tabular-nums ${on ? "bg-white text-black" : "bg-white/10 text-white/60"}`}>{i + 1}</span>
-                  <span className="truncate">{s.label}</span>
-                  <span className="shrink-0 font-mono text-[10px] tabular-nums text-white/40">
-                    {s.results.length} · {best}%
-                  </span>
-                </button>
+      {(trail.length > 1 || pending) && (
+        <nav aria-label="Research trail" className="mt-2">
+          <ol className="flex items-center gap-1">
+            {shown.length < steps.length && (
+              <li className="flex items-center gap-1 text-[11px] text-white/30">
+                …<Chevron />
               </li>
-            );
-          })}
-          {pending && query && (
-            <li className="flex items-center gap-1" style={{ animation: "rise-in .4s var(--ease-out-expo) both" }}>
-              <Chevron />
-              <span className="flex h-7 items-center gap-1.5 rounded-full border border-dashed border-white/20 px-2.5 text-[11.5px] text-white/60">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
-                {query.step ?? "Refining"}
-              </span>
-            </li>
-          )}
-        </ol>
-      </nav>
+            )}
+            {shown.map(({ s, i }, j) => {
+              const on = i === trailAt && !pending;
+              const limits = describeFilters(s.query.filters ?? DEFAULT_FILTERS);
+              return (
+                <li key={i} className="flex items-center gap-1" style={{ animation: "rise-in .5s var(--ease-out-expo) both" }}>
+                  {j > 0 && <Chevron />}
+                  <button
+                    type="button"
+                    onClick={() => ui.restore(i)}
+                    aria-current={on ? "step" : undefined}
+                    title={`${s.results.length} sites · ${limits.length ? limits.join(" · ") : "physical match, no limits"}`}
+                    className={`flex h-7 max-w-[220px] items-center gap-1.5 rounded-full border pl-1 pr-2.5 text-[11.5px] backdrop-blur-xl transition-[background-color,border-color,color] duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40 ${
+                      on ? "border-white/25 bg-white/[0.12] text-white" : "border-white/[0.07] bg-[rgb(10_11_14/0.5)] text-white/50 hover:border-white/20 hover:text-white/85"
+                    }`}
+                  >
+                    <span className={`grid h-5 w-5 shrink-0 place-items-center rounded-full text-[10px] font-semibold tabular-nums ${on ? "bg-white text-black" : "bg-white/10 text-white/60"}`}>{i + 1}</span>
+                    <span className="truncate">{s.label}</span>
+                    <span className="shrink-0 font-mono text-[10px] tabular-nums text-white/40">
+                      {s.results.length}
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+            {pending && query && (
+              <li className="flex items-center gap-1" style={{ animation: "rise-in .4s var(--ease-out-expo) both" }}>
+                <Chevron />
+                <span className="flex h-7 items-center gap-1.5 rounded-full border border-dashed border-white/20 px-2.5 text-[11.5px] text-white/60">
+                  <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-white" />
+                  {query.step ?? "Refining"}
+                </span>
+              </li>
+            )}
+          </ol>
+        </nav>
+      )}
     </div>
   );
 }

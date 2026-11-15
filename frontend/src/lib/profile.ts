@@ -238,6 +238,8 @@ export interface DimMatch {
   target: string;
   /** Why it falls short, when it does */
   gap?: string;
+  /** The same, in a few words */
+  brief?: string;
 }
 
 /** Below this, a dimension is flagged as falling short. */
@@ -258,6 +260,7 @@ export function matchProfile(s: CandidateSite, q: AnalogQuery): DimMatch[] {
       earth: formatField("slope", t.slope),
       target: formatField("slope", p.slope),
       gap: t.slope < p.slope ? `Gentler than ${short}: ${t.slope}° slopes against ${p.slope}°.` : `Steeper than ${short}: ${t.slope}° slopes against ${p.slope}°.`,
+      brief: t.slope < p.slope ? "slopes too gentle" : "slopes too steep",
     },
     {
       dim: "geology",
@@ -265,6 +268,7 @@ export function matchProfile(s: CandidateSite, q: AnalogQuery): DimMatch[] {
       earth: rock(t.geology),
       target: rock(p.geology),
       gap: `No ${rock(p.geology.filter((g) => !t.geology.includes(g))).toLowerCase()} here.`,
+      brief: `no ${rock(p.geology.filter((g) => !t.geology.includes(g))).toLowerCase()}`,
     },
     {
       dim: "thermal",
@@ -272,6 +276,7 @@ export function matchProfile(s: CandidateSite, q: AnalogQuery): DimMatch[] {
       earth: formatField("meanTemp", k.meanTempC),
       target: formatField("meanTemp", p.meanTemp),
       gap: `${Math.abs(dT)} °C ${dT > 0 ? "warmer" : "colder"} on average. Pair field work with a thermal-vacuum test.`,
+      brief: `${Math.abs(dT)} °C ${dT > 0 ? "warmer" : "colder"}`,
     },
     {
       dim: "aridity",
@@ -279,6 +284,7 @@ export function matchProfile(s: CandidateSite, q: AnalogQuery): DimMatch[] {
       earth: formatField("precip", k.precipMmYr),
       target: "none",
       gap: `${Math.round(k.precipMmYr)} mm of rain a year weathers the surface; ${short} has none.`,
+      brief: `${Math.round(k.precipMmYr)} mm of rain a year`,
     },
     {
       dim: "sun",
@@ -286,9 +292,10 @@ export function matchProfile(s: CandidateSite, q: AnalogQuery): DimMatch[] {
       earth: formatField("solar", k.solarKwhM2Day),
       target: formatField("solar", p.solar),
       gap: k.solarKwhM2Day > p.solar ? "Far more sunlight than the target gets." : "Less sunlight than the target gets.",
+      brief: k.solarKwhM2Day > p.solar ? "too much sun" : "too little sun",
     },
   ];
-  return out.map((m) => (m.score < SHORT ? m : { ...m, gap: undefined }));
+  return out.map((m) => (m.score < SHORT ? m : { ...m, gap: undefined, brief: undefined }));
 }
 
 export function overallScore(s: CandidateSite, q: AnalogQuery) {
@@ -314,4 +321,85 @@ export function rank(q: AnalogQuery) {
     .map((s) => ({ s, score: overallScore(s, q) }))
     .sort((a, b) => b.score - a.score)
     .map((r) => r.s);
+}
+
+// ── Suggestions: the tool proposes the next refine ─────────────────────────
+
+export interface Suggestion {
+  dim: Dim;
+  /** Plain-language move, e.g. "Look for steeper ground" */
+  title: string;
+  /** Why, in target terms */
+  reason: string;
+  /** The limit it adds, for the trail */
+  limit: string;
+  filters: Filters;
+  results: CandidateSite[];
+  /** Dimension score at the site on screen, then at the new top result */
+  before: number;
+  after: number;
+  /** Ranking value: the gain, less what it costs in overall match */
+  value: number;
+}
+
+const MOVES: Partial<Record<Dim, { key: NumKey; up: string; down: string; reason: (p: TargetProfile, short: string) => string }>> = {
+  terrain: { key: "slope", up: "Look for steeper ground", down: "Look for gentler ground", reason: (p, s) => `${cap(s)} has ~${p.slope}° slopes` },
+  thermal: { key: "meanTemp", up: "Look somewhere warmer", down: "Look somewhere colder", reason: (p, s) => `${cap(s)} averages ${formatField("meanTemp", p.meanTemp)}` },
+  aridity: { key: "precip", up: "Look somewhere wetter", down: "Look somewhere drier", reason: (_, s) => `${cap(s)} has never seen rain` },
+  sun: { key: "solar", up: "Look for stronger sun", down: "Look for lower sun", reason: (p, s) => `${cap(s)} gets ~${formatField("solar", p.solar)}` },
+};
+const cap = (s: string) => s[0].toUpperCase() + s.slice(1);
+
+/**
+ * For each dimension the site on screen falls short on, try the limits that would push
+ * toward the target and keep the one that most improves the next top result.
+ */
+export function suggest(q: AnalogQuery, site: CandidateSite, current: CandidateSite[]): Suggestion[] {
+  const base = q.filters ?? DEFAULT_FILTERS;
+  const { profile: p, short } = targetOf(q);
+  const pool = poolFor(q);
+  const now = matchProfile(site, q);
+  const overallNow = overallScore(site, q);
+  const same = (r: CandidateSite[]) => r.length === current.length && r.every((s, i) => s.id === current[i].id);
+  const out: Suggestion[] = [];
+
+  for (const m of now) {
+    if (!m.gap || base.weights[m.dim] === 0) continue;
+    const tries: { filters: Filters; limit: string; title: string; reason: string }[] = [];
+
+    if (m.dim === "geology") {
+      const need = p.geology.filter((g) => !traits(site).geology.includes(g));
+      const filters = { ...base, geology: need };
+      tries.push({ filters, limit: need.map((g) => GEOLOGY[g].label).join(" or "), title: `Find ${need.map((g) => GEOLOGY[g].label.toLowerCase()).join(" or ")}`, reason: `${cap(short)} is ${p.geology.map((g) => GEOLOGY[g].label.toLowerCase()).join(" and ")}` });
+    } else {
+      const mv = MOVES[m.dim]!;
+      const f = FIELDS[mv.key];
+      const v = f.get(site);
+      const goal = mv.key === "precip" ? 0 : f.target!(p);
+      const up = goal > v;
+      // Thresholds at the values of the pool sites lying toward the target.
+      const steps = [...new Set(pool.map(f.get).filter((x) => (up ? x > v : x < v)))];
+      for (const x of steps) {
+        const prev = base.ranges[mv.key] ?? [f.min, f.max];
+        const r: [number, number] = up ? [Math.max(prev[0], Math.floor(x / f.step) * f.step), prev[1]] : [prev[0], Math.min(prev[1], Math.ceil(x / f.step) * f.step)];
+        const filters = { ...base, ranges: { ...base.ranges, [mv.key]: r } };
+        tries.push({ filters, limit: describeRange(mv.key, r[0] <= f.min && r[1] >= f.max ? undefined : r), title: up ? mv.up : mv.down, reason: mv.reason(p, short) });
+      }
+    }
+
+    let best: Suggestion | null = null;
+    for (const t of tries) {
+      const nq = { ...q, filters: t.filters };
+      const results = rank(nq);
+      if (!results.length || same(results)) continue;
+      const after = matchProfile(results[0], nq).find((d) => d.dim === m.dim)!.score;
+      // The biggest gain for the least overall match given up, leaving a few sites to compare.
+      const value = after - m.score + 0.8 * Math.min(0, overallScore(results[0], nq) - overallNow) + Math.min(results.length, 3) * 0.04;
+      if (after - m.score > 0.12 && (!best || value > best.value)) {
+        best = { dim: m.dim, title: t.title, reason: t.reason, limit: t.limit, filters: t.filters, results, before: m.score, after, value };
+      }
+    }
+    if (best) out.push(best);
+  }
+  return out.sort((a, b) => b.value - a.value);
 }

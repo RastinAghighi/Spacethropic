@@ -15,9 +15,10 @@ const HOVER = 0.16;
 /** Row of candidate thumbnails above the search bar; swells toward the pointer. */
 export function CandidateTray() {
   const { mode, results, active, searchFrom, query } = useUi();
-  const { draft, applied } = useResearch();
-  // While limits are being drafted, preview which of these candidates would survive them.
-  const previewing = !sameFilters(draft, applied);
+  const { draft, applied, preview } = useResearch();
+  // While limits are drafted (or a suggestion is hovered), preview which candidates survive.
+  const next = preview ?? draft;
+  const previewing = !sameFilters(next, applied);
   const items = useRef<(HTMLButtonElement | null)[]>([]);
   const [hovered, setHovered] = useState<number | null>(null);
   const shown = mode === "site" || mode === "diving" || mode === "surfacing" || (mode === "searching" && searchFrom === "site");
@@ -90,7 +91,7 @@ export function CandidateTray() {
       {results.map((c, i) => {
         const isActive = i === active;
         const [r, g, b] = c.avgColor;
-        const cut = previewing && !passes(c, draft);
+        const cut = previewing && !passes(c, next);
         const score = query ? Math.round(overallScore(c, query) * 100) : null;
         return (
           <button

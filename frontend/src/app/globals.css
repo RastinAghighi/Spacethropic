@@ -155,3 +155,26 @@ body {
 @keyframes ring-in {
   from { stroke-dashoffset: var(--circ); }
 }
+
+/* Rolling numbers: animate an integer custom property and print it with a counter */
+@property --num {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+.ticker {
+  counter-reset: num var(--num);
+  transition: --num 0.9s var(--ease-out-expo);
+}
+.ticker::after {
+  content: counter(num);
+}
+@keyframes count-up {
+  from { --num: 0; }
+}
+
+/* Suggested next step: one soft highlight travels the border when it appears */
+@keyframes suggest-sheen {
+  from { background-position: 200% 0; }
+  to { background-position: -100% 0; }
+}
