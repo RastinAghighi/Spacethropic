@@ -9,9 +9,11 @@ dependencies = [
     "pandas>=2.2",
     "pyarrow>=17",
     "pyproj>=3.6",
+    "pystac-client>=0.8",
     "pyyaml>=6.0",
     "rasterio>=1.4",
     "requests>=2.32",
+    "scipy>=1.13",
 ]
 
 [dependency-groups]
