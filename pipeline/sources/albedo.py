@@ -11,6 +11,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 import numpy as np
+import rasterio
 from pystac_client import Client
 from rasterio.warp import Resampling, transform_bounds
 
@@ -31,6 +32,14 @@ SEASONS = {
     "sudbury": ["2023-07-01/2023-08-31", "2024-07-01/2024-08-31"],
     "haughton": ["2023-07-15/2023-08-25", "2024-07-15/2024-08-25"],
     "atacama": ["2023-11-01/2024-03-31"],
+    "blackpoint": ["2023-04-01/2023-10-31"],  # high desert; avoids rare winter snow
+    "dumont": ["2023-04-01/2023-10-31"],
+    # Random controls: snow-free summer, or the dry season in the Amazon.
+    "rand_nwt": ["2023-07-01/2023-08-31", "2024-07-01/2024-08-31"],
+    "rand_quebec": ["2023-07-01/2023-08-31", "2024-07-01/2024-08-31"],
+    "rand_amazon": ["2023-07-01/2023-10-31", "2024-07-01/2024-10-31"],
+    "rand_kunlun": ["2023-06-01/2023-09-30", "2024-06-01/2024-09-30"],
+    "rand_oklahoma": ["2023-04-01/2023-10-31"],
 }
 MAX_SCENES = 8
 MAX_CLOUD_PCT = 20
@@ -51,6 +60,11 @@ class Sentinel2Albedo(Source):
         return site.id in SEASONS
 
     def fetch(self, site: Site, out: Path) -> dict:
+        # Some items list s3:// hrefs; the bucket is public, so GDAL must not try to sign.
+        with rasterio.Env(AWS_NO_SIGN_REQUEST="YES"):
+            return self._fetch(site, out)
+
+    def _fetch(self, site: Site, out: Path) -> dict:
         half = raster_half_extent_m(site)
         bbox = transform_bounds(local_crs(site), geographic_crs(site.body), -half, -half, half, half, densify_pts=51)
         client = Client.open(EARTH_SEARCH)

@@ -1,0 +1,86 @@
+site,body,dimension,layer,status,gaps_allowed,cells,measured,fallback,interpolated,physical,proxy,unfilled
+apollo16,moon,1,albedo,implemented,True,663,663,0,0,0,0,0
+apollo16,moon,1,feo_wt_pct,implemented,True,663,663,0,0,0,0,0
+apollo16,moon,2,elevation_m,implemented,True,663,663,0,0,0,0,0
+apollo16,moon,2,slope_deg,implemented,True,663,663,0,0,0,0,0
+apollo16,moon,2,tri_m,implemented,True,663,663,0,0,0,0,0
+apollo16,moon,3,insolation_wm2,implemented,True,663,663,0,0,0,0,0
+apollo16,moon,3,temp_day_max_k,implemented,True,663,663,0,0,0,0,0
+apollo16,moon,3,temp_mean_k,implemented,True,663,663,0,0,0,0,0
+apollo16,moon,3,temp_night_max_k,implemented,True,663,663,0,0,0,0,0
+apollo16,moon,3,temp_night_min_k,implemented,True,663,663,0,0,0,0,0
+apollo16,moon,4,"Water, ice, permafrost, resources",not_implemented,False,663,0,0,0,0,0,663
+apollo16,moon,5,pressure_mean_pa,implemented,True,663,0,0,0,663,0,0
+apollo16,moon,5,wind_max_ms,implemented,True,663,0,0,0,663,0,0
+apollo16,moon,5,wind_mean_ms,implemented,True,663,0,0,0,663,0,0
+apollo16,moon,6,"Biology, extremophiles, habitability, biosignatures",not_implemented,False,663,0,0,0,0,0,663
+apollo16,moon,7,"Caves, lava tubes, subsurface",not_implemented,False,663,0,0,0,0,0,663
+apollo16,moon,8,"Landing, mobility, navigation, robotic/human ops, construction",not_implemented,False,663,0,0,0,0,0,663
+atacama,earth,1,albedo,implemented,True,378,378,0,0,0,0,0
+atacama,earth,1,feo_wt_pct,implemented,True,378,0,0,0,0,0,378
+atacama,earth,2,elevation_m,implemented,True,378,378,0,0,0,0,0
+atacama,earth,2,slope_deg,implemented,True,378,378,0,0,0,0,0
+atacama,earth,2,tri_m,implemented,True,378,378,0,0,0,0,0
+atacama,earth,3,insolation_wm2,implemented,True,378,378,0,0,0,0,0
+atacama,earth,3,temp_day_max_k,implemented,True,378,378,0,0,0,0,0
+atacama,earth,3,temp_mean_k,implemented,True,378,378,0,0,0,0,0
+atacama,earth,3,temp_night_max_k,implemented,True,378,378,0,0,0,0,0
+atacama,earth,3,temp_night_min_k,implemented,True,378,378,0,0,0,0,0
+atacama,earth,4,"Water, ice, permafrost, resources",not_implemented,False,378,0,0,0,0,0,378
+atacama,earth,5,pressure_mean_pa,implemented,True,378,378,0,0,0,0,0
+atacama,earth,5,wind_max_ms,implemented,True,378,378,0,0,0,0,0
+atacama,earth,5,wind_mean_ms,implemented,True,378,378,0,0,0,0,0
+atacama,earth,6,"Biology, extremophiles, habitability, biosignatures",not_implemented,False,378,0,0,0,0,0,378
+atacama,earth,7,"Caves, lava tubes, subsurface",not_implemented,False,378,0,0,0,0,0,378
+atacama,earth,8,"Landing, mobility, navigation, robotic/human ops, construction",not_implemented,False,378,0,0,0,0,0,378
+haughton,earth,1,albedo,implemented,True,350,346,0,4,0,0,0
+haughton,earth,1,feo_wt_pct,implemented,True,350,0,0,0,0,0,350
+haughton,earth,2,elevation_m,implemented,True,350,350,0,0,0,0,0
+haughton,earth,2,slope_deg,implemented,True,350,350,0,0,0,0,0
+haughton,earth,2,tri_m,implemented,True,350,350,0,0,0,0,0
+haughton,earth,3,insolation_wm2,implemented,True,350,350,0,0,0,0,0
+haughton,earth,3,temp_day_max_k,implemented,True,350,350,0,0,0,0,0
+haughton,earth,3,temp_mean_k,implemented,True,350,350,0,0,0,0,0
+haughton,earth,3,temp_night_max_k,implemented,True,350,350,0,0,0,0,0
+haughton,earth,3,temp_night_min_k,implemented,True,350,350,0,0,0,0,0
+haughton,earth,4,"Water, ice, permafrost, resources",not_implemented,False,350,0,0,0,0,0,350
+haughton,earth,5,pressure_mean_pa,implemented,True,350,350,0,0,0,0,0
+haughton,earth,5,wind_max_ms,implemented,True,350,350,0,0,0,0,0
+haughton,earth,5,wind_mean_ms,implemented,True,350,350,0,0,0,0,0
+haughton,earth,6,"Biology, extremophiles, habitability, biosignatures",not_implemented,False,350,0,0,0,0,0,350
+haughton,earth,7,"Caves, lava tubes, subsurface",not_implemented,False,350,0,0,0,0,0,350
+haughton,earth,8,"Landing, mobility, navigation, robotic/human ops, construction",not_implemented,False,350,0,0,0,0,0,350
+shackleton,moon,1,albedo,implemented,True,679,679,0,0,0,0,0
+shackleton,moon,1,feo_wt_pct,implemented,True,679,679,0,0,0,0,0
+shackleton,moon,2,elevation_m,implemented,True,679,679,0,0,0,0,0
+shackleton,moon,2,slope_deg,implemented,True,679,679,0,0,0,0,0
+shackleton,moon,2,tri_m,implemented,True,679,679,0,0,0,0,0
+shackleton,moon,3,insolation_wm2,implemented,True,679,679,0,0,0,0,0
+shackleton,moon,3,temp_day_max_k,implemented,True,679,679,0,0,0,0,0
+shackleton,moon,3,temp_mean_k,implemented,True,679,679,0,0,0,0,0
+shackleton,moon,3,temp_night_max_k,implemented,True,679,679,0,0,0,0,0
+shackleton,moon,3,temp_night_min_k,implemented,True,679,679,0,0,0,0,0
+shackleton,moon,4,"Water, ice, permafrost, resources",not_implemented,False,679,0,0,0,0,0,679
+shackleton,moon,5,pressure_mean_pa,implemented,True,679,0,0,0,679,0,0
+shackleton,moon,5,wind_max_ms,implemented,True,679,0,0,0,679,0,0
+shackleton,moon,5,wind_mean_ms,implemented,True,679,0,0,0,679,0,0
+shackleton,moon,6,"Biology, extremophiles, habitability, biosignatures",not_implemented,False,679,0,0,0,0,0,679
+shackleton,moon,7,"Caves, lava tubes, subsurface",not_implemented,False,679,0,0,0,0,0,679
+shackleton,moon,8,"Landing, mobility, navigation, robotic/human ops, construction",not_implemented,False,679,0,0,0,0,0,679
+sudbury,earth,1,albedo,implemented,True,346,346,0,0,0,0,0
+sudbury,earth,1,feo_wt_pct,implemented,True,346,0,0,0,0,0,346
+sudbury,earth,2,elevation_m,implemented,True,346,346,0,0,0,0,0
+sudbury,earth,2,slope_deg,implemented,True,346,346,0,0,0,0,0
+sudbury,earth,2,tri_m,implemented,True,346,346,0,0,0,0,0
+sudbury,earth,3,insolation_wm2,implemented,True,346,346,0,0,0,0,0
+sudbury,earth,3,temp_day_max_k,implemented,True,346,346,0,0,0,0,0
+sudbury,earth,3,temp_mean_k,implemented,True,346,346,0,0,0,0,0
+sudbury,earth,3,temp_night_max_k,implemented,True,346,346,0,0,0,0,0
+sudbury,earth,3,temp_night_min_k,implemented,True,346,346,0,0,0,0,0
+sudbury,earth,4,"Water, ice, permafrost, resources",not_implemented,False,346,0,0,0,0,0,346
+sudbury,earth,5,pressure_mean_pa,implemented,True,346,346,0,0,0,0,0
+sudbury,earth,5,wind_max_ms,implemented,True,346,346,0,0,0,0,0
+sudbury,earth,5,wind_mean_ms,implemented,True,346,346,0,0,0,0,0
+sudbury,earth,6,"Biology, extremophiles, habitability, biosignatures",not_implemented,False,346,0,0,0,0,0,346
+sudbury,earth,7,"Caves, lava tubes, subsurface",not_implemented,False,346,0,0,0,0,0,346
+sudbury,earth,8,"Landing, mobility, navigation, robotic/human ops, construction",not_implemented,False,346,0,0,0,0,0,346

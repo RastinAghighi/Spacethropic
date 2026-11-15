@@ -16,16 +16,18 @@ This is a NASA Space Apps 2026 entry: find Earth analogs for Moon/Mars base and 
 sites ([../docs/challenge.md](../docs/challenge.md)). The eventual "searcher" ranks Earth
 locations by how analogous they are to a planetary site.
 
-No dataset links Earth to the Moon or Mars, so three **historically validated analogs** act
-as labelled examples:
+No dataset links Earth to the Moon or Mars, so **historically used analogs** act as labelled
+examples:
 
 | Earth site | Planetary counterpart | Label strength |
 |---|---|---|
 | Sudbury | Apollo 16 (Moon) | Historical: crew trained there and recognised impact breccia |
 | Atacama, Yungay | Viking 1 and Viking 2 (Mars) | Historical: Viking-style soil experiments (Navarro-González 2003) |
 | Haughton | Shackleton (Moon), Phoenix (Mars) | Chosen by the team (HMP studied Haughton for both bodies, with no specific site) |
+| Black Point Lava Flow | Apollo 15, Hadley Rille (Moon) | Chosen by the team (Desert RATS simulated generic lunar missions) |
+| Dumont Dunes | Bagnold Dunes, Gale (Mars) | Historical: Curiosity mobility tests (2012) for those dunes |
 
-Every Earth site is crossed with every planetary site: 3 × 5 = 15 edges, 5 true and 10 wrong.
+Every Earth site is crossed with every planetary site: 10 × 7 = 70 edges, 7 true and 63 wrong (originally 3 × 5 = 15; expanded 2026-11-14). Five of the Earth sites are **random controls** (`rand_*` in `sites.yaml`) with no analog association, so all their 35 edges are wrong.
 A calibrated searcher should place true edges at a lower distance. The pipeline only builds
 the **feature dataset**; weighting and the searcher itself are out of scope so far.
 
@@ -35,13 +37,18 @@ the **feature dataset**; weighting and the searcher itself are out of scope so f
 |---|---|
 | Dimension 2, terrain (elevation, slope, roughness/TRI) | **Done.** All 8 sites, 100% of cells measured, verified |
 | Dimension 1, FeO (`feo_wt_pct`) | **Done** for the Moon (Lunar Prospector GRS) and Mars (Odyssey GRS). Empty on Earth (no source) and at Phoenix (GRS polar mask); allowed by the `allow_gaps` flag |
-| Dimensions 3 + 5, temperature, sunlight, weather | **Earth and Moon merged**, every cell filled (Moon weather = known-absent 0). **Mars pending:** the sampled GCM climatology (12 files) is building; then run `download`, `grid`, `merge` for viking1, viking2, phoenix, followed by a full `merge` of all 8 sites. `data/out/coverage.csv` and `manifest.json` currently list only the 5 Earth and Moon sites, and the Mars parquets are stale (no temperature/weather) |
+| All dimensions built so far, for the 17 sites (5 analog + 5 random-control Earth, 3 Moon, 4 Mars) | **Merged, 28 tests pass.** Only gaps: FeO on Earth and Phoenix (3,719 cell values, allowed); 38 tests pass. Bagnold's pressure (635 Pa) is low against Curiosity's ~700–900 Pa: a GCM coarse-cell artefact |
+| Dimensions 3 + 5, temperature, sunlight, weather | **Done for all 12 sites**, every cell filled. Mars comes from the sampled GCM climatology (`data/raw/_shared/mgcm/mgcm_climatology_step6.npz`: 12 files, 1,920 samples), Moon weather is known-absent 0 |
 | Feature importance (preliminary) | Done on terrain + albedo + FeO; see `analysis/feature_importance.md` |
 | Dimension 1, albedo (`albedo`) | **Done.** Earth from Sentinel-2 (median of clear summer scenes), Moon from LOLA 1064 nm normal albedo (polar 1 km for Shackleton, global 10 ppd otherwise), Mars from TES. Every cell filled (4 Haughton cells interpolated) |
-| Dimensions 3–8 | **Not implemented.** They appear in `data/out/coverage.csv` as `status=not_implemented` |
+| Dimensions 4, 6–8 | **Not implemented.** They appear in `data/out/coverage.csv` as `status=not_implemented` |
 | Tests | `uv run pytest`: 20 pass. The zonal spot-check compares `elevation_m__std` and now selects the terrain source explicitly; it used to take the first interim file alphabetically, which broke once other sources existed |
 | Reproducibility | A fresh copy rebuilt Sudbury bit-identically, from the same input ETags |
+| Data guide | `data/README.md` (git-ignored, ships with the data): source id → dataset → feature columns, folder layout, shared caches. Update it when a source or layer is added |
+| Elevation export ZIP | Built 2026-11-14: `data/export/elevation_all_sites.zip` (89 MB, 17 sites): 200 m site-grid DEMs + provenance, per-cell interim parquet, terrain columns of `out/` (CSV + parquet), original LOLA polar file, manifest, data guide. Native-resolution crops and a rescaled ("normalized") tier were not made: undecided |
 | Git | Committed in `d2003e2` ("data so far"). Everything after it is uncommitted: elevation std-only, FeO, `allow_gaps`, albedo, `pystac-client` dependency, and the docs |
+| Global exclusion mask | **Built 2026-11-14** (`analysis/global_mask.py`, downloader `global_mask_download.py`). Pixel-by-pixel at 0.05° (user: no grid). Removes ocean, ≥ 50 people/km², 2023 peak NDVI ≥ 0.5. Kept 56.4 M km²: −88.9 % vs Earth, −61.6 % vs land. Sudbury is removed (vegetated). Lakes inside land polygons are kept (caveat). See README |
+| Elevation at Earth-r8 size | **Built 2026-11-14** (`analysis/elevation_r8.py`): 858.68 m square pixels (Earth r8 mean area) on all bodies, recomputed from the original DEMs; 17 sites, 100 % valid; zip in `data/export/`. Not wired into `grid`/`merge` (still r7 cells, 200 m baseline) |
 | Frontend link | None yet. `frontend/src/data/candidates.json` is a separate hand-made sample set, and the frontend's `/api/search` was deliberately set aside |
 
 ## Decisions
@@ -56,7 +63,10 @@ but are open to revision.
 | The 3 historical pairs are the ground-truth labels | user | `pairs.yaml` |
 | Haughton pairs with both bodies, one counterpart each (Shackleton, Phoenix) | user | `pairs.yaml` |
 | Atacama pairs with both Viking landers | user | `pairs.yaml` |
+| **Expanded (2026-11-14):** Black Point Lava Flow pairs with Apollo 15 / Hadley Rille (Desert RATS; the counterpart is the user's choice), and Dumont Dunes with the Bagnold Dunes / Gale (Curiosity mobility tests). Now 5 Earth × 7 planetary = 35 edges, 7 true | user | `sites.yaml`, `pairs.yaml` |
 | Negatives come from bipartite cross-pairing | user | `merge._pairs` |
+| **Random controls (2026-11-14):** 5 unassociated Earth sites as extra negatives | user (request); selection rule by Claude | `sites.yaml` (`role: control`) |
+| Control selection: seed 20261114, uniform on the sphere, 60°S–75°N, Copernicus DEM tile present, ≥ 90% non-zero elevation in the 25 km window, ≥ 300 km from other Earth sites. Sentinel-2 seasons: local summer, Amazon dry season | Claude | `sites.yaml`, `sources/albedo.py: SEASONS` |
 | The 8 challenge dimensions (numbered as in the challenge, `layers.DIMENSIONS`) | user | `layers.py` |
 | **Work priority (revised 2026-11-14):** 1. weather/temperature (#3 temperature + #5 pressure/wind), 2. geology (#1), 3. elevation/terrain (#2), 4. illumination (sunlight). The remaining dimensions (#4, #6–#8) come after | user | — |
 | Dimension 3 temperature features: daytime max, nighttime max, nighttime min, mean surface temperature (day = local solar time 6–18 h), plus mean sunlight | user | `layers.py`, `sources/climate.py` |
@@ -76,6 +86,8 @@ but are open to revision.
 | Sentinel-2 seasons, cloud < 20%, ≤ 32 scenes, per-pixel median, SCL mask (cloud/shadow/snow out) | Claude | `sources/albedo.py` |
 | FeO expressed as total-iron FeO wt%; Mars Fe × 1.2865 | Claude | `sources/geochem.py` |
 | `elevation_m` keeps only `std`; absolute mean/percentiles dropped (height references differ by body) | user | `layers.py` (`Layer.stats`) |
+| Global mask: pixel-by-pixel, no grid; Earth-r8 elevation uses the same physical pixel on every body (no per-body rescale) | user | `analysis/global_mask.py`, `analysis/elevation_r8.py` |
+| Global mask thresholds (50 people/km², peak NDVI 0.5), sources (Natural Earth, GHSL 2020, VIIRS VNP13C2 2023), 0.05° pixel; r8 pixel as equal-area square (858.68 m) | Claude (user delegated the definitions: rural OK, forest not Mars-like) | same |
 | 25 km radius | Claude | `sites.yaml` |
 | Shared 200 m terrain baseline before slope/TRI | Claude | `sites.yaml: terrain_baseline_m` |
 | TRI as the roughness metric; 50% valid-pixel threshold | Claude | `features.py`, `sites.yaml` |
@@ -116,8 +128,9 @@ leftover gaps are reported in `coverage.csv` (`gaps_allowed` column) and don't f
    - Earth FeO from literature (deferred by the user).
    - Diviner silicate mineralogy (Christiansen feature) for the Moon, TES/THEMIS mineral
      indices for Mars. These have no direct Earth equivalent, so ask the user first.
-2. **In progress: temperature (#3).** Earth (NASA POWER hourly), Moon (Diviner GCP) and Mars (Ames GCM climatology, built once by streaming 67 files) are written. Sunlight (analytic) is also written. Grid and merge haven't been rerun for these yet.
-3. **In progress: weather (#5)**, with mean surface pressure, mean and max wind. Sources are written; Earth is fetching, Mars comes from the same GCM build, Moon is known-absent 0.
+2. **Done: temperature (#3).** Earth (NASA POWER hourly), Moon (Diviner GCP) and Mars (Ames GCM climatology, built once by streaming 67 files) are written. Sunlight (analytic) is also written. Grid and merge haven't been rerun for these yet.
+3. **Prefetched for #4 and #5 (dust), not wired in:** 12 sources in `data/raw/_shared/prefetch/`. See `PREFETCH.md` there (git-ignored) and the summary in `docs/HANDOFF.md`. Feature choice is the user's.
+   **Done: weather (#5)**, with mean surface pressure, mean and max wind. Sources are written; Earth is fetching, Mars comes from the same GCM build, Moon is known-absent 0.
    - Wind heights differ: Earth at 10 m, Mars in the lowest GCM layer.
    - Dust (`dust_mass_*`) and water vapour (`h2o_vap_mass_mean`) are already in the GCM climatology `.npz` for later dimensions #5 and #4.
 4. Then the rest of geology, elevation and illumination improvements, then dimensions #4 and #6–#8. Ideas not yet agreed:
@@ -136,8 +149,39 @@ leftover gaps are reported in `coverage.csv` (`gaps_allowed` column) and don't f
      rougher) and Sudbury–Apollo 16 (albedo 0.12 vs 0.29).
    - **Multivariate fit:** AUC 0.82 in-sample but 0.34 under leave-one-target-out, so it
      doesn't generalise.
-   - **Rerun** after temperature and weather are merged. The full study is the final step
-     once all dimensions are built (user request).
+   - **Second run** (2026-11-14), in `analysis/runs/2026-11-14_earth-moon-temps/`. It used a
+     snapshot taken *before* the Mars merge, so Mars has no temperature or weather in it.
+     - On the 6 Earth–Moon edges, sunlight, day-max and night-min temperature reach AUC 0.75
+       (p 0.22–0.33). That's a single hit, essentially latitude: Haughton is the closest
+       Earth site to Shackleton. It's close to circular, since that pair was chosen as a polar
+       pair.
+     - Weather is an artefact: Moon pressure and wind are 0.
+     - **Haughton–Shackleton ablation** (A all, B dropped, B2 all Shackleton edges dropped,
+       C relabelled wrong): B and C look better only because Shackleton's wrong edges are far
+       apart. B2 is worse (true/wrong ratio 1.37). Nothing reaches p < 0.22.
+     - The run's `report.md` was not written: the subagent's file write was blocked. Its
+       text exists only in the session, pending the user's OK to save it.
+   - **Script options** (backwards compatible; defaults reproduce the committed CSVs):
+     `--data-dir`, `--out-dir`, `--targets`, `--exclude-edge EARTH:TARGET`,
+     `--relabel-false EARTH:TARGET`, `--transform PREFIX=log1p|rank`. Exact nulls are now
+     enumerated over only the edges that have values.
+   - **Third run, full graph** (2026-11-14), in `analysis/runs/2026-11-14_full-35-edges/`
+     (`report.md`): 35 edges, 7 true, all built dimensions.
+     - Each feature alone as the distance. Best AUC 0.57 (`wind_mean_ms__mean`, which is an
+       artefact of lunar wind = 0), then `albedo__p10` 0.56 and insolation/day-max T 0.55.
+     - No p_constrained < 0.18. The all-feature aggregate is AUC 0.49. Logistic regression
+       gives 0.76 in-sample and 0.24 leave-one-target-out.
+     - Script changes: sites are now read from `pairs.csv` (no hard-coded 3×5); `auc_many`
+       vectorises the null. Permutation nulls are exact up to `MAX_ENUM` = 200k labelings,
+       otherwise 100k seeded Monte Carlo draws (the plain null over 35 edges is MC; the
+       constrained null, 5^7 = 78,125, stays exact).
+   - **Fourth run, with random controls** (2026-11-14), `analysis/runs/2026-11-14_with-random-controls/`:
+     70 edges. Best single feature is `albedo__p10` (AUC 0.64, p_constr 0.08), then
+     `temp_night_max_k__mean` (0.57, p 0.06). Aggregate AUC 0.53–0.55.
+     - Mean aggregate distance: true 1.26, wrong analog-site edges 1.26, random-control edges 1.44.
+       So the features separate analog-like ground from random land, but not *which* target.
+   - **Next:** the full study is the final step once all dimensions are built (user request).
+     The full study is the final step once all dimensions are built (user request).
    Find which features contribute most to separating the 5 true edges from the 10 wrong
    ones in `pairs.csv`.
    - The method is the user's call. With only 15 labelled edges, prefer robust approaches,
@@ -146,6 +190,10 @@ leftover gaps are reported in `coverage.csv` (`gaps_allowed` column) and don't f
    - The study must handle missing features (gaps are allowed).
 
 ## Pitfalls already hit (don't rediscover them)
+
+- **GHSL 30″ WGS84 grid is offset:** origin −180.0079°, 43,202 columns, top 89.0996°N. Bin by pixel
+  centre, not 6 × 6 blocks. **VNP13C2 subdataset** is `CMG_0.05_Deg_monthly_NDVI` (lower-case
+  `monthly`), HDF5 (readable); MODIS C6.1 CMG files are HDF4, which this GDAL build can't read.
 
 - **Sentinel-2 offset trap:** Earth Search v1 items with
   `earthsearch:boa_offset_applied: true` already have the baseline-04.00 +1000 DN shift
@@ -174,6 +222,10 @@ leftover gaps are reported in `coverage.csv` (`gaps_allowed` column) and don't f
     rerunning skips finished files. Delete `partials/` only to force a full rebuild.
 - **Run the project env:** `python -c ...` outside `uv run` fails with "No module named
   yaml"; always use `python -m uv run python`.
+- **GCM resolution vs deep craters:** a 5° × 6° GCM cell averages Gale's floor with Mount
+  Sharp and the surrounding highlands, so Bagnold's pressure and temperature are biased
+  toward the highlands. A topographic pressure correction (scale height ~11 km, using the
+  site's MOLA elevation) would fix pressure; it isn't implemented.
 - **Gamma-ray tables** (`sources/geochem.py`):
   - The Lunar Prospector table gives bin *bounds* in −180..180 and weight *fractions*
     (×100 for wt%).
@@ -201,6 +253,11 @@ leftover gaps are reported in `coverage.csv` (`gaps_allowed` column) and don't f
   expected, not a bug. Copernicus DEM COGs are tiled and cheap.
 - **Misleading product names:** `ldrm_*` is LOLA *roughness*, not reflectance. Read the
   `.lbl` `DESCRIPTION` before trusting a filename.
+- **Sentinel-2 `s3://` hrefs:** some Earth Search items (seen at `rand_amazon`) list `s3://`
+  asset hrefs, and GDAL then demands AWS credentials. `Sentinel2Albedo.fetch` runs inside
+  `rasterio.Env(AWS_NO_SIGN_REQUEST="YES")`; the bucket is public.
+- **New Earth sites need a Sentinel-2 season:** `Sentinel2Albedo.covers` is
+  `site.id in SEASONS`, so a site missing from `SEASONS` silently gets no albedo.
 - **Windows tooling:** `uv` is run as `python -m uv`. There's no system GDAL; rasterio
   bundles it. Piped Python stdout is buffered, so background logs appear only at the end.
 

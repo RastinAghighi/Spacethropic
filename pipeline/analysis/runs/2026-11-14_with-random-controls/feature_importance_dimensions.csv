@@ -1,0 +1,5 @@
+dimension,name,features,usable,mean_best,mean_best_auc,mean_median_auc,mean_composite_auc,mean_composite_p_constrained,mean_composite_hit_rate,w1_best,w1_best_auc,w1_median_auc,w1_composite_auc,w1_composite_p_constrained,w1_composite_hit_rate
+1,"Geology, mineralogy, and surface materials",6,5,albedo__p10,0.6417,0.5964,0.5692,0.2554,0.0,albedo__p10,0.6463,0.5964,0.585,0.2072,0.0
+2,"Terrain, elevation, slope, roughness, craters",11,11,tri_m__mean,0.5261,0.5034,0.5057,0.4833,0.1429,tri_m__mean,0.5306,0.5011,0.4966,0.5341,0.1429
+3,"Temperature, illumination, environmental extremes",5,5,temp_night_max_k__mean,0.5714,0.5397,0.5329,0.2752,0.2857,temp_night_max_k__mean,0.5714,0.5397,0.5374,0.2566,0.2857
+5,"Dust, wind, erosion, atmospheric/surface processes",3,3,pressure_mean_pa__mean,0.5714,0.5533,0.5147,0.4461,0.0,pressure_mean_pa__mean,0.5703,0.551,0.5091,0.4669,0.0
