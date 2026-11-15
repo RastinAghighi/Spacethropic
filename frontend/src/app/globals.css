@@ -21,8 +21,8 @@
 :root {
   /* Room the search bar leaves for the evidence panel in the satellite view. */
   --panel-space: 0px;
-  /* Refine drawer width: the room between the rail column and the evidence panel. */
-  --drawer-w: min(360px, 100vw - var(--panel-space) - 132px);
+  /* Refine drawer width, capped by the room between the rail column and the evidence panel. */
+  --drawer-w: min(304px, 100vw - var(--panel-space) - 132px);
   interpolate-size: allow-keywords;
   transition:
     --glow-color 1.2s ease,

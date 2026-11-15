@@ -165,19 +165,19 @@ function GeologyPicker({ draft, c, q, tint }: { draft: Filters; c: Candidate; q:
               key={g}
               type="button"
               aria-pressed={on}
+              title={GEOLOGY[g].note}
               onClick={() => research.toggleGeology(g)}
-              className={`rounded-xl border px-3 py-2.5 text-left transition-[background-color,border-color] duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40 ${
+              className={`rounded-xl border px-3 py-2 text-left transition-[background-color,border-color] duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40 ${
                 on ? "border-white/30 bg-white/[0.09]" : "border-white/[0.07] bg-white/[0.02] hover:border-white/15"
               }`}
             >
               <span className="flex items-center justify-between gap-2">
-                <span className={`text-[12.5px] ${on ? "text-white" : "text-white/75"}`}>{GEOLOGY[g].label}</span>
+                <span className={`truncate text-[12.5px] ${on ? "text-white" : "text-white/75"}`}>{GEOLOGY[g].label}</span>
                 <span className="flex items-center gap-1">
                   {here.includes(g) && <span title="At this site" className="h-[6px] w-[6px] rounded-full bg-white/80" />}
                   {profile.geology.includes(g) && <span title="At the target" className="h-[7px] w-[7px] rounded-full" style={{ boxShadow: `inset 0 0 0 1.5px ${tint}` }} />}
                 </span>
               </span>
-              <span className="mt-0.5 block text-[10.5px] leading-snug text-white/35">{GEOLOGY[g].note}</span>
             </button>
           );
         })}
@@ -227,7 +227,7 @@ function Drawer({ tab, c, q, draft, applied }: { tab: Tab; c: Candidate; q: Anal
   const thermalNote = (() => {
     if (tab !== "thermal" || profile.meanTemp >= FIELDS.meanTemp.min) return null;
     const best = [...pool].sort((a, b) => a.climate.meanTempC - b.climate.meanTempC)[0];
-    return `No surface on Earth averages ${formatField("meanTemp", profile.meanTemp)}; the coldest candidate is ${best.name} at ${formatField("meanTemp", best.climate.meanTempC)}.`;
+    return `Nothing on Earth averages ${formatField("meanTemp", profile.meanTemp)}. Coldest here: ${best.name}.`;
   })();
 
   return (
@@ -388,7 +388,7 @@ export function RefinePanel() {
         aria-label={`${tabById(shownTab).label} refine`}
         aria-hidden={!open}
         inert={!open}
-        className="fixed left-[84px] top-[72px] z-20 flex h-[min(576px,calc(100vh-170px))] w-[var(--drawer-w)] flex-col"
+        className="fixed left-[84px] top-[72px] z-20 flex h-[min(592px,calc(100vh-170px))] w-[var(--drawer-w)] flex-col"
         style={{
           opacity: open ? 1 : 0,
           transform: open ? "none" : "translateX(-14px) scale(0.985)",

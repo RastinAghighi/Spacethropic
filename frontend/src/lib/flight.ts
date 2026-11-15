@@ -32,15 +32,12 @@ export const CLOUD_DECKS: [number, number, number, number][] = [
 /** Written by the globe camera when a flight starts, read by both sides. */
 export const flight = { diveFrom: 400, surfaceTo: 400 };
 
-/** Width the evidence panel takes on the right (matches --panel-space). */
-const panelSpace = (width: number) => (width >= 768 ? Math.min(420, width * 0.33) + 20 : 0);
-
 /**
- * Where on screen the site sits (fractions of the viewport): centred in the space left
- * of the evidence panel, and a touch above middle to clear the tray and search bar.
+ * Where on screen the site sits (fractions of the viewport): centred on the window, on the
+ * same axis as the candidate tray, and a touch above middle to clear the tray.
  */
 export const anchor = (width: number, height: number) => ({
-  x: (width - panelSpace(width)) / 2 / width,
+  x: 0.5,
   y: height > 500 ? 0.45 : 0.5,
 });
 

@@ -1,14 +1,10 @@
 "use client";
 
 import { useUi } from "@/lib/ui";
-import { useResearch } from "@/lib/research";
 import { CandidateTray } from "../CandidateTray";
 import { LoadingBar } from "./primitives";
 
 type Variant = "full" | "compressed" | "hidden";
-
-/** Clears the rail and an open drawer, so the tray centres in the free space. */
-const DRAWER_SPACE = "calc(84px + var(--drawer-w))";
 
 /** Glass surface with the environment-tinted border. */
 function Glass({ children }: { children: React.ReactNode }) {
@@ -36,7 +32,6 @@ function Glass({ children }: { children: React.ReactNode }) {
  */
 export function SearchDock({ width, editor, tint, error, label }: { width: number; editor: React.ReactNode; tint?: string; error?: string | null; label: string }) {
   const { landed, mode, searchFrom, barOpen } = useUi();
-  const { drawer } = useResearch();
 
   const variant: Variant =
     mode === "searching" ? "compressed" : mode === "diving" || mode === "site" || (mode === "surfacing" && !barOpen) ? "hidden" : "full";
@@ -53,10 +48,8 @@ export function SearchDock({ width, editor, tint, error, label }: { width: numbe
         opacity: landed ? 1 : 0,
         transform: landed ? "none" : "translateY(18px)",
         filter: landed ? "none" : "blur(6px)",
-        paddingRight: inSite ? "var(--panel-space)" : undefined,
-        paddingLeft: inSite && drawer && mode === "site" ? DRAWER_SPACE : undefined,
         transition:
-          "opacity 1.1s var(--ease-out-expo), transform 1.1s var(--ease-out-expo), filter 1.1s var(--ease-out-expo), padding .8s var(--ease-out-expo)",
+          "opacity 1.1s var(--ease-out-expo), transform 1.1s var(--ease-out-expo), filter 1.1s var(--ease-out-expo)",
       }}
     >
       <div className="pointer-events-auto flex w-full flex-col items-center">
