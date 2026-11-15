@@ -1,0 +1,289 @@
+policy,landcover_source,mcd12c1_class,class_name,analog_in_policy,area_inside_kept_pixels_km2,pct_of_kept
+P1,mcd12q1,0,Water bodies,False,387463,0.41
+P1,mcd12q1,1,Evergreen needleleaf forests,False,88895,0.09
+P1,mcd12q1,2,Evergreen broadleaf forests,False,320906,0.34
+P1,mcd12q1,3,Deciduous needleleaf forests,False,43825,0.05
+P1,mcd12q1,4,Deciduous broadleaf forests,False,267615,0.28
+P1,mcd12q1,5,Mixed forests,False,170641,0.18
+P1,mcd12q1,6,Closed shrublands,False,217005,0.23
+P1,mcd12q1,7,Open shrublands,True,12911617,13.73
+P1,mcd12q1,8,Woody savannas,False,1287599,1.37
+P1,mcd12q1,9,Savannas,True,12926778,13.75
+P1,mcd12q1,10,Grasslands,True,28964771,30.8
+P1,mcd12q1,11,Permanent wetlands,False,332785,0.35
+P1,mcd12q1,12,Croplands,False,978284,1.04
+P1,mcd12q1,13,Urban and built-up lands,False,98085,0.1
+P1,mcd12q1,14,Cropland/natural vegetation mosaics,False,145383,0.15
+P1,mcd12q1,15,Permanent snow and ice,True,14590359,15.52
+P1,mcd12q1,16,Barren,True,20276706,21.56
+P1,mcd12q1,nodata,No land-cover data (kept by default),,21023,0.02
+P1,mcd12c1,0,Water bodies,False,378833,0.4
+P1,mcd12c1,1,Evergreen needleleaf forests,False,85905,0.09
+P1,mcd12c1,2,Evergreen broadleaf forests,False,310226,0.33
+P1,mcd12c1,3,Deciduous needleleaf forests,False,42044,0.04
+P1,mcd12c1,4,Deciduous broadleaf forests,False,257337,0.27
+P1,mcd12c1,5,Mixed forests,False,166277,0.18
+P1,mcd12c1,6,Closed shrublands,False,207661,0.22
+P1,mcd12c1,7,Open shrublands,True,12923774,13.74
+P1,mcd12c1,8,Woody savannas,False,1263234,1.34
+P1,mcd12c1,9,Savannas,True,13031446,13.85
+P1,mcd12c1,10,Grasslands,True,29028121,30.85
+P1,mcd12c1,11,Permanent wetlands,False,322864,0.34
+P1,mcd12c1,12,Croplands,False,951595,1.01
+P1,mcd12c1,13,Urban and built-up lands,False,92470,0.1
+P1,mcd12c1,14,Cropland/natural vegetation mosaics,False,143294,0.15
+P1,mcd12c1,15,Permanent snow and ice,True,14609619,15.53
+P1,mcd12c1,16,Barren,True,20275305,21.55
+P1,mcd12c1,nodata,No land-cover data (kept by default),,0,0.0
+P1b,mcd12q1,0,Water bodies,False,362123,0.41
+P1b,mcd12q1,1,Evergreen needleleaf forests,False,22211,0.03
+P1b,mcd12q1,2,Evergreen broadleaf forests,False,103073,0.12
+P1b,mcd12q1,3,Deciduous needleleaf forests,False,18485,0.02
+P1b,mcd12q1,4,Deciduous broadleaf forests,False,104506,0.12
+P1b,mcd12q1,5,Mixed forests,False,47002,0.05
+P1b,mcd12q1,6,Closed shrublands,False,105660,0.12
+P1b,mcd12q1,7,Open shrublands,True,12646262,14.47
+P1b,mcd12q1,8,Woody savannas,False,416833,0.48
+P1b,mcd12q1,9,Savannas,True,10691750,12.24
+P1b,mcd12q1,10,Grasslands,True,27327154,31.27
+P1b,mcd12q1,11,Permanent wetlands,False,190284,0.22
+P1b,mcd12q1,12,Croplands,False,367801,0.42
+P1b,mcd12q1,13,Urban and built-up lands,False,82226,0.09
+P1b,mcd12q1,14,Cropland/natural vegetation mosaics,False,39699,0.05
+P1b,mcd12q1,15,Permanent snow and ice,True,14587496,16.69
+P1b,mcd12q1,16,Barren,True,20249386,23.17
+P1b,mcd12q1,nodata,No land-cover data (kept by default),,21023,0.02
+P1b,mcd12c1,0,Water bodies,False,354084,0.4
+P1b,mcd12c1,1,Evergreen needleleaf forests,False,21030,0.02
+P1b,mcd12c1,2,Evergreen broadleaf forests,False,97366,0.11
+P1b,mcd12c1,3,Deciduous needleleaf forests,False,17388,0.02
+P1b,mcd12c1,4,Deciduous broadleaf forests,False,97465,0.11
+P1b,mcd12c1,5,Mixed forests,False,43931,0.05
+P1b,mcd12c1,6,Closed shrublands,False,98646,0.11
+P1b,mcd12c1,7,Open shrublands,True,12659898,14.48
+P1b,mcd12c1,8,Woody savannas,False,400448,0.46
+P1b,mcd12c1,9,Savannas,True,10775261,12.32
+P1b,mcd12c1,10,Grasslands,True,27387616,31.32
+P1b,mcd12c1,11,Permanent wetlands,False,181413,0.21
+P1b,mcd12c1,12,Croplands,False,348801,0.4
+P1b,mcd12c1,13,Urban and built-up lands,False,77296,0.09
+P1b,mcd12c1,14,Cropland/natural vegetation mosaics,False,37960,0.04
+P1b,mcd12c1,15,Permanent snow and ice,True,14606963,16.7
+P1b,mcd12c1,16,Barren,True,20249388,23.15
+P1b,mcd12c1,nodata,No land-cover data (kept by default),,0,0.0
+P1c,mcd12q1,0,Water bodies,False,43670,0.05
+P1c,mcd12q1,1,Evergreen needleleaf forests,False,4084,0.01
+P1c,mcd12q1,2,Evergreen broadleaf forests,False,25269,0.03
+P1c,mcd12q1,3,Deciduous needleleaf forests,False,5324,0.01
+P1c,mcd12q1,4,Deciduous broadleaf forests,False,32172,0.04
+P1c,mcd12q1,5,Mixed forests,False,11222,0.01
+P1c,mcd12q1,6,Closed shrublands,False,38284,0.05
+P1c,mcd12q1,7,Open shrublands,True,11973166,14.98
+P1c,mcd12q1,8,Woody savannas,False,103079,0.13
+P1c,mcd12q1,9,Savannas,True,8222663,10.29
+P1c,mcd12q1,10,Grasslands,True,24783306,31.0
+P1c,mcd12q1,11,Permanent wetlands,False,43672,0.05
+P1c,mcd12q1,12,Croplands,False,103299,0.13
+P1c,mcd12q1,13,Urban and built-up lands,False,24910,0.03
+P1c,mcd12q1,14,Cropland/natural vegetation mosaics,False,7560,0.01
+P1c,mcd12q1,15,Permanent snow and ice,True,14481236,18.12
+P1c,mcd12q1,16,Barren,True,20012453,25.04
+P1c,mcd12q1,nodata,No land-cover data (kept by default),,21023,0.03
+P1c,mcd12c1,0,Water bodies,False,41681,0.05
+P1c,mcd12c1,1,Evergreen needleleaf forests,False,3551,0.0
+P1c,mcd12c1,2,Evergreen broadleaf forests,False,22018,0.03
+P1c,mcd12c1,3,Deciduous needleleaf forests,False,4759,0.01
+P1c,mcd12c1,4,Deciduous broadleaf forests,False,28057,0.04
+P1c,mcd12c1,5,Mixed forests,False,9319,0.01
+P1c,mcd12c1,6,Closed shrublands,False,33940,0.04
+P1c,mcd12c1,7,Open shrublands,True,12002061,14.98
+P1c,mcd12c1,8,Woody savannas,False,93817,0.12
+P1c,mcd12c1,9,Savannas,True,8312272,10.38
+P1c,mcd12c1,10,Grasslands,True,24877084,31.05
+P1c,mcd12c1,11,Permanent wetlands,False,40247,0.05
+P1c,mcd12c1,12,Croplands,False,92887,0.12
+P1c,mcd12c1,13,Urban and built-up lands,False,22886,0.03
+P1c,mcd12c1,14,Cropland/natural vegetation mosaics,False,6739,0.01
+P1c,mcd12c1,15,Permanent snow and ice,True,14501587,18.1
+P1c,mcd12c1,16,Barren,True,20018584,24.99
+P1c,mcd12c1,nodata,No land-cover data (kept by default),,0,0.0
+P2,mcd12q1,0,Water bodies,False,294145,0.38
+P2,mcd12q1,1,Evergreen needleleaf forests,False,37218,0.05
+P2,mcd12q1,2,Evergreen broadleaf forests,False,48236,0.06
+P2,mcd12q1,3,Deciduous needleleaf forests,False,6783,0.01
+P2,mcd12q1,4,Deciduous broadleaf forests,False,39484,0.05
+P2,mcd12q1,5,Mixed forests,False,31595,0.04
+P2,mcd12q1,6,Closed shrublands,False,179588,0.23
+P2,mcd12q1,7,Open shrublands,True,12575677,16.15
+P2,mcd12q1,8,Woody savannas,False,241552,0.31
+P2,mcd12q1,9,Savannas,False,1219347,1.57
+P2,mcd12q1,10,Grasslands,True,27349258,35.12
+P2,mcd12q1,11,Permanent wetlands,False,165759,0.21
+P2,mcd12q1,12,Croplands,False,726003,0.93
+P2,mcd12q1,13,Urban and built-up lands,False,57506,0.07
+P2,mcd12q1,14,Cropland/natural vegetation mosaics,False,21184,0.03
+P2,mcd12q1,15,Permanent snow and ice,True,14590176,18.74
+P2,mcd12q1,16,Barren,True,20267706,26.03
+P2,mcd12q1,nodata,No land-cover data (kept by default),,21023,0.03
+P2,mcd12c1,0,Water bodies,False,288436,0.37
+P2,mcd12c1,1,Evergreen needleleaf forests,False,36894,0.05
+P2,mcd12c1,2,Evergreen broadleaf forests,False,48281,0.06
+P2,mcd12c1,3,Deciduous needleleaf forests,False,6378,0.01
+P2,mcd12c1,4,Deciduous broadleaf forests,False,37376,0.05
+P2,mcd12c1,5,Mixed forests,False,31043,0.04
+P2,mcd12c1,6,Closed shrublands,False,172828,0.22
+P2,mcd12c1,7,Open shrublands,True,12597670,16.16
+P2,mcd12c1,8,Woody savannas,False,238382,0.31
+P2,mcd12c1,9,Savannas,False,1206800,1.55
+P2,mcd12c1,10,Grasslands,True,27464345,35.23
+P2,mcd12c1,11,Permanent wetlands,False,160171,0.21
+P2,mcd12c1,12,Croplands,False,711149,0.91
+P2,mcd12c1,13,Urban and built-up lands,False,53968,0.07
+P2,mcd12c1,14,Cropland/natural vegetation mosaics,False,20522,0.03
+P2,mcd12c1,15,Permanent snow and ice,True,14609467,18.74
+P2,mcd12c1,16,Barren,True,20267476,26.0
+P2,mcd12c1,nodata,No land-cover data (kept by default),,0,0.0
+P3,mcd12q1,0,Water bodies,False,132329,0.28
+P3,mcd12q1,1,Evergreen needleleaf forests,False,1604,0.0
+P3,mcd12q1,2,Evergreen broadleaf forests,False,127,0.0
+P3,mcd12q1,3,Deciduous needleleaf forests,False,3083,0.01
+P3,mcd12q1,4,Deciduous broadleaf forests,False,436,0.0
+P3,mcd12q1,5,Mixed forests,False,1631,0.0
+P3,mcd12q1,6,Closed shrublands,False,86387,0.18
+P3,mcd12q1,7,Open shrublands,True,11663897,24.32
+P3,mcd12q1,8,Woody savannas,False,33720,0.07
+P3,mcd12q1,9,Savannas,False,211251,0.44
+P3,mcd12q1,10,Grasslands,False,1421720,2.96
+P3,mcd12q1,11,Permanent wetlands,False,77261,0.16
+P3,mcd12q1,12,Croplands,False,33358,0.07
+P3,mcd12q1,13,Urban and built-up lands,False,15813,0.03
+P3,mcd12q1,14,Cropland/natural vegetation mosaics,False,64,0.0
+P3,mcd12q1,15,Permanent snow and ice,True,14564185,30.37
+P3,mcd12q1,16,Barren,True,19693784,41.06
+P3,mcd12q1,nodata,No land-cover data (kept by default),,21023,0.04
+P3,mcd12c1,0,Water bodies,False,130656,0.27
+P3,mcd12c1,1,Evergreen needleleaf forests,False,1525,0.0
+P3,mcd12c1,2,Evergreen broadleaf forests,False,123,0.0
+P3,mcd12c1,3,Deciduous needleleaf forests,False,2934,0.01
+P3,mcd12c1,4,Deciduous broadleaf forests,False,405,0.0
+P3,mcd12c1,5,Mixed forests,False,1613,0.0
+P3,mcd12c1,6,Closed shrublands,False,84083,0.18
+P3,mcd12c1,7,Open shrublands,True,11707457,24.4
+P3,mcd12c1,8,Woody savannas,False,32975,0.07
+P3,mcd12c1,9,Savannas,False,209804,0.44
+P3,mcd12c1,10,Grasslands,False,1391551,2.9
+P3,mcd12c1,11,Permanent wetlands,False,75543,0.16
+P3,mcd12c1,12,Croplands,False,32477,0.07
+P3,mcd12c1,13,Urban and built-up lands,False,14793,0.03
+P3,mcd12c1,14,Cropland/natural vegetation mosaics,False,54,0.0
+P3,mcd12c1,15,Permanent snow and ice,True,14584508,30.4
+P3,mcd12c1,16,Barren,True,19705779,41.07
+P3,mcd12c1,nodata,No land-cover data (kept by default),,0,0.0
+P4,mcd12q1,0,Water bodies,False,87847,0.26
+P4,mcd12q1,1,Evergreen needleleaf forests,False,1162,0.0
+P4,mcd12q1,2,Evergreen broadleaf forests,False,116,0.0
+P4,mcd12q1,3,Deciduous needleleaf forests,False,3083,0.01
+P4,mcd12q1,4,Deciduous broadleaf forests,False,391,0.0
+P4,mcd12q1,5,Mixed forests,False,1346,0.0
+P4,mcd12q1,6,Closed shrublands,False,86317,0.26
+P4,mcd12q1,7,Open shrublands,True,11662623,35.07
+P4,mcd12q1,8,Woody savannas,False,33242,0.1
+P4,mcd12q1,9,Savannas,False,210791,0.63
+P4,mcd12q1,10,Grasslands,False,1373812,4.13
+P4,mcd12q1,11,Permanent wetlands,False,75901,0.23
+P4,mcd12q1,12,Croplands,False,33321,0.1
+P4,mcd12q1,13,Urban and built-up lands,False,15761,0.05
+P4,mcd12q1,14,Cropland/natural vegetation mosaics,False,64,0.0
+P4,mcd12q1,15,Permanent snow and ice,False,96823,0.29
+P4,mcd12q1,16,Barren,True,19549581,58.79
+P4,mcd12q1,nodata,No land-cover data (kept by default),,21023,0.06
+P4,mcd12c1,0,Water bodies,False,86875,0.26
+P4,mcd12c1,1,Evergreen needleleaf forests,False,1144,0.0
+P4,mcd12c1,2,Evergreen broadleaf forests,False,112,0.0
+P4,mcd12c1,3,Deciduous needleleaf forests,False,2934,0.01
+P4,mcd12c1,4,Deciduous broadleaf forests,False,368,0.0
+P4,mcd12c1,5,Mixed forests,False,1349,0.0
+P4,mcd12c1,6,Closed shrublands,False,84023,0.25
+P4,mcd12c1,7,Open shrublands,True,11706448,35.2
+P4,mcd12c1,8,Woody savannas,False,32548,0.1
+P4,mcd12c1,9,Savannas,False,209424,0.63
+P4,mcd12c1,10,Grasslands,False,1347715,4.05
+P4,mcd12c1,11,Permanent wetlands,False,74234,0.22
+P4,mcd12c1,12,Croplands,False,32443,0.1
+P4,mcd12c1,13,Urban and built-up lands,False,14749,0.04
+P4,mcd12c1,14,Cropland/natural vegetation mosaics,False,54,0.0
+P4,mcd12c1,15,Permanent snow and ice,False,97062,0.29
+P4,mcd12c1,16,Barren,True,19568217,58.83
+P4,mcd12c1,nodata,No land-cover data (kept by default),,0,0.0
+P5,mcd12q1,0,Water bodies,False,88903,0.26
+P5,mcd12q1,1,Evergreen needleleaf forests,False,643,0.0
+P5,mcd12q1,2,Evergreen broadleaf forests,False,22,0.0
+P5,mcd12q1,3,Deciduous needleleaf forests,False,1,0.0
+P5,mcd12q1,4,Deciduous broadleaf forests,False,62,0.0
+P5,mcd12q1,5,Mixed forests,False,444,0.0
+P5,mcd12q1,6,Closed shrublands,False,326,0.0
+P5,mcd12q1,7,Open shrublands,False,193780,0.56
+P5,mcd12q1,8,Woody savannas,False,905,0.0
+P5,mcd12q1,9,Savannas,False,1867,0.01
+P5,mcd12q1,10,Grasslands,False,442319,1.27
+P5,mcd12q1,11,Permanent wetlands,False,3165,0.01
+P5,mcd12q1,12,Croplands,False,3381,0.01
+P5,mcd12q1,13,Urban and built-up lands,False,8678,0.02
+P5,mcd12q1,14,Cropland/natural vegetation mosaics,False,3,0.0
+P5,mcd12q1,15,Permanent snow and ice,True,14563263,41.89
+P5,mcd12q1,16,Barren,True,19433078,55.9
+P5,mcd12q1,nodata,No land-cover data (kept by default),,21023,0.06
+P5,mcd12c1,0,Water bodies,False,88105,0.25
+P5,mcd12c1,1,Evergreen needleleaf forests,False,594,0.0
+P5,mcd12c1,2,Evergreen broadleaf forests,False,21,0.0
+P5,mcd12c1,3,Deciduous needleleaf forests,False,0,0.0
+P5,mcd12c1,4,Deciduous broadleaf forests,False,51,0.0
+P5,mcd12c1,5,Mixed forests,False,440,0.0
+P5,mcd12c1,6,Closed shrublands,False,306,0.0
+P5,mcd12c1,7,Open shrublands,False,189099,0.54
+P5,mcd12c1,8,Woody savannas,False,865,0.0
+P5,mcd12c1,9,Savannas,False,1714,0.0
+P5,mcd12c1,10,Grasslands,False,433142,1.25
+P5,mcd12c1,11,Permanent wetlands,False,3009,0.01
+P5,mcd12c1,12,Croplands,False,3232,0.01
+P5,mcd12c1,13,Urban and built-up lands,False,8163,0.02
+P5,mcd12c1,14,Cropland/natural vegetation mosaics,False,2,0.0
+P5,mcd12c1,15,Permanent snow and ice,True,14583673,41.95
+P5,mcd12c1,16,Barren,True,19453419,55.96
+P5,mcd12c1,nodata,No land-cover data (kept by default),,0,0.0
+P6,mcd12q1,0,Water bodies,False,44417,0.22
+P6,mcd12q1,1,Evergreen needleleaf forests,False,212,0.0
+P6,mcd12q1,2,Evergreen broadleaf forests,False,14,0.0
+P6,mcd12q1,3,Deciduous needleleaf forests,False,0,0.0
+P6,mcd12q1,4,Deciduous broadleaf forests,False,18,0.0
+P6,mcd12q1,5,Mixed forests,False,177,0.0
+P6,mcd12q1,6,Closed shrublands,False,283,0.0
+P6,mcd12q1,7,Open shrublands,False,193325,0.96
+P6,mcd12q1,8,Woody savannas,False,443,0.0
+P6,mcd12q1,9,Savannas,False,1430,0.01
+P6,mcd12q1,10,Grasslands,False,396079,1.97
+P6,mcd12q1,11,Permanent wetlands,False,1831,0.01
+P6,mcd12q1,12,Croplands,False,3353,0.02
+P6,mcd12q1,13,Urban and built-up lands,False,8625,0.04
+P6,mcd12q1,14,Cropland/natural vegetation mosaics,False,3,0.0
+P6,mcd12q1,15,Permanent snow and ice,False,96295,0.48
+P6,mcd12q1,16,Barren,True,19289187,96.17
+P6,mcd12q1,nodata,No land-cover data (kept by default),,21023,0.1
+P6,mcd12c1,0,Water bodies,False,44337,0.22
+P6,mcd12c1,1,Evergreen needleleaf forests,False,218,0.0
+P6,mcd12c1,2,Evergreen broadleaf forests,False,13,0.0
+P6,mcd12c1,3,Deciduous needleleaf forests,False,0,0.0
+P6,mcd12c1,4,Deciduous broadleaf forests,False,16,0.0
+P6,mcd12c1,5,Mixed forests,False,200,0.0
+P6,mcd12c1,6,Closed shrublands,False,270,0.0
+P6,mcd12c1,7,Open shrublands,False,188709,0.94
+P6,mcd12c1,8,Woody savannas,False,451,0.0
+P6,mcd12c1,9,Savannas,False,1350,0.01
+P6,mcd12c1,10,Grasslands,False,390589,1.95
+P6,mcd12c1,11,Permanent wetlands,False,1748,0.01
+P6,mcd12c1,12,Croplands,False,3208,0.02
+P6,mcd12c1,13,Urban and built-up lands,False,8119,0.04
+P6,mcd12c1,14,Cropland/natural vegetation mosaics,False,2,0.0
+P6,mcd12c1,15,Permanent snow and ice,False,96584,0.48
+P6,mcd12c1,16,Barren,True,19316022,96.33
+P6,mcd12c1,nodata,No land-cover data (kept by default),,0,0.0

@@ -1,0 +1,30 @@
+# Experiment-local ignores. Raw datasets live outside Git (C:\Dev\Spacethropic-datasets).
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+# Intermediates and caches (global rasters, npz/npy, logs)
+work/
+*.npy
+*.npz
+*.tif
+*.tmp
+*.part
+*.log
+*.py[cod]
+*.hdf
+*.h5
+*.hdf5
+*.tiff
+*.zip
+*.parquet
+*.gpkg
+*.shp
+*.shx
+*.dbf
+results/*
+!results/dataset_validation_report.md
+!results/global_landcover_class_area.csv
+!results/global_landcover_broad_area.csv
+!results/filter_policy_comparison.csv
+!results/filter_policy_kept_composition.csv
