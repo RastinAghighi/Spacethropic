@@ -33,6 +33,8 @@ the **feature dataset**; weighting and the searcher itself are out of scope so f
 
 ## Current state
 
+> **Paused 2026-11-15 07:15.** Remaining jobs (per-hexagon feature columns for Earth/Moon/Mars, terrain, re-zipping) and their exact commands: [../docs/HANDOFF_jobs_2026-11-15.md](../docs/HANDOFF_jobs_2026-11-15.md).
+
 | Item | State |
 |---|---|
 | Dimension 2, terrain (elevation, slope, roughness/TRI) | **Done.** All 8 sites, 100% of cells measured, verified |
@@ -49,6 +51,9 @@ the **feature dataset**; weighting and the searcher itself are out of scope so f
 | Git | Committed in `d2003e2` ("data so far"). Everything after it is uncommitted: elevation std-only, FeO, `allow_gaps`, albedo, `pystac-client` dependency, and the docs |
 | Global exclusion mask | **Built 2026-11-14** (`analysis/global_mask.py`, downloader `global_mask_download.py`). Pixel-by-pixel at 0.05° (user: no grid). Removes ocean, ≥ 50 people/km², 2023 peak NDVI ≥ 0.5. Kept 56.4 M km²: −88.9 % vs Earth, −61.6 % vs land. Sudbury is removed (vegetated). Lakes inside land polygons are kept (caveat). See README |
 | Elevation at Earth-r8 size | **Built 2026-11-14** (`analysis/elevation_r8.py`): 858.68 m square pixels (Earth r8 mean area) on all bodies, recomputed from the original DEMs; 17 sites, 100 % valid; zip in `data/export/`. Not wired into `grid`/`merge` (still r7 cells, 200 m baseline) |
+| Global mask v2 (land cover) | **Built 2026-11-14** (`analysis/landcover_fractions.py`, `analysis/global_mask_v2.py`): MODIS MCD12Q1 + Esri 10 m LULC 2023 averaged; Dynamic World pending Earth Engine access. Kept 85.8 M km² (−41.5 % vs land; v1 −61.6 %). See README |
+| R8 contour pipeline (Earth, v2 mask) | **8x complete 2026-11-15 01:30**: 22,349 tiles, 114.2 M hexagons, 295.9 M lines in `data/out/contours_r8_v2/8x_i20m/`. Chain continues 4x → 2x → full in one process (`--workers 24`, all RAM on one level at a time, user request). `read_elevation` reads neighbour tiles in parallel threads. v1 partial results in `data/out/contours_r8/` |
+| Moon/Mars Earth-r8 hexagons | **Running** (`analysis/contours_planet.py`, queue `analysis/queue_2026-11-15.sh`, log `data/out/contours_planet/queue.log`). Moon 240m complete (51,449,247 hexes, 265 M lines, 9.9 GB). Order (user): Mars 240m → Mars native → Moon native (583 tiles done) → Earth 4x → 2x → full. Team README `data/out/contours_planet/README.md`. Zip parts ≤ 3 GB via `analysis/package_parts.py` into `data/export/` (Moon 240m: 4 parts; others auto). **Disk risk:** 111 GB free vs ~250 GB still projected; disk guard stops at 25 GB. User not yet decided on skipping Mars 240m / wider interval / deleting coarse levels |
 | Frontend link | None yet. `frontend/src/data/candidates.json` is a separate hand-made sample set, and the frontend's `/api/search` was deliberately set aside |
 
 ## Decisions
@@ -88,6 +93,12 @@ but are open to revision.
 | `elevation_m` keeps only `std`; absolute mean/percentiles dropped (height references differ by body) | user | `layers.py` (`Layer.stats`) |
 | Global mask: pixel-by-pixel, no grid; Earth-r8 elevation uses the same physical pixel on every body (no per-body rescale) | user | `analysis/global_mask.py`, `analysis/elevation_r8.py` |
 | Global mask thresholds (50 people/km², peak NDVI 0.5), sources (Natural Earth, GHSL 2020, VIIRS VNP13C2 2023), 0.05° pixel; r8 pixel as equal-area square (858.68 m) | Claude (user delegated the definitions: rural OK, forest not Mars-like) | same |
+| Contours: output unit = Earth r8 hexagon; drop if ≥ 90 % removed; contour lines themselves (downstream may aggregate); download coarse → fine, one pass per level | user | `analysis/contours_r8.py` |
+| Contours: fixed absolute 20 m levels (EGM2008), float32 metres east/north of hex centre, two Parquet tables per tile, 0.001° sampling for the 90 % rule, Antarctica included but last, contourpy | Claude (user didn't answer the interval/Antarctica question) | same |
+| Mask v2: land cover from MODIS MCD12Q1, Dynamic World and Esri LULC replaces NDVI | user | `analysis/global_mask_v2.py` |
+| Mask v2 class grouping (forest/closed shrub/woody savanna/crops/wetland = vegetated; savanna/grass/open shrub/bare/snow kept), source averaging, thresholds (water 0.5, built 0.25, veg 0.5, mixed 0.5), GHSL kept, NDVI dropped, year 2023 | Claude (not discussed; flagged) | same |
+| Moon/Mars: Earth r8 hexagon size copied unchanged; whole surfaces | user | `analysis/contours_planet.py` |
+| Moon/Mars grid construction (latitude-row hex lattice, nearest-centre cells, row/col ids), tile sizes 5°/3°, levels 240m/native | Claude (flagged) | same |
 | 25 km radius | Claude | `sites.yaml` |
 | Shared 200 m terrain baseline before slope/TRI | Claude | `sites.yaml: terrain_baseline_m` |
 | TRI as the roughness metric; 50% valid-pixel threshold | Claude | `features.py`, `sites.yaml` |
@@ -190,6 +201,22 @@ leftover gaps are reported in `coverage.csv` (`gaps_allowed` column) and don't f
    - The study must handle missing features (gaps are allowed).
 
 ## Pitfalls already hit (don't rediscover them)
+
+- **Stopping a run on Windows leaves orphans:** `.venv\Scripts\python.exe` is a launcher; the real interpreter and
+  pool workers are `python3.12.exe`. Killing only `python.exe` left ~38 idle workers holding ~11 GB, and the
+  machine paged to disk (disk 325 % busy, CPU 50 %). Stop runs by killing every `python*` process whose command
+  line or parent chain belongs to the run.
+- **Contour tiles were latency-bound:** opening the up-to-9 neighbouring Copernicus COGs one after another left
+  the CPU idle ~half of each tile. `read_elevation` now opens and reads them in parallel threads (identical
+  output, ~4x faster per tile, deployed live 2026-11-15).
+- **Grid self-checks must not materialise 200 M ids:** count per row instead (`np.bincount`).
+
+- **Thread pools + `as_completed` over a list keep every result alive:** the first Esri land-cover run held ~60 MB per item and died. Reduce each item to small counts inside the worker (`local_counts`) and drop futures as they finish.
+- **MCD12Q1 is HDF4:** this GDAL can't read it; `pyhdf` (added) can. Dynamic World is Earth Engine-only.
+
+- **Many worker processes on 15.8 GB RAM:** 24 workers died with `OpenBLAS error: Memory allocation`.
+  Set `OPENBLAS_NUM_THREADS=1` and `GDAL_CACHEMAX=128` per worker and gate tile starts on free memory (`memory_ok()`). A full-resolution worker peaks ~0.5 GB, idle ~0.19 GB.
+- **Don't edit `contours_r8.py` while a run is live:** workers are respawned every 50 tiles (`max_tasks_per_child`) and re-import the file; a broken edit hung the 8x run once (2026-11-14).
 
 - **GHSL 30″ WGS84 grid is offset:** origin −180.0079°, 43,202 columns, top 89.0996°N. Bin by pixel
   centre, not 6 × 6 blocks. **VNP13C2 subdataset** is `CMG_0.05_Deg_monthly_NDVI` (lower-case

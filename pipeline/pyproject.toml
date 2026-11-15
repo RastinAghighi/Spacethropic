@@ -4,10 +4,12 @@ version = "0.1.0"
 description = "Builds the Earth/Moon/Mars analog calibration dataset on an H3 grid."
 requires-python = ">=3.12,<3.13"
 dependencies = [
+    "contourpy>=1.4.0",
     "h3>=4.1",
     "numpy>=2.0",
     "pandas>=2.2",
     "pyarrow>=17",
+    "pyhdf>=0.11.7",
     "pyproj>=3.6",
     "pystac-client>=0.8",
     "pyyaml>=6.0",
