@@ -283,45 +283,11 @@ land polygons and not green.
 ## Per-hexagon feature columns (`analysis/hex_features.py`, `analysis/hex_terrain.py`)
 
 Adds the site pipeline's feature columns to every hexagon table (Earth `contours_r8_v2`, Moon
-and Mars `contours_planet`), one feature group at a time, one body at a time (user order: Earth → Moon → Mars, then the next
-feature; `--bodies earth`). Inputs:
+and Mars `contours_planet`), one feature group at a time on all bodies together. Inputs:
 `analysis/earth_merra2_climate.py` (Earth temperature + weather from MERRA-2 hourly 2023, built),
-`analysis/moon_diviner_grid.py` (Moon temperature, built), `analysis/planet_feature_grids.py`
-(Moon/Mars FeO and albedo, built). **Weather, temperature, sunlight (all bodies) and albedo (Moon, Mars) done 2026-11-15**; FeO
-removed from the hexagon queue (user); terrain (`hex_terrain.py --bodies <body>`) done on Earth and Moon; Mars paused (user uploading Mars data) at 3,315/6,486 tables per dataset. See
+`analysis/moon_diviner_grid.py` (Moon temperature, downloading), `analysis/planet_feature_grids.py`
+(Moon/Mars FeO and albedo, built). **Paused before any group ran**; see
 [../docs/HANDOFF_jobs_2026-11-15.md](../docs/HANDOFF_jobs_2026-11-15.md) for order and commands.
-
-### Extras: water/ice and dust (`analysis/hex_extras.py`)
-
-Every product in `data/raw/_shared/prefetch/` that covers a whole body (or a large region), plus
-MERRA-2 monthly aerosol for Earth, each as its own column in native units (user: "as much
-information as possible"; nothing harmonised across bodies). NaN where a product has no coverage.
-
-| Body | Columns |
-|---|---|
-| Earth | `soil_moisture_m3m3__mean/__max`, `soil_moisture_valid_days` (ESA CCI SM 2023), `permafrost_pct`, `active_layer_m` (ESA CCI Permafrost, 25–85°N), `dust_aod_mean/_max`, `dust_surface_kgm3`, `dust_column_kgm2`, `aerosol_aod_mean` (MERRA-2 M2TMNXAER 2023) |
-| Moon | `hydrogen_ppm` (Lunar Prospector NS), `psr_flag`, `sun_visibility` (LOLA, south of ~85°S) |
-| Mars | `h2o_wt_pct`, `h2o_sigma_wt_pct` (Odyssey GRS, ±57.5°), `neutron_{epithermal,thermal,fast}_cps`, `hend_epithermal_norm` (Odyssey 2002), `dust_cover_index` (TES, ±60°), `dust_tau_mean/_max` (Montabone 9.3 µm), `dust_mass_mean/_max`, `h2o_vapour_mass_mean`, `pressure_min_pa`, `pressure_max_pa` (Ames GCM) |
-
-```bash
-uv run python analysis/hex_extras.py build                 # lookup grids -> data/interim/global/extras/
-uv run python analysis/hex_extras.py run --bodies earth    # then moon, then mars
-```
-
-Status 2026-11-15: Earth and Moon done; Mars on hold (user).
-
-## R7 run (`analysis/queue_r7.sh`)
-
-The same jobs at H3 r7 size (user, 2026-11-15): Earth's mean r7 cell (5.1613 km², edge 1409.5 m)
-applied 1:1 to the Moon and Mars, for Earth 8x, Moon 240 m and Mars 240 m. Every script takes the
-resolution from the `HEX_RES` environment variable (unset = r8, the original run), so R8 outputs are untouched:
-
-```bash
-HEX_RES=7 uv run python analysis/contours_r8.py --levels 8x      # -> data/out/contours_r7_v2/
-HEX_RES=7 uv run python analysis/contours_planet.py --levels 240m # -> data/out/contours_planet_r7/
-HEX_RES=7 uv run python analysis/hex_features.py weather --bodies earth   # etc.; hex_terrain, hex_extras alike
-uv run python analysis/zip_single.py data/out/contours_r7_v2/8x_i20m --prefix r7_
-```
 
 ## Moon and Mars contours on Earth-r8 hexagons (`analysis/contours_planet.py`)
 

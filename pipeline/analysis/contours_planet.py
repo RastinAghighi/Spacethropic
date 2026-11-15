@@ -52,10 +52,9 @@ import contours_r8 as earth  # noqa: E402  (schemas, memory gate, manifest write
 
 ROOT = Path(__file__).resolve().parents[1]
 DEM_DIR = ROOT / "data" / "raw" / "global" / "planet"
-RES = earth.H3_RES  # HEX_RES env var (default 8); user rule: Earth's mean cell at that resolution, 1:1 on every body
-OUT_ROOT = ROOT / "data" / "out" / ("contours_planet" if RES == 8 else f"contours_planet_r{RES}")
+OUT_ROOT = ROOT / "data" / "out" / "contours_planet"
 
-AREA_M2 = h3.average_hexagon_area(RES, unit="m^2")     # Earth's mean cell at RES
+AREA_M2 = h3.average_hexagon_area(8, unit="m^2")       # Earth's mean r8 cell
 EDGE_M = math.sqrt(2 * AREA_M2 / (3 * math.sqrt(3)))   # regular hexagon with that area
 ROW_M, COL_M = 1.5 * EDGE_M, math.sqrt(3) * EDGE_M
 
@@ -289,7 +288,7 @@ def run_level(body: str, level: str, interval: float, workers: int, root: Path, 
     totals = info.get("totals", {"hexes_kept": 0, "lines": 0, "points": 0})
     info.update({
         "body": body, "level": level, "contour_interval_m": interval, "datum": BODIES[body]["datum"],
-        "hexagon": {"area_m2": AREA_M2, "edge_m": EDGE_M, "rule": f"Earth H3 r{RES} mean cell size, unchanged",
+        "hexagon": {"area_m2": AREA_M2, "edge_m": EDGE_M, "rule": "Earth H3 r8 mean cell size, unchanged",
                     "id": "row << 32 | col (row: constant-latitude ring from the south pole)"},
         "dem": BODIES[body]["dem"], "tiles_total": len(tiles), "status": "running",
         "started": info.get("started", datetime.now(timezone.utc).isoformat(timespec="seconds")),
