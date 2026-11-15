@@ -158,6 +158,7 @@ export function MirrorLens({
   const root = useRef<HTMLDivElement>(null);
   const spots = useRef<Map<string, HTMLElement>>(new Map());
   const pinEl = useRef<HTMLDivElement>(null);
+  const marks = useRef<HTMLDivElement>(null);
   const view = useRef<View>({ lat: 0, lon: 0 });
   const goal = useRef<{ from: View; to: View; t0: number } | null>(null);
   const drag = useRef<{ x: number; y: number; moved: boolean; view: View } | null>(null);
@@ -211,6 +212,12 @@ export function MirrorLens({
     const place = () => {
       const half = size / 2;
       const r = (half / 1.08) * zoom.current.now;
+      // Zoomed in, the disc runs past the lens: clip the markers to the lens circle with a soft edge.
+      if (marks.current) {
+        const m = zoom.current.now > 1.02 ? "radial-gradient(circle closest-side, #000 calc(100% - 7px), transparent)" : "none";
+        marks.current.style.maskImage = m;
+        marks.current.style.webkitMaskImage = m;
+      }
       const v = view.current;
       // Selected first; any other dot that would overlap one already shown steps back.
       const shown: [number, number][] = [];
@@ -222,7 +229,7 @@ export function MirrorLens({
           const q = project(v, lat, lon);
           const x = half + q.x * r;
           const y = half - q.y * r;
-          const inside = Math.hypot(x - half, y - half) < half - 8;
+          const inside = Math.hypot(x - half, y - half) < half - 4;
           const clear = !shown.some(([sx, sy]) => Math.hypot(sx - x, sy - y) < 14);
           const on = q.z > 0.04 && inside && clear;
           if (on) shown.push([x, y]);
@@ -376,35 +383,37 @@ export function MirrorLens({
           }
         }}
       />
-      {sites.map((s) => {
-        const on = s.id === selected;
-        return (
-          <button
-            key={`${s.id},${s.lat},${s.lon}`}
-            ref={(el) => {
-              const k = `${s.id},${s.lat},${s.lon}`;
-              if (el) spots.current.set(k, el);
-              else spots.current.delete(k);
-            }}
-            type="button"
-            onClick={() => onSelect(s.id)}
-            aria-label={s.name}
-            title={s.name}
-            className="group absolute left-0 top-0 -ml-3 -mt-3 flex h-6 w-6 items-center justify-center focus-visible:outline-none"
-            style={{ opacity: 0, transition: "opacity .25s" }}
-          >
-            <span className="absolute h-3 w-3 rounded-full border border-white/70" style={{ animation: on ? "ping-ring 1.8s var(--ease-out-expo) infinite" : undefined }} />
-            <span
-              className={`relative rounded-full bg-white shadow-[0_0_8px_rgb(255_255_255/0.8)] transition-all duration-300 group-hover:scale-150 group-focus-visible:scale-150 ${on ? "h-2 w-2" : "h-[5px] w-[5px] opacity-80"}`}
-            />
-          </button>
-        );
-      })}
-      <div ref={pinEl} className="pointer-events-none absolute left-0 top-0" style={{ opacity: 0 }}>
-        <svg width="18" height="24" viewBox="0 0 18 24" className="-ml-[9px] -mt-[22px] drop-shadow-[0_2px_6px_rgb(0_0_0/0.6)]" aria-hidden>
-          <path d="M9 23s7-8.2 7-13.5A7 7 0 002 9.5C2 14.8 9 23 9 23z" fill="white" />
-          <circle cx="9" cy="9.5" r="2.6" fill={BODY[body].tint} />
-        </svg>
+      <div ref={marks} className="pointer-events-none absolute inset-0">
+        {sites.map((s) => {
+          const on = s.id === selected;
+          return (
+            <button
+              key={`${s.id},${s.lat},${s.lon}`}
+              ref={(el) => {
+                const k = `${s.id},${s.lat},${s.lon}`;
+                if (el) spots.current.set(k, el);
+                else spots.current.delete(k);
+              }}
+              type="button"
+              onClick={() => onSelect(s.id)}
+              aria-label={s.name}
+              title={s.name}
+              className="group absolute left-0 top-0 -ml-3 -mt-3 flex h-6 w-6 items-center justify-center focus-visible:outline-none"
+              style={{ opacity: 0, transition: "opacity .25s" }}
+            >
+              <span className="absolute h-3 w-3 rounded-full border border-white/70" style={{ animation: on ? "ping-ring 1.8s var(--ease-out-expo) infinite" : undefined }} />
+              <span
+                className={`relative rounded-full bg-white shadow-[0_0_8px_rgb(255_255_255/0.8)] transition-all duration-300 group-hover:scale-150 group-focus-visible:scale-150 ${on ? "h-2 w-2" : "h-[5px] w-[5px] opacity-80"}`}
+              />
+            </button>
+          );
+        })}
+        <div ref={pinEl} className="pointer-events-none absolute left-0 top-0" style={{ opacity: 0 }}>
+          <svg width="18" height="24" viewBox="0 0 18 24" className="-ml-[9px] -mt-[22px] drop-shadow-[0_2px_6px_rgb(0_0_0/0.6)]" aria-hidden>
+            <path d="M9 23s7-8.2 7-13.5A7 7 0 002 9.5C2 14.8 9 23 9 23z" fill="white" />
+            <circle cx="9" cy="9.5" r="2.6" fill={BODY[body].tint} />
+          </svg>
+        </div>
       </div>
     </div>
   );
