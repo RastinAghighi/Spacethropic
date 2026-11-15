@@ -5,7 +5,7 @@ import { DIVE, useUi } from "@/lib/ui";
 import { research, useResearch } from "@/lib/research";
 import { formatCoord, type Candidate } from "@/lib/candidates";
 import { BODY } from "@/lib/catalog";
-import { DIMS, matchProfile, overallScore, suggest, targetOf, type DimMatch, type Filters } from "@/lib/profile";
+import { DIMS, matchProfile, overallScore, suggest, targetOf, type DimMatch, type Filters, type Tab } from "@/lib/profile";
 import type { AnalogQuery } from "@/lib/search";
 import { useRunSearch } from "./search/primitives";
 
@@ -71,107 +71,98 @@ function Delta({ value, className, fallback }: { value: number | null; className
   );
 }
 
-/** One dimension: a quiet bar that opens its detail and lights its drawer tab on hover. */
-function FingerprintRow({ m, weight, tint, delta, i }: { m: DimMatch; weight: number; tint: string; delta: number | null; i: number }) {
-  const ignored = weight === 0;
-  const short = !!m.gap && !ignored;
-  const tab = DIMS[m.dim].tab;
+const COLS = "grid grid-cols-[76px_minmax(0,1fr)_minmax(0,1fr)_40px_52px] items-center gap-x-2.5";
+
+/** Measured values side by side: the site, the target, and how close they are. */
+function MatchTable({ match, weights, target, tint, deltas, hover }: { match: DimMatch[]; weights: Filters["weights"]; target: string; tint: string; deltas: (number | null)[]; hover: Tab | null }) {
   return (
-    <li>
-      <button
-        type="button"
-        onClick={() => research.open(tab)}
-        onPointerEnter={() => research.hover(tab)}
-        onPointerLeave={() => research.hover(null)}
-        onFocus={() => research.hover(tab)}
-        onBlur={() => research.hover(null)}
-        className={`group -mx-2.5 block w-[calc(100%+20px)] rounded-xl px-2.5 py-2 text-left transition-colors duration-200 hover:bg-white/[0.035] focus-visible:bg-white/[0.035] focus-visible:outline-none ${ignored ? "opacity-35" : ""}`}
-      >
-        <span className="flex items-center gap-3">
-          <span className="flex w-[84px] shrink-0 items-center gap-1.5 text-[12.5px] text-white/70 transition-colors group-hover:text-white">
-            {DIMS[m.dim].label}
-            {weight === 2 && <span title="Prioritised" className="h-1 w-1 rounded-full" style={{ background: tint }} />}
-          </span>
-          <span className="relative h-[3px] flex-1 overflow-hidden rounded-full bg-white/[0.07]">
-            <span
-              className="absolute inset-y-0 left-0 rounded-full"
-              style={{
-                width: `${pct(m.score)}%`,
-                background: short ? AMBER : tint,
-                opacity: short ? 0.9 : 0.8,
-                transformOrigin: "0 50%",
-                animation: `bar-in .9s var(--ease-out-expo) ${0.2 + i * 0.05}s both`,
-              }}
-            />
-          </span>
-          <span className="flex w-[64px] shrink-0 items-center justify-end gap-1.5">
-            <Delta value={delta} />
-            <span className="font-mono text-[11px] tabular-nums" style={{ color: short ? AMBER : "rgb(255 255 255 / 0.6)" }}>
-              {ignored ? "—" : pct(m.score)}
-            </span>
-          </span>
+    <div role="table" aria-label={`Measured values against ${target}`}>
+      <div role="row" className={`${COLS} pb-1.5 text-[10px] uppercase tracking-[0.12em] text-white/30`}>
+        <span role="columnheader" />
+        <span role="columnheader">Here</span>
+        <span role="columnheader" title={target}>
+          Target
         </span>
-        {/* Detail on demand */}
-        <span className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out group-hover:grid-rows-[1fr] group-focus-visible:grid-rows-[1fr]">
-          <span className="min-h-0 overflow-hidden">
-            <span className="flex items-baseline justify-between gap-3 pl-[96px] pt-1.5 text-[11px] leading-snug">
-              <span className="text-white/55">
-                <span className="font-mono text-white/80">{m.earth}</span>
-                <span className="px-1.5 text-white/25">vs</span>
-                <span className="font-mono">{m.target}</span>
+        <span role="columnheader" className="col-span-2 text-right">
+          Match
+        </span>
+      </div>
+      {match.map((m, i) => {
+        const ignored = weights[m.dim] === 0;
+        const short = !!m.gap && !ignored;
+        const tab = DIMS[m.dim].tab;
+        return (
+          <button
+            key={m.dim}
+            type="button"
+            role="row"
+            onClick={() => research.open(tab)}
+            onPointerEnter={() => research.hover(tab)}
+            onPointerLeave={() => research.hover(null)}
+            onFocus={() => research.hover(tab)}
+            onBlur={() => research.hover(null)}
+            title={m.gap ?? `Refine on ${DIMS[m.dim].label.toLowerCase()}`}
+            className={`${COLS} -mx-2 w-[calc(100%+16px)] rounded-lg px-2 py-[7px] text-left transition-colors duration-200 focus-visible:outline-none ${hover === tab ? "bg-white/[0.06]" : "hover:bg-white/[0.04]"} ${ignored ? "opacity-35" : ""}`}
+          >
+            <span role="cell" className="flex items-center gap-1.5 text-[12px] text-white/50">
+              {DIMS[m.dim].metric}
+              {weights[m.dim] === 2 && <span title="Prioritised" className="h-1 w-1 rounded-full" style={{ background: tint }} />}
+            </span>
+            <span role="cell" title={m.earth} className="truncate text-[13px] tabular-nums" style={{ color: short ? AMBER : "rgb(255 255 255 / 0.92)" }}>
+              {m.earth}
+            </span>
+            <span role="cell" title={m.target} className="truncate text-[13px] tabular-nums text-white/40">
+              {m.target}
+            </span>
+            <span role="cell" aria-hidden className="relative h-[3px] overflow-hidden rounded-full bg-white/[0.07]">
+              <span
+                className="absolute inset-y-0 left-0 rounded-full"
+                style={{ width: `${pct(m.score)}%`, background: short ? AMBER : tint, transformOrigin: "0 50%", animation: `bar-in .9s var(--ease-out-expo) ${0.2 + i * 0.05}s both` }}
+              />
+            </span>
+            <span role="cell" className="flex items-center justify-end gap-1">
+              <Delta value={deltas[i]} />
+              <span className="font-mono text-[11px] tabular-nums" style={{ color: short ? AMBER : "rgb(255 255 255 / 0.55)" }}>
+                {ignored ? "—" : pct(m.score)}
               </span>
-              <span className="shrink-0 text-white/40">Refine ›</span>
             </span>
-          </span>
-        </span>
-      </button>
-    </li>
+          </button>
+        );
+      })}
+    </div>
   );
 }
 
-/** One plain sentence a non-specialist can act on. */
-function Verdict({ match, weights }: { match: DimMatch[]; weights: Filters["weights"] }) {
-  const counted = match.filter((m) => weights[m.dim] > 0);
-  const strong = counted.filter((m) => m.score >= 0.75).sort((a, b) => b.score - a.score);
-  const worst = counted.filter((m) => m.gap).sort((a, b) => a.score - b.score)[0];
-  const list = (ms: DimMatch[]) => ms.map((m) => DIMS[m.dim].label.toLowerCase()).join(ms.length > 2 ? ", " : " and ");
-  return (
-    <p className="text-[14.5px] leading-[1.45] tracking-[-0.005em] text-white/85">
-      {strong.length ? <>Strong on {list(strong.slice(0, 3))}.</> : <>A partial match.</>}{" "}
-      {worst ? (
-        <span className="text-white/50">
-          Weakest on {DIMS[worst.dim].label.toLowerCase()}: <span style={{ color: AMBER }}>{worst.brief}</span>.
-        </span>
-      ) : (
-        <span className="text-white/50">No dimension falls short.</span>
-      )}
-    </p>
-  );
-}
-
-/** The tool's proposal for the next refine, with its predicted effect. */
+/** The tool's proposed next refine, stated as the limit itself and its measured effect. */
 function NextStep({ c, q, results, tint }: { c: Candidate; q: AnalogQuery; results: Candidate[]; tint: string }) {
   const { run, busy } = useRunSearch();
   const [i, setI] = useState(0);
   const ideas = suggest(q, c, results);
-  if (!ideas.length)
-    return (
-      <p className="mt-6 text-[12px] leading-relaxed text-white/40">
-        Nothing in this pool closes the remaining gaps. Open a drawer on the left to set your own limits.
-      </p>
-    );
+  if (!ideas.length) return null;
   const s = ideas[i % ideas.length];
-  const go = () => run({ ...q, filters: s.filters, step: s.limit });
+  const tab = DIMS[s.dim].tab;
+  const enter = () => {
+    research.preview(s.filters);
+    research.hover(tab);
+  };
+  const leave = () => {
+    research.preview(null);
+    research.hover(null);
+  };
+  const go = () => {
+    leave();
+    run({ ...q, filters: s.filters, step: s.limit });
+  };
 
   return (
-    <div className="mt-6" style={{ animation: "rise-in .7s var(--ease-out-expo) .35s both" }}>
-      <div className="mb-2 flex items-center justify-between">
-        <p className="text-[10.5px] font-medium uppercase tracking-[0.14em] text-white/40">Suggested next step</p>
+    <div className="mt-5" style={{ animation: "rise-in .7s var(--ease-out-expo) .35s both" }}>
+      <div className="mb-1.5 flex items-center justify-between">
+        <p className="text-[10px] uppercase tracking-[0.12em] text-white/30">Suggested refine</p>
         {ideas.length > 1 && (
           <button
             type="button"
             onClick={() => setI((v) => v + 1)}
-            className="flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[10.5px] tabular-nums text-white/40 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
+            className="flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[10.5px] tabular-nums text-white/35 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
             aria-label="Another suggestion"
           >
             {(i % ideas.length) + 1} / {ideas.length}
@@ -183,9 +174,9 @@ function NextStep({ c, q, results, tint }: { c: Candidate; q: AnalogQuery; resul
       </div>
       {/* Gradient border with a single sheen on arrival */}
       <div
-        className="rounded-2xl p-px"
+        className="rounded-[14px] p-px"
         style={{
-          background: `linear-gradient(110deg, rgb(255 255 255 / 0.08) 30%, ${tint}aa 50%, rgb(255 255 255 / 0.08) 70%) 0 0 / 250% 100%`,
+          background: `linear-gradient(110deg, rgb(255 255 255 / 0.09) 30%, ${tint}aa 50%, rgb(255 255 255 / 0.09) 70%) 0 0 / 250% 100%`,
           animation: "suggest-sheen 2.4s var(--ease-out-expo) .6s both",
         }}
       >
@@ -194,29 +185,25 @@ function NextStep({ c, q, results, tint }: { c: Candidate; q: AnalogQuery; resul
           type="button"
           onClick={go}
           disabled={busy}
-          onPointerEnter={() => research.preview(s.filters)}
-          onPointerLeave={() => research.preview(null)}
-          onFocus={() => research.preview(s.filters)}
-          onBlur={() => research.preview(null)}
-          className="group block w-full rounded-[15px] bg-[rgb(14_15_19/0.92)] px-4 py-3.5 text-left transition-colors hover:bg-[rgb(22_23_28/0.95)] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40 disabled:opacity-60"
+          onPointerEnter={enter}
+          onPointerLeave={leave}
+          onFocus={enter}
+          onBlur={leave}
+          title={`${s.title}. ${s.reason}.`}
+          className="group flex w-full items-center justify-between gap-3 rounded-[13px] bg-[rgb(14_15_19/0.92)] py-2.5 pl-3.5 pr-2.5 text-left transition-colors hover:bg-[rgb(22_23_28/0.95)] focus-visible:outline-none disabled:opacity-60"
         >
-          <span className="flex items-center justify-between gap-3" style={{ animation: "rise-in .45s var(--ease-out-expo) both" }}>
-            <span className="text-[14px] font-medium tracking-[-0.01em] text-white">{s.title}</span>
-            <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white text-black transition-transform duration-300 group-hover:translate-x-0.5">
-              <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden>
-                <path d="M2.5 7h9M7.75 3.25L11.5 7l-3.75 3.75" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+          <span className="min-w-0" style={{ animation: "rise-in .45s var(--ease-out-expo) both" }}>
+            <span className="block truncate font-mono text-[13px] text-white">{s.limit}</span>
+            <span className="mt-0.5 block truncate text-[11px] tabular-nums text-white/40">
+              {DIMS[s.dim].metric.toLowerCase()} match {pct(s.before)} → <span className="text-[#8fe3b0]">{pct(s.after)}</span>
+              <span className="text-white/20"> · </span>
+              {results.length} → {s.results.length} sites
             </span>
           </span>
-          <span className="mt-0.5 block text-[12px] text-white/45">{s.reason}.</span>
-          <span className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px]">
-            <span className="rounded-md bg-white/[0.06] px-1.5 py-0.5 font-mono text-white/70">{s.limit}</span>
-            <span className="text-white/35">→</span>
-            <span className="tabular-nums text-white/55">
-              {s.results.length} site{s.results.length > 1 ? "s" : ""} · {DIMS[s.dim].label.toLowerCase()} {pct(s.before)}
-              <span className="text-white/30"> → </span>
-              <span className="text-[#8fe3b0]">{pct(s.after)}</span>
-            </span>
+          <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-white text-black transition-transform duration-300 group-hover:translate-x-0.5">
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden>
+              <path d="M2.5 7h9M7.75 3.25L11.5 7l-3.75 3.75" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </span>
         </button>
       </div>
@@ -224,12 +211,32 @@ function NextStep({ c, q, results, tint }: { c: Candidate; q: AnalogQuery; resul
   );
 }
 
-function Body({ c, index, total, q, results, source, applied, prev }: { c: Candidate; index: number; total: number; q: AnalogQuery; results: Candidate[]; source: "live" | "sample"; applied: Filters; prev: { c: Candidate; q: AnalogQuery } | null }) {
+function Body({
+  c,
+  index,
+  total,
+  q,
+  results,
+  source,
+  applied,
+  hover,
+  prev,
+}: {
+  c: Candidate;
+  index: number;
+  total: number;
+  q: AnalogQuery;
+  results: Candidate[];
+  source: "live" | "sample";
+  applied: Filters;
+  hover: Tab | null;
+  prev: { c: Candidate; q: AnalogQuery } | null;
+}) {
   const tint = BODY[q.target].tint;
   const target = targetOf(q);
   const match = matchProfile(c, q);
   const before = prev ? matchProfile(prev.c, prev.q) : null;
-  const dimDelta = (i: number) => (before ? pct(match[i].score) - pct(before[i].score) : null);
+  const deltas = match.map((m, i) => (before ? pct(m.score) - pct(before[i].score) : null));
   const scoreDelta = prev ? pct(overallScore(c, q)) - pct(overallScore(prev.c, prev.q)) : null;
 
   return (
@@ -257,58 +264,49 @@ function Body({ c, index, total, q, results, source, applied, prev }: { c: Candi
         <ScoreRing score={overallScore(c, q)} delta={scoreDelta} tint={tint} />
       </div>
 
-      <div className="mt-5" style={{ animation: "rise-in .6s var(--ease-out-expo) .08s both" }}>
-        <Verdict match={match} weights={applied.weights} />
-      </div>
-
-      <section className="mt-5" style={{ animation: "rise-in .6s var(--ease-out-expo) .12s both" }} aria-label={`Match against ${target.name}`}>
-        <p className="mb-1 text-[10.5px] font-medium uppercase tracking-[0.14em] text-white/40">Against {target.short}</p>
-        <ul>
-          {match.map((m, i) => (
-            <FingerprintRow key={m.dim} m={m} weight={applied.weights[m.dim]} tint={tint} delta={dimDelta(i)} i={i} />
-          ))}
-        </ul>
+      <section className="mt-6" style={{ animation: "rise-in .6s var(--ease-out-expo) .1s both" }}>
+        <MatchTable match={match} weights={applied.weights} target={target.short} tint={tint} deltas={deltas} hover={hover} />
       </section>
 
       <NextStep c={c} q={q} results={results} tint={tint} />
 
-      <section className="mt-8" style={{ animation: "rise-in .6s var(--ease-out-expo) .4s both" }}>
-        <p className="text-[13px] leading-relaxed text-white/60">{c.summary}</p>
+      <details className="group mt-6 border-t border-white/[0.06] pt-3 text-[12px]" style={{ animation: "rise-in .6s var(--ease-out-expo) .4s both" }}>
+        <summary className="flex cursor-pointer list-none items-center justify-between text-white/40 transition-colors hover:text-white/70 [&::-webkit-details-marker]:hidden">
+          About this site
+          <svg width="10" height="10" viewBox="0 0 10 10" className="transition-transform group-open:rotate-90" aria-hidden>
+            <path d="M3.5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </summary>
+        <p className="mt-3 text-[13px] leading-relaxed text-white/70">{c.summary}</p>
         <ul className="mt-3 space-y-1.5">
           {c.why.map((w) => (
-            <li key={w} className="flex gap-2.5 text-[12.5px] leading-snug text-white/55">
+            <li key={w} className="flex gap-2.5 leading-snug text-white/55">
               <span className="mt-[8px] h-px w-2 shrink-0 bg-white/30" aria-hidden />
               {w}
             </li>
           ))}
         </ul>
-        <details className="group mt-4 text-[12px] text-white/40">
-          <summary className="flex cursor-pointer list-none items-center gap-1.5 transition-colors hover:text-white/70 [&::-webkit-details-marker]:hidden">
-            <svg width="9" height="9" viewBox="0 0 10 10" className="transition-transform group-open:rotate-90" aria-hidden>
-              <path d="M3.5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-            Field limits and sources
-          </summary>
-          <ul className="mt-2 space-y-1.5 pl-4">
-            {c.breaks.map((b) => (
-              <li key={b} className="leading-snug text-white/50">
-                {b}
-              </li>
-            ))}
-          </ul>
-          <p className="mt-3 pl-4 text-[10.5px] leading-relaxed text-white/30">
-            Imagery: NASA HLS via GIBS, {c.imagery.date}. Climate: NASA POWER climatology. Target values are indicative.
-          </p>
-        </details>
-      </section>
+        <p className="mt-4 text-[10px] uppercase tracking-[0.12em] text-white/30">Where it differs</p>
+        <ul className="mt-1.5 space-y-1.5">
+          {c.breaks.map((b) => (
+            <li key={b} className="flex gap-2.5 leading-snug text-white/45">
+              <span className="mt-[8px] h-px w-2 shrink-0 bg-white/20" aria-hidden />
+              {b}
+            </li>
+          ))}
+        </ul>
+        <p className="mt-4 text-[10.5px] leading-relaxed text-white/30">
+          Imagery: NASA HLS via GIBS, {c.imagery.date}. Climate: NASA POWER climatology. Target values are indicative.
+        </p>
+      </details>
     </div>
   );
 }
 
-/** Right-third panel: a verdict, the match fingerprint, and the tool's suggested next step. */
+/** Right-third panel: measured values against the target, and the tool's suggested next refine. */
 export function EvidencePanel() {
   const { mode, results, active, query, source, searchFrom, trail, trailAt } = useUi();
-  const { applied } = useResearch();
+  const { applied, hover } = useResearch();
   const c = results[active];
   const shown = mode === "site" || mode === "diving" || mode === "surfacing" || (mode === "searching" && searchFrom === "site");
   if (!c || !query || !shown) return null;
@@ -327,7 +325,7 @@ export function EvidencePanel() {
       }}
     >
       <div className="min-h-0 overflow-y-auto overscroll-contain rounded-[22px] border border-white/[0.08] bg-[rgb(10_11_14/0.6)] p-6 shadow-[0_30px_80px_-30px_rgb(0_0_0/0.9),inset_0_1px_0_rgb(255_255_255/0.05)] backdrop-blur-2xl backdrop-saturate-150 [scrollbar-width:none]">
-        <Body key={`${c.id}:${trailAt}`} c={c} index={active} total={results.length} q={query} results={results} source={source} applied={applied} prev={prev} />
+        <Body key={`${c.id}:${trailAt}`} c={c} index={active} total={results.length} q={query} results={results} source={source} applied={applied} hover={hover} prev={prev} />
       </div>
     </aside>
   );

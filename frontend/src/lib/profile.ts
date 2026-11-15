@@ -8,26 +8,28 @@ import type { AnalogQuery, AnalogTarget } from "./search";
 
 export type Geology = "basalt" | "impact" | "sedimentary" | "evaporite" | "sulfate" | "ice";
 
-export const GEOLOGY: Record<Geology, { label: string; note: string }> = {
-  basalt: { label: "Basalt", note: "Volcanic flows, like the lunar maria" },
-  impact: { label: "Impact breccia", note: "Shocked, brecciated crater rock" },
-  sedimentary: { label: "Sedimentary", note: "Water-laid clays, mudstones, deltas" },
-  evaporite: { label: "Evaporite", note: "Salts left by drying brines" },
-  sulfate: { label: "Sulfate · acid", note: "Jarosite and hematite from acid water" },
-  ice: { label: "Ground ice", note: "Permafrost or buried ice" },
+export const GEOLOGY: Record<Geology, { label: string; short: string; note: string }> = {
+  basalt: { label: "Basalt", short: "Basalt", note: "Volcanic flows, like the lunar maria" },
+  impact: { label: "Impact breccia", short: "Breccia", note: "Shocked, brecciated crater rock" },
+  sedimentary: { label: "Sedimentary", short: "Sediment", note: "Water-laid clays, mudstones, deltas" },
+  evaporite: { label: "Evaporite", short: "Salts", note: "Salts left by drying brines" },
+  sulfate: { label: "Sulfate · acid", short: "Sulfates", note: "Jarosite and hematite from acid water" },
+  ice: { label: "Ground ice", short: "Ice", note: "Permafrost or buried ice" },
 };
+export const rockList = (gs: Geology[]) => gs.map((g, i) => (i ? GEOLOGY[g].short.toLowerCase() : GEOLOGY[g].short)).join(", ");
 
 /** Left-rail drawers. */
 export type Tab = "terrain" | "geology" | "thermal" | "weather" | "access";
 /** Scored similarity dimensions, shown in the right pane. */
 export type Dim = "terrain" | "geology" | "thermal" | "aridity" | "sun";
 
-export const DIMS: Record<Dim, { label: string; tab: Tab }> = {
-  terrain: { label: "Terrain", tab: "terrain" },
-  geology: { label: "Geology", tab: "geology" },
-  thermal: { label: "Thermal", tab: "thermal" },
-  aridity: { label: "Aridity", tab: "weather" },
-  sun: { label: "Illumination", tab: "weather" },
+/** `metric` is the measured quantity each dimension is scored on, as shown in tables. */
+export const DIMS: Record<Dim, { label: string; metric: string; tab: Tab }> = {
+  terrain: { label: "Terrain", metric: "Slope", tab: "terrain" },
+  geology: { label: "Geology", metric: "Rock", tab: "geology" },
+  thermal: { label: "Thermal", metric: "Mean temp", tab: "thermal" },
+  aridity: { label: "Aridity", metric: "Rainfall", tab: "weather" },
+  sun: { label: "Illumination", metric: "Sunlight", tab: "weather" },
 };
 export const DIM_ORDER: Dim[] = ["terrain", "geology", "thermal", "aridity", "sun"];
 
@@ -124,7 +126,7 @@ export const FIELDS: Record<NumKey, Field> = {
   elevation: { label: "Elevation", unit: "m", min: 0, max: 3500, step: 50, digits: 0, get: (s) => s.climate.elevationM },
   meanTemp: { label: "Mean temperature", unit: "°C", min: -30, max: 35, step: 1, digits: 1, get: (s) => s.climate.meanTempC, target: (p) => p.meanTemp },
   coldMin: { label: "Coldest-month low", unit: "°C", min: -60, max: 15, step: 1, digits: 1, get: (s) => s.climate.coldestMonthMinC },
-  precip: { label: "Precipitation", unit: "mm/yr", min: 0, max: 1000, step: 10, digits: 0, scale: "sqrt", get: (s) => s.climate.precipMmYr, target: () => 0 },
+  precip: { label: "Rainfall", unit: "mm/yr", min: 0, max: 1000, step: 10, digits: 0, scale: "sqrt", get: (s) => s.climate.precipMmYr, target: () => 0 },
   humidity: { label: "Humidity", unit: "%", min: 0, max: 100, step: 1, digits: 0, get: (s) => s.climate.humidityPct },
   wind: { label: "Wind", unit: "m/s", min: 0, max: 6, step: 0.1, digits: 1, get: (s) => s.climate.windMs },
   solar: { label: "Solar irradiance", unit: "kWh/m²·d", min: 0, max: 11, step: 0.1, digits: 1, get: (s) => s.climate.solarKwhM2Day, target: (p) => p.solar },
@@ -251,6 +253,7 @@ export function matchProfile(s: CandidateSite, q: AnalogQuery): DimMatch[] {
   const k = s.climate;
   const geoHit = p.geology.filter((g) => t.geology.includes(g));
   const rock = (gs: Geology[]) => gs.map((g) => GEOLOGY[g].label).join(" · ");
+  const deg = (v: number) => `${Math.round(v).toString().replace("-", "−")} °C`;
   const dT = Math.round(k.meanTempC - p.meanTemp);
 
   const out: DimMatch[] = [
@@ -265,32 +268,32 @@ export function matchProfile(s: CandidateSite, q: AnalogQuery): DimMatch[] {
     {
       dim: "geology",
       score: Math.max(0.08, geoHit.length / p.geology.length),
-      earth: rock(t.geology),
-      target: rock(p.geology),
+      earth: rockList(t.geology),
+      target: rockList(p.geology),
       gap: `No ${rock(p.geology.filter((g) => !t.geology.includes(g))).toLowerCase()} here.`,
       brief: `no ${rock(p.geology.filter((g) => !t.geology.includes(g))).toLowerCase()}`,
     },
     {
       dim: "thermal",
       score: gauss(dT, 45),
-      earth: formatField("meanTemp", k.meanTempC),
-      target: formatField("meanTemp", p.meanTemp),
+      earth: deg(k.meanTempC),
+      target: deg(p.meanTemp),
       gap: `${Math.abs(dT)} °C ${dT > 0 ? "warmer" : "colder"} on average. Pair field work with a thermal-vacuum test.`,
       brief: `${Math.abs(dT)} °C ${dT > 0 ? "warmer" : "colder"}`,
     },
     {
       dim: "aridity",
       score: Math.exp(-k.precipMmYr / 350),
-      earth: formatField("precip", k.precipMmYr),
-      target: "none",
+      earth: `${Math.round(k.precipMmYr)} mm`,
+      target: "0 mm",
       gap: `${Math.round(k.precipMmYr)} mm of rain a year weathers the surface; ${short} has none.`,
       brief: `${Math.round(k.precipMmYr)} mm of rain a year`,
     },
     {
       dim: "sun",
       score: gauss(k.solarKwhM2Day - p.solar, 2.4),
-      earth: formatField("solar", k.solarKwhM2Day),
-      target: formatField("solar", p.solar),
+      earth: `${k.solarKwhM2Day.toFixed(1)} kWh`,
+      target: `${p.solar.toFixed(1)} kWh`,
       gap: k.solarKwhM2Day > p.solar ? "Far more sunlight than the target gets." : "Less sunlight than the target gets.",
       brief: k.solarKwhM2Day > p.solar ? "too much sun" : "too little sun",
     },

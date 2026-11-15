@@ -339,6 +339,9 @@ export function RefinePanel() {
         style={{ animation: mode === "diving" ? `rise-in .9s var(--ease-out-expo) ${DIVE.panel + 0.1}s both` : undefined }}
       >
         <div className="flex flex-col gap-0.5 rounded-[18px] border border-white/[0.08] bg-[rgb(10_11_14/0.55)] p-1 shadow-[0_30px_80px_-30px_rgb(0_0_0/0.9),inset_0_1px_0_rgb(255_255_255/0.05)] backdrop-blur-2xl backdrop-saturate-150">
+          <p aria-hidden className="pb-1 pt-1.5 text-center text-[8.5px] font-medium uppercase tracking-[0.12em] text-white/35">
+            Refine
+          </p>
           {TABS.map((t) => {
             const on = drawer === t.id;
             const n = limitsIn(t.id, draft);

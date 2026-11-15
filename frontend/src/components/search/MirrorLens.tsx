@@ -6,6 +6,7 @@ import { BODY, type Target } from "@/lib/catalog";
 
 // A small orthographic globe of the Moon or Mars, drawn with one fragment shader. The view is
 // the lat/lon at the centre of the disc; hotspots are DOM buttons placed with the same projection.
+// Choosing a site with close neighbours (the south-pole cluster) zooms in so they separate.
 
 const VERT = `attribute vec2 p; varying vec2 v; void main(){ v = p; gl_Position = vec4(p, 0., 1.); }`;
 const FRAG = `
@@ -17,8 +18,9 @@ uniform vec3 uSun;
 uniform vec3 uTint;
 uniform float uPx;    // one pixel in disc units
 uniform float uAtmo;
+uniform float uZoom;
 void main() {
-  vec2 p = v * 1.08;  // leave room for the halo
+  vec2 p = v * 1.08 / uZoom;  // leave room for the halo
   float r = length(p);
   if (r > 1.0) {
     float g = exp(-(r - 1.0) * 26.0) * uAtmo;
@@ -38,6 +40,8 @@ void main() {
   float lam = max(dot(n, uSun), 0.0);
   col *= 0.16 + 1.05 * pow(lam, 0.75);
   col += uTint * pow(1.0 - n.z, 4.0) * uAtmo * 0.55;
+  // Zoomed in, the limb is out of frame: a lens vignette keeps the depth.
+  col *= 1.0 - 0.45 * smoothstep(0.35, 1.0, length(v)) * clamp(uZoom - 1.0, 0.0, 1.0);
   float a = 1.0 - smoothstep(1.0 - uPx * 1.5, 1.0, r);
   gl_FragColor = vec4(col * a, a);
 }`;
@@ -99,8 +103,8 @@ function loadMap(url: string) {
       const img = new Image();
       img.onload = () => {
         const c = document.createElement("canvas");
-        c.width = 1536;
-        c.height = 768;
+        c.width = 2048;
+        c.height = 1024;
         c.getContext("2d")!.drawImage(img, 0, 0, c.width, c.height);
         resolve(c);
       };
@@ -110,6 +114,19 @@ function loadMap(url: string) {
     textures.set(url, p);
   }
   return p;
+}
+
+/** Great-circle separation in degrees. */
+function separation(a: View, b: View) {
+  const p = project(a, b.lat, b.lon);
+  return Math.acos(Math.max(-1, Math.min(1, p.z))) / D;
+}
+
+/** Zoom that separates the chosen site from its nearest neighbour. */
+function zoomFor(site: View | null, sites: View[]) {
+  if (!site) return 1;
+  const near = Math.min(...sites.map((s) => separation(site, s)).filter((d) => d > 1e-3), 90);
+  return Math.max(1.3, Math.min(2.2, 14 / near));
 }
 
 const hex = (h: string) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);
@@ -141,11 +158,12 @@ export function MirrorLens({
   const goal = useRef<{ from: View; to: View; t0: number } | null>(null);
   const drag = useRef<{ x: number; y: number; moved: boolean; view: View } | null>(null);
   const kick = useRef<() => void>(() => {});
-  const props = useRef({ spinning, pin });
+  const zoom = useRef({ now: 1, goal: 1 });
+  const props = useRef({ spinning, pin, selected });
   const [grabbing, setGrabbing] = useState(false);
   useEffect(() => {
-    props.current = { spinning, pin };
-  }, [spinning, pin]);
+    props.current = { spinning, pin, selected };
+  }, [spinning, pin, selected]);
 
   // Renderer: one context per lens, redrawn only while something moves.
   useEffect(() => {
@@ -180,6 +198,7 @@ export function MirrorLens({
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
 
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let raf = 0;
     let last = performance.now();
     let ready = false;
@@ -187,16 +206,26 @@ export function MirrorLens({
 
     const place = () => {
       const half = size / 2;
-      const r = half / 1.08;
+      const r = (half / 1.08) * zoom.current.now;
       const v = view.current;
-      spots.current.forEach((node, key) => {
-        const [lat, lon] = key.split(",").slice(1).map(Number);
-        const q = project(v, lat, lon);
-        const on = q.z > 0.04;
-        node.style.transform = `translate(${half + q.x * r}px, ${half - q.y * r}px)`;
-        node.style.opacity = on ? String(Math.min(1, q.z * 4)) : "0";
-        node.style.pointerEvents = on ? "auto" : "none";
-      });
+      // Selected first; any other dot that would overlap one already shown steps back.
+      const shown: [number, number][] = [];
+      const sel = props.current.selected;
+      [...spots.current.entries()]
+        .sort(([a], [b]) => +b.startsWith(`${sel},`) - +a.startsWith(`${sel},`))
+        .forEach(([key, node]) => {
+          const [lat, lon] = key.split(",").slice(1).map(Number);
+          const q = project(v, lat, lon);
+          const x = half + q.x * r;
+          const y = half - q.y * r;
+          const inside = Math.hypot(x - half, y - half) < half - 8;
+          const clear = !shown.some(([sx, sy]) => Math.hypot(sx - x, sy - y) < 14);
+          const on = q.z > 0.04 && inside && clear;
+          if (on) shown.push([x, y]);
+          node.style.transform = `translate(${x}px, ${y}px)`;
+          node.style.opacity = on ? String(Math.min(1, q.z * 4)) : "0";
+          node.style.pointerEvents = on ? "auto" : "none";
+        });
       const pp = props.current.pin;
       if (pinEl.current) {
         const q = pp ? project(v, pp.lat, pp.lon) : null;
@@ -223,8 +252,15 @@ export function MirrorLens({
         view.current = { ...view.current, lon: view.current.lon + dt * 9 };
         moving = true;
       }
+      const z = zoom.current;
+      if (Math.abs(z.goal - z.now) > 1e-3) {
+        z.now += (z.goal - z.now) * (1 - Math.exp(-dt * 5));
+        moving = true;
+      } else z.now = z.goal;
       if (ready) {
         gl.uniform2f(u("uView"), view.current.lat * D, view.current.lon * D);
+        gl.uniform1f(u("uZoom"), z.now);
+        gl.uniform1f(u("uPx"), 2 / (size * dpr) / z.now);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
       }
       place();
@@ -237,10 +273,8 @@ export function MirrorLens({
       }
     };
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
     el.width = el.height = Math.round(size * dpr);
     gl.viewport(0, 0, el.width, el.height);
-    gl.uniform1f(u("uPx"), 2 / (size * dpr));
 
     const tint = hex(BODY[body].tint);
     gl.uniform3fv(u("uTint"), tint);
@@ -267,29 +301,33 @@ export function MirrorLens({
     };
   }, [body, size]);
 
-  // Turn to the selected site.
+  // Idle: a slow spin, tilted to show the south. Once someone picks, turn and zoom to the place.
   useEffect(() => {
+    if (spinning) {
+      zoom.current.goal = 1;
+      goal.current = { from: { ...view.current }, to: { lat: -24, lon: view.current.lon }, t0: performance.now() };
+      kick.current();
+      return;
+    }
     const s = sites.find((x) => x.id === selected);
     const to = s ? { lat: s.lat, lon: s.lon } : pin;
     if (!to) return;
-    goal.current = { from: { ...view.current }, to: { lat: Math.max(-80, Math.min(80, to.lat)), lon: to.lon }, t0: performance.now() };
+    zoom.current.goal = s ? zoomFor(s, sites) : zoom.current.goal;
+    goal.current = { from: { ...view.current }, to: { lat: Math.max(-88, Math.min(88, to.lat)), lon: to.lon }, t0: performance.now() };
     kick.current();
-  }, [selected, sites, pin]);
-
-  useEffect(() => {
-    if (spinning) kick.current();
-  }, [spinning]);
+  }, [selected, sites, pin, spinning]);
 
   const toDisc = (e: React.PointerEvent) => {
     const r = canvas.current!.getBoundingClientRect();
-    return { x: (((e.clientX - r.left) / r.width) * 2 - 1) * 1.08, y: -(((e.clientY - r.top) / r.height) * 2 - 1) * 1.08 };
+    const k = 1.08 / zoom.current.now;
+    return { x: (((e.clientX - r.left) / r.width) * 2 - 1) * k, y: -(((e.clientY - r.top) / r.height) * 2 - 1) * k };
   };
 
   return (
     <div className="relative shrink-0 select-none" style={{ width: size, height: size }}>
       <canvas
         ref={canvas}
-        className="absolute inset-0 h-full w-full touch-none"
+        className="absolute inset-0 h-full w-full touch-none rounded-full"
         style={{ cursor: grabbing ? "grabbing" : "grab", transition: "opacity .7s ease" }}
         aria-label={`${BODY[body].label} globe: drag to turn, click to drop a pin`}
         onPointerDown={(e) => {
@@ -307,7 +345,7 @@ export function MirrorLens({
             d.moved = true;
             setGrabbing(true);
           }
-          const k = 180 / Math.PI / (size / 2 / 1.08);
+          const k = 180 / Math.PI / ((size / 2 / 1.08) * zoom.current.now);
           view.current = { lat: Math.max(-89, Math.min(89, d.view.lat + dy * k)), lon: d.view.lon - dx * k };
         }}
         onPointerUp={(e) => {
