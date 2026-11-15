@@ -1,0 +1,21 @@
+mcd12c1_class,mcd12q1_value,class_name,broad_category,global_filter_v2_group,global_filter_v2_treatment,area_km2,pct_of_earth,pct_of_modis_land,area_on_ne_land_km2,pct_of_ne_land,area_south_of_60S_km2,majority_pixel_area_km2,area_km2_unnormalised_pct_div_100,mcd12q1_area_km2,mcd12q1_area_south_of_60S_km2,mcd12q1_vs_mcd12c1_pct_diff
+0,17,Water bodies,water,water,counts toward removal,365000709,71.56,,2363768,1.611,21896935,365171776,365000710,217315270,13119968,
+1,1,Evergreen needleleaf forests,forest,veg,counts toward removal,2492332,0.489,1.718,2456602,1.674,1,2376149,2492332,2499781,1,0.3
+2,2,Evergreen broadleaf forests,forest,veg,counts toward removal,12134663,2.379,8.365,12069844,8.226,0,12483399,12134663,12117127,0,-0.14
+3,3,Deciduous needleleaf forests,forest,veg,counts toward removal,335448,0.066,0.231,335302,0.229,0,170957,335448,342923,0,2.23
+4,4,Deciduous broadleaf forests,forest,veg,counts toward removal,2763385,0.542,1.905,2759003,1.88,0,2566022,2763385,2779936,0,0.6
+5,5,Mixed forests,forest,veg,counts toward removal,4818666,0.945,3.322,4806552,3.276,0,4945420,4818666,4818303,0,-0.01
+6,6,Closed shrublands,shrubland,veg,counts toward removal,460667,0.09,0.318,459847,0.313,0,354606,460667,467969,0,1.59
+7,7,Open shrublands,shrubland,other,kept as analog,13118763,2.572,9.043,13109269,8.934,2,13436633,13118763,13110786,3,-0.06
+8,8,Woody savannas,savanna,veg,counts toward removal,11402976,2.236,7.861,11359750,7.742,1,11413658,11402976,11391791,1,-0.1
+9,9,Savannas,savanna,other,kept as analog,15810401,3.1,10.899,15756040,10.738,1,15994037,15810402,15792460,1,-0.11
+10,10,Grasslands,grassland,other,kept as analog,31006067,6.079,21.374,30883552,21.047,91,30991432,31006067,31002157,105,-0.01
+11,11,Permanent wetlands,wetland,veg,counts toward removal,1452783,0.285,1.001,1286759,0.877,69,912514,1452783,1483158,78,2.09
+12,12,Croplands,cropland,veg,counts toward removal,11885475,2.33,8.193,11870281,8.09,0,12465635,11885475,11851244,0,-0.29
+13,13,Urban and built-up lands,urban,built,counts toward removal,868194,0.17,0.598,848599,0.578,0,666978,868194,880936,0,1.47
+14,14,Cropland/natural vegetation mosaics,cropland,veg,counts toward removal,1409626,0.276,0.972,1407666,0.959,0,1166122,1409626,1424352,0,1.04
+15,15,Permanent snow and ice,snow_ice,other,kept as analog,14687590,2.88,10.125,14619189,9.963,12267891,14661259,14687590,14689739,12267752,0.01
+16,16,Barren,barren,other,kept as analog,20417875,4.003,14.075,20343693,13.864,2928,20289024,20417875,20424051,3089,0.03
+nodata,,Unclassified / no data,unclassified,,,0,0.0,,0,0.0,,,,7325,,
+total_land,,All land classes (1-16),,,,145064910,28.44,,144371948,,,,,145076713,,0.01
+earth,,Whole Earth (authalic sphere),,,,510065622,100.0,,146735718,,,,,362399307,,
