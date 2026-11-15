@@ -6,8 +6,9 @@ import { research, useResearch } from "@/lib/research";
 import { formatCoord, type Candidate } from "@/lib/candidates";
 import { BODY } from "@/lib/catalog";
 import { DIMS, matchProfile, overallScore, suggest, targetOf, type DimMatch, type Filters, type Tab } from "@/lib/profile";
-import type { AnalogQuery } from "@/lib/search";
+import type { AnalogQuery, Source } from "@/lib/search";
 import { Label, useRunSearch } from "./search/primitives";
+import { ShapeCompare } from "./ShapeCompare";
 
 const AMBER = "#f3b453";
 const pct = (v: number) => Math.round(v * 100);
@@ -226,7 +227,7 @@ function Body({
   total: number;
   q: AnalogQuery;
   results: Candidate[];
-  source: "live" | "sample";
+  source: Source;
   applied: Filters;
   hover: Tab | null;
   prev: { c: Candidate; q: AnalogQuery } | null;
@@ -249,7 +250,11 @@ function Body({
           <span className="h-[6px] w-[6px] rounded-full" style={{ background: tint }} />
           {BODY[q.target].label} analog
         </span>
-        {source === "sample" && <span title="No search backend connected: ranked over the bundled sample sites">Sample data</span>}
+        {source === "sample" ? (
+          <span title="No search backend connected: ranked over the bundled sample sites">Sample data</span>
+        ) : (
+          c.shape && <span title={`H3 res 7 cell ${c.shape.cell}; target terrain from ${c.shape.dem}`}>Terrain search</span>
+        )}
       </div>
 
       <div className="mt-3 flex items-center justify-between gap-4" style={{ animation: "rise-in .6s var(--ease-out-expo) .03s both" }}>
@@ -262,6 +267,12 @@ function Body({
         </div>
         <ScoreRing score={overallScore(c, q)} delta={scoreDelta} tint={tint} />
       </div>
+
+      {c.shape && (
+        <div className="mt-6">
+          <ShapeCompare shape={c.shape} targetName={target.short} tint={tint} />
+        </div>
+      )}
 
       <section className="mt-6" style={{ animation: "rise-in .6s var(--ease-out-expo) .1s both" }}>
         <MatchTable match={match} weights={applied.weights} target={target.short} tint={tint} deltas={deltas} hover={hover} />

@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from "react";
 import { bearing, type Candidate } from "./candidates";
-import type { AnalogQuery } from "./search";
+import type { AnalogQuery, Source } from "./search";
 import { research } from "./research";
 
 // Page-level choreography shared between the 3D scene and the DOM overlay.
@@ -35,7 +35,7 @@ interface UiState {
   searchFrom: "globe" | "site";
   query: AnalogQuery | null;
   results: Candidate[];
-  source: "live" | "sample";
+  source: Source;
   active: number;
   /** performance.now() when the current dive/surface/switch began. */
   transitionAt: number;
@@ -108,7 +108,7 @@ export const ui = {
     set({ mode: state.searchFrom });
   },
 
-  showResults(results: Candidate[], source: "live" | "sample") {
+  showResults(results: Candidate[], source: Source) {
     if (!results.length) return set({ mode: state.searchFrom });
     const now = performance.now();
     const q = state.query!;

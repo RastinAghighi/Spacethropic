@@ -69,7 +69,7 @@ export function SiteView() {
           </div>
           {current && (
             <p className="hidden pb-px text-[10px] text-white/45 lg:block">
-              NASA HLS · {current.imagery.date} · {current.imagery.metersPerPixel} m/px
+              {current.imagery.source.startsWith("NASA HLS") ? "NASA HLS" : current.imagery.source} · {current.imagery.date} · {current.imagery.metersPerPixel} m/px
             </p>
           )}
         </div>

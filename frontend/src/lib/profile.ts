@@ -34,14 +34,7 @@ export const DIMS: Record<Dim, { label: string; metric: string; tab: Tab }> = {
 export const DIM_ORDER: Dim[] = ["terrain", "geology", "thermal", "aridity", "sun"];
 
 /** Per-site traits the sample set doesn't carry yet. */
-interface Traits {
-  slope: number;
-  roughness: number;
-  geology: Geology[];
-  roadKm: number;
-  protectedArea: boolean;
-  access: string;
-}
+type Traits = NonNullable<CandidateSite["traits"]>;
 
 const TRAITS: Record<string, Traits> = {
   "craters-of-the-moon": { slope: 6, roughness: 2.4, geology: ["basalt"], roadKm: 3, protectedArea: true, access: "Year-round; park permit for off-trail work" },
@@ -59,7 +52,7 @@ const TRAITS: Record<string, Traits> = {
   bockfjord: { slope: 18, roughness: 2.8, geology: ["basalt", "ice"], roadKm: 400, protectedArea: true, access: "Jul–Aug by ship" },
 };
 
-export const traits = (s: CandidateSite) => TRAITS[s.id];
+export const traits = (s: CandidateSite) => s.traits ?? TRAITS[s.id];
 
 /** Indicative surface conditions at each Moon/Mars target. */
 export interface TargetProfile {
@@ -302,6 +295,7 @@ export function matchProfile(s: CandidateSite, q: AnalogQuery): DimMatch[] {
 }
 
 export function overallScore(s: CandidateSite, q: AnalogQuery) {
+  if (s.shape) return s.shape.score; // shape search results rank on terrain shape
   const w = (q.filters ?? DEFAULT_FILTERS).weights;
   const m = matchProfile(s, q);
   const total = m.reduce((a, d) => a + w[d.dim], 0);

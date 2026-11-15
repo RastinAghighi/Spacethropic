@@ -1,5 +1,6 @@
 import data from "@/data/candidates.json";
 import type { AnalogTarget } from "./search";
+import type { Geology } from "./profile";
 
 // Sample candidate set for the UI prototype. Imagery is NASA HLS via GIBS and the
 // climate block is NASA POWER climatology, both fetched ahead of time so switching
@@ -32,6 +33,36 @@ export interface CandidateSite {
   imagery: { source: string; layer: string; date: string; bbox: number[]; metersPerPixel: number };
   avgColor: [number, number, number];
   climate: Climate;
+  /** Results from a live search carry their own traits (sample sites use the table in profile.ts) */
+  traits?: Traits;
+  /** Terrain shape match against the target, from the shape search */
+  shape?: ShapeMatch;
+}
+
+export interface Traits {
+  slope: number;
+  roughness: number;
+  geology: Geology[];
+  roadKm: number;
+  protectedArea: boolean;
+  access: string;
+}
+
+/** The target's and this cell's terrain over the same Earth-sized res-7 disk, mean height removed. */
+export interface ShapeMatch {
+  /** RMS height difference after turning the target to fit, metres */
+  rmseM: number;
+  rotationDeg: number;
+  /** 0..1, 1 − rmse / target relief */
+  score: number;
+  reliefM: number;
+  targetReliefM: number;
+  pxM: number;
+  /** Rows north to south; null outside the disk */
+  target: (number | null)[][];
+  match: (number | null)[][];
+  dem: string;
+  cell: string;
 }
 
 /** A search result. Relevance and match explanations arrive with the real search logic. */
@@ -39,8 +70,10 @@ export type Candidate = CandidateSite;
 
 export const SITES = data as unknown as CandidateSite[];
 
-export const imageUrl = (id: string) => `/candidates/${id}.jpg`;
-export const thumbUrl = (id: string) => `/candidates/${id}_thumb.jpg`;
+// Live search results ("cell-<h3>") get their imagery from the search service.
+const live = (id: string) => (id.startsWith("cell-") ? `/api/imagery/${id.slice(5)}` : null);
+export const imageUrl = (id: string) => (live(id) ?? `/candidates/${id}`) + ".jpg";
+export const thumbUrl = (id: string) => (live(id) ?? `/candidates/${id}`) + "_thumb.jpg";
 
 /** Initial great-circle bearing (radians, clockwise from north) from a to b. */
 export function bearing(a: { lat: number; lon: number }, b: { lat: number; lon: number }) {
