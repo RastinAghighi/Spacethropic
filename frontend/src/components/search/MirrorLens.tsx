@@ -122,6 +122,9 @@ function separation(a: View, b: View) {
   return Math.acos(Math.max(-1, Math.min(1, p.z))) / D;
 }
 
+/** Wheel zoom stops where the map texture runs out of detail. */
+const MAX_ZOOM = 4;
+
 /** Zoom that separates the chosen site from its nearest neighbour. */
 function zoomFor(site: View | null, sites: View[]) {
   if (!site) return 1;
@@ -152,6 +155,7 @@ export function MirrorLens({
   size?: number;
 }) {
   const canvas = useRef<HTMLCanvasElement>(null);
+  const root = useRef<HTMLDivElement>(null);
   const spots = useRef<Map<string, HTMLElement>>(new Map());
   const pinEl = useRef<HTMLDivElement>(null);
   const view = useRef<View>({ lat: 0, lon: 0 });
@@ -254,7 +258,7 @@ export function MirrorLens({
       }
       const z = zoom.current;
       if (Math.abs(z.goal - z.now) > 1e-3) {
-        z.now += (z.goal - z.now) * (1 - Math.exp(-dt * 5));
+        z.now += (z.goal - z.now) * (1 - Math.exp(-dt * 8));
         moving = true;
       } else z.now = z.goal;
       if (ready) {
@@ -317,6 +321,19 @@ export function MirrorLens({
     kick.current();
   }, [selected, sites, pin, spinning]);
 
+  // Scroll wheel zooms the lens. Native listener: React's wheel handler is passive and can't stop the page scrolling.
+  useEffect(() => {
+    const el = root.current!;
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const z = zoom.current;
+      z.goal = Math.max(1, Math.min(MAX_ZOOM, z.goal * Math.exp(-e.deltaY * 0.0015)));
+      kick.current();
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, []);
+
   const toDisc = (e: React.PointerEvent) => {
     const r = canvas.current!.getBoundingClientRect();
     const k = 1.08 / zoom.current.now;
@@ -324,12 +341,12 @@ export function MirrorLens({
   };
 
   return (
-    <div className="relative shrink-0 select-none" style={{ width: size, height: size }}>
+    <div ref={root} className="relative shrink-0 select-none" style={{ width: size, height: size }}>
       <canvas
         ref={canvas}
         className="absolute inset-0 h-full w-full touch-none rounded-full"
         style={{ cursor: grabbing ? "grabbing" : "grab", transition: "opacity .7s ease" }}
-        aria-label={`${BODY[body].label} globe: drag to turn, click to drop a pin`}
+        aria-label={`${BODY[body].label} globe: drag to turn, scroll to zoom, click to drop a pin`}
         onPointerDown={(e) => {
           e.currentTarget.setPointerCapture(e.pointerId);
           goal.current = null;

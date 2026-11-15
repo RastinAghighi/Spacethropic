@@ -167,7 +167,7 @@ export function Mirror() {
             setPicking(false);
           }}
         />
-        <p className="mt-2 text-[10.5px] text-white/30">Drag to turn · click to drop a pin</p>
+        <p className="mt-2 text-[10.5px] text-white/30">Drag to turn · scroll to zoom · click to pin</p>
       </div>
 
       <div className="flex w-full min-w-0 flex-1 flex-col">
