@@ -2,6 +2,7 @@
 # Install with: pip install -r requirements-lock.txt && pip install --no-deps -e .
 # rasterio is optional (pip install -e .[rasterio]); it is not listed because it could not load on this machine.
 colorama==0.4.6
+duckdb==2.0.0
 contourpy==1.4.0
 cycler==0.12.1
 fonttools==4.68.0
