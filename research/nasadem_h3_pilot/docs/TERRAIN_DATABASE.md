@@ -11,16 +11,8 @@ Use this page first; detailed guides: [integration contracts/status](INTEGRATION
 [QGIS demo](QGIS_DEMO.md), [batch benchmark](TERRAIN_BENCHMARK.md),
 [scientific pilot handoff](NASADEM_H3_PILOT_HANDOFF.md).
 
-**Publication discrepancy found in the November 15, 2026 audit:** local HEAD is
-`105758f8d2091098c92309275e8ee381598866ef`. The database/selector/QGIS modules,
-tests and these new guides are still untracked, and dependency changes are
-uncommitted. `git ls-remote --heads origin feat/terrain-database` returned no
-published branch. A literal fresh clone of the currently published repository
-cannot reproduce this milestone yet. The owner must commit the milestone files
-and publish the branch before handing it off. This documentation audit did not
-stage, commit, push or modify application code. Commands below work with the
-current milestone source; the audit used a fresh environment and tracked pilot
-inputs, not a clean clone containing that source.
+**Published:** `feat/terrain-database` was pushed to GitHub at commit `e6cd31e`.
+Teammates with repository access can use the branch and follow this handoff.
 
 `local/`, `.venv/` and `benchmarks/` are generated and ignored. **They do not
 arrive after cloning.** Regenerate a database and exports from the tracked pairs:
@@ -295,6 +287,9 @@ the existing importer, full exporter and pilot artifacts.
 
 ## Fresh-environment documentation audit (November 15, 2026)
 
+The audit tested a fresh Python 3.12 environment in the existing working tree;
+it did not test a fresh Git clone.
+
 Created `local/docs_audit_20261115/.venv` with `py -3.12 -m venv`, installed the
 lock file and editable current package, then used the actual CLI against a new
 `local/docs_audit_20261115/walkthrough/terrain.duckdb`. Nothing used the previous
@@ -310,8 +305,6 @@ At the time of that documentation audit, the QGIS script failed against that LF 
 `run/resolution not found`: it then hard-coded the CRLF run ID and had no run-ID flag.
 That limitation was subsequently fixed with metadata-based discovery and an
 explicit `--run-id` option; [both database variants now pass](QGIS_DEMO.md#lf-and-crlf-regression-verification).
-No clean-clone
-success is claimed while the milestone code remains untracked/unpublished.
 Existing database/selection tests also passed in the fresh environment:
 **23 passed in 17.20 s**. The sample JSON above exactly matches the selected
 candidate, both full Parquet exports have their expected counts/sample totals,
@@ -358,8 +351,8 @@ mutations are written only in pytest temporary directories. Raw-ZIP tests in the
 older suite skip when that asset is unavailable.
 
 `tests/test_terrain_selection.py` separately covers `select-terrain`. The audit
-above verifies real command execution rather than claiming a fresh-clone test
-passed with unpublished files.
+above verifies real command execution in a fresh Python environment, not a
+fresh Git clone.
 
 Generated `.duckdb`, `.duckdb.wal`, `.parquet`, virtual environments, caches and
 editable-install metadata are ignored by Git. The local working artifacts in
