@@ -43,7 +43,7 @@ def grid_site(site: Site) -> None:
             if not tif.exists():
                 raise SystemExit(f"{tif} missing; run `download {site.id}` first")
             with rasterio.open(tif) as r:
-                features = EXTRACTORS[group](r.read(1), r.transform.a)
+                features = EXTRACTORS[group](r.read(), r.transform.a)
                 table = aggregate(site, cells, features, r.transform)
             out = INTERIM / site.id / f"{src.id}.parquet"
             out.parent.mkdir(parents=True, exist_ok=True)

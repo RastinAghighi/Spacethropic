@@ -14,6 +14,7 @@ from aggregate import aggregate
 from config import INTERIM, RAW, geographic_crs, local_crs, raster_half_extent_m, settings, sites
 from features import terrain
 from merge import _interpolate
+from sources import sources_for
 
 SITES = list(sites().values())
 
@@ -75,17 +76,17 @@ def test_interpolation_fills_from_neighbours():
 
 @pytest.mark.parametrize("site", SITES, ids=lambda s: s.id)
 def test_cell_means_match_independent_polygon_zonal_stats(site):
-    """Spot-check: recompute a few cells' mean elevation by rasterising the H3 polygon."""
-    parquet = sorted((INTERIM / site.id).glob("*.parquet")) if (INTERIM / site.id).exists() else []
-    if not parquet:
+    """Spot-check: recompute a few cells' elevation spread by rasterising the H3 polygon."""
+    src_id = sources_for(site, "terrain")[0].id
+    parquet = INTERIM / site.id / f"{src_id}.parquet"
+    if not parquet.exists():
         pytest.skip("run the pipeline first")
-    src_id = parquet[0].stem
-    table = pd.read_parquet(parquet[0]).set_index("cell")
+    table = pd.read_parquet(parquet).set_index("cell")
     to_xy = Transformer.from_crs(geographic_crs(site.body), local_crs(site), always_xy=True)
     with rasterio.open(RAW / site.id / f"{src_id}.tif") as r:
         dem = r.read(1)
         for cell in table.index[:: max(len(table) // 5, 1)]:
             ring = [to_xy.transform(lon, lat) for lat, lon in h3.cell_to_boundary(cell)]
             inside = ~geometry_mask([{"type": "Polygon", "coordinates": [ring + ring[:1]]}], dem.shape, r.transform)
-            expected = np.nanmean(dem[inside])
-            assert table.loc[cell, "elevation_m__mean"] == pytest.approx(expected, rel=0.02, abs=2.0)
+            expected = np.nanstd(dem[inside])
+            assert table.loc[cell, "elevation_m__std"] == pytest.approx(expected, rel=0.1, abs=1.0)

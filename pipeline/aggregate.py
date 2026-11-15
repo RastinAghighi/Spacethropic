@@ -55,6 +55,7 @@ def aggregate(site: Site, cells: pd.DataFrame, features: dict[str, np.ndarray], 
                 vals, expected = flat[layer.name][in_cell], in_cell.size
             else:
                 vals, expected = features[layer.name][r0:r1, c0:c1][disk], int(np.pi * r * r / (px * px))
-            row.update(zip(layer.columns(), _stats(vals, expected)))
+            stats = dict(zip(STATS, _stats(vals, expected)))
+            row.update({f"{layer.name}__{s}": stats[s] for s in layer.stats})
         rows.append(row)
     return pd.DataFrame(rows)

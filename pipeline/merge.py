@@ -64,7 +64,7 @@ def merge_site(site: Site) -> tuple[pd.DataFrame, list[dict]]:
 
         if not srcs and (layer.name, site.body.name) in KNOWN_ABSENT:
             v = KNOWN_ABSENT[(layer.name, site.body.name)]
-            values[cols] = [v, 0.0, v, v, v]
+            values[cols] = [0.0 if s == "std" else v for s in layer.stats]
             source[:] = "physical"
         elif not srcs and (layer.name, site.body.name) in PROXIES:
             stand_in = PROXIES[(layer.name, site.body.name)]
@@ -83,6 +83,7 @@ def merge_site(site: Site) -> tuple[pd.DataFrame, list[dict]]:
                 "dimension": layer.dimension,
                 "layer": layer.name,
                 "status": "implemented",
+                "gaps_allowed": layer.allow_gaps,
                 "cells": len(cells),
                 **{k: int(kinds.get(k, 0)) for k in ("measured", "fallback", "interpolated", "physical", "proxy", "unfilled")},
             }
@@ -143,7 +144,7 @@ def merge_all(selected: list[Site]) -> int:
     missing_dims = [
         # No layers exist yet, so every cell is unfilled for this dimension.
         {"site": s.id, "body": s.body.name, "dimension": d, "layer": DIMENSIONS[d], "status": "not_implemented",
-         "cells": cell_counts[s.id], **dict.fromkeys(kinds, 0), "unfilled": cell_counts[s.id]}
+         "gaps_allowed": False, "cells": cell_counts[s.id], **dict.fromkeys(kinds, 0), "unfilled": cell_counts[s.id]}
         for s in selected
         for d in DIMENSIONS
         if d not in implemented
@@ -166,8 +167,11 @@ def merge_all(selected: list[Site]) -> int:
         encoding="utf-8",
     )
 
-    unfilled = int(cov["unfilled"].sum())
     print(cov.to_string(index=False))
+    allowed = int(cov.loc[cov["gaps_allowed"], "unfilled"].sum())
+    if allowed:
+        print(f"\n{allowed} cell-layer values left empty in gap-allowed layers (expected); see coverage.csv")
+    unfilled = int(cov.loc[~cov["gaps_allowed"], "unfilled"].sum())
     if unfilled:
         print(f"\n{unfilled} cell-layer values could not be filled; see coverage.csv")
         return 1
