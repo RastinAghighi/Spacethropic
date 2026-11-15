@@ -1,0 +1,7 @@
+mean_all,mean_all_n_features,mean_complete,mean_complete_n_features,mean_temp_sun_weather,mean_temp_sun_weather_n_features,mean_terrain_albedo,mean_terrain_albedo_n_features,w1_all,w1_all_n_features,w1_complete,w1_complete_n_features,w1_temp_sun_weather,w1_temp_sun_weather_n_features,w1_terrain_albedo,w1_terrain_albedo_n_features,earth,target,true
+1.1846,24,1.1846,24,1.401,8,1.0763,16,1.0674,24,1.0674,24,1.4809,8,0.8606,16,sudbury,apollo16,True
+2.2217,24,2.2217,24,1.6696,8,2.4977,16,1.7934,24,1.7934,24,1.7554,8,1.8124,16,sudbury,shackleton,False
+0.7734,24,0.7734,24,1.4648,8,0.4277,16,0.7401,24,0.7401,24,1.5625,8,0.3289,16,atacama,apollo16,False
+1.8609,24,1.8609,24,1.909,8,1.8368,16,1.4825,24,1.4825,24,2.0076,8,1.22,16,atacama,shackleton,False
+0.8364,24,0.8364,24,1.6806,8,0.4143,16,0.8883,24,0.8883,24,1.7801,8,0.4424,16,haughton,apollo16,False
+1.7396,24,1.7396,24,1.7024,8,1.7581,16,1.471,24,1.471,24,1.8151,8,1.299,16,haughton,shackleton,True

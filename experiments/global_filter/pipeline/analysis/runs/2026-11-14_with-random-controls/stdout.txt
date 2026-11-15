@@ -1,0 +1,125 @@
+C:\Users\Py Torch\Documents\GitHub\Spacethropic\pipeline\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1593: RuntimeWarning: All-NaN slice encountered
+  return fnb._ureduce(a,
+C:\Users\Py Torch\Documents\GitHub\Spacethropic\pipeline\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1593: RuntimeWarning: All-NaN slice encountered
+  return fnb._ureduce(a,
+C:\Users\Py Torch\Documents\GitHub\Spacethropic\pipeline\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1593: RuntimeWarning: All-NaN slice encountered
+  return fnb._ureduce(a,
+C:\Users\Py Torch\Documents\GitHub\Spacethropic\pipeline\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1593: RuntimeWarning: All-NaN slice encountered
+  return fnb._ureduce(a,
+C:\Users\Py Torch\Documents\GitHub\Spacethropic\pipeline\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1593: RuntimeWarning: All-NaN slice encountered
+  return fnb._ureduce(a,
+C:\Users\Py Torch\Documents\GitHub\Spacethropic\pipeline\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1593: RuntimeWarning: All-NaN slice encountered
+  return fnb._ureduce(a,
+                        dimension  mean_auc  mean_p_plain  mean_p_constrained  mean_hit_rate  mean_loso_top3_frac  mean_boot_target_top3_frac  w1_auc  w1_p_constrained  w1_hit_rate  w1_loso_top3_frac
+feature                                                                                                                                                                                                
+albedo__p10                     1     0.642         0.115               0.079          0.000                0.941                       0.614   0.646             0.073        0.286              1.000
+albedo__p50                     1     0.601         0.198               0.157          0.286                0.765                       0.368   0.596             0.170        0.000              0.588
+albedo__mean                    1     0.596         0.210               0.172          0.143                0.412                       0.269   0.599             0.167        0.000              0.765
+temp_night_max_k__mean          3     0.571         0.276               0.064          0.286                0.353                       0.313   0.571             0.064        0.286              0.353
+pressure_mean_pa__mean          5     0.571         0.277               0.294          0.286                0.235                       0.376   0.570             0.290        0.286              0.176
+wind_mean_ms__mean              5     0.553         0.328               0.278          0.000                0.059                       0.179   0.551             0.286        0.000              0.059
+insolation_wm2__mean            3     0.540         0.372               0.323          0.286                0.059                       0.168   0.540             0.323        0.286              0.118
+temp_day_max_k__mean            3     0.540         0.370               0.238          0.286                0.059                       0.188   0.540             0.238        0.286              0.059
+tri_m__mean                     2     0.526         0.418               0.372          0.000                0.000                       0.038   0.531             0.347        0.143              0.118
+slope_deg__p90                  2     0.526         0.419               0.392          0.143                0.059                       0.026   0.515             0.443        0.143              0.000
+slope_deg__std                  2     0.519         0.439               0.437          0.143                0.059                       0.178   0.497             0.518        0.000              0.000
+albedo__p90                     1     0.512         0.463               0.452          0.000                0.000                       0.028   0.526             0.402        0.000              0.000
+tri_m__p50                      2     0.512         0.463               0.437          0.000                0.000                       0.022   0.515             0.429        0.143              0.000
+tri_m__p90                      2     0.506         0.487               0.483          0.143                0.000                       0.000   0.506             0.484        0.143              0.000
+slope_deg__mean                 2     0.503         0.494               0.487          0.000                0.000                       0.000   0.512             0.440        0.143              0.000
+temp_mean_k__mean               3     0.501         0.502               0.488          0.286                0.000                       0.076   0.501             0.488        0.286              0.000
+tri_m__std                      2     0.499         0.507               0.506          0.000                0.000                       0.086   0.474             0.600        0.000              0.000
+slope_deg__p50                  2     0.497         0.517               0.526          0.000                0.000                       0.000   0.501             0.505        0.143              0.000
+elevation_m__std                2     0.494         0.524               0.544          0.143                0.000                       0.038   0.492             0.558        0.143              0.000
+tri_m__p10                      2     0.490         0.539               0.581          0.143                0.000                       0.010   0.485             0.611        0.143              0.000
+wind_max_ms__mean               5     0.483         0.561               0.579          0.000                0.000                       0.052   0.485             0.568        0.000              0.000
+temp_night_min_k__mean          3     0.481         0.569               0.650          0.000                0.000                       0.022   0.481             0.650        0.000              0.000
+albedo__std                     1     0.472         0.598               0.600          0.000                0.000                       0.000   0.472             0.600        0.000              0.000
+slope_deg__p10                  2     0.463         0.629               0.761          0.143                0.000                       0.000   0.449             0.835        0.143              0.000
+feo_wt_pct__mean                1       NaN           NaN                 NaN            NaN                0.000                       0.000     NaN               NaN          NaN              0.000
+   dimension                                               name  features  usable               mean_best  mean_best_auc  mean_median_auc  mean_composite_auc  mean_composite_p_constrained  mean_composite_hit_rate                 w1_best  \
+0          1         Geology, mineralogy, and surface materials         6       5             albedo__p10          0.642            0.596               0.569                         0.255                    0.000             albedo__p10   
+1          2      Terrain, elevation, slope, roughness, craters        11      11             tri_m__mean          0.526            0.503               0.506                         0.483                    0.143             tri_m__mean   
+2          3  Temperature, illumination, environmental extremes         5       5  temp_night_max_k__mean          0.571            0.540               0.533                         0.275                    0.286  temp_night_max_k__mean   
+3          5  Dust, wind, erosion, atmospheric/surface proce...         3       3  pressure_mean_pa__mean          0.571            0.553               0.515                         0.446                    0.000  pressure_mean_pa__mean   
+
+   w1_best_auc  w1_median_auc  w1_composite_auc  w1_composite_p_constrained  w1_composite_hit_rate  
+0        0.646          0.596             0.585                       0.207                  0.000  
+1        0.531          0.501             0.497                       0.534                  0.143  
+2        0.571          0.540             0.537                       0.257                  0.286  
+3        0.570          0.551             0.509                       0.467                  0.000  
+{
+ "mean": {
+  "features": [
+   "albedo__mean",
+   "albedo__p10",
+   "albedo__p50",
+   "albedo__p90",
+   "albedo__std",
+   "elevation_m__std",
+   "insolation_wm2__mean",
+   "pressure_mean_pa__mean",
+   "slope_deg__mean",
+   "slope_deg__p10",
+   "slope_deg__p50",
+   "slope_deg__p90",
+   "slope_deg__std",
+   "temp_day_max_k__mean",
+   "temp_mean_k__mean",
+   "temp_night_max_k__mean",
+   "temp_night_min_k__mean",
+   "tri_m__mean",
+   "tri_m__p10",
+   "tri_m__p50",
+   "tri_m__p90",
+   "tri_m__std",
+   "wind_max_ms__mean",
+   "wind_mean_ms__mean"
+  ],
+  "lambda": 1.0,
+  "auc_in_sample": 0.7642,
+  "auc_leave_one_edge_out": 0.1429,
+  "auc_leave_one_target_out": 0.424
+ },
+ "w1": {
+  "features": [
+   "albedo__mean",
+   "albedo__p10",
+   "albedo__p50",
+   "albedo__p90",
+   "albedo__std",
+   "elevation_m__std",
+   "insolation_wm2__mean",
+   "pressure_mean_pa__mean",
+   "slope_deg__mean",
+   "slope_deg__p10",
+   "slope_deg__p50",
+   "slope_deg__p90",
+   "slope_deg__std",
+   "temp_day_max_k__mean",
+   "temp_mean_k__mean",
+   "temp_night_max_k__mean",
+   "temp_night_min_k__mean",
+   "tri_m__mean",
+   "tri_m__p10",
+   "tri_m__p50",
+   "tri_m__p90",
+   "tri_m__std",
+   "wind_max_ms__mean",
+   "wind_mean_ms__mean"
+  ],
+  "lambda": 1.0,
+  "auc_in_sample": 0.771,
+  "auc_leave_one_edge_out": 0.1315,
+  "auc_leave_one_target_out": 0.424
+ }
+}
+  method       feature_set  n_features  n_edges  n_true_edges  true_mean_dist  wrong_mean_dist  ratio_true_over_wrong    auc  p_plain  p_constrained  hit_rate  hit_n_targets  true_partner_mean_rank
+0   mean               all          24       70             7           1.256            1.359                  0.924  0.528    0.411          0.360     0.143              7                   5.143
+1   mean          complete          24       70             7           1.256            1.359                  0.924  0.528    0.411          0.360     0.143              7                   5.143
+2   mean  temp_sun_weather           8       70             7           1.526            1.593                  0.958  0.551    0.336          0.183     0.286              7                   5.286
+3   mean    terrain_albedo          16       70             7           1.121            1.242                  0.903  0.528    0.410          0.366     0.143              7                   5.000
+4     w1               all          24       70             7           0.998            1.074                  0.929  0.551    0.339          0.243     0.143              7                   4.571
+5     w1          complete          24       70             7           0.998            1.074                  0.929  0.551    0.339          0.243     0.143              7                   4.571
+6     w1  temp_sun_weather           8       70             7           1.446            1.508                  0.959  0.551    0.336          0.192     0.286              7                   5.286
+7     w1    terrain_albedo          16       70             7           0.774            0.857                  0.903  0.515    0.454          0.433     0.143              7                   5.143

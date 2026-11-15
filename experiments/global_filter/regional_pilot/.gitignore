@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+.pytest_cache/
+# Local input rasters and pilot outputs are data, not code.
+data/
+runs/

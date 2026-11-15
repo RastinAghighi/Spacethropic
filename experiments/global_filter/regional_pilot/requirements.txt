@@ -1,0 +1,7 @@
+h3>=4.2,<5
+rasterio>=1.4,<2
+shapely>=2,<3
+pyproj>=3.6,<4
+pyarrow>=18,<30
+pytest>=8,<10
+numpy>=2,<3
