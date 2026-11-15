@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { DIVE, ui, useUi } from "@/lib/ui";
 import { thumbUrl } from "@/lib/candidates";
+import { useResearch } from "@/lib/research";
+import { overallScore, passes, sameFilters } from "@/lib/profile";
 
 const SIZE = 58;
 /** Pointer influence radius (px) for the approach swell. */
@@ -12,7 +14,10 @@ const HOVER = 0.16;
 
 /** Row of candidate thumbnails above the search bar; swells toward the pointer. */
 export function CandidateTray() {
-  const { mode, results, active, searchFrom } = useUi();
+  const { mode, results, active, searchFrom, query } = useUi();
+  const { draft, applied } = useResearch();
+  // While limits are being drafted, preview which of these candidates would survive them.
+  const previewing = !sameFilters(draft, applied);
   const items = useRef<(HTMLButtonElement | null)[]>([]);
   const [hovered, setHovered] = useState<number | null>(null);
   const shown = mode === "site" || mode === "diving" || mode === "surfacing" || (mode === "searching" && searchFrom === "site");
@@ -85,6 +90,8 @@ export function CandidateTray() {
       {results.map((c, i) => {
         const isActive = i === active;
         const [r, g, b] = c.avgColor;
+        const cut = previewing && !passes(c, draft);
+        const score = query ? Math.round(overallScore(c, query) * 100) : null;
         return (
           <button
             key={c.id}
@@ -93,7 +100,7 @@ export function CandidateTray() {
             }}
             role="tab"
             aria-selected={isActive}
-            aria-label={`${c.name}, ${c.region}`}
+            aria-label={`${c.name}, ${c.region}${cut ? ", fails the drafted limits" : ""}`}
             onClick={() => ui.select(i)}
             onPointerEnter={() => setHovered(i)}
             onPointerLeave={() => setHovered((h) => (h === i ? null : h))}
@@ -123,7 +130,20 @@ export function CandidateTray() {
               }`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={thumbUrl(c.id)} alt="" draggable={false} className="h-full w-full object-cover" />
+              <img
+                src={thumbUrl(c.id)}
+                alt=""
+                draggable={false}
+                className="h-full w-full object-cover"
+                style={{ filter: cut ? "grayscale(1) brightness(.45)" : "none", transition: "filter .4s ease" }}
+              />
+              {cut && (
+                <span aria-hidden className="absolute inset-0 grid place-items-center" style={{ animation: "rise-in .3s var(--ease-out-expo) both" }}>
+                  <svg width="16" height="16" viewBox="0 0 16 16">
+                    <path d="M4 4l8 8M12 4l-8 8" stroke="white" strokeOpacity=".75" strokeWidth="1.5" strokeLinecap="round" />
+                  </svg>
+                </span>
+              )}
               {!isActive && <span aria-hidden className="absolute inset-0 bg-black/25 transition-opacity duration-300 group-hover:opacity-0" />}
             </span>
             <span
@@ -137,7 +157,9 @@ export function CandidateTray() {
               <span className="block text-[12px] font-medium text-white">{c.name}</span>
               <span className="block text-[10.5px] text-white/50">
                 {c.region}
+                {score !== null && <span className="text-white/75"> · {score}% match</span>}
               </span>
+              {cut && <span className="mt-0.5 block text-[10.5px] text-[#f3b453]">Cut by your new limits</span>}
             </span>
           </button>
         );

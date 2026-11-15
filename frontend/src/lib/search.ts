@@ -3,7 +3,8 @@
 // The UI POSTs an AnalogQuery to /api/search and expects AnalogResult[] back. Until a
 // route exists there, findCandidates() falls back to the bundled sample set and says
 // so (source: "sample"), so the prototype UI can be exercised end to end.
-import { SITES, sampleCandidates, type Candidate } from "./candidates";
+import { SITES, type Candidate } from "./candidates";
+import { rank, type Filters } from "./profile";
 
 export type AnalogTarget = "moon" | "mars";
 
@@ -15,6 +16,10 @@ export interface AnalogQuery {
   place?: string;
   /** Skip well-studied analog sites */
   discovery?: boolean;
+  /** Researcher's limits and priorities from the refine drawers */
+  filters?: Filters;
+  /** Label for this step on the research trail */
+  step?: string;
 }
 
 export interface AnalogResult {
@@ -57,9 +62,6 @@ export interface SearchOutcome {
   source: "live" | "sample";
 }
 
-/** Less-studied sample sites, for the "hide well-known analogs" toggle. */
-const DISCOVERY_ORDER = ["lonar", "dalangtan", "lut", "dallol", "kilbourne-hole", "bockfjord", "rio-tinto"];
-
 /** Long enough for the search state to read, short enough to feel instant. */
 const SAMPLE_LATENCY_MS = 1100;
 
@@ -77,8 +79,6 @@ export async function findCandidates(query: AnalogQuery, signal?: AbortSignal): 
   }
   await new Promise((r) => setTimeout(r, SAMPLE_LATENCY_MS));
   if (signal?.aborted) throw new DOMException("Aborted", "AbortError");
-  let candidates = sampleCandidates(query.discovery ? DISCOVERY_ORDER : undefined);
-  // Sample data has no scores: lead with sites that are analogs for the body searched.
-  if (query.place) candidates = [...candidates].sort((a, b) => +b.targets.includes(query.target) - +a.targets.includes(query.target));
-  return { candidates, source: "sample" };
+  // Demo ranking over the bundled sample sites (lib/profile).
+  return { candidates: rank(query), source: "sample" };
 }

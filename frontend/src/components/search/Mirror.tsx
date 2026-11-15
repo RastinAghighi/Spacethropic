@@ -38,6 +38,7 @@ export function Mirror() {
       target: body,
       place: target?.id ?? `${body}:${pin!.lat.toFixed(3)},${pin!.lon.toFixed(3)}`,
       discovery,
+      step: "Physical match",
     });
 
   const editor = (
@@ -115,12 +116,6 @@ export function Mirror() {
       editor={editor}
       error={error}
       tint={tint}
-      summary={
-        <>
-          Earth&apos;s mirror of <span className="text-white">{target ? target.short : name}</span>
-          <span className="text-white/35"> · {BODY[body].label}</span>
-        </>
-      }
     />
   );
 }

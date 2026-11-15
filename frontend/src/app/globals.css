@@ -147,3 +147,11 @@ body {
   0% { transform: scale(0.6); opacity: 0.9; }
   100% { transform: scale(2.6); opacity: 0; }
 }
+
+/* Evidence panel: match bars and score ring fill in */
+@keyframes bar-in {
+  from { transform: scaleX(0); }
+}
+@keyframes ring-in {
+  from { stroke-dashoffset: var(--circ); }
+}

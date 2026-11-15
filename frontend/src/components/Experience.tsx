@@ -8,6 +8,9 @@ import { SiteView } from "./SiteView";
 import { SiteRenderer } from "./SiteRenderer";
 import { EvidencePanel } from "./EvidencePanel";
 import { Mirror } from "./search/Mirror";
+import { RefinePanel } from "./research/RefinePanel";
+import { ResearchTrail } from "./research/ResearchTrail";
+import { research } from "@/lib/research";
 
 const GlobeScene = dynamic(() => import("./globe/GlobeScene"), { ssr: false });
 
@@ -41,18 +44,21 @@ function Chrome() {
           </svg>
           Earth
         </button>
-        {/* Brand steps aside once we're down at a site */}
-        <div
-          className="pointer-events-none"
-          style={{
-            opacity: onGlobe ? 1 : 0,
-            transform: onGlobe ? "none" : "translateX(-6px)",
-            filter: onGlobe ? "none" : "blur(3px)",
-            transition: "opacity .5s ease, transform .6s var(--ease-out-expo), filter .5s ease",
-          }}
-        >
-          <p className="text-[13px] font-medium tracking-[-0.01em] text-white/90">Spacethropic</p>
-          <p className="mt-0.5 text-[12px] text-white/40">Earth analogs for the Moon &amp; Mars</p>
+        {/* Brand steps aside for the research trail once we're down at a site */}
+        <div className="grid min-w-0 [&>*]:[grid-area:1/1]">
+          <ResearchTrail />
+          <div
+            className="pointer-events-none"
+            style={{
+              opacity: onGlobe ? 1 : 0,
+              transform: onGlobe ? "none" : "translateX(-6px)",
+              filter: onGlobe ? "none" : "blur(3px)",
+              transition: "opacity .5s ease, transform .6s var(--ease-out-expo), filter .5s ease",
+            }}
+          >
+            <p className="text-[13px] font-medium tracking-[-0.01em] text-white/90">Spacethropic</p>
+            <p className="mt-0.5 text-[12px] text-white/40">Earth analogs for the Moon &amp; Mars</p>
+          </div>
         </div>
       </header>
       <p
@@ -78,11 +84,13 @@ function Chrome() {
 }
 
 export default function Experience() {
-  // Esc in the site view returns to Earth.
+  // Esc in the site view closes an open drawer, then returns to Earth.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const typing = e.target instanceof HTMLElement && e.target.closest("input, textarea, [contenteditable]");
-      if (e.key === "Escape" && !typing && ui.get().mode === "site") ui.surface();
+      if (e.key !== "Escape" || typing || ui.get().mode !== "site") return;
+      if (research.get().drawer) research.open(null);
+      else ui.surface();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -94,6 +102,7 @@ export default function Experience() {
       <SiteRenderer />
       <SiteView />
       <EvidencePanel />
+      <RefinePanel />
       <Chrome />
       <Mirror />
       <Loader />

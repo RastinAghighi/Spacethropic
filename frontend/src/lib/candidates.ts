@@ -6,6 +6,7 @@ import type { AnalogTarget } from "./search";
 // is instant. A real search backend would return candidates in the same shape.
 
 export interface Climate {
+  elevationM: number;
   meanTempC: number;
   coldestMonthMinC: number;
   hottestMonthMaxC: number;
@@ -40,16 +41,6 @@ export const SITES = data as unknown as CandidateSite[];
 
 export const imageUrl = (id: string) => `/candidates/${id}.jpg`;
 export const thumbUrl = (id: string) => `/candidates/${id}_thumb.jpg`;
-
-/**
- * UI prototype: no query matching yet. Every search returns the same sample set in a
- * fixed order, chosen to show a spread of terrains, climates and both target bodies.
- */
-const SAMPLE_ORDER = ["haughton", "dallol", "lut", "bockfjord", "craters-of-the-moon", "yungay", "dalangtan"];
-
-export function sampleCandidates(order = SAMPLE_ORDER): Candidate[] {
-  return order.flatMap((id) => SITES.filter((s) => s.id === id));
-}
 
 /** Initial great-circle bearing (radians, clockwise from north) from a to b. */
 export function bearing(a: { lat: number; lon: number }, b: { lat: number; lon: number }) {
