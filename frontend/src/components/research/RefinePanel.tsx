@@ -34,7 +34,7 @@ export const TABS: { id: Tab; label: string; icon: string; fields: NumKey[]; mor
   { id: "terrain", label: "Terrain", icon: "M1.5 13.5l4.25-7.5 3 5 2-3 3.75 5.5z", fields: ["slope"], more: ["roughness", "elevation"], dims: ["terrain"] },
   { id: "geology", label: "Geology", icon: "M8 1.75l5.75 4.5L8 14.25 2.25 6.25z M2.25 6.25h11.5 M6 6.25L8 14.25l2-8", fields: [], more: [], dims: ["geology"] },
   { id: "thermal", label: "Thermal", icon: "M8 2.25c.83 0 1.5.67 1.5 1.5v5.6a3 3 0 1 1-3 0v-5.6c0-.83.67-1.5 1.5-1.5z M8 7v4", fields: ["meanTemp"], more: ["coldMin"], dims: ["thermal"] },
-  { id: "weather", label: "Weather", icon: "M4.75 12.5h6.5a2.75 2.75 0 0 0 .4-5.47A3.75 3.75 0 0 0 4.5 8a2.25 2.25 0 0 0 .25 4.5z", fields: ["precip", "solar"], more: ["humidity", "wind"], dims: ["aridity", "sun"] },
+  { id: "weather", label: "Weather", icon: "M4.75 12.5h6.5a2.75 2.75 0 0 0 .4-5.47A3.75 3.75 0 0 0 4.5 8a2.25 2.25 0 0 0 .25 4.5z", fields: ["precip"], more: ["solar", "humidity", "wind"], dims: ["aridity", "sun"] },
   { id: "access", label: "Access", icon: "M8 14.25s4.5-4.06 4.5-7.75a4.5 4.5 0 0 0-9 0c0 3.69 4.5 7.75 4.5 7.75z M8 8.25a1.75 1.75 0 1 0 0-3.5 1.75 1.75 0 0 0 0 3.5z", fields: ["roadKm"], more: [], dims: [] },
 ];
 const tabById = (id: Tab) => TABS.find((t) => t.id === id)!;
@@ -111,7 +111,6 @@ function Readouts({ tab, c, q }: { tab: Tab; c: Candidate; q: AnalogQuery }) {
           {tile("slope", at(formatField("slope", profile.slope)), "Typical slope")}
           {tile("roughness", "RMS height at 30 m")}
           {tile("elevation", "Above sea level")}
-          <Tile label="Rock" value={t.geology.map((g) => GEOLOGY[g].label).join(" · ")} note="Dominant units" />
         </div>
       );
     case "geology":
@@ -122,16 +121,14 @@ function Readouts({ tab, c, q }: { tab: Tab; c: Candidate; q: AnalogQuery }) {
           {tile("meanTemp", at(formatField("meanTemp", profile.meanTemp)))}
           {tile("coldMin", "Night-time extreme")}
           <Tile label="Hottest-month high" {...parts("meanTemp", k.hottestMonthMaxC)} note="Daytime extreme" />
-          <Tile label="Annual swing" value={(k.hottestMonthMaxC - k.coldestMonthMinC).toFixed(0)} unit="°C" note="High minus low" />
         </div>
       );
     case "weather":
       return (
         <div className="divide-y divide-white/[0.05]">
           {tile("precip", at("none"))}
-          {tile("humidity", "Relative, annual mean")}
-          {tile("wind", "At 10 m")}
           {tile("solar", at(formatField("solar", profile.solar)))}
+          {tile("humidity", "Relative, annual mean")}
         </div>
       );
     case "access":
@@ -208,7 +205,7 @@ function Toggle({ on, onChange, label, note }: { on: boolean; onChange: (v: bool
 
 function Drawer({ tab, c, q, draft, applied }: { tab: Tab; c: Candidate; q: AnalogQuery; draft: Filters; applied: Filters }) {
   const def = tabById(tab);
-  const { profile, short, name } = targetOf(q);
+  const { profile, name } = targetOf(q);
   const tint = BODY[q.target].tint;
   const pool = poolFor(q);
   const gaps = matchProfile(c, q).filter((m) => m.gap && def.dims.includes(m.dim));
@@ -230,7 +227,7 @@ function Drawer({ tab, c, q, draft, applied }: { tab: Tab; c: Candidate; q: Anal
   const thermalNote = (() => {
     if (tab !== "thermal" || profile.meanTemp >= FIELDS.meanTemp.min) return null;
     const best = [...pool].sort((a, b) => a.climate.meanTempC - b.climate.meanTempC)[0];
-    return `No surface on Earth averages ${formatField("meanTemp", profile.meanTemp)}. The coldest candidate here is ${best.name} at ${formatField("meanTemp", best.climate.meanTempC)}, so thermal is always a gap for ${short}.`;
+    return `No surface on Earth averages ${formatField("meanTemp", profile.meanTemp)}; the coldest candidate is ${best.name} at ${formatField("meanTemp", best.climate.meanTempC)}.`;
   })();
 
   return (
@@ -252,13 +249,12 @@ function Drawer({ tab, c, q, draft, applied }: { tab: Tab; c: Candidate; q: Anal
         )}
       </section>
 
-      {gaps.map((g) => (
-        <p key={g.dim} className="mt-2 flex gap-2 text-[11.5px] leading-snug text-white/55">
+      {(thermalNote ? [thermalNote] : gaps.map((g) => g.gap!)).slice(0, 1).map((note) => (
+        <p key={note} className="mt-2 flex gap-2 text-[11.5px] leading-snug text-white/55">
           <span className="mt-[6px] h-1 w-1 shrink-0 rounded-full" style={{ background: AMBER }} />
-          {g.gap}
+          {note}
         </p>
       ))}
-      {thermalNote && <p className="mt-3 text-[11.5px] leading-relaxed text-white/45">{thermalNote}</p>}
 
       <section className="mt-6">
         <div className="mb-3 flex items-baseline justify-between">
@@ -392,7 +388,7 @@ export function RefinePanel() {
         aria-label={`${tabById(shownTab).label} refine`}
         aria-hidden={!open}
         inert={!open}
-        className="fixed left-[84px] top-[72px] z-20 flex max-h-[calc(100vh-170px)] w-[var(--drawer-w)] flex-col"
+        className="fixed left-[84px] top-[72px] z-20 flex h-[min(576px,calc(100vh-170px))] w-[var(--drawer-w)] flex-col"
         style={{
           opacity: open ? 1 : 0,
           transform: open ? "none" : "translateX(-14px) scale(0.985)",
@@ -402,7 +398,7 @@ export function RefinePanel() {
           transition: "opacity .35s ease, transform .55s var(--ease-out-expo), filter .4s ease",
         }}
       >
-        <div className="flex min-h-0 flex-col overflow-hidden rounded-[22px] border border-white/[0.08] bg-[rgb(10_11_14/0.62)] shadow-[0_30px_80px_-30px_rgb(0_0_0/0.9),inset_0_1px_0_rgb(255_255_255/0.05)] backdrop-blur-2xl backdrop-saturate-150">
+        <div className="flex h-full min-h-0 flex-col overflow-hidden rounded-[22px] border border-white/[0.08] bg-[rgb(10_11_14/0.62)] shadow-[0_30px_80px_-30px_rgb(0_0_0/0.9),inset_0_1px_0_rgb(255_255_255/0.05)] backdrop-blur-2xl backdrop-saturate-150">
           <header className="flex items-start justify-between gap-3 px-5 pb-4 pt-5">
             <div className="min-w-0">
               <p className="text-[17px] font-medium tracking-[-0.015em] text-white">{tabById(shownTab).label}</p>
