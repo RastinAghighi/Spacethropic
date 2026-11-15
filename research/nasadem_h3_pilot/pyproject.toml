@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "spacethropic"
+version = "0.1.0"
+description = "Terrestrial analog discovery for lunar and Martian environments: NASADEM ingestion and terrain analysis"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=2.0",  # weighted percentiles (np.percentile(..., weights=...))
+    "matplotlib>=3.7",
+    "h3>=4.0,<5",  # H3 v4 API (latlng_to_cell, cell_to_boundary, ...) for hexagon aggregation
+]
+
+[project.optional-dependencies]
+rasterio = ["rasterio>=1.3"]  # optional GDAL cross-check of the native reader
+dev = ["pytest>=7"]
+
+[project.scripts]
+spacethropic-terrain = "spacethropic.cli:main"
+spacethropic-h3 = "spacethropic.h3_cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
