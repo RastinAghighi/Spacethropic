@@ -1,0 +1,16 @@
+earth,target,target_body,true,basis
+sudbury,apollo16,moon,True,Apollo 16 crew trained here; recognised Cayley breccia as impact breccia
+sudbury,shackleton,moon,False,
+sudbury,viking1,mars,False,
+sudbury,viking2,mars,False,
+sudbury,phoenix,mars,False,
+atacama,apollo16,moon,False,
+atacama,shackleton,moon,False,
+atacama,viking1,mars,True,Viking-style labelled-release experiments on Yungay soils (Navarro-González 2003)
+atacama,viking2,mars,True,Viking-style labelled-release experiments on Yungay soils (Navarro-González 2003)
+atacama,phoenix,mars,False,
+haughton,apollo16,moon,False,
+haughton,shackleton,moon,True,Chosen pairing: ~20 km polar impact crater vs ~21 km south-polar crater (HMP Moon analog)
+haughton,viking1,mars,False,
+haughton,viking2,mars,False,
+haughton,phoenix,mars,True,Chosen pairing: polygonal ground and shallow ground ice (HMP Mars analog)

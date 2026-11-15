@@ -10,12 +10,14 @@ grid, producing one complete feature table per site.
 | Sudbury impact structure, Ontario | Apollo 16, Descartes highlands (Moon) | Apollo 16 crew trained here and recognised the Cayley breccia as impact breccia |
 | Yungay, Atacama hyper-arid core | Viking 1 and Viking 2 landing sites (Mars) | Viking-style soil experiments on Yungay soils (Navarro-González et al. 2003) |
 | Haughton crater, Devon Island | Shackleton crater (Moon), Phoenix landing site (Mars) | Haughton-Mars Project; the specific counterparts are our choice |
+| Black Point Lava Flow, Arizona | Apollo 15, Hadley Rille (Moon) | NASA Desert RATS simulated lunar missions on basalt lava terrain (2008–2012); the counterpart is our choice |
+| Dumont Dunes, California | Bagnold Dunes, Gale crater (Mars) | Curiosity's "Scarecrow" test rover drove these dunes (2012) to plan driving at the Bagnold dunes |
 
 Contributors and coding agents: [AGENTS.md](AGENTS.md) records the current state, the
 decisions made so far and who made them, open questions, and known pitfalls.
 
-Every Earth site is paired with every planetary site, giving 15 edges (`data/out/pairs.csv`).
-Five are true analogs and ten are wrong. A calibrated searcher should place true edges at a
+Every Earth site is paired with every planetary site, giving 70 edges (`data/out/pairs.csv`). Five Earth sites are random controls (`rand_*`, seeded random land points) with no analog association, so all their edges are wrong:
+7 true analogs and 28 wrong. A calibrated searcher should place true edges at a
 lower distance than wrong ones.
 
 ## Status
@@ -25,13 +27,21 @@ lower distance than wrong ones.
 | 1. Geology: FeO (`feo_wt_pct`) | Implemented for the Moon and Mars. Empty on Earth (no source yet) and at Phoenix (polar mask); gaps allowed |
 | 1. Geology: albedo (`albedo`) | Implemented, every cell filled (4 Haughton cells interpolated) |
 | 2. Terrain (elevation spread, slope, roughness) | Implemented, every cell filled |
-| 3. Temperature (day max, night max, night min, mean) + sunlight | Merged for Earth and Moon, every cell filled. Mars pending the GCM build |
-| 5. Weather (mean pressure, mean and max wind) | Merged for Earth (measured) and Moon (known-absent 0). Mars pending the GCM build |
+| 3. Temperature (day max, night max, night min, mean) + sunlight | Implemented for all 17 sites, every cell filled (Mars from model output) |
+| 5. Weather (mean pressure, mean and max wind) | Implemented for all 17 sites: Earth measured, Moon known-absent 0, Mars model |
 | 4, 6–8 | Not yet implemented; listed as `not_implemented` in `coverage.csv` |
 
 A preliminary feature-importance study of the merged features is in
 [analysis/feature_importance.md](analysis/feature_importance.md). Reproduce it with
 `python -m uv run python analysis/feature_importance.py`.
+The latest run covers all 35 edges (5 Earth × 7 targets) and all built dimensions:
+[analysis/runs/2026-11-14_full-35-edges/report.md](analysis/runs/2026-11-14_full-35-edges/report.md).
+Each feature is scored alone as a distance: |site-mean difference| / SD of the site means, or
+1-D Wasserstein / pooled SD. The best AUC is 0.57 (p ≥ 0.18), so no single feature separates
+true from wrong edges.
+With the 5 random controls (70 edges, [run](analysis/runs/2026-11-14_with-random-controls/)) the best is
+`albedo__p10` at AUC 0.64 (p 0.08). Random-control edges are farther than analog-site edges, but
+true and wrong analog edges are equally close.
 
 ## Reproduce
 
@@ -114,6 +124,9 @@ Each step below is a fixed rule. Changing any of them changes the output.
      - Sudbury: Jul–Aug 2023 and 2024
      - Haughton: 15 Jul–25 Aug 2023 and 2024
      - Atacama: Nov 2023–Mar 2024
+     - Black Point, Dumont: Apr–Oct 2023
+     - Random controls: Jul–Aug 2023/2024 (NWT, Québec), Jun–Sep 2023/2024 (Kunlun),
+       Jul–Oct 2023/2024 dry season (Amazon), Apr–Oct 2023 (Oklahoma)
    - **Temperature** (`temp_*_k`): from a year of surface temperature samples. Day is local
      solar time 6–18 h; night is the rest.
      - Day max: maximum of the day samples. Night max and night min: maximum and minimum of
@@ -151,6 +164,8 @@ Each step below is a fixed rule. Changing any of them changes the output.
 Every dataset below is read directly by `run.py download`, with no login and no manual
 download. Source ids match the files in `data/raw/<site>/` and the keys in `manifest.json`.
 Within each body, sources are listed in fill order (primary first).
+`data/README.md` maps each source id to the output feature columns it produces. It sits in
+the git-ignored data folder so it travels with the data.
 
 #### Full datasets (entire products)
 
@@ -183,16 +198,16 @@ These crops aren't hosted anywhere; rebuild them with `run.py download <site>`.
 
 | Source id | Sites | What is fetched | Local crop |
 |---|---|---|---|
-| `copdem30` | sudbury, atacama, haughton | Only the 1° tiles touching the site: `https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_<N\|S><lat>_00_<E\|W><lon>_00_DEM/…_DEM.tif`, e.g. [N46 W082](https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N46_00_W082_00_DEM/Copernicus_DSM_COG_10_N46_00_W082_00_DEM.tif) for Sudbury. Exact tiles per site are in `manifest.json` | `data/raw/<site>/copdem30.tif` |
+| `copdem30` | all Earth sites (analogs and `rand_*` controls) | Only the 1° tiles touching the site: `https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_<N\|S><lat>_00_<E\|W><lon>_00_DEM/…_DEM.tif`, e.g. [N46 W082](https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N46_00_W082_00_DEM/Copernicus_DSM_COG_10_N46_00_W082_00_DEM.tif) for Sudbury. Exact tiles per site are in `manifest.json` | `data/raw/<site>/copdem30.tif` |
 | `lola_polar20` | shackleton | Whole file, downloaded once (small), cached in `data/raw/_shared/lola_polar/` | `data/raw/shackleton/lola_polar20.tif` |
 | `lola118` | apollo16, shackleton (fallback) | Rows covering the site window only (~65–100 MB of the 8.5 GB file) | `data/raw/<site>/lola118.tif` |
 | `hrsc_mola200` | viking1, viking2, phoenix | Rows covering the site window only (~67 MB per site) | `data/raw/<site>/hrsc_mola200.tif` |
 | `mola463` | viking1, viking2, phoenix (fallback) | Rows covering the site window only (~13 MB per site) | `data/raw/<site>/mola463.tif` |
-| `s2_albedo` | sudbury, atacama, haughton | STAC search over the site box for the season below (cloud < 20%), lowest-cloud first, up to 32 scenes. Per scene: SCL + 5 bands read through COG overviews at ~160 m, averaged to 200 m. Scene ids and dates are in `data/raw/<site>/s2_albedo.json` and `manifest.json` | `data/raw/<site>/s2_albedo.tif` |
+| `s2_albedo` | all Earth sites (analogs and `rand_*` controls) | STAC search over the site box for the season below (cloud < 20%), lowest-cloud first, up to 32 scenes. Per scene: SCL + 5 bands read through COG overviews at ~160 m, averaged to 200 m. Scene ids and dates are in `data/raw/<site>/s2_albedo.json` and `manifest.json` | `data/raw/<site>/s2_albedo.tif` |
 | `lola_albedo_s1000` | shackleton | Window of the polar map | `data/raw/shackleton/lola_albedo_s1000.tif` |
 | `lola_albedo_10ppd` | apollo16, shackleton (fallback) | Window of the global map | `data/raw/<site>/lola_albedo_10ppd.tif` |
 | `tes_albedo` | viking1, viking2, phoenix | Window of the global map | `data/raw/<site>/tes_albedo.tif` |
-| `power_ts_hourly`, `power_weather_hourly` | sudbury, atacama, haughton | One year of hourly values for each POWER grid cell touching the site (1–4 cells), via the API. Query URLs in `manifest.json` | `data/raw/<site>/power_*.tif` (multi-band) |
+| `power_ts_hourly`, `power_weather_hourly` | all Earth sites (analogs and `rand_*` controls) | One year of hourly values for each POWER grid cell touching the site (1–4 cells), via the API. Query URLs in `manifest.json` | `data/raw/<site>/power_*.tif` (multi-band) |
 | `diviner_gcp` | apollo16, shackleton | The site's 10° band table, downloaded once to `data/raw/_shared/diviner/`, reduced per 0.5° cell | `data/raw/<site>/diviner_gcp.tif` (4 bands) |
 | `mgcm_tsurf`, `mgcm_weather` | viking1, viking2, phoenix | Every 6th file (12 of 67, ~3.5 GB), each reduced on the whole GCM grid then deleted. Result cached in `data/raw/_shared/mgcm/mgcm_climatology_step6.npz` (per-file partials in `partials/`). Interpolated bilinearly to the site | `data/raw/<site>/mgcm_*.tif` |
 | `orbital_insolation` | all 8 | Computed per pixel from latitude | `data/raw/<site>/orbital_insolation.tif` |
@@ -231,6 +246,51 @@ Impact Database, Navarro-González et al. (2003), NASA Apollo 16 records, the US
 of Planetary Nomenclature (Shackleton), the Viking 1 location revised by Morris & Jones
 (1980), and the Viking 2 and Phoenix landing records.
 
+## Global Earth exclusion mask (`analysis/global_mask.py`)
+
+Whole-Earth, pixel-by-pixel filter (no H3 grid) that removes every 0.05° pixel (~5.6 km at the
+equator; the VIIRS CMG grid, the coarsest input) that is **ocean**, **densely populated** or
+**densely vegetated**. Areas are exact spherical pixel areas.
+
+| Rule | Data | Removed when |
+|---|---|---|
+| Ocean | [Natural Earth 1:10m land](https://www.naturalearthdata.com/) (GeoJSON), pixel-centre test | outside land (lakes count as land; the Caspian counts as ocean) |
+| Populated | [GHSL GHS-POP R2023A](https://human-settlement.emergency.copernicus.eu/), epoch 2020, 30″, summed per pixel | ≥ 50 people/km² (GHSL "very low density rural" bound) |
+| Vegetated | [VIIRS VNP13C2 v002](https://lpdaac.usgs.gov/products/vnp13c2v002/) monthly NDVI 0.05°, 2023 peak | peak NDVI ≥ 0.5 (dense: forest, crops) |
+
+```bash
+uv run python analysis/global_mask_download.py   # ~2.3 GB; VIIRS needs EARTHDATA_TOKEN in .env
+uv run python analysis/global_mask.py            # ~25 s
+```
+
+Result (2026-11-14), in `data/out/global_mask/` (`summary.json`, `exclusion_flags.tif` bits
+1 ocean / 2 populated / 4 vegetated, `kept.tif`, `map_before_land.png`, `map_after_filtered.png`,
+`map_reasons.png`):
+
+| | Area (M km²) |
+|---|---|
+| Earth | 510.07 |
+| Land | 146.74 |
+| Kept | **56.38** (44.12 excluding south of 60°S) |
+
+Reduction: **88.9 % vs the whole Earth**, **61.6 % vs land**, 67.2 % vs land excluding
+Antarctica. Vegetation removes 88.4 M km² of land and population 15.6 M km² (13.6 overlap).
+Kept land holds 59 M of 7.84 bn people. Earth analog sites kept: Atacama, Haughton, Black
+Point, Dumont, rand_kunlun. Removed (vegetation): **Sudbury** (peak NDVI 0.83) and four random
+controls. Known caveat: large lakes (Great Lakes, Victoria) are kept, since they are inside the
+land polygons and not green.
+
+## Elevation at Earth-r8 size (`analysis/elevation_r8.py`)
+
+Every site's elevation recomputed from the original DEM products onto square pixels with the
+area of Earth's mean H3 r8 cell (0.7373 km², **858.68 m** side). The **same physical size is
+used on the Moon and Mars** (H3 r8 there would be smaller cells). Area-average resampling, same
+site-local grid and source fill order as the pipeline; 71 × 71 px per site, all 17 sites 100 %
+valid. Outputs: `data/out/elevation_r8/<site>.tif` (band 1 `elevation_m`, band 2
+`source_index`), per-source rasters + provenance, `summary.csv`, and
+`data/export/elevation_r8_all_sites.zip`. Run: `uv run python analysis/elevation_r8.py all`
+(~9 min, remote range reads).
+
 ## Outputs (`data/out/`)
 
 - **`<site>.parquet`:** one row per H3 cell, with:
@@ -254,8 +314,10 @@ statistics.
 
 ## Expected results
 
-- **Cell counts per site:** Sudbury 346, Atacama 378, Haughton 350, Apollo 16 663,
-  Shackleton 679, Viking 1 205, Viking 2 229, Phoenix 199.
+- **Cell counts per site:**
+  - Earth: Sudbury 346, Atacama 378, Haughton 350, Black Point 338, Dumont 343
+  - Moon: Apollo 16 663, Shackleton 679, Apollo 15 697
+  - Mars: Viking 1 205, Viking 2 229, Phoenix 199, Bagnold 165
 - **Terrain:** every value filled.
 - **Temperature, sunlight and weather** (site averages; K, W/m², Pa, m/s):
 
@@ -266,8 +328,24 @@ statistics.
   | Haughton | 286.4 | 283.1 | 227.6 | 257.9 | 185 | 99,350 | 3.9 / 13.6 |
   | Apollo 16 | 388.1 | 127.0 | 93.2 | 200.7 | 428 | 0 | 0 / 0 |
   | Shackleton | 211.2 | 170.0 | 55.5 | 118.6 | 12 | 0 | 0 / 0 |
+  | Viking 1 | 277.8 | 219.8 | 184.5 | 219.7 | 167 | 780 | 7.7 / 21.6 |
+  | Viking 2 | 267.7 | 221.7 | 153.3 | 198.1 | 128 | 866 | 5.9 / 21.4 |
+  | Phoenix | 249.3 | 228.2 | 149.1 | 180.7 | 91 | 822 | 10.5 / 33.2 |
 
-  Mars rows will be added once the GCM build finishes.
+  New sites (site averages):
+
+  | Site | Albedo | FeO wt% | Slope ° | Day max K | Night min K | Mean K | Sunlight | Pressure Pa | Wind mean |
+  |---|---|---|---|---|---|---|---|---|---|
+  | Black Point | 0.18 | — | 2.5 | 322.3 | 257.1 | 285.9 | 345 | 84,450 | 3.4 |
+  | Dumont | 0.23 | — | 5.2 | 331.0 | 266.8 | 290.9 | 345 | 89,990 | 3.6 |
+  | Apollo 15 | 0.22 | 13.2 | 10.5 | 381.0 | 91.8 | 197.4 | 389 | 0 | 0 |
+  | Bagnold | 0.23 | 19.3 | 6.1 | 289.5 | 181.7 | 222.7 | 178 | 635 | 7.1 |
+
+  Apollo 15's FeO (13%, mare basalt) is about twice Apollo 16's (6%, highlands), as expected.
+  Bagnold's 635 Pa is below what Curiosity measures on the Gale floor (~700–900 Pa). The GCM's
+  5° × 6° cell averages the deep crater floor with Mount Sharp and the surrounding highlands.
+  Mars pressures match the landers (Viking 1 measured ~690–900 Pa). Phoenix's night minimum
+  sits at the CO₂ frost point (~148 K).
 - **Albedo (`albedo__mean`, site average):**
   - Earth: Sudbury 0.12 (forest and lakes), Atacama 0.28, Haughton 0.23
   - Moon: Apollo 16 0.29, Shackleton 0.38

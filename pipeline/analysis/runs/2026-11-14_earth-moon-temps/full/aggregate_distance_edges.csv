@@ -1,0 +1,16 @@
+mean_all,mean_all_n_features,mean_complete,mean_complete_n_features,mean_temp_sun_weather,mean_temp_sun_weather_n_features,mean_terrain_albedo,mean_terrain_albedo_n_features,w1_all,w1_all_n_features,w1_complete,w1_complete_n_features,w1_temp_sun_weather,w1_temp_sun_weather_n_features,w1_terrain_albedo,w1_terrain_albedo_n_features,earth,target,true
+1.2223,24,1.1329,16,1.401,8,1.1329,16,1.0983,24,0.907,16,1.4809,8,0.907,16,sudbury,apollo16,True
+2.3224,24,2.6489,16,1.6696,8,2.6489,16,1.8593,24,1.9113,16,1.7554,8,1.9113,16,sudbury,shackleton,False
+0.8793,16,0.8793,16,,0,0.8793,16,0.6741,16,0.6741,16,,0,0.6741,16,sudbury,viking1,False
+0.6329,16,0.6329,16,,0,0.6329,16,0.5647,16,0.5647,16,,0,0.5647,16,sudbury,viking2,False
+0.6908,16,0.6908,16,,0,0.6908,16,0.565,16,0.565,16,,0,0.565,16,sudbury,phoenix,False
+0.7514,24,0.3947,16,1.4648,8,0.3947,16,0.7499,24,0.3436,16,1.5625,8,0.3436,16,atacama,apollo16,False
+1.9002,24,1.8958,16,1.909,8,1.8958,16,1.5252,24,1.2839,16,2.0076,8,1.2839,16,atacama,shackleton,False
+0.9976,16,0.9976,16,,0,0.9976,16,0.7145,16,0.7145,16,,0,0.7145,16,atacama,viking1,True
+0.5818,16,0.5818,16,,0,0.5818,16,0.4918,16,0.4918,16,,0,0.4918,16,atacama,viking2,True
+0.9052,16,0.9052,16,,0,0.9052,16,0.6707,16,0.6707,16,,0,0.6707,16,atacama,phoenix,False
+0.8607,24,0.4508,16,1.6806,8,0.4508,16,0.9029,24,0.4643,16,1.7801,8,0.4643,16,haughton,apollo16,False
+1.8461,24,1.9179,16,1.7024,8,1.9179,16,1.5197,24,1.372,16,1.8151,8,1.372,16,haughton,shackleton,True
+0.9714,16,0.9714,16,,0,0.9714,16,0.6693,16,0.6693,16,,0,0.6693,16,haughton,viking1,False
+0.6373,16,0.6373,16,,0,0.6373,16,0.4633,16,0.4633,16,,0,0.4633,16,haughton,viking2,False
+0.8597,16,0.8597,16,,0,0.8597,16,0.6136,16,0.6136,16,,0,0.6136,16,haughton,phoenix,True

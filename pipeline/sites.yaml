@@ -38,6 +38,64 @@ sites:
     lon: -89.667
     source: "Haughton crater (75°23′N 89°40′W)"
 
+  - id: blackpoint
+    name: Black Point Lava Flow, Arizona (Desert RATS)
+    body: earth
+    lat: 35.6835
+    lon: -111.4786
+    source: "Desert RATS test site on the flow's northern margin (35.6835°N 111.4786°W; AZGS / NASA)"
+
+  - id: dumont
+    name: Dumont Dunes, California (Curiosity mobility tests)
+    body: earth
+    lat: 35.6786
+    lon: -116.2316
+    source: "Dumont Dunes summit, USGS GNIS (35.67863°N 116.23156°W)"
+
+  # --- Earth random controls (no analog association; every edge is wrong) ---
+  # Drawn 2026-11-14: seed 20261114, uniform on the sphere, kept if 60°S ≤ lat ≤ 75°N
+  # (Sentinel-2 albedo is snow-masked beyond), a Copernicus DEM tile exists, ≥ 90% of the
+  # 25 km window is non-zero elevation, and ≥ 300 km from any other Earth site.
+  - id: rand_nwt
+    name: Random control 1, Northwest Territories, Canada
+    body: earth
+    lat: 64.1192
+    lon: -120.1396
+    role: control
+    source: "Seeded random draw (see comment above)"
+
+  - id: rand_quebec
+    name: Random control 2, Côte-Nord, Québec
+    body: earth
+    lat: 50.2682
+    lon: -68.6105
+    role: control
+    source: "Seeded random draw (see comment above)"
+
+  - id: rand_amazon
+    name: Random control 3, Amazon basin, Brazil
+    body: earth
+    lat: -4.6278
+    lon: -60.2194
+    role: control
+    source: "Seeded random draw (see comment above)"
+
+  - id: rand_kunlun
+    name: Random control 4, Kunlun Shan / Tarim margin, China
+    body: earth
+    lat: 36.7825
+    lon: 81.2511
+    role: control
+    source: "Seeded random draw (see comment above)"
+
+  - id: rand_oklahoma
+    name: Random control 5, northwest Oklahoma
+    body: earth
+    lat: 36.6986
+    lon: -99.7922
+    role: control
+    source: "Seeded random draw (see comment above)"
+
   # --- Moon ---
   - id: apollo16
     name: Apollo 16 landing site, Descartes highlands
@@ -52,6 +110,13 @@ sites:
     lat: -89.67
     lon: 129.78
     source: "USGS Gazetteer of Planetary Nomenclature (89.67°S 129.78°E)"
+
+  - id: apollo15
+    name: Apollo 15 landing site, Hadley Rille
+    body: moon
+    lat: 26.1322
+    lon: 3.6339
+    source: "NASA Apollo Lunar Surface Journal (26°07′56″N 3°38′02″E)"
 
   # --- Mars ---
   - id: viking1
@@ -78,3 +143,10 @@ sites:
     lat: 68.2188
     lon: -125.7492
     source: "Phoenix lander (68.2188°N 125.7492°W), planetocentric"
+
+  - id: bagnold
+    name: Bagnold Dunes, Gale crater (Namib dune area)
+    body: mars
+    lat: -4.680
+    lon: 137.361
+    source: "HiRISE ESP_045293_1755, Curiosity at the Bagnold dune field (4.680°S 137.361°E, planetocentric)"
