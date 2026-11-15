@@ -1,0 +1,1833 @@
+{
+ "task": "DRUMHELLER-PILOT-02 independent verification",
+ "zip_file": "NASADEM_HGT_n51w113.zip",
+ "tile_origin_south_west_deg": [
+  51,
+  -113
+ ],
+ "aoi_windows": {
+  "tile": {
+   "rows": [
+    1,
+    3601
+   ],
+   "cols": [
+    0,
+    3600
+   ]
+  },
+  "drumheller_badlands": {
+   "rows": [
+    1729,
+    2161
+   ],
+   "cols": [
+    720,
+    1440
+   ]
+  }
+ },
+ "pure_python_hgt_summary": {
+  "void_count": 0,
+  "min_m": 650,
+  "max_m": 1095,
+  "mean_m_unweighted_all_samples": 853.207201538713,
+  "samples": 12967201
+ },
+ "checks": [
+  {
+   "check": "reader: zip_members_crc32_and_size",
+   "passed": true,
+   "detail": "3 members inflated with zlib; CRC-32 and sizes match the central directory"
+  },
+  {
+   "check": "reader: byte_counts",
+   "passed": true,
+   "detail": "hgt 25934402 = 2 x 3601^2, num 12967201, swb 12967201"
+  },
+  {
+   "check": "reader: stored_inspect_summary_vs_pure_python",
+   "passed": true,
+   "detail": "stored min/max/mean/voids 650/1095/853.207201539/0; pure Python 650/1095/853.207201539/0"
+  },
+  {
+   "check": "masks: swb_counts_vs_stored",
+   "passed": true,
+   "detail": "water 117665, land 12849536, other 0"
+  },
+  {
+   "check": "masks: num0_equals_swb255",
+   "passed": true,
+   "detail": "NUM water code <=> SWB water"
+  },
+  {
+   "check": "tile: water_count_vs_stored",
+   "passed": true,
+   "detail": "117282 water samples"
+  },
+  {
+   "check": "drumheller_badlands: water_count_vs_stored",
+   "passed": true,
+   "detail": "0 water samples"
+  },
+  {
+   "check": "reference: only_granule_edges_undefined",
+   "passed": true,
+   "detail": "outer rows/cols undefined: True; undefined interior samples: 0"
+  },
+  {
+   "check": "reader: full_hgt_identical_to_stdlib_decode",
+   "passed": true,
+   "detail": "all 12967201 int16 samples"
+  },
+  {
+   "check": "reader: sampled_values_match_struct_decode",
+   "passed": true,
+   "detail": "3007 points (random.Random(20261114) + 7 fixed), 0 mismatches"
+  },
+  {
+   "check": "reader: full_num_identical",
+   "passed": true,
+   "detail": "NUM layer, all samples"
+  },
+  {
+   "check": "reader: full_swb_identical",
+   "passed": true,
+   "detail": "SWB layer, all samples"
+  },
+  {
+   "check": "geometry: sample_coordinates",
+   "passed": true,
+   "detail": "max |lat diff| 7.1e-15 deg, max |lon diff| 0.0e+00 deg"
+  },
+  {
+   "check": "geometry: dx_vs_ecef_chord",
+   "passed": true,
+   "detail": "max relative diff 9.8e-13 (tol 1e-9)"
+  },
+  {
+   "check": "geometry: dy_vs_ecef_chord",
+   "passed": true,
+   "detail": "max relative diff 4.2e-11 (tol 1e-9)"
+  },
+  {
+   "check": "geometry: cell_area_vs_exact_quadrangle",
+   "passed": true,
+   "detail": "max relative diff 4.4e-10 (tol 1e-9)"
+  },
+  {
+   "check": "tile: window_vs_integer_arcsec_derivation",
+   "passed": true,
+   "detail": "pipeline rows [1, 3601] cols [0, 3600]; reference rows [1, 3601] cols [0, 3600]"
+  },
+  {
+   "check": "tile: aoi_area_vs_exact_quadrangle",
+   "passed": true,
+   "detail": "pipeline 7725.722891125 km2, exact 7725.722891117 km2"
+  },
+  {
+   "check": "tile: water_mask_identical",
+   "passed": true,
+   "detail": "117282 water samples"
+  },
+  {
+   "check": "tile: analysis_mask_identical",
+   "passed": true,
+   "detail": "12842718 analysed samples"
+  },
+  {
+   "check": "tile: per_pixel_elevation",
+   "passed": true,
+   "detail": "max |diff| 0.00e+00 (tol 0), NaN-pattern mismatches 0, 12960000 pixels"
+  },
+  {
+   "check": "tile: per_pixel_slope",
+   "passed": true,
+   "detail": "max |diff| 1.91e-06 (tol 1e-05), NaN-pattern mismatches 0, 12952801 pixels"
+  },
+  {
+   "check": "tile: per_pixel_roughness_tri",
+   "passed": true,
+   "detail": "max |diff| 3.76e-06 (tol 1e-05), NaN-pattern mismatches 0, 12952801 pixels"
+  },
+  {
+   "check": "tile: per_pixel_roughness_detrended",
+   "passed": true,
+   "detail": "max |diff| 2.38e-07 (tol 1e-05), NaN-pattern mismatches 0, 12952801 pixels"
+  },
+  {
+   "check": "tile: per_pixel_roughness_detrended_vs_metric_window",
+   "passed": true,
+   "detail": "max |diff| 5.82e-05 (tol 0.0005), NaN-pattern mismatches 0, 12952801 pixels"
+  },
+  {
+   "check": "tile: statistics_vs_reference",
+   "passed": true,
+   "detail": "44 statistics, 0 outside tolerance"
+  },
+  {
+   "check": "tile: stored_outputs_reproduced",
+   "passed": true,
+   "detail": "44 statistics, 0 stored values differ from a fresh run"
+  },
+  {
+   "check": "tile: undefined_derivative_count",
+   "passed": true,
+   "detail": "pipeline 7199, reference 7199"
+  },
+  {
+   "check": "drumheller_badlands: window_vs_integer_arcsec_derivation",
+   "passed": true,
+   "detail": "pipeline rows [1729, 2161] cols [720, 1440]; reference rows [1729, 2161] cols [720, 1440]"
+  },
+  {
+   "check": "drumheller_badlands: aoi_area_vs_exact_quadrangle",
+   "passed": true,
+   "detail": "pipeline 185.580753005 km2, exact 185.580753005 km2"
+  },
+  {
+   "check": "drumheller_badlands: water_mask_identical",
+   "passed": true,
+   "detail": "0 water samples"
+  },
+  {
+   "check": "drumheller_badlands: analysis_mask_identical",
+   "passed": true,
+   "detail": "311040 analysed samples"
+  },
+  {
+   "check": "drumheller_badlands: per_pixel_elevation",
+   "passed": true,
+   "detail": "max |diff| 0.00e+00 (tol 0), NaN-pattern mismatches 0, 311040 pixels"
+  },
+  {
+   "check": "drumheller_badlands: per_pixel_slope",
+   "passed": true,
+   "detail": "max |diff| 1.91e-06 (tol 1e-05), NaN-pattern mismatches 0, 311040 pixels"
+  },
+  {
+   "check": "drumheller_badlands: per_pixel_roughness_tri",
+   "passed": true,
+   "detail": "max |diff| 3.76e-06 (tol 1e-05), NaN-pattern mismatches 0, 311040 pixels"
+  },
+  {
+   "check": "drumheller_badlands: per_pixel_roughness_detrended",
+   "passed": true,
+   "detail": "max |diff| 2.38e-07 (tol 1e-05), NaN-pattern mismatches 0, 311040 pixels"
+  },
+  {
+   "check": "drumheller_badlands: per_pixel_roughness_detrended_vs_metric_window",
+   "passed": true,
+   "detail": "max |diff| 5.58e-05 (tol 0.0005), NaN-pattern mismatches 0, 311040 pixels"
+  },
+  {
+   "check": "drumheller_badlands: statistics_vs_reference",
+   "passed": true,
+   "detail": "44 statistics, 0 outside tolerance"
+  },
+  {
+   "check": "drumheller_badlands: stored_outputs_reproduced",
+   "passed": true,
+   "detail": "44 statistics, 0 stored values differ from a fresh run"
+  },
+  {
+   "check": "drumheller_badlands: undefined_derivative_count",
+   "passed": true,
+   "detail": "pipeline 0, reference 0"
+  }
+ ],
+ "all_checks_passed": true,
+ "reference_statistics": {
+  "tile": {
+   "elevation": {
+    "count_valid": 12842718,
+    "min": 651.0,
+    "max": 1095.0,
+    "mean": 853.6471670791158,
+    "std": 59.243204389950286,
+    "p5": 753.0,
+    "p25": 823.0,
+    "p50": 849.0,
+    "p75": 885.0,
+    "p95": 957.0,
+    "valid_area_km2": 7656.0488659958
+   },
+   "slope": {
+    "count_valid": 12835519,
+    "min": 0.0,
+    "max": 44.697505871901335,
+    "mean": 2.9169490158573312,
+    "std": 3.0910702266886525,
+    "p5": 0.4400774763713479,
+    "p25": 1.3074286765051621,
+    "p50": 2.11718168995737,
+    "p75": 3.3370938764386566,
+    "p95": 7.779879593475817,
+    "valid_area_km2": 7651.734164799493
+   },
+   "roughness_tri": {
+    "count_valid": 12835519,
+    "min": 0.0,
+    "max": 72.16647421067486,
+    "mean": 3.8063059569763817,
+    "std": 3.479976320896531,
+    "p5": 1.4142135623730951,
+    "p25": 2.23606797749979,
+    "p50": 3.0,
+    "p75": 4.242640687119285,
+    "p95": 9.0,
+    "valid_area_km2": 7651.734164799493
+   },
+   "roughness_detrended": {
+    "count_valid": 12835519,
+    "min": 0.0,
+    "max": 6.15238586662539,
+    "mean": 0.40975006825574406,
+    "std": 0.23246079683408116,
+    "p5": 0.23570226039551584,
+    "p25": 0.2832788618662658,
+    "p50": 0.36851386559504445,
+    "p75": 0.4779069592801459,
+    "p95": 0.7617394000445604,
+    "valid_area_km2": 7651.734164799493
+   }
+  },
+  "drumheller_badlands": {
+   "elevation": {
+    "count_valid": 311040,
+    "min": 670.0,
+    "max": 861.0,
+    "mean": 779.3253536199455,
+    "std": 49.400377818561616,
+    "p5": 685.0,
+    "p25": 747.0,
+    "p50": 793.0,
+    "p75": 817.0,
+    "p95": 840.0,
+    "valid_area_km2": 185.58075300679738
+   },
+   "slope": {
+    "count_valid": 311040,
+    "min": 0.0,
+    "max": 44.37757977903967,
+    "mean": 5.259051999280865,
+    "std": 5.678856267098207,
+    "p5": 0.7419991115342126,
+    "p25": 1.6636653662044791,
+    "p50": 3.0325833483436258,
+    "p75": 6.329521973119721,
+    "p95": 18.206728881517904,
+    "valid_area_km2": 185.58075300679738
+   },
+   "roughness_tri": {
+    "count_valid": 311040,
+    "min": 0.0,
+    "max": 65.23802572120036,
+    "mean": 6.466254179044017,
+    "std": 6.456966196501236,
+    "p5": 1.4142135623730951,
+    "p25": 2.449489742783178,
+    "p50": 3.872983346207417,
+    "p75": 7.681145747868608,
+    "p95": 20.688160865577203,
+    "valid_area_km2": 185.58075300679738
+   },
+   "roughness_detrended": {
+    "count_valid": 311040,
+    "min": 0.0,
+    "max": 5.422859707516635,
+    "mean": 0.5519730814392299,
+    "std": 0.3913626446704031,
+    "p5": 0.23570226039551587,
+    "p25": 0.28327886186626583,
+    "p50": 0.4303314829119352,
+    "p75": 0.6382847385042254,
+    "p95": 1.3630937940428107,
+    "valid_area_km2": 185.58075300679738
+   }
+  }
+ },
+ "reference_extra": {
+  "tile": {
+   "roughness_detrended_metric_window": {
+    "count_valid": 12835519,
+    "min": 0.0,
+    "max": 6.152397503352641,
+    "mean": 0.4097501086667121,
+    "std": 0.23246072648810293,
+    "p5": 0.23570226040415138,
+    "p25": 0.28327807802717625,
+    "p50": 0.36851417050025026,
+    "p75": 0.47790600101692565,
+    "p95": 0.7617398400074228,
+    "valid_area_km2": 7651.734164799493
+   },
+   "elevation_unweighted_mean": 853.602861170042,
+   "elevation_unweighted_linear_percentiles": {
+    "p5": 754.0,
+    "p25": 823.0,
+    "p50": 849.0,
+    "p75": 885.0,
+    "p95": 957.0
+   }
+  },
+  "drumheller_badlands": {
+   "roughness_detrended_metric_window": {
+    "count_valid": 311040,
+    "min": 0.0,
+    "max": 5.422860720969021,
+    "mean": 0.5519731398478338,
+    "std": 0.3913625471940372,
+    "p5": 0.2357022772904483,
+    "p25": 0.2832808275653613,
+    "p50": 0.4303314839365136,
+    "p75": 0.6382915783442368,
+    "p95": 1.3630868869026425,
+    "valid_area_km2": 185.58075300679738
+   },
+   "elevation_unweighted_mean": 779.3239711934157,
+   "elevation_unweighted_linear_percentiles": {
+    "p5": 685.0,
+    "p25": 747.0,
+    "p50": 793.0,
+    "p75": 817.0,
+    "p95": 840.0
+   }
+  }
+ },
+ "comparison": {
+  "sample_points": {
+   "count": 3007,
+   "seed": 20261114,
+   "mismatches": 0,
+   "first_points_row_col_lat_lon_height": [
+    [
+     0,
+     0,
+     52.0,
+     -113.0,
+     882
+    ],
+    [
+     0,
+     3600,
+     52.0,
+     -112.0,
+     805
+    ],
+    [
+     3600,
+     0,
+     51.0,
+     -113.0,
+     875
+    ],
+    [
+     3600,
+     3600,
+     51.0,
+     -112.0,
+     730
+    ],
+    [
+     1800,
+     1800,
+     51.5,
+     -112.5,
+     879
+    ],
+    [
+     1729,
+     720,
+     51.51972222222222,
+     -112.8,
+     769
+    ],
+    [
+     2160,
+     1439,
+     51.4,
+     -112.60027777777778,
+     684
+    ],
+    [
+     262,
+     986,
+     51.92722222222222,
+     -112.72611111111111,
+     877
+    ],
+    [
+     2267,
+     2404,
+     51.37027777777778,
+     -112.33222222222223,
+     865
+    ],
+    [
+     1983,
+     2070,
+     51.44916666666666,
+     -112.425,
+     862
+    ],
+    [
+     3131,
+     528,
+     51.13027777777778,
+     -112.85333333333334,
+     954
+    ],
+    [
+     2036,
+     100,
+     51.434444444444445,
+     -112.97222222222223,
+     847
+    ]
+   ]
+  },
+  "geometry": {
+   "dx_rel_diff_max": 9.798828415341632e-13,
+   "dy_rel_diff_max": 4.204547821018423e-11,
+   "cell_area_rel_diff_max": 4.3880898914494537e-10,
+   "dx_m_range_tile": [
+    19.077226688675356,
+    19.49935490825126
+   ],
+   "dy_m_range_tile": [
+    30.902300623558368,
+    30.907596671004384
+   ]
+  },
+  "tile": {
+   "pipeline_seconds": 14.8,
+   "per_pixel": {
+    "elevation": {
+     "max_abs_diff": 0.0,
+     "nan_pattern_mismatches": 0,
+     "pixels_compared": 12960000
+    },
+    "slope": {
+     "max_abs_diff": 1.9069652950065574e-06,
+     "nan_pattern_mismatches": 0,
+     "pixels_compared": 12952801
+    },
+    "roughness_tri": {
+     "max_abs_diff": 3.758780110274529e-06,
+     "nan_pattern_mismatches": 0,
+     "pixels_compared": 12952801
+    },
+    "roughness_detrended": {
+     "max_abs_diff": 2.3793436998431616e-07,
+     "nan_pattern_mismatches": 0,
+     "pixels_compared": 12952801
+    },
+    "roughness_detrended_vs_metric_window": {
+     "max_abs_diff": 5.819419114971858e-05,
+     "nan_pattern_mismatches": 0,
+     "pixels_compared": 12952801
+    }
+   },
+   "statistics": [
+    {
+     "measurement": "elevation",
+     "statistic": "count_valid",
+     "reference": 12842718,
+     "pipeline_rerun": 12842718,
+     "stored_json": 12842718,
+     "abs_diff_vs_reference": 0,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "elevation",
+     "statistic": "min",
+     "reference": 651.0,
+     "pipeline_rerun": 651.0,
+     "stored_json": 651.0,
+     "abs_diff_vs_reference": 0.0,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "elevation",
+     "statistic": "max",
+     "reference": 1095.0,
+     "pipeline_rerun": 1095.0,
+     "stored_json": 1095.0,
+     "abs_diff_vs_reference": 0.0,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "elevation",
+     "statistic": "mean",
+     "reference": 853.6471670791158,
+     "pipeline_rerun": 853.6471670790988,
+     "stored_json": 853.647167079,
+     "abs_diff_vs_reference": 1.693933882052079e-11,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 1e-09,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "elevation",
+     "statistic": "std",
+     "reference": 59.243204389950286,
+     "pipeline_rerun": 59.24320438993439,
+     "stored_json": 59.2432043899,
+     "abs_diff_vs_reference": 1.589484099895344e-11,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 1e-09,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "elevation",
+     "statistic": "p5",
+     "reference": 753.0,
+     "pipeline_rerun": 753.0,
+     "stored_json": 753.0,
+     "abs_diff_vs_reference": 0.0,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "elevation",
+     "statistic": "p25",
+     "reference": 823.0,
+     "pipeline_rerun": 823.0,
+     "stored_json": 823.0,
+     "abs_diff_vs_reference": 0.0,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "elevation",
+     "statistic": "p50",
+     "reference": 849.0,
+     "pipeline_rerun": 849.0,
+     "stored_json": 849.0,
+     "abs_diff_vs_reference": 0.0,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "elevation",
+     "statistic": "p75",
+     "reference": 885.0,
+     "pipeline_rerun": 885.0,
+     "stored_json": 885.0,
+     "abs_diff_vs_reference": 0.0,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "elevation",
+     "statistic": "p95",
+     "reference": 957.0,
+     "pipeline_rerun": 957.0,
+     "stored_json": 957.0,
+     "abs_diff_vs_reference": 0.0,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "elevation",
+     "statistic": "valid_area_km2",
+     "reference": 7656.0488659958,
+     "pipeline_rerun": 7656.0488658879985,
+     "stored_json": 7656.04886589,
+     "abs_diff_vs_reference": 1.0780149750644341e-07,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 1e-09,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "slope",
+     "statistic": "count_valid",
+     "reference": 12835519,
+     "pipeline_rerun": 12835519,
+     "stored_json": 12835519,
+     "abs_diff_vs_reference": 0,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "slope",
+     "statistic": "min",
+     "reference": 0.0,
+     "pipeline_rerun": 0.0,
+     "stored_json": 0.0,
+     "abs_diff_vs_reference": 0.0,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "slope",
+     "statistic": "max",
+     "reference": 44.697505871901335,
+     "pipeline_rerun": 44.697505950927734,
+     "stored_json": 44.6975059509,
+     "abs_diff_vs_reference": 7.902639964640912e-08,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "slope",
+     "statistic": "mean",
+     "reference": 2.9169490158573312,
+     "pipeline_rerun": 2.916949015869428,
+     "stored_json": 2.91694901587,
+     "abs_diff_vs_reference": 1.2096545987105856e-11,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 1e-06,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "slope",
+     "statistic": "std",
+     "reference": 3.0910702266886525,
+     "pipeline_rerun": 3.091070226865216,
+     "stored_json": 3.09107022687,
+     "abs_diff_vs_reference": 1.76563652587447e-10,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 1e-06,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "slope",
+     "statistic": "p5",
+     "reference": 0.4400774763713479,
+     "pipeline_rerun": 0.4400774836540222,
+     "stored_json": 0.440077483654,
+     "abs_diff_vs_reference": 7.282674296948954e-09,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "slope",
+     "statistic": "p25",
+     "reference": 1.3074286765051621,
+     "pipeline_rerun": 1.3074287176132202,
+     "stored_json": 1.30742871761,
+     "abs_diff_vs_reference": 4.1108058068672904e-08,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "slope",
+     "statistic": "p50",
+     "reference": 2.11718168995737,
+     "pipeline_rerun": 2.1171817779541016,
+     "stored_json": 2.11718177795,
+     "abs_diff_vs_reference": 8.79967316791408e-08,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "slope",
+     "statistic": "p75",
+     "reference": 3.3370938764386566,
+     "pipeline_rerun": 3.3370938301086426,
+     "stored_json": 3.33709383011,
+     "abs_diff_vs_reference": 4.6330014047413215e-08,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "slope",
+     "statistic": "p95",
+     "reference": 7.779879593475817,
+     "pipeline_rerun": 7.779879570007324,
+     "stored_json": 7.77987957001,
+     "abs_diff_vs_reference": 2.3468492926781437e-08,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "slope",
+     "statistic": "valid_area_km2",
+     "reference": 7651.734164799493,
+     "pipeline_rerun": 7651.734164691767,
+     "stored_json": 7651.73416469,
+     "abs_diff_vs_reference": 1.0772600944619626e-07,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 1e-09,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_tri",
+     "statistic": "count_valid",
+     "reference": 12835519,
+     "pipeline_rerun": 12835519,
+     "stored_json": 12835519,
+     "abs_diff_vs_reference": 0,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_tri",
+     "statistic": "min",
+     "reference": 0.0,
+     "pipeline_rerun": 0.0,
+     "stored_json": 0.0,
+     "abs_diff_vs_reference": 0.0,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_tri",
+     "statistic": "max",
+     "reference": 72.16647421067486,
+     "pipeline_rerun": 72.16647338867188,
+     "stored_json": 72.1664733887,
+     "abs_diff_vs_reference": 8.220029883432289e-07,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_tri",
+     "statistic": "mean",
+     "reference": 3.8063059569763817,
+     "pipeline_rerun": 3.806305962236795,
+     "stored_json": 3.80630596224,
+     "abs_diff_vs_reference": 5.260413438179512e-09,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 1e-06,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_tri",
+     "statistic": "std",
+     "reference": 3.479976320896531,
+     "pipeline_rerun": 3.4799763203752603,
+     "stored_json": 3.47997632038,
+     "abs_diff_vs_reference": 5.21270582254374e-10,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 1e-06,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_tri",
+     "statistic": "p5",
+     "reference": 1.4142135623730951,
+     "pipeline_rerun": 1.4142135381698608,
+     "stored_json": 1.41421353817,
+     "abs_diff_vs_reference": 2.4203234305630872e-08,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_tri",
+     "statistic": "p25",
+     "reference": 2.23606797749979,
+     "pipeline_rerun": 2.2360680103302,
+     "stored_json": 2.23606801033,
+     "abs_diff_vs_reference": 3.283041039026102e-08,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_tri",
+     "statistic": "p50",
+     "reference": 3.0,
+     "pipeline_rerun": 3.0,
+     "stored_json": 3.0,
+     "abs_diff_vs_reference": 0.0,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_tri",
+     "statistic": "p75",
+     "reference": 4.242640687119285,
+     "pipeline_rerun": 4.242640495300293,
+     "stored_json": 4.2426404953,
+     "abs_diff_vs_reference": 1.9181899180154005e-07,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_tri",
+     "statistic": "p95",
+     "reference": 9.0,
+     "pipeline_rerun": 9.0,
+     "stored_json": 9.0,
+     "abs_diff_vs_reference": 0.0,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_tri",
+     "statistic": "valid_area_km2",
+     "reference": 7651.734164799493,
+     "pipeline_rerun": 7651.734164691767,
+     "stored_json": 7651.73416469,
+     "abs_diff_vs_reference": 1.0772600944619626e-07,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 1e-09,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_detrended",
+     "statistic": "count_valid",
+     "reference": 12835519,
+     "pipeline_rerun": 12835519,
+     "stored_json": 12835519,
+     "abs_diff_vs_reference": 0,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_detrended",
+     "statistic": "min",
+     "reference": 0.0,
+     "pipeline_rerun": 0.0,
+     "stored_json": 0.0,
+     "abs_diff_vs_reference": 0.0,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_detrended",
+     "statistic": "max",
+     "reference": 6.15238586662539,
+     "pipeline_rerun": 6.152385711669922,
+     "stored_json": 6.15238571167,
+     "abs_diff_vs_reference": 1.5495546801247428e-07,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_detrended",
+     "statistic": "mean",
+     "reference": 0.40975006825574406,
+     "pipeline_rerun": 0.409750068307622,
+     "stored_json": 0.409750068308,
+     "abs_diff_vs_reference": 5.1877946383172e-11,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 1e-06,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_detrended",
+     "statistic": "std",
+     "reference": 0.23246079683408116,
+     "pipeline_rerun": 0.23246079828252966,
+     "stored_json": 0.232460798283,
+     "abs_diff_vs_reference": 1.4484485000298974e-09,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 1e-06,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_detrended",
+     "statistic": "p5",
+     "reference": 0.23570226039551584,
+     "pipeline_rerun": 0.2357022613286972,
+     "stored_json": 0.235702261329,
+     "abs_diff_vs_reference": 9.331813655144572e-10,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_detrended",
+     "statistic": "p25",
+     "reference": 0.2832788618662658,
+     "pipeline_rerun": 0.28327885270118713,
+     "stored_json": 0.283278852701,
+     "abs_diff_vs_reference": 9.165078640460678e-09,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_detrended",
+     "statistic": "p50",
+     "reference": 0.36851386559504445,
+     "pipeline_rerun": 0.3685138523578644,
+     "stored_json": 0.368513852358,
+     "abs_diff_vs_reference": 1.323718007428809e-08,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_detrended",
+     "statistic": "p75",
+     "reference": 0.4779069592801459,
+     "pipeline_rerun": 0.4779069721698761,
+     "stored_json": 0.47790697217,
+     "abs_diff_vs_reference": 1.2889730172105374e-08,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_detrended",
+     "statistic": "p95",
+     "reference": 0.7617394000445604,
+     "pipeline_rerun": 0.7617393732070923,
+     "stored_json": 0.761739373207,
+     "abs_diff_vs_reference": 2.683746813669785e-08,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_detrended",
+     "statistic": "valid_area_km2",
+     "reference": 7651.734164799493,
+     "pipeline_rerun": 7651.734164691767,
+     "stored_json": 7651.73416469,
+     "abs_diff_vs_reference": 1.0772600944619626e-07,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 1e-09,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    }
+   ],
+   "pipeline_sample_counts": {
+    "aoi_samples": 12960000,
+    "void_samples": 0,
+    "water_samples": 117282,
+    "water_fraction": 0.009049537037037036,
+    "num_layer_present": true,
+    "analysis_samples": 12842718,
+    "derivative_undefined_in_analysis": 7199,
+    "derivative_undefined_reason": "AOI touches the granule edge, or a 3x3 window holds a void sample"
+   }
+  },
+  "drumheller_badlands": {
+   "pipeline_seconds": 1.1,
+   "per_pixel": {
+    "elevation": {
+     "max_abs_diff": 0.0,
+     "nan_pattern_mismatches": 0,
+     "pixels_compared": 311040
+    },
+    "slope": {
+     "max_abs_diff": 1.9056376387993623e-06,
+     "nan_pattern_mismatches": 0,
+     "pixels_compared": 311040
+    },
+    "roughness_tri": {
+     "max_abs_diff": 3.758780110274529e-06,
+     "nan_pattern_mismatches": 0,
+     "pixels_compared": 311040
+    },
+    "roughness_detrended": {
+     "max_abs_diff": 2.3793436998431616e-07,
+     "nan_pattern_mismatches": 0,
+     "pixels_compared": 311040
+    },
+    "roughness_detrended_vs_metric_window": {
+     "max_abs_diff": 5.579123047994017e-05,
+     "nan_pattern_mismatches": 0,
+     "pixels_compared": 311040
+    }
+   },
+   "statistics": [
+    {
+     "measurement": "elevation",
+     "statistic": "count_valid",
+     "reference": 311040,
+     "pipeline_rerun": 311040,
+     "stored_json": 311040,
+     "abs_diff_vs_reference": 0,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "elevation",
+     "statistic": "min",
+     "reference": 670.0,
+     "pipeline_rerun": 670.0,
+     "stored_json": 670.0,
+     "abs_diff_vs_reference": 0.0,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "elevation",
+     "statistic": "max",
+     "reference": 861.0,
+     "pipeline_rerun": 861.0,
+     "stored_json": 861.0,
+     "abs_diff_vs_reference": 0.0,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "elevation",
+     "statistic": "mean",
+     "reference": 779.3253536199455,
+     "pipeline_rerun": 779.325353619894,
+     "stored_json": 779.32535362,
+     "abs_diff_vs_reference": 5.150013748789206e-11,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 1e-09,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "elevation",
+     "statistic": "std",
+     "reference": 49.400377818561616,
+     "pipeline_rerun": 49.40037781859529,
+     "stored_json": 49.4003778186,
+     "abs_diff_vs_reference": 3.367262024767115e-11,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 1e-09,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "elevation",
+     "statistic": "p5",
+     "reference": 685.0,
+     "pipeline_rerun": 685.0,
+     "stored_json": 685.0,
+     "abs_diff_vs_reference": 0.0,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "elevation",
+     "statistic": "p25",
+     "reference": 747.0,
+     "pipeline_rerun": 747.0,
+     "stored_json": 747.0,
+     "abs_diff_vs_reference": 0.0,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "elevation",
+     "statistic": "p50",
+     "reference": 793.0,
+     "pipeline_rerun": 793.0,
+     "stored_json": 793.0,
+     "abs_diff_vs_reference": 0.0,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "elevation",
+     "statistic": "p75",
+     "reference": 817.0,
+     "pipeline_rerun": 817.0,
+     "stored_json": 817.0,
+     "abs_diff_vs_reference": 0.0,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "elevation",
+     "statistic": "p95",
+     "reference": 840.0,
+     "pipeline_rerun": 840.0,
+     "stored_json": 840.0,
+     "abs_diff_vs_reference": 0.0,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "elevation",
+     "statistic": "valid_area_km2",
+     "reference": 185.58075300679738,
+     "pipeline_rerun": 185.58075300481673,
+     "stored_json": 185.580753005,
+     "abs_diff_vs_reference": 1.9806520867859945e-09,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 1e-09,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "slope",
+     "statistic": "count_valid",
+     "reference": 311040,
+     "pipeline_rerun": 311040,
+     "stored_json": 311040,
+     "abs_diff_vs_reference": 0,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "slope",
+     "statistic": "min",
+     "reference": 0.0,
+     "pipeline_rerun": 0.0,
+     "stored_json": 0.0,
+     "abs_diff_vs_reference": 0.0,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "slope",
+     "statistic": "max",
+     "reference": 44.37757977903967,
+     "pipeline_rerun": 44.37757873535156,
+     "stored_json": 44.3775787354,
+     "abs_diff_vs_reference": 1.0436881083819571e-06,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "slope",
+     "statistic": "mean",
+     "reference": 5.259051999280865,
+     "pipeline_rerun": 5.259051999735289,
+     "stored_json": 5.25905199974,
+     "abs_diff_vs_reference": 4.5442405394169327e-10,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 1e-06,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "slope",
+     "statistic": "std",
+     "reference": 5.678856267098207,
+     "pipeline_rerun": 5.678856267744911,
+     "stored_json": 5.67885626774,
+     "abs_diff_vs_reference": 6.46704023665734e-10,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 1e-06,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "slope",
+     "statistic": "p5",
+     "reference": 0.7419991115342126,
+     "pipeline_rerun": 0.741999089717865,
+     "stored_json": 0.741999089718,
+     "abs_diff_vs_reference": 2.1816347617331644e-08,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "slope",
+     "statistic": "p25",
+     "reference": 1.6636653662044791,
+     "pipeline_rerun": 1.6636654138565063,
+     "stored_json": 1.66366541386,
+     "abs_diff_vs_reference": 4.7652027213018755e-08,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "slope",
+     "statistic": "p50",
+     "reference": 3.0325833483436258,
+     "pipeline_rerun": 3.032583236694336,
+     "stored_json": 3.03258323669,
+     "abs_diff_vs_reference": 1.1164928981344246e-07,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "slope",
+     "statistic": "p75",
+     "reference": 6.329521973119721,
+     "pipeline_rerun": 6.329522132873535,
+     "stored_json": 6.32952213287,
+     "abs_diff_vs_reference": 1.5975381373323216e-07,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "slope",
+     "statistic": "p95",
+     "reference": 18.206728881517904,
+     "pipeline_rerun": 18.206727981567383,
+     "stored_json": 18.2067279816,
+     "abs_diff_vs_reference": 8.99950521215942e-07,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "slope",
+     "statistic": "valid_area_km2",
+     "reference": 185.58075300679738,
+     "pipeline_rerun": 185.58075300481673,
+     "stored_json": 185.580753005,
+     "abs_diff_vs_reference": 1.9806520867859945e-09,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 1e-09,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_tri",
+     "statistic": "count_valid",
+     "reference": 311040,
+     "pipeline_rerun": 311040,
+     "stored_json": 311040,
+     "abs_diff_vs_reference": 0,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_tri",
+     "statistic": "min",
+     "reference": 0.0,
+     "pipeline_rerun": 0.0,
+     "stored_json": 0.0,
+     "abs_diff_vs_reference": 0.0,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_tri",
+     "statistic": "max",
+     "reference": 65.23802572120036,
+     "pipeline_rerun": 65.23802947998047,
+     "stored_json": 65.23802948,
+     "abs_diff_vs_reference": 3.758780110274529e-06,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_tri",
+     "statistic": "mean",
+     "reference": 6.466254179044017,
+     "pipeline_rerun": 6.46625418219694,
+     "stored_json": 6.4662541822,
+     "abs_diff_vs_reference": 3.1529232558114018e-09,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 1e-06,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_tri",
+     "statistic": "std",
+     "reference": 6.456966196501236,
+     "pipeline_rerun": 6.456966192923053,
+     "stored_json": 6.45696619292,
+     "abs_diff_vs_reference": 3.5781830831638217e-09,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 1e-06,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_tri",
+     "statistic": "p5",
+     "reference": 1.4142135623730951,
+     "pipeline_rerun": 1.4142135381698608,
+     "stored_json": 1.41421353817,
+     "abs_diff_vs_reference": 2.4203234305630872e-08,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_tri",
+     "statistic": "p25",
+     "reference": 2.449489742783178,
+     "pipeline_rerun": 2.4494898319244385,
+     "stored_json": 2.44948983192,
+     "abs_diff_vs_reference": 8.914126059522687e-08,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_tri",
+     "statistic": "p50",
+     "reference": 3.872983346207417,
+     "pipeline_rerun": 3.872983455657959,
+     "stored_json": 3.87298345566,
+     "abs_diff_vs_reference": 1.0945054196298543e-07,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_tri",
+     "statistic": "p75",
+     "reference": 7.681145747868608,
+     "pipeline_rerun": 7.681145668029785,
+     "stored_json": 7.68114566803,
+     "abs_diff_vs_reference": 7.983882266415776e-08,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_tri",
+     "statistic": "p95",
+     "reference": 20.688160865577203,
+     "pipeline_rerun": 20.688159942626953,
+     "stored_json": 20.6881599426,
+     "abs_diff_vs_reference": 9.229502495600173e-07,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_tri",
+     "statistic": "valid_area_km2",
+     "reference": 185.58075300679738,
+     "pipeline_rerun": 185.58075300481673,
+     "stored_json": 185.580753005,
+     "abs_diff_vs_reference": 1.9806520867859945e-09,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 1e-09,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_detrended",
+     "statistic": "count_valid",
+     "reference": 311040,
+     "pipeline_rerun": 311040,
+     "stored_json": 311040,
+     "abs_diff_vs_reference": 0,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_detrended",
+     "statistic": "min",
+     "reference": 0.0,
+     "pipeline_rerun": 0.0,
+     "stored_json": 0.0,
+     "abs_diff_vs_reference": 0.0,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_detrended",
+     "statistic": "max",
+     "reference": 5.422859707516635,
+     "pipeline_rerun": 5.4228596687316895,
+     "stored_json": 5.42285966873,
+     "abs_diff_vs_reference": 3.878494592157722e-08,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_detrended",
+     "statistic": "mean",
+     "reference": 0.5519730814392299,
+     "pipeline_rerun": 0.5519730820816563,
+     "stored_json": 0.551973082082,
+     "abs_diff_vs_reference": 6.424264453741557e-10,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 1e-06,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_detrended",
+     "statistic": "std",
+     "reference": 0.3913626446704031,
+     "pipeline_rerun": 0.3913626455854634,
+     "stored_json": 0.391362645585,
+     "abs_diff_vs_reference": 9.150603053065254e-10,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 1e-06,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_detrended",
+     "statistic": "p5",
+     "reference": 0.23570226039551587,
+     "pipeline_rerun": 0.2357022613286972,
+     "stored_json": 0.235702261329,
+     "abs_diff_vs_reference": 9.331813377588816e-10,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_detrended",
+     "statistic": "p25",
+     "reference": 0.28327886186626583,
+     "pipeline_rerun": 0.28327885270118713,
+     "stored_json": 0.283278852701,
+     "abs_diff_vs_reference": 9.165078695971829e-09,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_detrended",
+     "statistic": "p50",
+     "reference": 0.4303314829119352,
+     "pipeline_rerun": 0.4303314685821533,
+     "stored_json": 0.430331468582,
+     "abs_diff_vs_reference": 1.4329781861111002e-08,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_detrended",
+     "statistic": "p75",
+     "reference": 0.6382847385042254,
+     "pipeline_rerun": 0.6382847428321838,
+     "stored_json": 0.638284742832,
+     "abs_diff_vs_reference": 4.327958436078916e-09,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_detrended",
+     "statistic": "p95",
+     "reference": 1.3630937940428107,
+     "pipeline_rerun": 1.3630938529968262,
+     "stored_json": 1.363093853,
+     "abs_diff_vs_reference": 5.8954015447199026e-08,
+     "tolerance_abs": 1e-05,
+     "tolerance_rel": 0.0,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    },
+    {
+     "measurement": "roughness_detrended",
+     "statistic": "valid_area_km2",
+     "reference": 185.58075300679738,
+     "pipeline_rerun": 185.58075300481673,
+     "stored_json": 185.580753005,
+     "abs_diff_vs_reference": 1.9806520867859945e-09,
+     "tolerance_abs": 0.0,
+     "tolerance_rel": 1e-09,
+     "within_tolerance": true,
+     "stored_equals_rerun": true
+    }
+   ],
+   "pipeline_sample_counts": {
+    "aoi_samples": 311040,
+    "void_samples": 0,
+    "water_samples": 0,
+    "water_fraction": 0.0,
+    "num_layer_present": true,
+    "analysis_samples": 311040,
+    "derivative_undefined_in_analysis": 0,
+    "derivative_undefined_reason": "AOI touches the granule edge, or a 3x3 window holds a void sample"
+   }
+  }
+ },
+ "diagnostics": {
+  "tile": {
+   "num_code_area_fraction_unweighted": {
+    "2": 2e-06,
+    "3": 0.043549,
+    "4": 0.229435,
+    "5": 0.470072,
+    "6": 0.225544,
+    "7": 0.031397
+   },
+   "area_fraction_slope_exactly_0": 0.015025049589220624,
+   "area_fraction_tri_exactly_0": 0.011797573779776282,
+   "area_fraction_roughness_below_1e-9_m": 0.029138218424991022,
+   "horn_rounding_sigma_deg": {
+    "east_west": 0.37129608428926975,
+    "north_south": 0.2317406403771882,
+    "dx_m": 19.288843827625655,
+    "dy_m": 30.904952074807593
+   },
+   "roughness_quantisation_floor": {
+    "pixels": 1425782,
+    "subsample_step": 3,
+    "floor_percentiles_m": {
+     "p5": 4.1375569220787883e-17,
+     "p25": 0.23570226039551584,
+     "p50": 0.24845199749997665,
+     "p75": 0.2721655269759087,
+     "p95": 0.28327886186626583
+    },
+    "observed_percentiles_m": {
+     "p5": 0.23570226039551584,
+     "p25": 0.2832788618662658,
+     "p50": 0.36851386559504445,
+     "p75": 0.4779069592801459,
+     "p95": 0.7617394000445605
+    },
+    "floor_p95_m": 0.28327886186626583,
+    "fraction_observed_at_or_below_floor_p95": 0.3534790031014559,
+    "rms_floor_m": 0.231899700997227,
+    "rms_observed_m": 0.4715698979988233
+   },
+   "tri_effective_baseline_m": {
+    "east_west_facing_median": 21.410546722113537,
+    "east_west_n": 72236,
+    "north_south_facing_median": 31.832342838200635,
+    "north_south_n": 58531,
+    "plane_prediction_east_west_m": 19.288843827625655,
+    "plane_prediction_north_south_m": 30.904952074807593
+   },
+   "slope_estimator_sensitivity_deg": {
+    "horn": {
+     "mean": 2.9169490158573312,
+     "p50": 2.11718168995737,
+     "p95": 7.779879593475817
+    },
+    "zevenbergen_thorne": {
+     "mean": 3.0637048790560337,
+     "p50": 2.369431849882771,
+     "p95": 7.92794871191156
+    },
+    "least_squares_plane": {
+     "mean": 2.8843944276693,
+     "p50": 2.096573995110729,
+     "p95": 7.694176913208
+    }
+   },
+   "land_pixels_with_water_in_window": 13519,
+   "slope_mean_all_deg": 2.9169490158573312,
+   "slope_mean_excluding_those_deg": 2.9162199337264822
+  },
+  "drumheller_badlands": {
+   "num_code_area_fraction_unweighted": {
+    "4": 0.158459,
+    "5": 0.54313,
+    "6": 0.258488,
+    "7": 0.039924
+   },
+   "area_fraction_slope_exactly_0": 0.009103074814153865,
+   "area_fraction_tri_exactly_0": 0.0070904280929050476,
+   "area_fraction_roughness_below_1e-9_m": 0.019096164581348343,
+   "horn_rounding_sigma_deg": {
+    "east_west": 0.3709667576099297,
+    "north_south": 0.23174222291925958,
+    "dx_m": 19.305968026825674,
+    "dy_m": 30.904741025998014
+   },
+   "roughness_quantisation_floor": {
+    "pixels": 311040,
+    "subsample_step": 1,
+    "floor_percentiles_m": {
+     "p5": 4.1375569220787883e-17,
+     "p25": 0.23570226039551584,
+     "p50": 0.24845199749997665,
+     "p75": 0.2721655269759087,
+     "p95": 0.28327886186626583
+    },
+    "observed_percentiles_m": {
+     "p5": 0.23570226039551587,
+     "p25": 0.28327886186626583,
+     "p50": 0.4303314829119352,
+     "p75": 0.6382847385042255,
+     "p95": 1.3630937940428107
+    },
+    "floor_p95_m": 0.28327886186626583,
+    "fraction_observed_at_or_below_floor_p95": 0.2523051697530864,
+    "rms_floor_m": 0.23298023040810145,
+    "rms_observed_m": 0.6766402226203774
+   },
+   "tri_effective_baseline_m": {
+    "east_west_facing_median": 21.546284003177817,
+    "east_west_n": 21731,
+    "north_south_facing_median": 32.023061696128515,
+    "north_south_n": 19480,
+    "plane_prediction_east_west_m": 19.305968026825674,
+    "plane_prediction_north_south_m": 30.904741025998014
+   },
+   "slope_estimator_sensitivity_deg": {
+    "horn": {
+     "mean": 5.259051999280865,
+     "p50": 3.0325833483436258,
+     "p95": 18.206728881517904
+    },
+    "zevenbergen_thorne": {
+     "mean": 5.4089042349644005,
+     "p50": 3.14821357635632,
+     "p95": 18.58709716211686
+    },
+    "least_squares_plane": {
+     "mean": 5.2233575339604865,
+     "p50": 2.96691424366759,
+     "p95": 18.11663514279864
+    }
+   },
+   "land_pixels_with_water_in_window": 0
+  },
+  "water_alignment": {
+   "equal_height_fraction_water_water_pairs": 0.999817450037814,
+   "equal_height_fraction_land_land_pairs": 0.4722389729861587,
+   "water_water_pairs": 115037,
+   "pairs": "east-west neighbours, whole granule"
+  },
+  "georeferencing_plausibility": {
+   "town_coordinates_deg_approx": [
+    51.4636,
+    -112.7106
+   ],
+   "town_sample_row_col": [
+    1931,
+    1042
+   ],
+   "town_elevation_m": 688.0,
+   "aoi_percentile_rank_of_town_elevation": 7.539866255144033,
+   "aoi_min_m": 670.0,
+   "aoi_max_m": 861.0,
+   "neighbourhood_min_m": 676.0,
+   "neighbourhood_max_m": 767.0
+  },
+  "metrics_at_3_arcsec_decimation": {
+   "tile": {
+    "slope_mean_deg": 2.0707247313493164,
+    "slope_p95_deg": 6.263043745642633,
+    "slope_max_deg": 30.628601404330457,
+    "roughness_detrended_mean_m": 1.2619926682834115,
+    "samples": 1424632
+   },
+   "drumheller_badlands": {
+    "slope_mean_deg": 4.164292312914737,
+    "slope_p95_deg": 14.624255176785566,
+    "slope_max_deg": 29.859799938840062,
+    "roughness_detrended_mean_m": 2.198528359535979,
+    "samples": 34560
+   }
+  }
+ },
+ "tolerances": {
+  "per_pixel_abs": {
+   "elevation": 0.0,
+   "slope": 1e-05,
+   "roughness_tri": 1e-05,
+   "roughness_detrended": 1e-05,
+   "roughness_detrended_vs_metric_window": 0.0005
+  },
+  "statistics": "exact for counts and integer-valued elevation statistics; 1e-9 relative for elevation mean/std and areas; 1e-6 relative for float32-layer mean/std; 1e-5 absolute for float32-layer min/max/percentiles"
+ },
+ "software": {
+  "python": "3.12.10",
+  "numpy": "2.5.4"
+ },
+ "runtime_s": 104.3
+}

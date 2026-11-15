@@ -1,0 +1,625 @@
+{
+  "schema": "spacethropic.h3_terrain_cells/v1",
+  "generated_utc": "2026-11-14T22:15:07+00:00",
+  "software": {
+    "spacethropic": "0.1.0",
+    "python": "3.12.10",
+    "numpy": "2.5.4",
+    "reader": "native numpy reader of NASADEM .hgt/.num/.swb streamed from the ZIP",
+    "h3_python": "4.5.0",
+    "h3_c": "4.5.0"
+  },
+  "source": {
+    "collection": "NASADEM_HGT.001",
+    "product": "NASADEM_HGT V001 (NASADEM Merged DEM Global 1 arc second)",
+    "granules": [
+      {
+        "zip_file": "NASADEM_HGT_n51w113.zip",
+        "zip_sha256": "a414b5a27c9a66e9c8c28bc5d56bfd46d4ce86b7897a2a48c9be34fadfc9edfa",
+        "tile_id": "n51w113",
+        "all_granule_checks_passed": true
+      }
+    ],
+    "horizontal_crs": "EPSG:4326 (WGS 84 geographic; latitude/longitude in degrees)",
+    "vertical_datum": "EGM96 geoid (EPSG:5773); heights in metres",
+    "native_sampling": {
+      "resolution_arcsec": 1.0,
+      "registration": "pixel-is-point: sample centres on integer arc-seconds; edge rows/columns are shared with neighbouring tiles",
+      "aoi_dx_m_range": [
+        19.2807058352,
+        19.3312160662
+      ],
+      "aoi_dy_m_range": [
+        30.9044236592,
+        30.9050582955
+      ]
+    }
+  },
+  "aoi": {
+    "name": "drumheller_badlands",
+    "requested_bbox_deg": {
+      "west": -112.8,
+      "south": 51.4,
+      "east": -112.6,
+      "north": 51.52
+    },
+    "selection_rule": "samples with south <= lat < north and west <= lon < east (half-open)",
+    "sample_centre_extent_deg": {
+      "west": -112.8,
+      "south": 51.4,
+      "east": -112.600277778,
+      "north": 51.5197222222
+    },
+    "analysed_pixel_footprint_deg": {
+      "west": -112.800138889,
+      "south": 51.3998611111,
+      "east": -112.600138889,
+      "north": 51.5198611111
+    },
+    "footprint_note": "union of the analysed pixels (sample centre +- half a sample); the half-open selection puts it half a sample south and west of the requested bbox",
+    "shape": [
+      432,
+      720
+    ],
+    "area_km2": 185.580753005
+  },
+  "h3": {
+    "resolution": 8,
+    "library": "h3-py v4 (Uber H3)",
+    "api_calls": "latlng_to_cell(lat, lng, res), cell_to_boundary, cell_to_latlng, cell_area, grid_disk",
+    "cell_id_format": "15-character lower-case hexadecimal H3 index string",
+    "global_cell_count_at_resolution": 691776122,
+    "average_hexagon_area_km2": 0.737327597594,
+    "average_hexagon_edge_length_km": 0.53141401,
+    "planned_global_baseline": {
+      "resolution": 6,
+      "global_cells_including_ocean": 14117882,
+      "land_cells": "about 4.09 million: a planning estimate, not computed or verified here"
+    }
+  },
+  "methodology": {
+    "order_of_operations": "3x3 derivatives are computed on the native grid with a one-sample halo (full neighbouring context) before assignment; cells never recompute derivatives from cropped samples",
+    "assignment": "pixel-centre: each sample goes wholly to the H3 cell containing its centre (latlng_to_cell takes latitude first; GeoJSON outputs are longitude first). Boundary pixels are not split, so each cell's sampled area differs from its exact overlap by up to about one pixel row along the cell edge",
+    "hierarchy": "each resolution is assigned directly from the samples (H3 cells are not exactly nested)",
+    "derivative_window": "3 x 3 samples",
+    "terrain_baseline": "native 1-arc-second samples; 3x3 window spans about 38.6 m east-west x 61.8 m north-south here",
+    "statistics_per_cell": {
+      "elevation": [
+        "mean",
+        "min",
+        "max"
+      ],
+      "slope": [
+        "mean",
+        "p50",
+        "p95"
+      ],
+      "roughness_tri": [
+        "mean"
+      ],
+      "roughness_detrended": [
+        "mean"
+      ]
+    },
+    "measurement_definitions": {
+      "elevation": {
+        "units": "m",
+        "definition": "NASADEM_HGT height above the EGM96 geoid"
+      },
+      "slope": {
+        "units": "degrees",
+        "definition": "arctan(|grad z|); Horn (1981) 3x3 gradient using WGS 84 ground distances (per-row east-west spacing N*cos(lat)*dlon, north-south spacing M*dlat)"
+      },
+      "roughness_tri": {
+        "units": "m",
+        "definition": "Terrain Ruggedness Index (Riley et al., 1999): sqrt(sum of squared elevation differences between a sample and its 8 neighbours); sensitive to slope and grid spacing"
+      },
+      "roughness_detrended": {
+        "units": "m",
+        "definition": "RMS residual of the 3x3 window about its least-squares plane; zero on uniform slopes, so it isolates small-scale relief"
+      }
+    },
+    "weighting": "cell ground area (WGS 84), so statistics describe surface area rather than sample count",
+    "percentile_method": "weighted inverted CDF over each cell's own samples (stats.summarize); cell percentiles are never derived from tile/AOI percentiles",
+    "exclusions": {
+      "exclude_water": true,
+      "water_mask_source": "swb == 255",
+      "nodata_rule": "elevation == -32768 -> missing; 3x3 derivatives missing if any window sample is missing"
+    },
+    "coverage": {
+      "cell_area_km2": "WGS 84 ellipsoidal area of the full H3 cell polygon",
+      "h3_spherical_cell_area_km2": "h3.cell_area: area on H3's authalic sphere (R = 6371.007180918475 km); WGS 84 latitude/longitude are used directly as spherical coordinates",
+      "overlap_area_km2": "exact area of (cell polygon intersect analysed pixel footprint)",
+      "sampled_area_km2": "sum of the areas of the pixels whose centres fall in the cell (pixel-centre)",
+      "coverage_fraction_exact_overlap": "overlap_area / cell_area",
+      "coverage_fraction_pixel_centre": "sampled_area / cell_area (pixel-centre approximation)",
+      "valid_coverage_fraction": "area of samples with valid derivatives / cell_area",
+      "coverage_status": "complete if the footprint covers the whole polygon, else partial",
+      "partial_cells": "statistics describe only the observed part of the cell and are not extrapolated to the whole hexagon",
+      "geometry_model": "cell_to_boundary vertices, edges straight in the WGS 84 cylindrical equal-area plane; H3's own edges are great-circle arcs, which differ by well under a metre at these sizes"
+    },
+    "quality_flags": {
+      "partial_coverage": "cell only partly inside the analysed footprint",
+      "water_excluded": "SWB water samples were excluded",
+      "void_samples": "cell holds samples with missing elevation",
+      "missing_derivatives": "analysis samples whose 3x3 window crosses the granule edge or a void",
+      "no_valid_derivatives": "no slope/roughness statistics available",
+      "slope_p50_deg_below_quantisation_floor": "slope_p50_deg < 0.5 (1 m height-rounding floor; scientific_validation.md section 5.1)",
+      "roughness_detrended_mean_m_below_quantisation_floor": "roughness_detrended_mean_m < 0.3 (1 m height-rounding floor; scientific_validation.md section 5.1)"
+    },
+    "output_order": "cells sorted by ascending 64-bit H3 index (the same as sorting the hex strings)"
+  },
+  "results": {
+    "n_cells": 296,
+    "n_cells_complete": 220,
+    "n_cells_partial": 76,
+    "n_cells_without_valid_derivatives": 0,
+    "n_sliver_cells_without_samples": 1,
+    "sliver_overlap_area_km2": 4.86674042121e-05,
+    "sliver_cells": [
+      "8812ebc0e1fffff"
+    ],
+    "n_samples": 311040,
+    "n_analysis": 311040,
+    "n_excluded_water": 0,
+    "n_excluded_void": 0,
+    "n_derivative_missing": 0,
+    "sampled_area_km2": 185.580753005,
+    "analysis_area_km2": 185.580753005,
+    "valid_derivative_area_km2": 185.580753005,
+    "footprint_area_km2_exact": 185.580753005,
+    "cell_overlap_area_km2_exact": 185.580704337,
+    "pixel_centre_vs_exact_overlap_complete_cells": {
+      "n": 220,
+      "min": 0.996926315209,
+      "max": 1.00303708135,
+      "mean": 1.00001121381,
+      "note": "complete cells have exact coverage 1; the spread is the pixel-centre discretisation"
+    },
+    "pixel_centre_minus_exact_overlap_all_cells_km2": {
+      "min_km2": -0.00221257167144,
+      "max_km2": 0.00218476035946,
+      "max_abs_relative_to_overlap": 0.0689233568692
+    }
+  },
+  "conservation_checks": [
+    {
+      "check": "every_sample_assigned_once",
+      "passed": true,
+      "detail": "311040 of 311040 samples in 296 cells"
+    },
+    {
+      "check": "sampled_area_conserved",
+      "passed": true,
+      "detail": "sum over cells 185.580753005 km2 vs AOI 185.580753005 km2"
+    },
+    {
+      "check": "sample_partition_per_cell",
+      "passed": true,
+      "detail": "n_samples = n_analysis + n_excluded_water + n_excluded_void in every cell"
+    },
+    {
+      "check": "derivative_counts_consistent",
+      "passed": true,
+      "detail": "slope, TRI and detrended roughness share one 3x3 validity rule"
+    },
+    {
+      "check": "footprint_area_matches_pixel_areas",
+      "passed": true,
+      "detail": "exact footprint 185.580753005 km2 vs sum of pixel areas 185.580753005 km2"
+    },
+    {
+      "check": "exact_overlap_conserved",
+      "passed": true,
+      "detail": "cells 185.580704337 + slivers 0.000048667 km2 vs footprint 185.580753005 km2"
+    },
+    {
+      "check": "assigned_cells_overlap_footprint",
+      "passed": true,
+      "detail": "every cell holding a sample centre overlaps the analysed footprint"
+    }
+  ],
+  "reconciliation": [
+    {
+      "reference": "fresh_aoi_summary",
+      "all_passed": true,
+      "checks": [
+        {
+          "check": "fresh_aoi_summary:aoi_samples",
+          "passed": true,
+          "detail": "cells 311040 vs AOI 311040"
+        },
+        {
+          "check": "fresh_aoi_summary:void_samples",
+          "passed": true,
+          "detail": "cells 0 vs AOI 0"
+        },
+        {
+          "check": "fresh_aoi_summary:water_samples",
+          "passed": true,
+          "detail": "cells 0 vs AOI 0"
+        },
+        {
+          "check": "fresh_aoi_summary:analysis_samples",
+          "passed": true,
+          "detail": "cells 311040 vs AOI 311040"
+        },
+        {
+          "check": "fresh_aoi_summary:derivative_undefined_in_analysis",
+          "passed": true,
+          "detail": "cells 0 vs AOI 0"
+        },
+        {
+          "check": "fresh_aoi_summary:aoi_area_km2",
+          "passed": true,
+          "detail": "cells 185.580753005 vs AOI 185.580753005 km2"
+        },
+        {
+          "check": "fresh_aoi_summary:elevation:count_valid",
+          "passed": true,
+          "detail": "311040 vs 311040"
+        },
+        {
+          "check": "fresh_aoi_summary:elevation:valid_area",
+          "passed": true,
+          "detail": "185.580753005 vs 185.580753005 km2"
+        },
+        {
+          "check": "fresh_aoi_summary:elevation:mean",
+          "passed": true,
+          "detail": "779.3253536 vs 779.3253536 (diff -1.14e-13)"
+        },
+        {
+          "check": "fresh_aoi_summary:elevation:min",
+          "passed": true,
+          "detail": "670.0 vs 670.0"
+        },
+        {
+          "check": "fresh_aoi_summary:elevation:max",
+          "passed": true,
+          "detail": "861.0 vs 861.0"
+        },
+        {
+          "check": "fresh_aoi_summary:slope:count_valid",
+          "passed": true,
+          "detail": "311040 vs 311040"
+        },
+        {
+          "check": "fresh_aoi_summary:slope:valid_area",
+          "passed": true,
+          "detail": "185.580753005 vs 185.580753005 km2"
+        },
+        {
+          "check": "fresh_aoi_summary:slope:mean",
+          "passed": true,
+          "detail": "5.259052 vs 5.259052 (diff 8.88e-16)"
+        },
+        {
+          "check": "fresh_aoi_summary:slope:p50_pooled",
+          "passed": true,
+          "detail": "pooled cell samples 3.03258324 vs AOI 3.03258324"
+        },
+        {
+          "check": "fresh_aoi_summary:slope:p95_pooled",
+          "passed": true,
+          "detail": "pooled cell samples 18.206728 vs AOI 18.206728"
+        },
+        {
+          "check": "fresh_aoi_summary:roughness_tri:count_valid",
+          "passed": true,
+          "detail": "311040 vs 311040"
+        },
+        {
+          "check": "fresh_aoi_summary:roughness_tri:valid_area",
+          "passed": true,
+          "detail": "185.580753005 vs 185.580753005 km2"
+        },
+        {
+          "check": "fresh_aoi_summary:roughness_tri:mean",
+          "passed": true,
+          "detail": "6.466254182 vs 6.466254182 (diff -1.78e-15)"
+        },
+        {
+          "check": "fresh_aoi_summary:roughness_detrended:count_valid",
+          "passed": true,
+          "detail": "311040 vs 311040"
+        },
+        {
+          "check": "fresh_aoi_summary:roughness_detrended:valid_area",
+          "passed": true,
+          "detail": "185.580753005 vs 185.580753005 km2"
+        },
+        {
+          "check": "fresh_aoi_summary:roughness_detrended:mean",
+          "passed": true,
+          "detail": "0.5519730821 vs 0.5519730821 (diff -1.11e-16)"
+        }
+      ],
+      "measurements": {
+        "elevation": {
+          "count_valid": [
+            311040,
+            311040
+          ],
+          "valid_area_km2": [
+            185.580753005,
+            185.580753005
+          ],
+          "mean_from_area_weighted_cell_means": [
+            779.32535362,
+            779.32535362
+          ],
+          "min_of_cell_mins": [
+            670.0,
+            670.0
+          ],
+          "max_of_cell_maxs": [
+            861.0,
+            861.0
+          ]
+        },
+        "slope": {
+          "count_valid": [
+            311040,
+            311040
+          ],
+          "valid_area_km2": [
+            185.580753005,
+            185.580753005
+          ],
+          "mean_from_area_weighted_cell_means": [
+            5.25905199974,
+            5.25905199974
+          ],
+          "p50_from_pooled_cell_samples": [
+            3.03258323669,
+            3.03258323669
+          ],
+          "p50_naive_area_weighted_mean_of_cell_p50_NOT_VALID": 4.27716750029,
+          "p95_from_pooled_cell_samples": [
+            18.2067279816,
+            18.2067279816
+          ],
+          "p95_naive_area_weighted_mean_of_cell_p95_NOT_VALID": 12.8820736582
+        },
+        "roughness_tri": {
+          "count_valid": [
+            311040,
+            311040
+          ],
+          "valid_area_km2": [
+            185.580753005,
+            185.580753005
+          ],
+          "mean_from_area_weighted_cell_means": [
+            6.4662541822,
+            6.4662541822
+          ]
+        },
+        "roughness_detrended": {
+          "count_valid": [
+            311040,
+            311040
+          ],
+          "valid_area_km2": [
+            185.580753005,
+            185.580753005
+          ],
+          "mean_from_area_weighted_cell_means": [
+            0.551973082082,
+            0.551973082082
+          ]
+        }
+      }
+    },
+    {
+      "reference": "stored_aoi_summary",
+      "all_passed": true,
+      "checks": [
+        {
+          "check": "stored_aoi_summary:aoi_samples",
+          "passed": true,
+          "detail": "cells 311040 vs AOI 311040"
+        },
+        {
+          "check": "stored_aoi_summary:void_samples",
+          "passed": true,
+          "detail": "cells 0 vs AOI 0"
+        },
+        {
+          "check": "stored_aoi_summary:water_samples",
+          "passed": true,
+          "detail": "cells 0 vs AOI 0"
+        },
+        {
+          "check": "stored_aoi_summary:analysis_samples",
+          "passed": true,
+          "detail": "cells 311040 vs AOI 311040"
+        },
+        {
+          "check": "stored_aoi_summary:derivative_undefined_in_analysis",
+          "passed": true,
+          "detail": "cells 0 vs AOI 0"
+        },
+        {
+          "check": "stored_aoi_summary:aoi_area_km2",
+          "passed": true,
+          "detail": "cells 185.580753005 vs AOI 185.580753005 km2"
+        },
+        {
+          "check": "stored_aoi_summary:elevation:count_valid",
+          "passed": true,
+          "detail": "311040 vs 311040"
+        },
+        {
+          "check": "stored_aoi_summary:elevation:valid_area",
+          "passed": true,
+          "detail": "185.580753005 vs 185.580753005 km2"
+        },
+        {
+          "check": "stored_aoi_summary:elevation:mean",
+          "passed": true,
+          "detail": "779.3253536 vs 779.3253536 (diff -1.06e-10)"
+        },
+        {
+          "check": "stored_aoi_summary:elevation:min",
+          "passed": true,
+          "detail": "670.0 vs 670.0"
+        },
+        {
+          "check": "stored_aoi_summary:elevation:max",
+          "passed": true,
+          "detail": "861.0 vs 861.0"
+        },
+        {
+          "check": "stored_aoi_summary:slope:count_valid",
+          "passed": true,
+          "detail": "311040 vs 311040"
+        },
+        {
+          "check": "stored_aoi_summary:slope:valid_area",
+          "passed": true,
+          "detail": "185.580753005 vs 185.580753005 km2"
+        },
+        {
+          "check": "stored_aoi_summary:slope:mean",
+          "passed": true,
+          "detail": "5.259052 vs 5.259052 (diff -4.71e-12)"
+        },
+        {
+          "check": "stored_aoi_summary:slope:p50_pooled",
+          "passed": true,
+          "detail": "pooled cell samples 3.03258324 vs AOI 3.03258324"
+        },
+        {
+          "check": "stored_aoi_summary:slope:p95_pooled",
+          "passed": true,
+          "detail": "pooled cell samples 18.206728 vs AOI 18.206728"
+        },
+        {
+          "check": "stored_aoi_summary:roughness_tri:count_valid",
+          "passed": true,
+          "detail": "311040 vs 311040"
+        },
+        {
+          "check": "stored_aoi_summary:roughness_tri:valid_area",
+          "passed": true,
+          "detail": "185.580753005 vs 185.580753005 km2"
+        },
+        {
+          "check": "stored_aoi_summary:roughness_tri:mean",
+          "passed": true,
+          "detail": "6.466254182 vs 6.466254182 (diff -3.06e-12)"
+        },
+        {
+          "check": "stored_aoi_summary:roughness_detrended:count_valid",
+          "passed": true,
+          "detail": "311040 vs 311040"
+        },
+        {
+          "check": "stored_aoi_summary:roughness_detrended:valid_area",
+          "passed": true,
+          "detail": "185.580753005 vs 185.580753005 km2"
+        },
+        {
+          "check": "stored_aoi_summary:roughness_detrended:mean",
+          "passed": true,
+          "detail": "0.5519730821 vs 0.5519730821 (diff -3.44e-13)"
+        }
+      ],
+      "measurements": {
+        "elevation": {
+          "count_valid": [
+            311040,
+            311040
+          ],
+          "valid_area_km2": [
+            185.580753005,
+            185.580753005
+          ],
+          "mean_from_area_weighted_cell_means": [
+            779.32535362,
+            779.32535362
+          ],
+          "min_of_cell_mins": [
+            670.0,
+            670.0
+          ],
+          "max_of_cell_maxs": [
+            861.0,
+            861.0
+          ]
+        },
+        "slope": {
+          "count_valid": [
+            311040,
+            311040
+          ],
+          "valid_area_km2": [
+            185.580753005,
+            185.580753005
+          ],
+          "mean_from_area_weighted_cell_means": [
+            5.25905199974,
+            5.25905199974
+          ],
+          "p50_from_pooled_cell_samples": [
+            3.03258323669,
+            3.03258323669
+          ],
+          "p50_naive_area_weighted_mean_of_cell_p50_NOT_VALID": 4.27716750029,
+          "p95_from_pooled_cell_samples": [
+            18.2067279816,
+            18.2067279816
+          ],
+          "p95_naive_area_weighted_mean_of_cell_p95_NOT_VALID": 12.8820736582
+        },
+        "roughness_tri": {
+          "count_valid": [
+            311040,
+            311040
+          ],
+          "valid_area_km2": [
+            185.580753005,
+            185.580753005
+          ],
+          "mean_from_area_weighted_cell_means": [
+            6.4662541822,
+            6.4662541822
+          ]
+        },
+        "roughness_detrended": {
+          "count_valid": [
+            311040,
+            311040
+          ],
+          "valid_area_km2": [
+            185.580753005,
+            185.580753005
+          ],
+          "mean_from_area_weighted_cell_means": [
+            0.551973082082,
+            0.551973082082
+          ]
+        }
+      }
+    }
+  ],
+  "all_checks_passed": true,
+  "quality_limitations": [
+    "Pixel-centre assignment: boundary pixels are assigned whole; see coverage_fraction_pixel_centre vs coverage_fraction_exact_overlap for the per-cell effect.",
+    "Partial cells (coverage_status = partial) describe only the observed part of the hexagon; their statistics are not representative of the whole cell and should not be ranked against complete cells without accounting for coverage.",
+    "1 m elevation quantisation: slopes below about 0.5 deg and detrended roughness below about 0.3 m are dominated by rounding (scientific_validation.md section 5.1).",
+    "TRI and detrended roughness depend on the 1-arc-second sample spacing, pixel aspect (about 19.3 m x 30.9 m here) and latitude; they are not comparable across latitudes or with lunar/Martian DEMs without a common metric baseline (scientific_validation.md section 5.2).",
+    "Single granule: derivatives on a granule's south and west edge rows are undefined without the neighbouring granule, and cells crossing granule edges would be incomplete.",
+    "Water mask: SWB flags no water in some river channels (for example the Red Deer River), which are then analysed as land.",
+    "Absolute accuracy of NASADEM heights is not validated here (no ground truth)."
+  ],
+  "outputs": {
+    "csv": "h3_res8_cells.csv",
+    "geojson": "h3_res8_cells.geojson",
+    "run_summary": "h3_res8_run_summary.json",
+    "map_png": "h3_res8_mean_slope.png"
+  },
+  "reference_summary_note": "reconciled against outputs/n51w113_drumheller_badlands/terrain_summary.json"
+}
