@@ -280,6 +280,77 @@ Point, Dumont, rand_kunlun. Removed (vegetation): **Sudbury** (peak NDVI 0.83) a
 controls. Known caveat: large lakes (Great Lakes, Victoria) are kept, since they are inside the
 land polygons and not green.
 
+## Per-hexagon feature columns (`analysis/hex_features.py`, `analysis/hex_terrain.py`)
+
+Adds the site pipeline's feature columns to every hexagon table (Earth `contours_r8_v2`, Moon
+and Mars `contours_planet`), one feature group at a time on all bodies together. Inputs:
+`analysis/earth_merra2_climate.py` (Earth temperature + weather from MERRA-2 hourly 2023, built),
+`analysis/moon_diviner_grid.py` (Moon temperature, downloading), `analysis/planet_feature_grids.py`
+(Moon/Mars FeO and albedo, built). **Paused before any group ran**; see
+[../docs/HANDOFF_jobs_2026-11-15.md](../docs/HANDOFF_jobs_2026-11-15.md) for order and commands.
+
+## Moon and Mars contours on Earth-r8 hexagons (`analysis/contours_planet.py`)
+
+User rule: copy Earth's H3 r8 hexagon size unchanged onto the Moon and Mars, whole surfaces.
+H3 itself can't (r8 there would be 0.055 / 0.21 km²), so the script builds its own grid:
+regular hexagons with Earth r8's mean area (0.7373 km², edge 532.7 m) in rows of constant
+latitude (1.5 edges apart; centres √3 edges apart in true distance; odd rows offset by half a
+cell). Each elevation pixel belongs to its nearest centre, so cells tile the surface; cells
+along seams between rows of different counts are slightly irregular. Cell id = `row << 32 | col`.
+Moon 51,449,247 cells, Mars 196,577,272.
+
+Elevation: LOLA 118 m (Moon) and HRSC+MOLA 200 m (Mars) global mosaics, downloaded once by
+`data/raw/global/planet/download.py` (8.5 + 11.4 GB; they are striped with no overviews).
+Levels: `240m` (≈ Earth 8x) then `native`. Same Parquet schema as the Earth contours.
+
+```bash
+uv run python data/raw/global/planet/download.py
+uv run python analysis/contours_planet.py --bodies moon,mars --levels 240m,native
+```
+
+### Packaging for handoff (`analysis/package_parts.py`)
+
+Splits a finished dataset into `data/export/<dataset>/part_NN/` folders (hard links, no extra
+disk) and `part_NN.zip` files of at most 3 GB (stored, not recompressed: Parquet is already
+zstd). Each part has whole tiles, the README, the manifest, its own `done.txt` and `parts.csv`.
+Moon 240 m: 4 parts (2.91, 2.90, 2.91, 1.22 GB), verified 2,308 tiles / 51,449,247 hexagons.
+Mars 240 m, Mars native and Moon native are packaged automatically when each completes
+(log `data/export/package.log`).
+
+## Global Earth exclusion mask v2: land cover (`analysis/global_mask_v2.py`)
+
+Replaces v1's NDVI vegetation rule with land cover (user request, 2026-11-14). Same 0.05°
+pixels. Land-cover shares come from `analysis/landcover_fractions.py`:
+[MODIS MCD12Q1 v061](https://doi.org/10.5067/MODIS/MCD12Q1.061) 2023 (IGBP, 500 m, Earthdata
+token, read with `pyhdf`) and the [Esri / Impact Observatory 10 m LULC](https://livingatlas.arcgis.com/landcover/)
+2023 (read at its 320 m overview from the Microsoft Planetary Computer copy). The sources are
+averaged per pixel. [Dynamic World](https://developers.google.com/earth-engine/datasets/catalog/GOOGLE_DYNAMICWORLD_V1)
+is Earth Engine-only and not yet included (needs the user's Earth Engine access).
+
+| Rule | Removed when |
+|---|---|
+| Water | outside Natural Earth land, or water share ≥ 0.5 (lakes now removed) |
+| Populated | GHSL ≥ 50 people/km², or built-up share ≥ 0.25 |
+| Vegetated | dense-vegetation share ≥ 0.5 (forest, closed shrubland, woody savanna, crops, wetlands, flooded vegetation) |
+| Mixed | water + built + vegetation ≥ 0.5; the largest share is the reason |
+
+Kept as analog ground: bare, open shrubland, grassland/rangeland, savanna, snow/ice.
+
+```bash
+uv run python analysis/landcover_fractions.py modis   # ~1 min (1.4 GB of tiles, cached)
+uv run python analysis/landcover_fractions.py esri    # ~5 min (range reads)
+uv run python analysis/global_mask_v2.py              # ~20 s
+```
+
+Result in `data/out/global_mask_v2/` (same files as v1, plus `map_change_vs_v1.png`: tan kept
+in both, bright green newly kept, magenta newly removed). Kept **85.8 M km²**: −83.2 % vs the
+whole Earth, **−41.5 % vs land** (v1: 56.4 M, −61.6 %). v2 newly keeps 31.4 M km² (tundra,
+Sahel, cerrado, Australian margins: grass and savanna the NDVI rule removed) and newly removes
+1.9 M (lakes, some salt lakes). Sudbury is still removed (vegetated). Caveat: dry salt lakes
+(e.g. Lake Eyre) are classed as water and removed although they are good analog terrain.
+
+Contours are rerun on v2 into `data/out/contours_r8_v2/` (v1 partial run left in `contours_r8/`).
+
 ## Elevation at Earth-r8 size (`analysis/elevation_r8.py`)
 
 Every site's elevation recomputed from the original DEM products onto square pixels with the
@@ -290,6 +361,29 @@ valid. Outputs: `data/out/elevation_r8/<site>.tif` (band 1 `elevation_m`, band 2
 `source_index`), per-source rasters + provenance, `summary.csv`, and
 `data/export/elevation_r8_all_sites.zip`. Run: `uv run python analysis/elevation_r8.py all`
 (~9 min, remote range reads).
+
+## Contour lines per kept R8 hexagon (`analysis/contours_r8.py`)
+
+Streaming pipeline (2026-11-14): for every Copernicus GLO-30 1° tile touching kept land
+(18,678 tiles), it lists the Earth H3 r8 hexagons centred in the tile, drops those with ≥ 90 %
+removed area (sampled at ~0.001° against `global_mask/kept.tif`), range-reads the tile at one
+overview level plus a thin neighbour border (nothing is stored), traces contour lines at fixed
+absolute heights (`--interval`, default 20 m) inside each hexagon with `contourpy`, and writes
+`<tile>.hexes.parquet` + `<tile>.lines.parquet` atomically, then lists the tile in `done.txt`.
+Levels run coarse to fine (`--levels 8x,4x,2x,full`), each into its own folder under
+`data/out/contours_r8/`, so finished tiles can be handed off while the rest runs. Reruns skip
+done tiles; a run stops itself when free disk drops below 25 GB, starts a new tile only while
+≥ 0.5 GB RAM and ≥ 4 GB commit headroom are free, and restarts its worker pool after a crash.
+Several levels can run at once as separate processes (`--levels full` alongside `8x,4x,2x`). The schema and handoff notes
+for the downstream team are in `data/out/contours_r8/README.md` (ships with the data).
+
+```bash
+uv run python analysis/contours_r8.py --levels 8x,4x,2x        # ~76 M hexagons per level
+```
+
+Test on 4 tiles (Atacama, Haughton, Sahara, Black Point): 41,037 hexagons; 8×: 13–17
+readings/hexagon, ~160 B/hexagon output; full: ~850–1100 readings, ~1.3 KB/hexagon (≈ 98 GB
+for all levels' full pass). Lines stay within 570 m of the hexagon centre.
 
 ## Outputs (`data/out/`)
 
