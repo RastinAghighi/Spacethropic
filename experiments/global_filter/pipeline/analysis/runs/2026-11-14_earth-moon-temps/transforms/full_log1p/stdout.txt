@@ -1,0 +1,97 @@
+                        dimension  mean_auc  mean_p_plain  mean_p_constrained  mean_hit_rate  mean_loso_top3_frac  mean_boot_target_top3_frac  w1_auc  w1_p_constrained  w1_hit_rate  w1_loso_top3_frac
+feature                                                                                                                                                                                                
+insolation_wm2__mean            3     0.750         0.267               0.222            0.5                0.750                       0.762   0.750             0.222          0.5              0.750
+temp_day_max_k__mean            3     0.750         0.267               0.333            0.5                0.750                       0.762   0.750             0.333          0.5              0.750
+temp_night_min_k__mean          3     0.750         0.267               0.333            0.5                0.750                       0.762   0.750             0.333          0.5              0.750
+temp_mean_k__mean               3     0.625         0.400               0.333            0.5                0.250                       0.342   0.625             0.333          0.5              0.250
+albedo__p10                     1     0.560         0.384               0.387            0.4                0.125                       0.248   0.540             0.432          0.4              0.125
+albedo__std                     1     0.500         0.523               0.494            0.4                0.125                       0.030   0.500             0.494          0.4              0.125
+slope_deg__std                  2     0.500         0.523               0.543            0.2                0.000                       0.007   0.500             0.535          0.2              0.000
+temp_night_max_k__mean          3     0.500         0.600               0.667            0.5                0.250                       0.258   0.500             0.667          0.5              0.250
+wind_max_ms__mean               5     0.500         0.667               0.667            0.5                0.250                       0.354   0.500             0.667          0.5              0.250
+wind_mean_ms__mean              5     0.500         0.667               0.667            0.5                0.250                       0.354   0.500             0.667          0.5              0.250
+tri_m__std                      2     0.500         0.523               0.543            0.2                0.000                       0.020   0.480             0.568          0.2              0.000
+albedo__mean                    1     0.460         0.616               0.634            0.2                0.000                       0.072   0.460             0.634          0.2              0.000
+albedo__p50                     1     0.460         0.616               0.634            0.2                0.000                       0.072   0.460             0.634          0.2              0.000
+slope_deg__p90                  2     0.420         0.703               0.823            0.2                0.000                       0.007   0.400             0.860          0.2              0.000
+tri_m__mean                     2     0.420         0.703               0.860            0.2                0.000                       0.007   0.400             0.893          0.2              0.000
+tri_m__p90                      2     0.420         0.703               0.823            0.2                0.000                       0.007   0.400             0.848          0.2              0.000
+tri_m__p50                      2     0.400         0.743               0.909            0.2                0.000                       0.007   0.360             0.951          0.2              0.000
+slope_deg__mean                 2     0.360         0.815               0.922            0.2                0.000                       0.007   0.360             0.922          0.2              0.000
+albedo__p90                     1     0.340         0.845               0.835            0.2                0.000                       0.001   0.340             0.835          0.2              0.000
+tri_m__p10                      2     0.340         0.845               0.984            0.0                0.000                       0.000   0.340             0.984          0.0              0.000
+slope_deg__p50                  2     0.340         0.845               0.922            0.2                0.000                       0.007   0.320             0.963          0.2              0.000
+elevation_m__std                2     0.320         0.873               0.918            0.2                0.000                       0.001   0.300             0.951          0.2              0.000
+slope_deg__p10                  2     0.300         0.897               0.947            0.0                0.000                       0.000   0.280             0.967          0.0              0.000
+pressure_mean_pa__mean          5     0.250         0.933               0.889            0.0                0.000                       0.084   0.250             0.889          0.0              0.000
+feo_wt_pct__mean                1       NaN           NaN                 NaN            NaN                0.000                       0.000     NaN               NaN          NaN              0.000
+   dimension                                               name  features  usable             mean_best  mean_best_auc  mean_median_auc  mean_composite_auc  mean_composite_p_constrained  mean_composite_hit_rate               w1_best  w1_best_auc  \
+0          1         Geology, mineralogy, and surface materials         6       5           albedo__p10           0.56             0.46                0.44                         0.663                      0.2           albedo__p10         0.54   
+1          2      Terrain, elevation, slope, roughness, craters        11      11        slope_deg__std           0.50             0.40                0.38                         0.889                      0.2        slope_deg__std         0.50   
+2          3  Temperature, illumination, environmental extremes         5       5  insolation_wm2__mean           0.75             0.75                 NaN                           NaN                      NaN  insolation_wm2__mean         0.75   
+3          5  Dust, wind, erosion, atmospheric/surface proce...         3       3     wind_max_ms__mean           0.50             0.50                 NaN                           NaN                      NaN     wind_max_ms__mean         0.50   
+
+   w1_median_auc  w1_composite_auc  w1_composite_p_constrained  w1_composite_hit_rate  
+0           0.46              0.44                       0.663                    0.2  
+1           0.36              0.38                       0.889                    0.2  
+2           0.75               NaN                         NaN                    NaN  
+3           0.50               NaN                         NaN                    NaN  
+{
+ "mean": {
+  "features": [
+   "albedo__mean",
+   "albedo__p10",
+   "albedo__p50",
+   "albedo__p90",
+   "albedo__std",
+   "elevation_m__std",
+   "slope_deg__mean",
+   "slope_deg__p10",
+   "slope_deg__p50",
+   "slope_deg__p90",
+   "slope_deg__std",
+   "tri_m__mean",
+   "tri_m__p10",
+   "tri_m__p50",
+   "tri_m__p90",
+   "tri_m__std"
+  ],
+  "lambda": 1.0,
+  "auc_in_sample": 0.82,
+  "auc_leave_one_edge_out": 0.04,
+  "auc_leave_one_target_out": 0.34
+ },
+ "w1": {
+  "features": [
+   "albedo__mean",
+   "albedo__p10",
+   "albedo__p50",
+   "albedo__p90",
+   "albedo__std",
+   "elevation_m__std",
+   "slope_deg__mean",
+   "slope_deg__p10",
+   "slope_deg__p50",
+   "slope_deg__p90",
+   "slope_deg__std",
+   "tri_m__mean",
+   "tri_m__p10",
+   "tri_m__p50",
+   "tri_m__p90",
+   "tri_m__std"
+  ],
+  "lambda": 1.0,
+  "auc_in_sample": 0.8,
+  "auc_leave_one_edge_out": 0.0,
+  "auc_leave_one_target_out": 0.3
+ }
+}
+  method       feature_set  n_features  n_edges  n_true_edges  true_mean_dist  wrong_mean_dist  ratio_true_over_wrong   auc  p_plain  p_constrained  hit_rate  hit_n_targets  true_partner_mean_rank
+0   mean               all          24       15             5           1.102            1.059                  1.041  0.42    0.703          0.835       0.4              5                     2.0
+1   mean          complete          16       15             5           1.098            1.011                  1.086  0.36    0.815          0.864       0.2              5                     2.2
+2   mean  temp_sun_weather           8        6             2           1.559            1.708                  0.913  0.75    0.267          0.111       1.0              2                     1.0
+3   mean    terrain_albedo          16       15             5           1.098            1.011                  1.086  0.36    0.815          0.864       0.2              5                     2.2
+4     w1               all          24       15             5           0.888            0.868                  1.023  0.48    0.570          0.741       0.2              5                     2.2
+5     w1          complete          16       15             5           0.820            0.761                  1.077  0.34    0.845          0.926       0.0              5                     2.4
+6     w1  temp_sun_weather           8        6             2           1.649            1.800                  0.916  0.75    0.267          0.111       1.0              2                     1.0
+7     w1    terrain_albedo          16       15             5           0.820            0.761                  1.077  0.34    0.845          0.926       0.0              5                     2.4

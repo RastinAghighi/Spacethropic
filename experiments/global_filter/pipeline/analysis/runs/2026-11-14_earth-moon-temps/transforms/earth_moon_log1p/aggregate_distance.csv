@@ -1,0 +1,9 @@
+method,feature_set,n_features,n_edges,n_true_edges,true_mean_dist,wrong_mean_dist,ratio_true_over_wrong,auc,p_plain,p_constrained,hit_rate,hit_n_targets,true_partner_mean_rank
+mean,all,24,6,2,1.4644,1.4321,1.0225,0.5,0.6,0.6667,0.5,2,2.0
+mean,complete,24,6,2,1.4644,1.4321,1.0225,0.5,0.6,0.6667,0.5,2,2.0
+mean,temp_sun_weather,8,6,2,1.5588,1.7081,0.9126,0.75,0.2667,0.1111,1.0,2,1.0
+mean,terrain_albedo,16,6,2,1.4172,1.2941,1.0951,0.5,0.6,0.6667,0.5,2,2.0
+w1,all,24,6,2,1.2697,1.234,1.0289,0.5,0.6,0.6667,0.5,2,2.0
+w1,complete,24,6,2,1.2697,1.234,1.0289,0.5,0.6,0.6667,0.5,2,2.0
+w1,temp_sun_weather,8,6,2,1.6494,1.8001,0.9163,0.75,0.2667,0.1111,1.0,2,1.0
+w1,terrain_albedo,16,6,2,1.0798,0.9509,1.1355,0.375,0.7333,0.8889,0.0,2,2.5

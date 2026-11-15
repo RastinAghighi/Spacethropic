@@ -1,0 +1,104 @@
+{
+  "inputs_sha256_12": {
+    "sudbury": "5e85d0e0e97a",
+    "atacama": "da396d8df6cf",
+    "haughton": "564d10573b2a",
+    "apollo16": "7e8c0db34ee2",
+    "shackleton": "c11771773616"
+  },
+  "seed": 20261114,
+  "n_boot": 2000,
+  "top_k": 3,
+  "n_plain_labelings": 15,
+  "n_constrained_labelings": 9,
+  "multivariate": {
+    "mean": {
+      "features": [
+        "albedo__mean",
+        "albedo__p10",
+        "albedo__p50",
+        "albedo__p90",
+        "albedo__std",
+        "elevation_m__std",
+        "insolation_wm2__mean",
+        "pressure_mean_pa__mean",
+        "slope_deg__mean",
+        "slope_deg__p10",
+        "slope_deg__p50",
+        "slope_deg__p90",
+        "slope_deg__std",
+        "temp_day_max_k__mean",
+        "temp_mean_k__mean",
+        "temp_night_max_k__mean",
+        "temp_night_min_k__mean",
+        "tri_m__mean",
+        "tri_m__p10",
+        "tri_m__p50",
+        "tri_m__p90",
+        "tri_m__std",
+        "wind_max_ms__mean",
+        "wind_mean_ms__mean"
+      ],
+      "lambda": 1.0,
+      "auc_in_sample": 1.0,
+      "auc_leave_one_edge_out": 0.0,
+      "auc_leave_one_target_out": 0.0
+    },
+    "w1": {
+      "features": [
+        "albedo__mean",
+        "albedo__p10",
+        "albedo__p50",
+        "albedo__p90",
+        "albedo__std",
+        "elevation_m__std",
+        "insolation_wm2__mean",
+        "pressure_mean_pa__mean",
+        "slope_deg__mean",
+        "slope_deg__p10",
+        "slope_deg__p50",
+        "slope_deg__p90",
+        "slope_deg__std",
+        "temp_day_max_k__mean",
+        "temp_mean_k__mean",
+        "temp_night_max_k__mean",
+        "temp_night_min_k__mean",
+        "tri_m__mean",
+        "tri_m__p10",
+        "tri_m__p50",
+        "tri_m__p90",
+        "tri_m__std",
+        "wind_max_ms__mean",
+        "wind_mean_ms__mean"
+      ],
+      "lambda": 1.0,
+      "auc_in_sample": 1.0,
+      "auc_leave_one_edge_out": 0.125,
+      "auc_leave_one_target_out": 0.125
+    }
+  },
+  "run": {
+    "data_dir": "analysis\\runs\\2026-11-14_earth-moon-temps\\snapshot",
+    "targets": [
+      "apollo16",
+      "shackleton"
+    ],
+    "transform": {
+      "pressure_mean_pa": "rank",
+      "wind_": "rank"
+    },
+    "n_edges": 6,
+    "n_true_edges": 2,
+    "standardisation_sites": [
+      "sudbury",
+      "atacama",
+      "haughton",
+      "apollo16",
+      "shackleton"
+    ],
+    "targets_used": [
+      "apollo16",
+      "shackleton"
+    ]
+  }
+}

@@ -1,0 +1,152 @@
+# Calibration sites. Latitudes are planetocentric and longitudes east-positive in [-180, 180),
+# which is the convention of every elevation mosaic the pipeline reads.
+
+bodies:
+  # radius_m: sphere used for H3 cell areas and site-local projections (IAU 2015 mean radius;
+  # Earth uses H3's own authalic radius so Earth areas match h3.cell_area exactly).
+  # h3_res: resolution whose average cell is closest to the ~6 km² target on this body.
+  earth: { radius_m: 6371007.180918475, h3_res: 7 }   # ~5.2 km²
+  moon:  { radius_m: 1737400.0,         h3_res: 6 }   # ~2.7 km²
+  mars:  { radius_m: 3396190.0,         h3_res: 6 }   # ~10.3 km²
+
+defaults:
+  radius_km: 25          # fixed extent around every site
+  window_km2: 6          # fixed physical window for scale-sensitive features (slope, roughness)
+  terrain_baseline_m: 200  # every DEM is averaged to this pixel size before slope/roughness
+  min_valid_fraction: 0.5  # a cell/window needs at least this share of valid pixels
+
+sites:
+  # --- Earth ---
+  - id: sudbury
+    name: Sudbury impact structure, Ontario
+    body: earth
+    lat: 46.600
+    lon: -81.183
+    source: "Earth Impact Database / Sudbury Basin (46°36′N 81°11′W)"
+
+  - id: atacama
+    name: Yungay, Atacama hyper-arid core, Chile
+    body: earth
+    lat: -24.0638
+    lon: -69.8805
+    source: "Navarro-González et al. 2003 study site (24°03′49.6″S 69°52′49.8″W)"
+
+  - id: haughton
+    name: Haughton impact crater, Devon Island
+    body: earth
+    lat: 75.383
+    lon: -89.667
+    source: "Haughton crater (75°23′N 89°40′W)"
+
+  - id: blackpoint
+    name: Black Point Lava Flow, Arizona (Desert RATS)
+    body: earth
+    lat: 35.6835
+    lon: -111.4786
+    source: "Desert RATS test site on the flow's northern margin (35.6835°N 111.4786°W; AZGS / NASA)"
+
+  - id: dumont
+    name: Dumont Dunes, California (Curiosity mobility tests)
+    body: earth
+    lat: 35.6786
+    lon: -116.2316
+    source: "Dumont Dunes summit, USGS GNIS (35.67863°N 116.23156°W)"
+
+  # --- Earth random controls (no analog association; every edge is wrong) ---
+  # Drawn 2026-11-14: seed 20261114, uniform on the sphere, kept if 60°S ≤ lat ≤ 75°N
+  # (Sentinel-2 albedo is snow-masked beyond), a Copernicus DEM tile exists, ≥ 90% of the
+  # 25 km window is non-zero elevation, and ≥ 300 km from any other Earth site.
+  - id: rand_nwt
+    name: Random control 1, Northwest Territories, Canada
+    body: earth
+    lat: 64.1192
+    lon: -120.1396
+    role: control
+    source: "Seeded random draw (see comment above)"
+
+  - id: rand_quebec
+    name: Random control 2, Côte-Nord, Québec
+    body: earth
+    lat: 50.2682
+    lon: -68.6105
+    role: control
+    source: "Seeded random draw (see comment above)"
+
+  - id: rand_amazon
+    name: Random control 3, Amazon basin, Brazil
+    body: earth
+    lat: -4.6278
+    lon: -60.2194
+    role: control
+    source: "Seeded random draw (see comment above)"
+
+  - id: rand_kunlun
+    name: Random control 4, Kunlun Shan / Tarim margin, China
+    body: earth
+    lat: 36.7825
+    lon: 81.2511
+    role: control
+    source: "Seeded random draw (see comment above)"
+
+  - id: rand_oklahoma
+    name: Random control 5, northwest Oklahoma
+    body: earth
+    lat: 36.6986
+    lon: -99.7922
+    role: control
+    source: "Seeded random draw (see comment above)"
+
+  # --- Moon ---
+  - id: apollo16
+    name: Apollo 16 landing site, Descartes highlands
+    body: moon
+    lat: -8.97
+    lon: 15.51
+    source: "NASA Apollo 16 landing site (8.97°S 15.51°E)"
+
+  - id: shackleton
+    name: Shackleton crater, lunar south pole
+    body: moon
+    lat: -89.67
+    lon: 129.78
+    source: "USGS Gazetteer of Planetary Nomenclature (89.67°S 129.78°E)"
+
+  - id: apollo15
+    name: Apollo 15 landing site, Hadley Rille
+    body: moon
+    lat: 26.1322
+    lon: 3.6339
+    source: "NASA Apollo Lunar Surface Journal (26°07′56″N 3°38′02″E)"
+
+  # --- Mars ---
+  - id: viking1
+    name: Viking 1 landing site, Chryse Planitia
+    body: mars
+    lat: 22.24
+    lon: -47.97
+    source: >-
+      Revised VL1 location 22.483°N 47.968°W (Morris & Jones 1980), planetographic;
+      converted to planetocentric (-0.24°).
+
+  - id: viking2
+    name: Viking 2 landing site, Utopia Planitia
+    body: mars
+    lat: 47.64
+    lon: 134.29
+    source: >-
+      VL2 touchdown 47.968°N 225.71°W, planetographic; converted to planetocentric
+      (-0.33°) and to east longitude (360 - 225.71).
+
+  - id: phoenix
+    name: Phoenix landing site, Vastitas Borealis
+    body: mars
+    lat: 68.2188
+    lon: -125.7492
+    source: "Phoenix lander (68.2188°N 125.7492°W), planetocentric"
+
+  - id: bagnold
+    name: Bagnold Dunes, Gale crater (Namib dune area)
+    body: mars
+    lat: -4.680
+    lon: 137.361
+    source: "HiRISE ESP_045293_1755, Curiosity at the Bagnold dune field (4.680°S 137.361°E, planetocentric)"
