@@ -55,8 +55,8 @@ export function SiteView() {
           </div>
         </div>
 
-        {/* Scale, north and source */}
-        <div className="absolute bottom-6 left-5 flex items-end gap-4 font-mono text-[10.5px] text-white/70 sm:bottom-8 sm:left-7">
+        {/* North, scale and source: one row on the bottom gutter */}
+        <div className="absolute bottom-4 left-4 flex items-end gap-4 font-mono text-[10.5px] text-white/70 sm:bottom-6 sm:left-6">
           <div className="flex flex-col items-center gap-1">
             <span className="text-[9.5px] tracking-[0.2em] text-white/60">N</span>
             <svg width="10" height="14" viewBox="0 0 10 14" aria-hidden>
@@ -67,12 +67,12 @@ export function SiteView() {
             <div className="mb-1">{bar.km} km</div>
             <div className="h-1.5 border-x border-b border-white/70" style={{ width: bar.px }} />
           </div>
+          {current && (
+            <p className="hidden pb-px text-[10px] text-white/45 lg:block">
+              NASA HLS · {current.imagery.date} · {current.imagery.metersPerPixel} m/px
+            </p>
+          )}
         </div>
-        {current && (
-          <p className="absolute bottom-[78px] left-5 hidden font-mono text-[10px] text-white/45 sm:left-7 lg:block">
-            NASA HLS · {current.imagery.date} · {current.imagery.metersPerPixel} m/px
-          </p>
-        )}
       </div>
     </div>
   );

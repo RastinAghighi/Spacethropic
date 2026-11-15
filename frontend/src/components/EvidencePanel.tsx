@@ -7,7 +7,7 @@ import { formatCoord, type Candidate } from "@/lib/candidates";
 import { BODY } from "@/lib/catalog";
 import { DIMS, matchProfile, overallScore, suggest, targetOf, type DimMatch, type Filters, type Tab } from "@/lib/profile";
 import type { AnalogQuery } from "@/lib/search";
-import { useRunSearch } from "./search/primitives";
+import { Label, useRunSearch } from "./search/primitives";
 
 const AMBER = "#f3b453";
 const pct = (v: number) => Math.round(v * 100);
@@ -23,16 +23,17 @@ function Ticker({ value, className }: { value: number; className?: string }) {
 }
 
 function ScoreRing({ score, delta, tint }: { score: number; delta: number | null; tint: string }) {
-  const r = 25;
+  const r = 24;
   const circ = 2 * Math.PI * r;
   return (
-    <div className="flex flex-col items-center">
-      <div className="relative grid h-[62px] w-[62px] place-items-center">
-        <svg width="62" height="62" viewBox="0 0 62 62" className="absolute inset-0 -rotate-90" aria-hidden>
-          <circle cx="31" cy="31" r={r} fill="none" stroke="rgb(255 255 255 / 0.07)" strokeWidth="2.5" />
+    <div className="flex shrink-0 items-center gap-2" title="Overall match">
+      <Delta value={delta} />
+      <div className="relative grid h-14 w-14 place-items-center">
+        <svg width="56" height="56" viewBox="0 0 56 56" className="absolute inset-0 -rotate-90" aria-hidden>
+          <circle cx="28" cy="28" r={r} fill="none" stroke="rgb(255 255 255 / 0.07)" strokeWidth="2.5" />
           <circle
-            cx="31"
-            cy="31"
+            cx="28"
+            cy="28"
             r={r}
             fill="none"
             stroke={tint}
@@ -43,12 +44,11 @@ function ScoreRing({ score, delta, tint }: { score: number; delta: number | null
             style={{ ["--circ" as string]: `${circ}`, animation: "ring-in 1.1s var(--ease-out-expo) .15s both", filter: `drop-shadow(0 0 5px ${tint}55)` }}
           />
         </svg>
-        <span className="text-[17px] font-medium tracking-[-0.03em] text-white">
+        <span className="text-[16px] font-medium tracking-[-0.03em] text-white">
           <Ticker value={pct(score)} />
           <span className="text-[10px] text-white/40">%</span>
         </span>
       </div>
-      <Delta value={delta} className="mt-1" fallback="match" />
     </div>
   );
 }
@@ -57,9 +57,8 @@ function ScoreRing({ score, delta, tint }: { score: number; delta: number | null
  * What the last refine gained. Only gains are called out: a refine trades breadth for the
  * property asked for, and the numbers themselves already show the rest.
  */
-function Delta({ value, className, fallback }: { value: number | null; className?: string; fallback?: string }) {
-  if (value === null || value < 5)
-    return fallback ? <p className={`text-[9.5px] uppercase tracking-[0.14em] text-white/30 ${className ?? ""}`}>{fallback}</p> : null;
+function Delta({ value, className }: { value: number | null; className?: string }) {
+  if (value === null || value < 5) return null;
   return (
     <p
       className={`font-mono text-[10px] tabular-nums text-[#8fe3b0] ${className ?? ""}`}
@@ -77,7 +76,7 @@ const COLS = "grid grid-cols-[76px_minmax(0,1fr)_minmax(0,1fr)_40px_52px] items-
 function MatchTable({ match, weights, target, tint, deltas, hover }: { match: DimMatch[]; weights: Filters["weights"]; target: string; tint: string; deltas: (number | null)[]; hover: Tab | null }) {
   return (
     <div role="table" aria-label={`Measured values against ${target}`}>
-      <div role="row" className={`${COLS} pb-1.5 text-[10px] uppercase tracking-[0.12em] text-white/30`}>
+      <div role="row" className={`${COLS} pb-1.5 text-[10px] font-medium uppercase tracking-[0.12em] text-white/35`}>
         <span role="columnheader" />
         <span role="columnheader">Here</span>
         <span role="columnheader" title={target}>
@@ -155,14 +154,14 @@ function NextStep({ c, q, results, tint }: { c: Candidate; q: AnalogQuery; resul
   };
 
   return (
-    <div className="mt-5" style={{ animation: "rise-in .7s var(--ease-out-expo) .35s both" }}>
-      <div className="mb-1.5 flex items-center justify-between">
-        <p className="text-[10px] uppercase tracking-[0.12em] text-white/30">Suggested refine</p>
+    <div className="mt-6" style={{ animation: "rise-in .7s var(--ease-out-expo) .35s both" }}>
+      <div className="mb-2 flex h-5 items-center justify-between">
+        <Label>Suggested refine</Label>
         {ideas.length > 1 && (
           <button
             type="button"
             onClick={() => setI((v) => v + 1)}
-            className="flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[10.5px] tabular-nums text-white/35 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
+            className="-mr-1.5 flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[10.5px] tabular-nums text-white/35 transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
             aria-label="Another suggestion"
           >
             {(i % ideas.length) + 1} / {ideas.length}
@@ -190,7 +189,7 @@ function NextStep({ c, q, results, tint }: { c: Candidate; q: AnalogQuery; resul
           onFocus={enter}
           onBlur={leave}
           title={`${s.title}. ${s.reason}.`}
-          className="group flex w-full items-center justify-between gap-3 rounded-[13px] bg-[rgb(14_15_19/0.92)] py-2.5 pl-3.5 pr-2.5 text-left transition-colors hover:bg-[rgb(22_23_28/0.95)] focus-visible:outline-none disabled:opacity-60"
+          className="group flex w-full items-center justify-between gap-3 rounded-[13px] bg-[rgb(14_15_19/0.92)] py-2.5 pl-3 pr-2.5 text-left transition-colors hover:bg-[rgb(22_23_28/0.95)] focus-visible:outline-none disabled:opacity-60"
         >
           <span className="min-w-0" style={{ animation: "rise-in .45s var(--ease-out-expo) both" }}>
             <span className="block truncate font-mono text-[13px] text-white">{s.limit}</span>
@@ -253,10 +252,10 @@ function Body({
         {source === "sample" && <span title="No search backend connected: ranked over the bundled sample sites">Sample data</span>}
       </div>
 
-      <div className="mt-4 flex items-start justify-between gap-4" style={{ animation: "rise-in .6s var(--ease-out-expo) .03s both" }}>
+      <div className="mt-3 flex items-center justify-between gap-4" style={{ animation: "rise-in .6s var(--ease-out-expo) .03s both" }}>
         <div className="min-w-0">
           <h2 className="text-[26px] font-medium leading-[1.1] tracking-[-0.025em] text-white">{c.name}</h2>
-          <p className="mt-1.5 text-[12.5px] text-white/45">
+          <p className="mt-1 truncate text-[12.5px] text-white/45">
             {c.region}
             <span className="ml-2 font-mono text-[10.5px] text-white/30">{formatCoord(c.lat, c.lon)}</span>
           </p>
@@ -270,7 +269,7 @@ function Body({
 
       <NextStep c={c} q={q} results={results} tint={tint} />
 
-      <details className="group mt-6 border-t border-white/[0.06] pt-3 text-[12px]" style={{ animation: "rise-in .6s var(--ease-out-expo) .4s both" }}>
+      <details className="group mt-6 border-t border-white/[0.06] pt-4 text-[12px]" style={{ animation: "rise-in .6s var(--ease-out-expo) .4s both" }}>
         <summary className="flex cursor-pointer list-none items-center justify-between text-white/40 transition-colors hover:text-white/70 [&::-webkit-details-marker]:hidden">
           About this site
           <svg width="10" height="10" viewBox="0 0 10 10" className="transition-transform group-open:rotate-90" aria-hidden>
@@ -286,7 +285,7 @@ function Body({
             </li>
           ))}
         </ul>
-        <p className="mt-4 text-[10px] uppercase tracking-[0.12em] text-white/30">Where it differs</p>
+        <Label className="mt-4">Where it differs</Label>
         <ul className="mt-1.5 space-y-1.5">
           {c.breaks.map((b) => (
             <li key={b} className="flex gap-2.5 leading-snug text-white/45">
@@ -316,7 +315,7 @@ export function EvidencePanel() {
   return (
     <aside
       aria-label="Candidate evidence"
-      className="fixed right-5 top-5 z-20 hidden max-h-[calc(100vh-40px)] w-[min(420px,33vw)] flex-col md:flex"
+      className="fixed right-6 top-6 z-20 hidden max-h-[calc(100vh-48px)] w-[min(420px,33vw)] flex-col md:flex"
       style={{
         animation: mode === "diving" ? `rise-in .9s var(--ease-out-expo) ${DIVE.panel}s both` : undefined,
         opacity: mode === "surfacing" ? 0 : 1,
@@ -324,7 +323,7 @@ export function EvidencePanel() {
         transition: "opacity .35s ease, transform .5s var(--ease-out-expo)",
       }}
     >
-      <div className="min-h-0 overflow-y-auto overscroll-contain rounded-[22px] border border-white/[0.08] bg-[rgb(10_11_14/0.6)] p-6 shadow-[0_30px_80px_-30px_rgb(0_0_0/0.9),inset_0_1px_0_rgb(255_255_255/0.05)] backdrop-blur-2xl backdrop-saturate-150 [scrollbar-width:none]">
+      <div className="min-h-0 overflow-y-auto overscroll-contain rounded-[22px] border border-white/[0.08] bg-[rgb(10_11_14/0.62)] p-5 shadow-[0_30px_80px_-30px_rgb(0_0_0/0.9),inset_0_1px_0_rgb(255_255_255/0.05)] backdrop-blur-2xl backdrop-saturate-150 [scrollbar-width:none]">
         <Body key={`${c.id}:${trailAt}`} c={c} index={active} total={results.length} q={query} results={results} source={source} applied={applied} hover={hover} prev={prev} />
       </div>
     </aside>

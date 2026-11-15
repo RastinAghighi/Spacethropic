@@ -152,7 +152,7 @@ export function DiscoveryToggle({ on, onChange, tabIndex }: { on: boolean; onCha
 }
 
 export function Label({ children, className }: { children: React.ReactNode; className?: string }) {
-  return <p className={`text-[10.5px] font-medium uppercase tracking-[0.14em] text-white/35 ${className ?? ""}`}>{children}</p>;
+  return <p className={`text-[10px] font-medium uppercase tracking-[0.12em] text-white/35 ${className ?? ""}`}>{children}</p>;
 }
 
 /** Runs a query through the shared choreography: fold to a loading bar → dive (or punch-slide in the site view). */

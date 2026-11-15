@@ -8,7 +8,7 @@ import { LoadingBar } from "./primitives";
 type Variant = "full" | "compressed" | "hidden";
 
 /** Clears the rail and an open drawer, so the tray centres in the free space. */
-const DRAWER_SPACE = "calc(84px + min(360px, 100vw - var(--panel-space) - 116px))";
+const DRAWER_SPACE = "calc(84px + var(--drawer-w))";
 
 /** Glass surface with the environment-tinted border. */
 function Glass({ children }: { children: React.ReactNode }) {
@@ -48,7 +48,7 @@ export function SearchDock({ width, editor, tint, error, label }: { width: numbe
 
   return (
     <div
-      className="pointer-events-none fixed inset-x-0 bottom-0 z-30 flex justify-center px-3 pb-4 sm:pb-7"
+      className="pointer-events-none fixed inset-x-0 bottom-0 z-30 flex justify-center px-3 pb-4 sm:pb-6"
       style={{
         opacity: landed ? 1 : 0,
         transform: landed ? "none" : "translateY(18px)",

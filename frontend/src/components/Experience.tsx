@@ -24,13 +24,13 @@ function Chrome() {
   };
   return (
     <>
-      <header className="fixed left-5 top-5 z-20 flex items-start gap-3 sm:left-7 sm:top-6" style={fade}>
+      <header className="fixed left-4 top-4 z-20 flex max-w-[calc(100vw-var(--panel-space)-48px)] items-start gap-3 sm:left-6 sm:top-6" style={fade}>
         <button
           type="button"
           onClick={() => ui.surface()}
           aria-label="Back to Earth"
           tabIndex={inSite ? 0 : -1}
-          className="mt-0.5 flex h-8 items-center gap-1.5 overflow-hidden rounded-full border border-white/10 bg-[rgb(10_11_14/0.6)] text-[12px] text-white/75 backdrop-blur-xl transition-[max-width,opacity,padding,margin] duration-500 hover:border-white/25 hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
+          className="flex h-8 shrink-0 items-center gap-1.5 overflow-hidden rounded-full border border-white/10 bg-[rgb(10_11_14/0.6)] text-[12px] text-white/75 backdrop-blur-xl transition-[max-width,opacity,padding,margin] duration-500 hover:border-white/25 hover:text-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40"
           style={{
             maxWidth: inSite ? 120 : 0,
             opacity: inSite ? 1 : 0,
@@ -62,7 +62,7 @@ function Chrome() {
         </div>
       </header>
       <p
-        className="pointer-events-none fixed right-5 top-5 z-10 hidden max-w-xs text-right font-mono text-[10px] leading-relaxed text-white/25 sm:right-7 sm:top-6 md:block"
+        className="pointer-events-none fixed right-4 top-4 z-10 hidden max-w-xs text-right font-mono text-[10px] leading-relaxed text-white/25 sm:right-6 sm:top-6 md:block"
         style={{ ...fade, opacity: landed && mode === "globe" ? 1 : 0 }}
       >
         NASA Blue Marble NG · VIIRS Black Marble · GEBCO

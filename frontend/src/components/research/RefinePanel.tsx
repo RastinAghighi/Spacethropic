@@ -335,10 +335,10 @@ export function RefinePanel() {
       {/* Rail */}
       <nav
         aria-label="Refine"
-        className="fixed left-5 top-24 z-20 sm:left-7"
+        className="fixed left-6 top-[72px] z-20"
         style={{ animation: mode === "diving" ? `rise-in .9s var(--ease-out-expo) ${DIVE.panel + 0.1}s both` : undefined }}
       >
-        <div className="flex flex-col gap-0.5 rounded-[18px] border border-white/[0.08] bg-[rgb(10_11_14/0.55)] p-1 shadow-[0_30px_80px_-30px_rgb(0_0_0/0.9),inset_0_1px_0_rgb(255_255_255/0.05)] backdrop-blur-2xl backdrop-saturate-150">
+        <div className="flex flex-col gap-0.5 rounded-[18px] border border-white/[0.08] bg-[rgb(10_11_14/0.6)] p-[3px] shadow-[0_30px_80px_-30px_rgb(0_0_0/0.9),inset_0_1px_0_rgb(255_255_255/0.05)] backdrop-blur-2xl backdrop-saturate-150">
           <p aria-hidden className="pb-1 pt-1.5 text-center text-[8.5px] font-medium uppercase tracking-[0.12em] text-white/35">
             Refine
           </p>
@@ -392,7 +392,7 @@ export function RefinePanel() {
         aria-label={`${tabById(shownTab).label} refine`}
         aria-hidden={!open}
         inert={!open}
-        className="fixed left-[76px] top-24 z-20 flex max-h-[calc(100vh-13rem)] w-[min(360px,calc(100vw-var(--panel-space)-116px))] flex-col sm:left-[84px]"
+        className="fixed left-[84px] top-[72px] z-20 flex max-h-[calc(100vh-170px)] w-[var(--drawer-w)] flex-col"
         style={{
           opacity: open ? 1 : 0,
           transform: open ? "none" : "translateX(-14px) scale(0.985)",
@@ -402,8 +402,8 @@ export function RefinePanel() {
           transition: "opacity .35s ease, transform .55s var(--ease-out-expo), filter .4s ease",
         }}
       >
-        <div className="flex min-h-0 flex-col overflow-hidden rounded-[22px] border border-white/[0.09] bg-[rgb(10_11_14/0.7)] shadow-[0_30px_80px_-30px_rgb(0_0_0/0.9),inset_0_1px_0_rgb(255_255_255/0.05)] backdrop-blur-2xl backdrop-saturate-150">
-          <header className="flex items-start justify-between gap-3 px-5 pb-3 pt-5">
+        <div className="flex min-h-0 flex-col overflow-hidden rounded-[22px] border border-white/[0.08] bg-[rgb(10_11_14/0.62)] shadow-[0_30px_80px_-30px_rgb(0_0_0/0.9),inset_0_1px_0_rgb(255_255_255/0.05)] backdrop-blur-2xl backdrop-saturate-150">
+          <header className="flex items-start justify-between gap-3 px-5 pb-4 pt-5">
             <div className="min-w-0">
               <p className="text-[17px] font-medium tracking-[-0.015em] text-white">{tabById(shownTab).label}</p>
               <p className="mt-0.5 truncate text-[11.5px] text-white/40">

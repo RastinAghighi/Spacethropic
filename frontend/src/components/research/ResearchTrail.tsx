@@ -4,7 +4,7 @@ import { ui, useUi } from "@/lib/ui";
 import { BODY } from "@/lib/catalog";
 import { DEFAULT_FILTERS, describeFilters, targetOf } from "@/lib/profile";
 
-const MAX_STEPS = 4;
+const MAX_STEPS = 3;
 
 function Chevron() {
   return (
@@ -31,7 +31,7 @@ export function ResearchTrail() {
 
   return (
     <div
-      className="min-w-0"
+      className="flex h-8 min-w-0 items-center gap-3"
       aria-hidden={!inSite}
       inert={!inSite}
       style={{
@@ -41,14 +41,15 @@ export function ResearchTrail() {
         transition: "opacity .6s ease .1s, transform .7s var(--ease-out-expo) .1s, filter .6s ease .1s",
       }}
     >
-      <p className="flex items-center gap-2 text-[13px] font-medium tracking-[-0.01em] text-white/90">
+      <p className="flex shrink-0 items-center gap-2 whitespace-nowrap text-[13px] font-medium tracking-[-0.01em] text-white/90">
         <span className="h-[7px] w-[7px] rounded-full" style={{ background: tint, boxShadow: `0 0 8px ${tint}` }} />
         Earth&apos;s mirror of {targetOf(first).short}
         {trail.length === 1 && !pending && <span className="font-normal text-white/35">· {trail[0].results.length} sites</span>}
       </p>
       {(trail.length > 1 || pending) && (
-        <nav aria-label="Research trail" className="mt-2">
-          <ol className="flex items-center gap-1">
+        <nav aria-label="Research trail" className="flex min-w-0 items-center gap-3">
+          <span aria-hidden className="h-4 w-px shrink-0 bg-white/15" />
+          <ol className="flex min-w-0 items-center gap-1">
             {shown.length < steps.length && (
               <li className="flex items-center gap-1 text-[11px] text-white/30">
                 …<Chevron />
