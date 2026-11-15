@@ -1,4 +1,4 @@
-"""Terrain columns per R8 hexagon (user: "use R8 resolution as final"), all bodies together.
+"""Terrain columns per R8 hexagon (user: "use R8 resolution as final"), one body at a time (user).
 
 For every hexagon table (Earth contours_r8_v2 8x/4x, Moon and Mars 240m/native), re-read the
 same elevation grid that table's contours were traced from, compute per pixel
@@ -10,7 +10,7 @@ over each hexagon's own pixels with the site pipeline's terrain columns:
 Scale note: slope/TRI depend on pixel size; each table uses its own level (Earth 8x 240 m,
 4x 120 m; Moon 240 m / 118 m; Mars 240 m / 200 m), recorded in the manifest.
 
-Usage: uv run python analysis/hex_terrain.py [--workers 20]
+Usage: uv run python analysis/hex_terrain.py --bodies earth [--workers 20]
 """
 
 from __future__ import annotations
@@ -43,13 +43,16 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "data" / "out"
 STATS = ("mean", "std", "p10", "p50", "p90")
 COLS = ["elevation_m__std"] + [f"{l}__{s}" for l in ("slope_deg", "tri_m") for s in STATS]
+RES = earth.H3_RES  # HEX_RES env var, default 8
+_E = OUT / ("contours_r8_v2" if RES == 8 else f"contours_r{RES}_v2")
+_P = OUT / ("contours_planet" if RES == 8 else f"contours_planet_r{RES}")
 DATASETS = [  # (body, level, folder)
-    ("earth", "8x", OUT / "contours_r8_v2" / "8x_i20m"),
-    ("earth", "4x", OUT / "contours_r8_v2" / "4x_i20m"),
-    ("moon", "240m", OUT / "contours_planet" / "moon_240m_i20m"),
-    ("moon", "native", OUT / "contours_planet" / "moon_native_i20m"),
-    ("mars", "240m", OUT / "contours_planet" / "mars_240m_i20m"),
-    ("mars", "native", OUT / "contours_planet" / "mars_native_i20m"),
+    ("earth", "8x", _E / "8x_i20m"),
+    ("earth", "4x", _E / "4x_i20m"),
+    ("moon", "240m", _P / "moon_240m_i20m"),
+    ("moon", "native", _P / "moon_native_i20m"),
+    ("mars", "240m", _P / "mars_240m_i20m"),
+    ("mars", "native", _P / "mars_native_i20m"),
 ]
 
 
@@ -170,18 +173,20 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--workers", type=int, default=20)
     ap.add_argument("--limit", type=int, help="first N tiles per dataset (testing)")
+    ap.add_argument("--bodies", default="earth,moon,mars", help="comma list; user order is one body per run")
     a = ap.parse_args()
     log_dir = ROOT / "data" / "interim" / "global"
-    done_path = log_dir / "terrain_done.txt"
+    done_path = log_dir / ("terrain_done.txt" if RES == 8 else f"terrain_done_r{RES}.txt")  # folder names repeat across resolutions
     done = set(done_path.read_text().split()) if done_path.exists() else set()
 
+    bodies = a.bodies.split(",")
+    run = [d for d in DATASETS if d[0] in bodies and (d[2] / "done.txt").exists()]
     queues = []
-    for body, level, folder in DATASETS:
-        if (folder / "done.txt").exists():
-            tiles = (folder / "done.txt").read_text().split()[: a.limit]
-            queues.append([(body, level, str(folder), t) for t in tiles if f"{folder.name}/{t}" not in done])
+    for body, level, folder in run:
+        tiles = (folder / "done.txt").read_text().split()[: a.limit]
+        queues.append([(body, level, str(folder), t) for t in tiles if f"{folder.name}/{t}" not in done])
     jobs = []
-    while any(queues):  # interleave datasets so all bodies advance together
+    while any(queues):  # interleave the selected datasets (levels of one body)
         for q in queues:
             if q:
                 jobs.append(q.pop(0))
@@ -214,7 +219,7 @@ def main() -> None:
                 last = time.time()
                 print(f"terrain: {n_ok}/{len(jobs)} tables, eta {(len(jobs) - n_ok) / max(n_ok / (last - t0), 1e-9) / 3600:.2f} h", flush=True)
 
-    for body, level, folder in DATASETS:
+    for body, level, folder in run:
         mp = folder / "manifest.json"
         if mp.exists():
             m = json.loads(mp.read_text())

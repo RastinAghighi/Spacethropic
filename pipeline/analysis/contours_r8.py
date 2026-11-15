@@ -58,11 +58,12 @@ from scipy.ndimage import binary_dilation, find_objects  # noqa: E402
 ROOT = Path(__file__).resolve().parents[1]
 # v2 = land-cover mask (global_mask_v2.py). The v1 (NDVI) results stay in data/out/contours_r8/.
 # Workers are spawned processes, so the mask path travels in an environment variable.
-OUT_ROOT = ROOT / "data" / "out" / "contours_r8_v2"
+# Hexagon resolution travels in HEX_RES (spawned workers inherit it); unset = r8, the original run.
+H3_RES = int(os.environ.get("HEX_RES", "8"))
+OUT_ROOT = ROOT / "data" / "out" / ("contours_r8_v2" if H3_RES == 8 else f"contours_r{H3_RES}_v2")
 KEPT = Path(os.environ.get("CONTOURS_MASK", ROOT / "data" / "out" / "global_mask_v2" / "kept.tif"))
 BUCKET = "https://copernicus-dem-30m.s3.amazonaws.com"
 
-H3_RES = 8
 REMOVE_AT = 0.9       # drop a hexagon when this share of its area is removed land
 SAMPLE_DEG = 0.001    # sample grid for the removed-area share (~110 m in latitude)
 R_M = 6371007.180918475

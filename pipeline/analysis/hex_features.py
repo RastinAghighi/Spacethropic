@@ -39,11 +39,16 @@ from sources.climate import BANDS, WEATHER_BANDS, annual_mean_insolation, mgcm_i
 
 OUT = ROOT / "data" / "out"
 INTERIM = ROOT / "data" / "interim" / "global"
-DATASETS = {
-    "earth": [OUT / "contours_r8_v2" / "8x_i20m", OUT / "contours_r8_v2" / "4x_i20m"],
-    "moon": [OUT / "contours_planet" / "moon_240m_i20m", OUT / "contours_planet" / "moon_native_i20m"],
-    "mars": [OUT / "contours_planet" / "mars_240m_i20m", OUT / "contours_planet" / "mars_native_i20m"],
-}
+RES = int(os.environ.get("HEX_RES", "8"))  # same switch as the contour scripts
+if RES == 8:
+    DATASETS = {
+        "earth": [OUT / "contours_r8_v2" / "8x_i20m", OUT / "contours_r8_v2" / "4x_i20m"],
+        "moon": [OUT / "contours_planet" / "moon_240m_i20m", OUT / "contours_planet" / "moon_native_i20m"],
+        "mars": [OUT / "contours_planet" / "mars_240m_i20m", OUT / "contours_planet" / "mars_native_i20m"],
+    }
+else:  # user (2026-11-15): r7 for Earth 8x, Moon 240m, Mars 240m only
+    _P = OUT / f"contours_planet_r{RES}"
+    DATASETS = {"earth": [OUT / f"contours_r{RES}_v2" / "8x_i20m"], "moon": [_P / "moon_240m_i20m"], "mars": [_P / "mars_240m_i20m"]}
 GROUPS = {
     "temperature": BANDS,
     "weather": WEATHER_BANDS,
