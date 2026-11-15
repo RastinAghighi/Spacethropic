@@ -3,7 +3,7 @@
 import { useUi } from "@/lib/ui";
 import { useResearch } from "@/lib/research";
 import { CandidateTray } from "../CandidateTray";
-import { Dots } from "./primitives";
+import { LoadingBar } from "./primitives";
 
 type Variant = "full" | "compressed" | "hidden";
 
@@ -31,7 +31,7 @@ function Glass({ children }: { children: React.ReactNode }) {
 
 /**
  * Bottom dock. On the globe it holds the search editor; while a search runs it folds to
- * dots; in the site view it steps away entirely, leaving only the candidate tray, since
+ * a loading bar; in the site view it steps away entirely, leaving only the candidate tray, since
  * refining happens in the side drawers.
  */
 export function SearchDock({ width, editor, tint, error, label }: { width: number; editor: React.ReactNode; tint?: string; error?: string | null; label: string }) {
@@ -44,7 +44,7 @@ export function SearchDock({ width, editor, tint, error, label }: { width: numbe
   const compressed = variant === "compressed";
   const hidden = variant === "hidden";
   const inSite = hidden || (compressed && searchFrom === "site");
-  const w = compressed ? 132 : width;
+  const w = compressed ? 144 : width;
 
   return (
     <div
@@ -95,7 +95,7 @@ export function SearchDock({ width, editor, tint, error, label }: { width: numbe
               <section aria-label={label} className="relative">
                 <Glass>
                   <div role="status" aria-label={compressed ? "Searching" : undefined} className="pointer-events-none absolute inset-0 flex items-center justify-center" style={{ opacity: compressed ? 1 : 0, transition: `opacity ${compressed ? ".35s .15s" : ".2s"} ease` }}>
-                    {compressed && <Dots />}
+                    {compressed && <LoadingBar className="w-[96px]" />}
                   </div>
                   <div
                     className="min-h-12"

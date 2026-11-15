@@ -13,12 +13,14 @@ export function Icon({ d, size = 16, className, strokeWidth = 1.3 }: { d: string
   );
 }
 
-export function Dots() {
+/** Indeterminate loading bar: a lit segment sweeping a hairline track. */
+export function LoadingBar({ className }: { className?: string }) {
   return (
-    <span className="flex items-center gap-[5px]" aria-hidden>
-      {[0, 1, 2].map((i) => (
-        <span key={i} className="h-[6px] w-[6px] rounded-full bg-white" style={{ animation: `bounce-dot 1.1s ease-in-out ${i * 0.14}s infinite` }} />
-      ))}
+    <span aria-hidden className={`relative block h-[3px] overflow-hidden rounded-full bg-white/[0.1] ${className ?? ""}`}>
+      <span
+        className="absolute inset-y-0 left-0 w-2/5 rounded-full bg-white shadow-[0_0_8px_rgb(255_255_255/0.6)]"
+        style={{ animation: "load-sweep 1.15s cubic-bezier(.65,0,.35,1) infinite" }}
+      />
     </span>
   );
 }
@@ -153,7 +155,7 @@ export function Label({ children, className }: { children: React.ReactNode; clas
   return <p className={`text-[10.5px] font-medium uppercase tracking-[0.14em] text-white/35 ${className ?? ""}`}>{children}</p>;
 }
 
-/** Runs a query through the shared choreography: fold to dots → dive (or punch-slide in the site view). */
+/** Runs a query through the shared choreography: fold to a loading bar → dive (or punch-slide in the site view). */
 export function useRunSearch() {
   const { mode } = useUi();
   const abort = useRef<AbortController | null>(null);
