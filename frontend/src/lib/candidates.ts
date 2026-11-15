@@ -47,8 +47,8 @@ export const thumbUrl = (id: string) => `/candidates/${id}_thumb.jpg`;
  */
 const SAMPLE_ORDER = ["haughton", "dallol", "lut", "bockfjord", "craters-of-the-moon", "yungay", "dalangtan"];
 
-export function sampleCandidates(): Candidate[] {
-  return SAMPLE_ORDER.flatMap((id) => SITES.filter((s) => s.id === id));
+export function sampleCandidates(order = SAMPLE_ORDER): Candidate[] {
+  return order.flatMap((id) => SITES.filter((s) => s.id === id));
 }
 
 /** Initial great-circle bearing (radians, clockwise from north) from a to b. */

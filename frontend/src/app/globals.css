@@ -141,3 +141,9 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Mirror lens: pulse around the selected site */
+@keyframes ping-ring {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(2.6); opacity: 0; }
+}

@@ -1,12 +1,13 @@
 "use client";
 
+import { useEffect } from "react";
 import dynamic from "next/dynamic";
 import { ui, useUi } from "@/lib/ui";
 import { Loader } from "./Loader";
-import { SearchBar } from "./SearchBar";
 import { SiteView } from "./SiteView";
 import { SiteRenderer } from "./SiteRenderer";
 import { EvidencePanel } from "./EvidencePanel";
+import { Mirror } from "./search/Mirror";
 
 const GlobeScene = dynamic(() => import("./globe/GlobeScene"), { ssr: false });
 
@@ -61,12 +62,32 @@ function Chrome() {
         NASA Blue Marble NG · VIIRS Black Marble · GEBCO
         <br />
         LRO / SVS CGI Moon Kit · SVS Deep Star Maps 2020 · Hipparcos/Tycho
+        <br />
+        {/* CC BY 4.0 requires attribution and a licence link */}
+        Mars map ©{" "}
+        <a href="https://www.solarsystemscope.com/textures/" target="_blank" rel="noreferrer" className="pointer-events-auto underline decoration-white/20 underline-offset-2 hover:text-white/60">
+          Solar System Scope
+        </a>{" "}
+        (NASA data),{" "}
+        <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer" className="pointer-events-auto underline decoration-white/20 underline-offset-2 hover:text-white/60">
+          CC BY 4.0
+        </a>
       </p>
     </>
   );
 }
 
 export default function Experience() {
+  // Esc in the site view returns to Earth.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const typing = e.target instanceof HTMLElement && e.target.closest("input, textarea, [contenteditable]");
+      if (e.key === "Escape" && !typing && ui.get().mode === "site") ui.surface();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
   return (
     <main className="fixed inset-0 bg-black">
       <GlobeScene />
@@ -74,7 +95,7 @@ export default function Experience() {
       <SiteView />
       <EvidencePanel />
       <Chrome />
-      <SearchBar />
+      <Mirror />
       <Loader />
     </main>
   );

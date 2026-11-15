@@ -1,4 +1,4 @@
-// Natural-language analog search — the contract between the UI and the search backend.
+// Analog search: the contract between the UI and the search backend.
 //
 // The UI POSTs an AnalogQuery to /api/search and expects AnalogResult[] back. Until a
 // route exists there, findCandidates() falls back to the bundled sample set and says
@@ -8,8 +8,13 @@ import { SITES, sampleCandidates, type Candidate } from "./candidates";
 export type AnalogTarget = "moon" | "mars";
 
 export interface AnalogQuery {
+  /** Readable summary of the query, shown in the site view. */
   text: string;
   target: AnalogTarget;
+  /** Mirror: the Moon/Mars site id, or "<body>:<lat>,<lon>" for a dropped pin */
+  place?: string;
+  /** Skip well-studied analog sites */
+  discovery?: boolean;
 }
 
 export interface AnalogResult {
@@ -47,34 +52,13 @@ export async function searchAnalogs(query: AnalogQuery, signal?: AbortSignal): P
   return (await res.json()) as AnalogResult[];
 }
 
-/** Example prompts, written from the challenge's dimensions of analogy. */
-export const EXAMPLE_PROMPTS: Record<AnalogTarget, string[]> = {
-  moon: [
-    "Permanently shadowed terrain cold enough to trap water ice, like Shackleton crater",
-    "Young basaltic lava tubes that could shelter a habitat from radiation",
-    "Fine, sharp-grained volcanic ash that behaves like lunar regolith",
-    "High-latitude ridges with near-continuous sunlight for solar power",
-  ],
-  mars: [
-    "Hyper-arid, perchlorate-rich soils with almost no organic carbon",
-    "Impact craters in permafrost with exposed ground ice",
-    "Ancient lakebeds with clay minerals, like Jezero's delta",
-    "Wind-carved yardangs and dust devils on cold basaltic plains",
-  ],
-};
-
-export const QUICK_FILTERS: { label: string; prompt: string }[] = [
-  { label: "Lava tubes", prompt: "Lava tubes and skylights that could shelter a crew" },
-  { label: "Ground ice", prompt: "Permafrost and buried ground ice accessible near the surface" },
-  { label: "Hyper-arid", prompt: "Hyper-arid desert soils with extreme UV and almost no life" },
-  { label: "Impact craters", prompt: "Well-preserved impact craters with shocked rock and breccia" },
-  { label: "Dust & wind", prompt: "Regions dominated by dust storms, dunes and aeolian erosion" },
-];
-
 export interface SearchOutcome {
   candidates: Candidate[];
   source: "live" | "sample";
 }
+
+/** Less-studied sample sites, for the "hide well-known analogs" toggle. */
+const DISCOVERY_ORDER = ["lonar", "dalangtan", "lut", "dallol", "kilbourne-hole", "bockfjord", "rio-tinto"];
 
 /** Long enough for the search state to read, short enough to feel instant. */
 const SAMPLE_LATENCY_MS = 1100;
@@ -93,5 +77,8 @@ export async function findCandidates(query: AnalogQuery, signal?: AbortSignal): 
   }
   await new Promise((r) => setTimeout(r, SAMPLE_LATENCY_MS));
   if (signal?.aborted) throw new DOMException("Aborted", "AbortError");
-  return { candidates: sampleCandidates(), source: "sample" };
+  let candidates = sampleCandidates(query.discovery ? DISCOVERY_ORDER : undefined);
+  // Sample data has no scores: lead with sites that are analogs for the body searched.
+  if (query.place) candidates = [...candidates].sort((a, b) => +b.targets.includes(query.target) - +a.targets.includes(query.target));
+  return { candidates, source: "sample" };
 }
