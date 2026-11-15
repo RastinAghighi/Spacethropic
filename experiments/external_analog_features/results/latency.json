@@ -1,0 +1,182 @@
+{
+  "repeats": 50,
+  "duckdb": "2.0.0",
+  "before": {
+    "select_terrain_r6": {
+      "median_ms": 3.411,
+      "p95_ms": 3.922,
+      "min_ms": 3.127
+    },
+    "candidates_full_r6": {
+      "median_ms": 10.97,
+      "p95_ms": 11.947,
+      "min_ms": 9.543
+    },
+    "select_terrain_r8": {
+      "median_ms": 3.428,
+      "p95_ms": 3.794,
+      "min_ms": 3.152
+    },
+    "candidates_full_r8": {
+      "median_ms": 11.879,
+      "p95_ms": 13.226,
+      "min_ms": 10.394
+    }
+  },
+  "before_rows": {
+    "select_terrain_r6": 1,
+    "candidates_full_r6": 12,
+    "select_terrain_r8": 220,
+    "candidates_full_r8": 296
+  },
+  "one_time_fetch_hash_s": 0.032,
+  "build": {
+    "targets": [
+      "arcadia",
+      "arsia",
+      "cabeus",
+      "de-gerlache",
+      "deuteronilus",
+      "gale",
+      "hadley",
+      "haworth",
+      "jezero",
+      "malapert",
+      "marius-pit",
+      "mawrth",
+      "meridiani",
+      "mons-mouton",
+      "nobile",
+      "shackleton",
+      "tranquillitatis-pit",
+      "utopia"
+    ],
+    "nasc_rows": 88648,
+    "links": 308
+  },
+  "one_time_build_s": 0.723,
+  "db_bytes": {
+    "before": 4206592,
+    "after": 24653824
+  },
+  "after_live": {
+    "select_terrain_r6": {
+      "median_ms": 38.885,
+      "p95_ms": 41.364,
+      "min_ms": 36.724
+    },
+    "candidates_full_r6": {
+      "median_ms": 48.554,
+      "p95_ms": 68.882,
+      "min_ms": 45.368
+    },
+    "select_terrain_r8": {
+      "median_ms": 40.1,
+      "p95_ms": 41.624,
+      "min_ms": 38.87
+    },
+    "candidates_full_r8": {
+      "median_ms": 50.061,
+      "p95_ms": 52.323,
+      "min_ms": 48.19
+    }
+  },
+  "after_live_rows": {
+    "select_terrain_r6": 1,
+    "candidates_full_r6": 12,
+    "select_terrain_r8": 220,
+    "candidates_full_r8": 296
+  },
+  "after_prejoined": {
+    "select_terrain_r6": {
+      "median_ms": 12.523,
+      "p95_ms": 13.392,
+      "min_ms": 11.181
+    },
+    "candidates_full_r6": {
+      "median_ms": 22.624,
+      "p95_ms": 25.337,
+      "min_ms": 21.208
+    },
+    "select_terrain_r8": {
+      "median_ms": 13.637,
+      "p95_ms": 14.193,
+      "min_ms": 12.971
+    },
+    "candidates_full_r8": {
+      "median_ms": 24.852,
+      "p95_ms": 26.976,
+      "min_ms": 23.958
+    }
+  },
+  "after_prejoined_rows": {
+    "select_terrain_r6": 1,
+    "candidates_full_r6": 12,
+    "select_terrain_r8": 220,
+    "candidates_full_r8": 296
+  },
+  "live_equals_prejoined": true,
+  "after_columns": 148,
+  "before_columns_full": 40,
+  "checks": {
+    "unique_h3_after_join": true,
+    "sa_cells_hit": [
+      22763,
+      23204
+    ],
+    "rows_without_shadowastra": 0,
+    "rows_without_nasc": 0
+  },
+  "sample_rows": [
+    [
+      "8812ebc013fffff",
+      "51.25",
+      "-112.75",
+      "Great Plains",
+      "Sandstone and shale",
+      "0.625",
+      "0.4607999920845032",
+      "0.5529000163078308",
+      "4.9991536140441895",
+      "229.64918518066406"
+    ],
+    [
+      "8812ebc01bfffff",
+      "51.25",
+      "-112.75",
+      "Great Plains",
+      "Sandstone and shale",
+      "0.625",
+      "0.4607999920845032",
+      "0.5529000163078308",
+      "4.9991536140441895",
+      "229.64918518066406"
+    ],
+    [
+      "8812ebc053fffff",
+      "51.25",
+      "-112.75",
+      "Great Plains",
+      "Sandstone and shale",
+      "0.625",
+      "0.4607999920845032",
+      "0.5529000163078308",
+      "4.9991536140441895",
+      "229.64918518066406"
+    ]
+  ],
+  "added_latency_ms_median": {
+    "live": {
+      "select_terrain_r6": 35.474,
+      "candidates_full_r6": 37.584,
+      "select_terrain_r8": 36.672,
+      "candidates_full_r8": 38.182
+    },
+    "prejoined": {
+      "select_terrain_r6": 9.112,
+      "candidates_full_r6": 11.654,
+      "select_terrain_r8": 10.209,
+      "candidates_full_r8": 12.973
+    }
+  }
+}
