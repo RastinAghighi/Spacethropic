@@ -1,0 +1,10202 @@
+{
+ "drumheller": {
+  "site": {
+   "id": "drumheller",
+   "group": "analog",
+   "name": "Drumheller badlands, Red Deer River valley, Alberta",
+   "lat": 51.4714,
+   "lon": -112.72,
+   "box": [
+    -112.8,
+    51.4,
+    -112.6,
+    51.52
+   ],
+   "coord_source": "Repo: regional_pilot README example point; region = NASADEM pilot study box (research/nasadem_h3_pilot, W -112.80 S 51.40 E -112.60 N 51.52)",
+   "use": "Team-chosen badlands terrain test area (NASADEM H3 pilot). The repo does not cite a NASA/CSA analog campaign here.",
+   "profiles": [
+    "MARS_DRY"
+   ]
+  },
+  "pixels": [
+   {
+    "rc": [
+     770,
+     1344
+    ],
+    "km2": 19.25,
+    "decision": "kept",
+    "pop_per_km2": 47.4,
+    "classes": "Grasslands 57%; Croplands 43%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.427,
+     "other": 0.573
+    }
+   },
+   {
+    "rc": [
+     770,
+     1345
+    ],
+    "km2": 19.25,
+    "decision": "populated",
+    "pop_per_km2": 287.1,
+    "classes": "Grasslands 48%; Croplands 46%; Urban and built-up lands 7%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.067,
+     "veg": 0.456,
+     "other": 0.478
+    }
+   },
+   {
+    "rc": [
+     770,
+     1346
+    ],
+    "km2": 19.25,
+    "decision": "populated+vegetated",
+    "pop_per_km2": 79.5,
+    "classes": "Croplands 64%; Grasslands 33%; Urban and built-up lands 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.022,
+     "veg": 0.644,
+     "other": 0.333
+    }
+   },
+   {
+    "rc": [
+     770,
+     1347
+    ],
+    "km2": 19.25,
+    "decision": "vegetated",
+    "pop_per_km2": 0.9,
+    "classes": "Croplands 97%; Grasslands 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.966,
+     "other": 0.034
+    }
+   },
+   {
+    "rc": [
+     771,
+     1344
+    ],
+    "km2": 19.27,
+    "decision": "vegetated",
+    "pop_per_km2": 0.4,
+    "classes": "Croplands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     771,
+     1345
+    ],
+    "km2": 19.27,
+    "decision": "vegetated",
+    "pop_per_km2": 1.9,
+    "classes": "Croplands 87%; Grasslands 13%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.865,
+     "other": 0.135
+    }
+   },
+   {
+    "rc": [
+     771,
+     1346
+    ],
+    "km2": 19.27,
+    "decision": "kept",
+    "pop_per_km2": 41.1,
+    "classes": "Grasslands 74%; Croplands 26%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.256,
+     "other": 0.744
+    }
+   },
+   {
+    "rc": [
+     771,
+     1347
+    ],
+    "km2": 19.27,
+    "decision": "kept",
+    "pop_per_km2": 23.8,
+    "classes": "Grasslands 79%; Croplands 21%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.211,
+     "other": 0.789
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Grasslands": 43,
+   "Croplands": 41,
+   "Urban and built-up lands": 6
+  },
+  "site_pixel_500m_n": 90,
+  "region_500m_composition_km2": {
+   "Grasslands": 59.5,
+   "Croplands": 92.9,
+   "Urban and built-up lands": 1.7
+  },
+  "region_qc_counts": {
+   "0": 713,
+   "9": 5
+  },
+  "site_pixel_qc_counts": {
+   "0": 87,
+   "9": 3
+  },
+  "region_barren_patches": [],
+  "viirs_monthly_raw": [
+   -74,
+   18,
+   1893,
+   2175,
+   2918,
+   3880,
+   4048,
+   3038,
+   2509,
+   2356,
+   2164,
+   2091
+  ]
+ },
+ "atacama_yungay": {
+  "site": {
+   "id": "atacama_yungay",
+   "group": "analog",
+   "name": "Yungay, Atacama hyper-arid core, Chile",
+   "lat": -24.0638,
+   "lon": -69.8805,
+   "coord_source": "pipeline/sites.yaml: Navarro-Gonzalez et al. 2003 study site (24 03'49.6\"S 69 52'49.8\"W)",
+   "use": "Viking-style soil experiments; hyperarid Mars soil and life-detection analog",
+   "profiles": [
+    "MARS_DRY"
+   ]
+  },
+  "pixels": [
+   {
+    "rc": [
+     2279,
+     2202
+    ],
+    "km2": 28.24,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     2280,
+     2201
+    ],
+    "km2": 28.23,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     2280,
+     2202
+    ],
+    "km2": 28.23,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     2280,
+     2203
+    ],
+    "km2": 28.23,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     2281,
+     2200
+    ],
+    "km2": 28.22,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     2281,
+     2201
+    ],
+    "km2": 28.22,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     2281,
+     2202
+    ],
+    "km2": 28.22,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     2281,
+     2203
+    ],
+    "km2": 28.22,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     2282,
+     2201
+    ],
+    "km2": 28.21,
+    "decision": "kept",
+    "pop_per_km2": 1.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     2282,
+     2202
+    ],
+    "km2": 28.21,
+    "decision": "kept",
+    "pop_per_km2": 7.6,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     2282,
+     2203
+    ],
+    "km2": 28.21,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Barren": 132
+  },
+  "site_pixel_500m_n": 132,
+  "region_500m_composition_km2": {
+   "Barren": 308.9
+  },
+  "region_qc_counts": {
+   "0": 1439
+  },
+  "site_pixel_qc_counts": {
+   "0": 132
+  },
+  "region_barren_patches": [
+   1439
+  ],
+  "viirs_monthly_raw": [
+   801,
+   812,
+   812,
+   827,
+   837,
+   838,
+   859,
+   862,
+   860,
+   868,
+   850,
+   850
+  ]
+ },
+ "hanksville_mdrs": {
+  "site": {
+   "id": "hanksville_mdrs",
+   "group": "analog",
+   "name": "Mars Desert Research Station, Hanksville, Utah",
+   "lat": 38.4065,
+   "lon": -110.7919,
+   "coord_source": "MDRS station (Atlas Obscura / Wikipedia 38.4065, -110.7919); frontend sample uses 38.41, -110.79",
+   "use": "Crewed Mars surface-operations simulation; Morrison/Mancos sedimentary terrain",
+   "profiles": [
+    "MARS_DRY"
+   ]
+  },
+  "pixels": [
+   {
+    "rc": [
+     1030,
+     1383
+    ],
+    "km2": 24.2,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 91%; Open shrublands 8%; Grasslands 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1030,
+     1384
+    ],
+    "km2": 24.2,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 94%; Open shrublands 6%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1030,
+     1385
+    ],
+    "km2": 24.2,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 98%; Open shrublands 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1031,
+     1382
+    ],
+    "km2": 24.22,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1031,
+     1383
+    ],
+    "km2": 24.22,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 93%; Open shrublands 5%; Grasslands 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1031,
+     1384
+    ],
+    "km2": 24.22,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1031,
+     1385
+    ],
+    "km2": 24.22,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 92%; Open shrublands 8%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1032,
+     1382
+    ],
+    "km2": 24.23,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 77%; Open shrublands 19%; Grasslands 4%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1032,
+     1383
+    ],
+    "km2": 24.23,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 57%; Open shrublands 31%; Grasslands 12%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1032,
+     1384
+    ],
+    "km2": 24.23,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 90%; Open shrublands 10%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1032,
+     1385
+    ],
+    "km2": 24.23,
+    "decision": "kept",
+    "pop_per_km2": 8.3,
+    "classes": "Barren 71%; Open shrublands 18%; Grasslands 8%; Urban and built-up lands 4%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.036,
+     "veg": 0.0,
+     "other": 0.964
+    }
+   },
+   {
+    "rc": [
+     1033,
+     1383
+    ],
+    "km2": 24.25,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 65%; Open shrublands 25%; Grasslands 11%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1033,
+     1384
+    ],
+    "km2": 24.25,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Barren": 112
+  },
+  "site_pixel_500m_n": 112,
+  "region_500m_composition_km2": {
+   "Open shrublands": 32.0,
+   "Grasslands": 8.8,
+   "Urban and built-up lands": 0.9,
+   "Barren": 272.8
+  },
+  "region_qc_counts": {
+   "0": 1461,
+   "9": 4
+  },
+  "site_pixel_qc_counts": {
+   "0": 112
+  },
+  "region_barren_patches": [
+   1262,
+   7,
+   1,
+   1
+  ],
+  "viirs_monthly_raw": [
+   1053,
+   977,
+   999,
+   1036,
+   1094,
+   1062,
+   1045,
+   1088,
+   1049,
+   1085,
+   1116,
+   1069
+  ]
+ },
+ "mauna_kea_summit": {
+  "site": {
+   "id": "mauna_kea_summit",
+   "group": "analog",
+   "name": "Mauna Kea summit plateau, Hawaii",
+   "lat": 19.8207,
+   "lon": -155.4681,
+   "coord_source": "Mauna Kea summit (Wikipedia/GNIS 19 49'14.4\"N 155 28'05\"W, 4,205 m)",
+   "use": "Lunar regolith / tephra analog; PISCES lunar ISRU field tests on Mauna Kea (Apollo Valley, ~12,000 ft, evaluated for the 2012 test)",
+   "profiles": [
+    "MOON_SURF"
+   ]
+  },
+  "pixels": [
+   {
+    "rc": [
+     1402,
+     489
+    ],
+    "km2": 29.07,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 45%; Closed shrublands 25%; Barren 22%; Woody savannas 4%; Savannas 4%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.294,
+     "other": 0.706
+    }
+   },
+   {
+    "rc": [
+     1402,
+     490
+    ],
+    "km2": 29.07,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 70%; Savannas 13%; Closed shrublands 9%; Grasslands 7%; Woody savannas 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.104,
+     "other": 0.896
+    }
+   },
+   {
+    "rc": [
+     1402,
+     491
+    ],
+    "km2": 29.07,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 67%; Closed shrublands 16%; Grasslands 14%; Savannas 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.162,
+     "other": 0.838
+    }
+   },
+   {
+    "rc": [
+     1403,
+     489
+    ],
+    "km2": 29.08,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 88%; Closed shrublands 4%; Grasslands 4%; Savannas 4%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.044,
+     "other": 0.956
+    }
+   },
+   {
+    "rc": [
+     1403,
+     490
+    ],
+    "km2": 29.08,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 90%; Grasslands 10%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1403,
+     491
+    ],
+    "km2": 29.08,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 96%; Closed shrublands 3%; Grasslands 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.03,
+     "other": 0.97
+    }
+   },
+   {
+    "rc": [
+     1403,
+     492
+    ],
+    "km2": 29.08,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 39%; Closed shrublands 19%; Savannas 18%; Open shrublands 13%; Barren 12%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.185,
+     "other": 0.815
+    }
+   },
+   {
+    "rc": [
+     1404,
+     489
+    ],
+    "km2": 29.09,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Closed shrublands 41%; Open shrublands 21%; Barren 18%; Grasslands 18%; Savannas 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.412,
+     "other": 0.588
+    }
+   },
+   {
+    "rc": [
+     1404,
+     490
+    ],
+    "km2": 29.09,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 57%; Grasslands 30%; Savannas 7%; Open shrublands 5%; Closed shrublands 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.015,
+     "other": 0.985
+    }
+   },
+   {
+    "rc": [
+     1404,
+     491
+    ],
+    "km2": 29.09,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 49%; Grasslands 35%; Closed shrublands 10%; Savannas 4%; Open shrublands 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.096,
+     "other": 0.904
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Grasslands": 14,
+   "Barren": 122
+  },
+  "site_pixel_500m_n": 136,
+  "region_500m_composition_km2": {
+   "Closed shrublands": 37.4,
+   "Open shrublands": 12.0,
+   "Woody savannas": 1.7,
+   "Savannas": 15.5,
+   "Grasslands": 59.0,
+   "Barren": 165.5
+  },
+  "region_qc_counts": {
+   "0": 1356
+  },
+  "site_pixel_qc_counts": {
+   "0": 136
+  },
+  "region_barren_patches": [
+   770,
+   1
+  ],
+  "viirs_monthly_raw": [
+   -567,
+   -116,
+   -315,
+   -130,
+   599,
+   612,
+   610,
+   614,
+   648,
+   633,
+   655,
+   639
+  ]
+ },
+ "mauna_kea_hale_pohaku": {
+  "site": {
+   "id": "mauna_kea_hale_pohaku",
+   "group": "analog",
+   "name": "Mauna Kea, Hale Pohaku (9,200 ft)",
+   "lat": 19.7614,
+   "lon": -155.4561,
+   "coord_source": "Onizuka Center / Visitor Information Station (Wikipedia 19 45'41\"N 155 27'22\"W, 2,800 m)",
+   "use": "Elevation band of the 2010 ILSO-ISRU field test (~9,000 ft on Mauna Kea's slopes, Aerospace America 2010); exact test-site coordinates not published",
+   "profiles": [
+    "MOON_SURF"
+   ]
+  },
+  "pixels": [
+   {
+    "rc": [
+     1403,
+     490
+    ],
+    "km2": 29.08,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 90%; Grasslands 10%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1403,
+     491
+    ],
+    "km2": 29.08,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 96%; Closed shrublands 3%; Grasslands 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.03,
+     "other": 0.97
+    }
+   },
+   {
+    "rc": [
+     1404,
+     489
+    ],
+    "km2": 29.09,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Closed shrublands 41%; Open shrublands 21%; Barren 18%; Grasslands 18%; Savannas 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.412,
+     "other": 0.588
+    }
+   },
+   {
+    "rc": [
+     1404,
+     490
+    ],
+    "km2": 29.09,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 57%; Grasslands 30%; Savannas 7%; Open shrublands 5%; Closed shrublands 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.015,
+     "other": 0.985
+    }
+   },
+   {
+    "rc": [
+     1404,
+     491
+    ],
+    "km2": 29.09,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 49%; Grasslands 35%; Closed shrublands 10%; Savannas 4%; Open shrublands 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.096,
+     "other": 0.904
+    }
+   },
+   {
+    "rc": [
+     1404,
+     492
+    ],
+    "km2": 29.09,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 90%; Savannas 4%; Permanent wetlands 3%; Open shrublands 1%; Closed shrublands 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.037,
+     "other": 0.963
+    }
+   },
+   {
+    "rc": [
+     1405,
+     489
+    ],
+    "km2": 29.1,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 40%; Closed shrublands 28%; Grasslands 26%; Open shrublands 5%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.279,
+     "other": 0.721
+    }
+   },
+   {
+    "rc": [
+     1405,
+     490
+    ],
+    "km2": 29.1,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 73%; Closed shrublands 26%; Open shrublands 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.259,
+     "other": 0.741
+    }
+   },
+   {
+    "rc": [
+     1405,
+     491
+    ],
+    "km2": 29.1,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 84%; Closed shrublands 10%; Savannas 4%; Open shrublands 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.103,
+     "other": 0.897
+    }
+   },
+   {
+    "rc": [
+     1405,
+     492
+    ],
+    "km2": 29.1,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 95%; Savannas 4%; Permanent wetlands 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.015,
+     "other": 0.985
+    }
+   },
+   {
+    "rc": [
+     1406,
+     490
+    ],
+    "km2": 29.11,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 65%; Closed shrublands 18%; Grasslands 17%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.184,
+     "other": 0.816
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Closed shrublands": 2,
+   "Open shrublands": 7,
+   "Savannas": 9,
+   "Grasslands": 40,
+   "Barren": 77
+  },
+  "site_pixel_500m_n": 135,
+  "region_500m_composition_km2": {
+   "Closed shrublands": 40.4,
+   "Open shrublands": 10.9,
+   "Savannas": 7.1,
+   "Grasslands": 139.5,
+   "Permanent wetlands": 1.3,
+   "Barren": 120.9
+  },
+  "region_qc_counts": {
+   "0": 1491
+  },
+  "site_pixel_qc_counts": {
+   "0": 135
+  },
+  "region_barren_patches": [
+   419,
+   88,
+   55,
+   1
+  ],
+  "viirs_monthly_raw": [
+   2179,
+   1991,
+   1962,
+   1944,
+   2088,
+   2327,
+   2350,
+   2286,
+   2076,
+   2194,
+   2247,
+   2374
+  ]
+ },
+ "mcmurdo_beacon": {
+  "site": {
+   "id": "mcmurdo_beacon",
+   "group": "analog",
+   "name": "Beacon Valley, McMurdo Dry Valleys, Antarctica",
+   "lat": -77.817,
+   "lon": 160.65,
+   "coord_source": "Beacon Valley (Wikipedia/GNIS 77 49'S 160 39'E)",
+   "use": "Mars ground-ice and cold-desert analog (massive ground ice 10-60 cm below surface)",
+   "profiles": [
+    "MARS_ICE"
+   ]
+  },
+  "pixels": [
+   {
+    "rc": [
+     3355,
+     6805
+    ],
+    "km2": 6.55,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3355,
+     6806
+    ],
+    "km2": 6.55,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3355,
+     6807
+    ],
+    "km2": 6.55,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3355,
+     6808
+    ],
+    "km2": 6.55,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3355,
+     6809
+    ],
+    "km2": 6.55,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 97%; Barren 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3355,
+     6810
+    ],
+    "km2": 6.55,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 93%; Barren 7%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3355,
+     6811
+    ],
+    "km2": 6.55,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 87%; Barren 13%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3355,
+     6812
+    ],
+    "km2": 6.55,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 83%; Barren 17%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3355,
+     6813
+    ],
+    "km2": 6.55,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 67%; Barren 30%; Grasslands 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3355,
+     6814
+    ],
+    "km2": 6.55,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 90%; Barren 10%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3355,
+     6815
+    ],
+    "km2": 6.55,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3355,
+     6816
+    ],
+    "km2": 6.55,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3355,
+     6817
+    ],
+    "km2": 6.55,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3355,
+     6818
+    ],
+    "km2": 6.55,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3355,
+     6819
+    ],
+    "km2": 6.55,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3355,
+     6820
+    ],
+    "km2": 6.55,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3356,
+     6805
+    ],
+    "km2": 6.52,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3356,
+     6806
+    ],
+    "km2": 6.52,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3356,
+     6807
+    ],
+    "km2": 6.52,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3356,
+     6808
+    ],
+    "km2": 6.52,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3356,
+     6809
+    ],
+    "km2": 6.52,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 97%; Barren 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3356,
+     6810
+    ],
+    "km2": 6.52,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3356,
+     6811
+    ],
+    "km2": 6.52,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 84%; Barren 16%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3356,
+     6812
+    ],
+    "km2": 6.52,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 74%; Barren 23%; Grasslands 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3356,
+     6813
+    ],
+    "km2": 6.52,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 61%; Barren 35%; Grasslands 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3356,
+     6814
+    ],
+    "km2": 6.52,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 80%; Barren 20%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3356,
+     6815
+    ],
+    "km2": 6.52,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 90%; Barren 10%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3356,
+     6816
+    ],
+    "km2": 6.52,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3356,
+     6817
+    ],
+    "km2": 6.52,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3356,
+     6818
+    ],
+    "km2": 6.52,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 97%; Barren 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3356,
+     6819
+    ],
+    "km2": 6.52,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 63%; Barren 37%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3356,
+     6820
+    ],
+    "km2": 6.52,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 94%; Barren 6%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3357,
+     6806
+    ],
+    "km2": 6.49,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3357,
+     6807
+    ],
+    "km2": 6.49,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3357,
+     6808
+    ],
+    "km2": 6.49,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3357,
+     6809
+    ],
+    "km2": 6.49,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 58%; Barren 39%; Grasslands 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3357,
+     6810
+    ],
+    "km2": 6.49,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 93%; Barren 7%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3357,
+     6811
+    ],
+    "km2": 6.49,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 90%; Barren 10%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3357,
+     6812
+    ],
+    "km2": 6.49,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 93%; Barren 7%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3357,
+     6813
+    ],
+    "km2": 6.49,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3357,
+     6814
+    ],
+    "km2": 6.49,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 97%; Barren 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3357,
+     6815
+    ],
+    "km2": 6.49,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 93%; Barren 7%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3357,
+     6816
+    ],
+    "km2": 6.49,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 87%; Barren 13%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3357,
+     6817
+    ],
+    "km2": 6.49,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 93%; Barren 7%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3357,
+     6818
+    ],
+    "km2": 6.49,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3357,
+     6819
+    ],
+    "km2": 6.49,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 97%; Grasslands 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Grasslands": 1,
+   "Permanent snow and ice": 23,
+   "Barren": 7
+  },
+  "site_pixel_500m_n": 31,
+  "region_500m_composition_km2": {
+   "Grasslands": 1.1,
+   "Permanent snow and ice": 277.8,
+   "Barren": 21.3
+  },
+  "region_qc_counts": {
+   "5": 112,
+   "6": 1285,
+   "8": 1
+  },
+  "site_pixel_qc_counts": {
+   "5": 8,
+   "6": 23
+  },
+  "region_barren_patches": [
+   14,
+   9,
+   8,
+   5,
+   4,
+   4,
+   3,
+   3,
+   3,
+   3
+  ],
+  "viirs_monthly_raw": [
+   -14000,
+   -14000,
+   -14000,
+   -14000,
+   -14000,
+   -14000,
+   -14000,
+   -14000,
+   -14000,
+   -14000,
+   -14000,
+   -14000
+  ]
+ },
+ "mcmurdo_don_juan": {
+  "site": {
+   "id": "mcmurdo_don_juan",
+   "group": "analog",
+   "name": "Don Juan Pond, Wright Valley, McMurdo Dry Valleys",
+   "lat": -77.5644,
+   "lon": 161.1722,
+   "coord_source": "Don Juan Pond (Wikipedia 77 33'52\"S 161 10'20\"E; Toner et al. 2017)",
+   "use": "Mars brine analog (perennially liquid CaCl2 pond); RSL slope-streak analog",
+   "profiles": [
+    "MARS_ICE"
+   ]
+  },
+  "pixels": [
+   {
+    "rc": [
+     3349,
+     6823
+    ],
+    "km2": 6.7,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 87%; Permanent wetlands 7%; Barren 7%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.067,
+     "other": 0.933
+    }
+   },
+   {
+    "rc": [
+     3350,
+     6816
+    ],
+    "km2": 6.68,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 55%; Barren 45%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3350,
+     6817
+    ],
+    "km2": 6.68,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 74%; Barren 26%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3350,
+     6818
+    ],
+    "km2": 6.68,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 94%; Barren 6%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3350,
+     6819
+    ],
+    "km2": 6.68,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 87%; Barren 13%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3350,
+     6820
+    ],
+    "km2": 6.68,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 67%; Barren 30%; Grasslands 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3350,
+     6821
+    ],
+    "km2": 6.68,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 55%; Barren 45%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3350,
+     6822
+    ],
+    "km2": 6.68,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 57%; Barren 40%; Grasslands 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3350,
+     6823
+    ],
+    "km2": 6.68,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 81%; Barren 19%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3350,
+     6824
+    ],
+    "km2": 6.68,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 77%; Barren 23%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3350,
+     6825
+    ],
+    "km2": 6.68,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 73%; Barren 23%; Evergreen needleleaf forests 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.033,
+     "other": 0.967
+    }
+   },
+   {
+    "rc": [
+     3350,
+     6826
+    ],
+    "km2": 6.68,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 67%; Barren 33%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3350,
+     6827
+    ],
+    "km2": 6.68,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 50%; Barren 50%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3350,
+     6828
+    ],
+    "km2": 6.68,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 60%; Barren 40%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3350,
+     6829
+    ],
+    "km2": 6.68,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 64%; Barren 36%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3350,
+     6830
+    ],
+    "km2": 6.68,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 77%; Barren 23%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3351,
+     6815
+    ],
+    "km2": 6.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 77%; Permanent wetlands 23%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.233,
+     "other": 0.767
+    }
+   },
+   {
+    "rc": [
+     3351,
+     6816
+    ],
+    "km2": 6.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 87%; Permanent wetlands 13%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.133,
+     "other": 0.867
+    }
+   },
+   {
+    "rc": [
+     3351,
+     6817
+    ],
+    "km2": 6.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3351,
+     6818
+    ],
+    "km2": 6.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 97%; Barren 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3351,
+     6819
+    ],
+    "km2": 6.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3351,
+     6820
+    ],
+    "km2": 6.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 97%; Barren 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3351,
+     6821
+    ],
+    "km2": 6.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 93%; Permanent wetlands 3%; Barren 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.033,
+     "other": 0.967
+    }
+   },
+   {
+    "rc": [
+     3351,
+     6822
+    ],
+    "km2": 6.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 83%; Barren 17%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3351,
+     6823
+    ],
+    "km2": 6.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 70%; Barren 30%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3351,
+     6824
+    ],
+    "km2": 6.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 73%; Barren 27%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3351,
+     6825
+    ],
+    "km2": 6.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 77%; Barren 23%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3351,
+     6826
+    ],
+    "km2": 6.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 88%; Barren 12%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3351,
+     6827
+    ],
+    "km2": 6.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 80%; Barren 20%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3351,
+     6828
+    ],
+    "km2": 6.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 70%; Barren 30%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3351,
+     6829
+    ],
+    "km2": 6.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 97%; Barren 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3351,
+     6830
+    ],
+    "km2": 6.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3351,
+     6831
+    ],
+    "km2": 6.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 90%; Barren 10%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3352,
+     6817
+    ],
+    "km2": 6.62,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 90%; Barren 10%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3352,
+     6818
+    ],
+    "km2": 6.62,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 83%; Barren 17%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3352,
+     6819
+    ],
+    "km2": 6.62,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 85%; Barren 15%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3352,
+     6820
+    ],
+    "km2": 6.62,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 87%; Barren 13%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3352,
+     6821
+    ],
+    "km2": 6.62,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 97%; Barren 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3352,
+     6822
+    ],
+    "km2": 6.62,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3352,
+     6823
+    ],
+    "km2": 6.62,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3352,
+     6824
+    ],
+    "km2": 6.62,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3352,
+     6825
+    ],
+    "km2": 6.62,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3352,
+     6826
+    ],
+    "km2": 6.62,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3352,
+     6827
+    ],
+    "km2": 6.62,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3352,
+     6828
+    ],
+    "km2": 6.62,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 97%; Grasslands 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3352,
+     6829
+    ],
+    "km2": 6.62,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Permanent snow and ice": 23,
+   "Barren": 10
+  },
+  "site_pixel_500m_n": 33,
+  "region_500m_composition_km2": {
+   "Evergreen needleleaf forests": 0.2,
+   "Grasslands": 0.6,
+   "Permanent wetlands": 3.0,
+   "Permanent snow and ice": 254.6,
+   "Barren": 46.6
+  },
+  "region_qc_counts": {
+   "5": 251,
+   "6": 1170
+  },
+  "site_pixel_qc_counts": {
+   "5": 10,
+   "6": 23
+  },
+  "region_barren_patches": [
+   47,
+   30,
+   27,
+   14,
+   9,
+   8,
+   8,
+   7,
+   7,
+   7
+  ],
+  "viirs_monthly_raw": [
+   -14000,
+   -14000,
+   -14000,
+   -14000,
+   -14000,
+   -14000,
+   -14000,
+   -14000,
+   -14000,
+   -14000,
+   -14000,
+   -14000
+  ]
+ },
+ "haughton": {
+  "site": {
+   "id": "haughton",
+   "group": "analog",
+   "name": "Haughton impact crater, Devon Island",
+   "lat": 75.383,
+   "lon": -89.667,
+   "coord_source": "pipeline/sites.yaml (75 23'N 89 40'W)",
+   "use": "Haughton-Mars Project: polar-desert impact crater, Moon/Mars",
+   "profiles": [
+    "MARS_ICE",
+    "FIELD_GEO"
+   ]
+  },
+  "pixels": [
+   {
+    "rc": [
+     291,
+     1800
+    ],
+    "km2": 7.78,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 56%; Barren 44%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     291,
+     1801
+    ],
+    "km2": 7.78,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 64%; Grasslands 36%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     291,
+     1802
+    ],
+    "km2": 7.78,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 53%; Grasslands 47%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     291,
+     1803
+    ],
+    "km2": 7.78,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 78%; Grasslands 22%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     291,
+     1804
+    ],
+    "km2": 7.78,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 69%; Grasslands 17%; Permanent snow and ice 14%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     291,
+     1805
+    ],
+    "km2": 7.78,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 78%; Permanent snow and ice 19%; Grasslands 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     291,
+     1806
+    ],
+    "km2": 7.78,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 97%; Permanent snow and ice 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     291,
+     1807
+    ],
+    "km2": 7.78,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 89%; Permanent snow and ice 6%; Grasslands 6%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     291,
+     1808
+    ],
+    "km2": 7.78,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 89%; Permanent snow and ice 6%; Grasslands 6%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     291,
+     1809
+    ],
+    "km2": 7.78,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 97%; Grasslands 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     291,
+     1810
+    ],
+    "km2": 7.78,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 92%; Permanent snow and ice 6%; Grasslands 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     291,
+     1811
+    ],
+    "km2": 7.78,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     291,
+     1812
+    ],
+    "km2": 7.78,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 94%; Permanent snow and ice 3%; Grasslands 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     292,
+     1800
+    ],
+    "km2": 7.8,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 83%; Grasslands 11%; Permanent snow and ice 6%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     292,
+     1801
+    ],
+    "km2": 7.8,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 97%; Permanent snow and ice 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     292,
+     1802
+    ],
+    "km2": 7.8,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 97%; Permanent snow and ice 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     292,
+     1803
+    ],
+    "km2": 7.8,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 76%; Grasslands 24%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     292,
+     1804
+    ],
+    "km2": 7.8,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 78%; Grasslands 14%; Permanent snow and ice 8%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     292,
+     1805
+    ],
+    "km2": 7.8,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 69%; Permanent snow and ice 31%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     292,
+     1806
+    ],
+    "km2": 7.8,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 97%; Permanent snow and ice 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     292,
+     1807
+    ],
+    "km2": 7.8,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 75%; Permanent snow and ice 25%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     292,
+     1808
+    ],
+    "km2": 7.8,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 53%; Permanent snow and ice 39%; Grasslands 8%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     292,
+     1809
+    ],
+    "km2": 7.8,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 89%; Grasslands 11%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     292,
+     1810
+    ],
+    "km2": 7.8,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 97%; Permanent snow and ice 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     292,
+     1811
+    ],
+    "km2": 7.8,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 97%; Grasslands 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     292,
+     1812
+    ],
+    "km2": 7.8,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 97%; Grasslands 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     292,
+     1813
+    ],
+    "km2": 7.8,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 92%; Permanent snow and ice 8%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     293,
+     1801
+    ],
+    "km2": 7.83,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 94%; Grasslands 6%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     293,
+     1802
+    ],
+    "km2": 7.83,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 97%; Grasslands 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     293,
+     1803
+    ],
+    "km2": 7.83,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     293,
+     1804
+    ],
+    "km2": 7.83,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 92%; Grasslands 8%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     293,
+     1805
+    ],
+    "km2": 7.83,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 78%; Grasslands 19%; Permanent snow and ice 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     293,
+     1806
+    ],
+    "km2": 7.83,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 92%; Grasslands 8%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     293,
+     1807
+    ],
+    "km2": 7.83,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     293,
+     1808
+    ],
+    "km2": 7.83,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 89%; Grasslands 11%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     293,
+     1809
+    ],
+    "km2": 7.83,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 81%; Grasslands 19%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     293,
+     1810
+    ],
+    "km2": 7.83,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 94%; Grasslands 6%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     293,
+     1811
+    ],
+    "km2": 7.83,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 89%; Grasslands 11%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Permanent snow and ice": 1,
+   "Barren": 35
+  },
+  "site_pixel_500m_n": 36,
+  "region_500m_composition_km2": {
+   "Grasslands": 28.3,
+   "Permanent snow and ice": 14.4,
+   "Barren": 253.1
+  },
+  "region_qc_counts": {
+   "0": 1378
+  },
+  "site_pixel_qc_counts": {
+   "0": 36
+  },
+  "region_barren_patches": [
+   1175,
+   2,
+   2
+  ],
+  "viirs_monthly_raw": [
+   -12000,
+   -364,
+   -224,
+   -223,
+   -229,
+   1308,
+   1628,
+   1460,
+   1449,
+   -347,
+   -1215,
+   -12000
+  ]
+ },
+ "black_point": {
+  "site": {
+   "id": "black_point",
+   "group": "analog",
+   "name": "Black Point Lava Flow, Arizona (Desert RATS)",
+   "lat": 35.6835,
+   "lon": -111.4786,
+   "coord_source": "pipeline/sites.yaml (AZGS / NASA)",
+   "use": "NASA Desert RATS simulated lunar missions on basalt",
+   "profiles": [
+    "MOON_SURF"
+   ]
+  },
+  "pixels": [
+   {
+    "rc": [
+     1085,
+     1368
+    ],
+    "km2": 25.09,
+    "decision": "kept",
+    "pop_per_km2": 0.2,
+    "classes": "Open shrublands 66%; Grasslands 34%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1085,
+     1369
+    ],
+    "km2": 25.09,
+    "decision": "kept",
+    "pop_per_km2": 0.3,
+    "classes": "Open shrublands 62%; Grasslands 38%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1085,
+     1370
+    ],
+    "km2": 25.09,
+    "decision": "kept",
+    "pop_per_km2": 0.5,
+    "classes": "Open shrublands 86%; Grasslands 14%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1085,
+     1371
+    ],
+    "km2": 25.09,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 95%; Grasslands 3%; Barren 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1086,
+     1368
+    ],
+    "km2": 25.11,
+    "decision": "kept",
+    "pop_per_km2": 0.2,
+    "classes": "Open shrublands 55%; Grasslands 45%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1086,
+     1369
+    ],
+    "km2": 25.11,
+    "decision": "kept",
+    "pop_per_km2": 0.4,
+    "classes": "Grasslands 88%; Open shrublands 12%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1086,
+     1370
+    ],
+    "km2": 25.11,
+    "decision": "kept",
+    "pop_per_km2": 0.6,
+    "classes": "Grasslands 78%; Open shrublands 21%; Barren 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1086,
+     1371
+    ],
+    "km2": 25.11,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 77%; Open shrublands 22%; Barren 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1086,
+     1372
+    ],
+    "km2": 25.11,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 62%; Open shrublands 37%; Barren 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1087,
+     1369
+    ],
+    "km2": 25.13,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1087,
+     1370
+    ],
+    "km2": 25.13,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 94%; Open shrublands 6%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1087,
+     1371
+    ],
+    "km2": 25.13,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 98%; Open shrublands 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Open shrublands": 24,
+   "Grasslands": 91,
+   "Barren": 1
+  },
+  "site_pixel_500m_n": 116,
+  "region_500m_composition_km2": {
+   "Open shrublands": 116.8,
+   "Grasslands": 184.0,
+   "Barren": 1.1
+  },
+  "region_qc_counts": {
+   "0": 1406
+  },
+  "site_pixel_qc_counts": {
+   "0": 116
+  },
+  "region_barren_patches": [
+   1,
+   1,
+   1,
+   1,
+   1
+  ],
+  "viirs_monthly_raw": [
+   1180,
+   1239,
+   1321,
+   1457,
+   1572,
+   1566,
+   1567,
+   1948,
+   2485,
+   1941,
+   1720,
+   1635
+  ]
+ },
+ "dumont": {
+  "site": {
+   "id": "dumont",
+   "group": "analog",
+   "name": "Dumont Dunes, California",
+   "lat": 35.6786,
+   "lon": -116.2316,
+   "coord_source": "pipeline/sites.yaml (USGS GNIS)",
+   "use": "Curiosity 'Scarecrow' rover mobility tests on dunes",
+   "profiles": [
+    "MARS_DRY"
+   ]
+  },
+  "pixels": [
+   {
+    "rc": [
+     1085,
+     1273
+    ],
+    "km2": 25.09,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 56%; Grasslands 20%; Open shrublands 17%; Urban and built-up lands 7%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.068,
+     "veg": 0.0,
+     "other": 0.932
+    }
+   },
+   {
+    "rc": [
+     1085,
+     1274
+    ],
+    "km2": 25.09,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1085,
+     1275
+    ],
+    "km2": 25.09,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1085,
+     1276
+    ],
+    "km2": 25.09,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1086,
+     1273
+    ],
+    "km2": 25.11,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1086,
+     1274
+    ],
+    "km2": 25.11,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 94%; Open shrublands 5%; Grasslands 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1086,
+     1275
+    ],
+    "km2": 25.11,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1086,
+     1276
+    ],
+    "km2": 25.11,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1086,
+     1277
+    ],
+    "km2": 25.11,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1087,
+     1274
+    ],
+    "km2": 25.13,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 91%; Open shrublands 6%; Grasslands 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1087,
+     1275
+    ],
+    "km2": 25.13,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1087,
+     1276
+    ],
+    "km2": 25.13,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Barren": 117
+  },
+  "site_pixel_500m_n": 117,
+  "region_500m_composition_km2": {
+   "Open shrublands": 7.1,
+   "Grasslands": 5.8,
+   "Urban and built-up lands": 1.7,
+   "Barren": 287.0
+  },
+  "region_qc_counts": {
+   "0": 1397,
+   "9": 8
+  },
+  "site_pixel_qc_counts": {
+   "0": 117
+  },
+  "region_barren_patches": [
+   1337
+  ],
+  "viirs_monthly_raw": [
+   717,
+   744,
+   747,
+   749,
+   744,
+   713,
+   724,
+   741,
+   723,
+   746,
+   754,
+   739
+  ]
+ },
+ "sudbury": {
+  "site": {
+   "id": "sudbury",
+   "group": "analog",
+   "name": "Sudbury impact structure, Ontario",
+   "lat": 46.6,
+   "lon": -81.183,
+   "coord_source": "pipeline/sites.yaml (Earth Impact Database)",
+   "use": "Apollo 16 crew impact-breccia training",
+   "profiles": [
+    "FIELD_GEO"
+   ]
+  },
+  "pixels": [
+   {
+    "rc": [
+     866,
+     1975
+    ],
+    "km2": 21.21,
+    "decision": "vegetated",
+    "pop_per_km2": 0.5,
+    "classes": "Deciduous broadleaf forests 53%; Mixed forests 33%; Woody savannas 8%; Evergreen needleleaf forests 5%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     866,
+     1976
+    ],
+    "km2": 21.21,
+    "decision": "vegetated",
+    "pop_per_km2": 0.8,
+    "classes": "Deciduous broadleaf forests 42%; Mixed forests 41%; Woody savannas 18%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     866,
+     1977
+    ],
+    "km2": 21.21,
+    "decision": "vegetated",
+    "pop_per_km2": 0.3,
+    "classes": "Mixed forests 46%; Deciduous broadleaf forests 38%; Woody savannas 14%; Evergreen needleleaf forests 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     867,
+     1974
+    ],
+    "km2": 21.23,
+    "decision": "vegetated",
+    "pop_per_km2": 4.5,
+    "classes": "Deciduous broadleaf forests 61%; Woody savannas 30%; Grasslands 9%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.911,
+     "other": 0.089
+    }
+   },
+   {
+    "rc": [
+     867,
+     1975
+    ],
+    "km2": 21.23,
+    "decision": "vegetated",
+    "pop_per_km2": 9.9,
+    "classes": "Woody savannas 64%; Deciduous broadleaf forests 27%; Mixed forests 5%; Grasslands 3%; Savannas 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.961,
+     "other": 0.039
+    }
+   },
+   {
+    "rc": [
+     867,
+     1976
+    ],
+    "km2": 21.23,
+    "decision": "vegetated",
+    "pop_per_km2": 0.6,
+    "classes": "Deciduous broadleaf forests 50%; Woody savannas 47%; Mixed forests 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     867,
+     1977
+    ],
+    "km2": 21.23,
+    "decision": "vegetated",
+    "pop_per_km2": 7.3,
+    "classes": "Woody savannas 62%; Deciduous broadleaf forests 16%; Grasslands 15%; Croplands 6%; Mixed forests 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.854,
+     "other": 0.146
+    }
+   },
+   {
+    "rc": [
+     867,
+     1978
+    ],
+    "km2": 21.23,
+    "decision": "vegetated",
+    "pop_per_km2": 38.6,
+    "classes": "Woody savannas 62%; Grasslands 27%; Savannas 5%; Deciduous broadleaf forests 4%; Croplands 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.68,
+     "other": 0.32
+    }
+   },
+   {
+    "rc": [
+     868,
+     1974
+    ],
+    "km2": 21.25,
+    "decision": "vegetated",
+    "pop_per_km2": 16.4,
+    "classes": "Woody savannas 69%; Grasslands 18%; Deciduous broadleaf forests 11%; Savannas 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.802,
+     "other": 0.198
+    }
+   },
+   {
+    "rc": [
+     868,
+     1975
+    ],
+    "km2": 21.25,
+    "decision": "populated+vegetated",
+    "pop_per_km2": 134.1,
+    "classes": "Woody savannas 74%; Grasslands 18%; Deciduous broadleaf forests 3%; Savannas 2%; Urban and built-up lands 2%; Croplands 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.021,
+     "veg": 0.784,
+     "other": 0.196
+    }
+   },
+   {
+    "rc": [
+     868,
+     1976
+    ],
+    "km2": 21.25,
+    "decision": "populated+vegetated",
+    "pop_per_km2": 269.0,
+    "classes": "Woody savannas 57%; Grasslands 28%; Urban and built-up lands 8%; Deciduous broadleaf forests 6%; Savannas 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.076,
+     "veg": 0.629,
+     "other": 0.295
+    }
+   },
+   {
+    "rc": [
+     868,
+     1977
+    ],
+    "km2": 21.25,
+    "decision": "populated",
+    "pop_per_km2": 160.9,
+    "classes": "Grasslands 52%; Woody savannas 44%; Savannas 3%; Deciduous broadleaf forests 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.449,
+     "other": 0.551
+    }
+   },
+   {
+    "rc": [
+     868,
+     1978
+    ],
+    "km2": 21.25,
+    "decision": "vegetated",
+    "pop_per_km2": 18.5,
+    "classes": "Woody savannas 73%; Grasslands 17%; Deciduous broadleaf forests 6%; Savannas 2%; Croplands 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.812,
+     "other": 0.188
+    }
+   },
+   {
+    "rc": [
+     869,
+     1975
+    ],
+    "km2": 21.27,
+    "decision": "vegetated",
+    "pop_per_km2": 0.1,
+    "classes": "Deciduous broadleaf forests 72%; Woody savannas 23%; Mixed forests 5%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     869,
+     1976
+    ],
+    "km2": 21.27,
+    "decision": "vegetated",
+    "pop_per_km2": 8.4,
+    "classes": "Woody savannas 48%; Deciduous broadleaf forests 43%; Water bodies 5%; Savannas 3%; Mixed forests 1%",
+    "shares": {
+     "water": 0.052,
+     "built": 0.0,
+     "veg": 0.917,
+     "other": 0.031
+    }
+   },
+   {
+    "rc": [
+     869,
+     1977
+    ],
+    "km2": 21.27,
+    "decision": "populated+vegetated",
+    "pop_per_km2": 80.7,
+    "classes": "Woody savannas 71%; Water bodies 12%; Savannas 6%; Deciduous broadleaf forests 6%; Grasslands 4%; Permanent wetlands 2%",
+    "shares": {
+     "water": 0.117,
+     "built": 0.0,
+     "veg": 0.786,
+     "other": 0.097
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Deciduous broadleaf forests": 48,
+   "Mixed forests": 3,
+   "Woody savannas": 45
+  },
+  "site_pixel_500m_n": 96,
+  "region_500m_composition_km2": {
+   "Water bodies": 3.6,
+   "Evergreen needleleaf forests": 1.5,
+   "Deciduous broadleaf forests": 92.3,
+   "Mixed forests": 28.8,
+   "Woody savannas": 162.1,
+   "Savannas": 5.6,
+   "Grasslands": 40.1,
+   "Permanent wetlands": 0.4,
+   "Croplands": 2.4,
+   "Urban and built-up lands": 2.1
+  },
+  "region_qc_counts": {
+   "0": 1529,
+   "2": 41,
+   "9": 9
+  },
+  "site_pixel_qc_counts": {
+   "0": 96
+  },
+  "region_barren_patches": [],
+  "viirs_monthly_raw": [
+   1381,
+   1019,
+   905,
+   5035,
+   6466,
+   8249,
+   8285,
+   8297,
+   7797,
+   5964,
+   5215,
+   5353
+  ]
+ },
+ "craters_of_the_moon": {
+  "site": {
+   "id": "craters_of_the_moon",
+   "group": "analog",
+   "name": "Craters of the Moon, Idaho",
+   "lat": 43.42,
+   "lon": -113.55,
+   "coord_source": "frontend/src/data/candidates.json (approximate)",
+   "use": "Basalt lava fields, Apollo 14 geology training; lava tubes",
+   "profiles": [
+    "MOON_SURF"
+   ]
+  },
+  "pixels": [
+   {
+    "rc": [
+     930,
+     1327
+    ],
+    "km2": 22.43,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     930,
+     1328
+    ],
+    "km2": 22.43,
+    "decision": "kept",
+    "pop_per_km2": 0.1,
+    "classes": "Grasslands 88%; Barren 12%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     930,
+     1329
+    ],
+    "km2": 22.43,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 52%; Grasslands 48%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     930,
+     1330
+    ],
+    "km2": 22.43,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 90%; Grasslands 10%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     931,
+     1327
+    ],
+    "km2": 22.45,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     931,
+     1328
+    ],
+    "km2": 22.45,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 63%; Grasslands 37%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     931,
+     1329
+    ],
+    "km2": 22.45,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 59%; Grasslands 41%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     931,
+     1330
+    ],
+    "km2": 22.45,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 94%; Grasslands 6%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     932,
+     1327
+    ],
+    "km2": 22.47,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 58%; Barren 42%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     932,
+     1328
+    ],
+    "km2": 22.47,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 56%; Grasslands 44%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     932,
+     1329
+    ],
+    "km2": 22.47,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 97%; Barren 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     932,
+     1330
+    ],
+    "km2": 22.47,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 93%; Barren 7%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Grasslands": 43,
+   "Barren": 62
+  },
+  "site_pixel_500m_n": 105,
+  "region_500m_composition_km2": {
+   "Grasslands": 161.9,
+   "Barren": 107.5
+  },
+  "region_qc_counts": {
+   "0": 1255
+  },
+  "site_pixel_qc_counts": {
+   "0": 105
+  },
+  "region_barren_patches": [
+   491,
+   5,
+   5
+  ],
+  "viirs_monthly_raw": [
+   -299,
+   -282,
+   -282,
+   1698,
+   2195,
+   3112,
+   2952,
+   2875,
+   2948,
+   2850,
+   2878,
+   2569
+  ]
+ },
+ "kilbourne_hole": {
+  "site": {
+   "id": "kilbourne_hole",
+   "group": "analog",
+   "name": "Kilbourne Hole maar, New Mexico",
+   "lat": 31.97,
+   "lon": -106.97,
+   "coord_source": "frontend/src/data/candidates.json (approximate)",
+   "use": "Apollo astronaut training maar crater",
+   "profiles": [
+    "MOON_SURF"
+   ]
+  },
+  "pixels": [
+   {
+    "rc": [
+     1159,
+     1459
+    ],
+    "km2": 26.21,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 71%; Grasslands 29%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1159,
+     1460
+    ],
+    "km2": 26.21,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 82%; Grasslands 18%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1159,
+     1461
+    ],
+    "km2": 26.21,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 92%; Grasslands 8%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1160,
+     1458
+    ],
+    "km2": 26.22,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 87%; Grasslands 13%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1160,
+     1459
+    ],
+    "km2": 26.22,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 98%; Grasslands 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1160,
+     1460
+    ],
+    "km2": 26.22,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 98%; Grasslands 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1160,
+     1461
+    ],
+    "km2": 26.22,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1160,
+     1462
+    ],
+    "km2": 26.22,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1161,
+     1459
+    ],
+    "km2": 26.24,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 98%; Grasslands 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1161,
+     1460
+    ],
+    "km2": 26.24,
+    "decision": "kept",
+    "pop_per_km2": 0.1,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1161,
+     1461
+    ],
+    "km2": 26.24,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Open shrublands": 117,
+   "Grasslands": 3
+  },
+  "site_pixel_500m_n": 120,
+  "region_500m_composition_km2": {
+   "Open shrublands": 268.3,
+   "Grasslands": 20.2
+  },
+  "region_qc_counts": {
+   "0": 1344
+  },
+  "site_pixel_qc_counts": {
+   "0": 120
+  },
+  "region_barren_patches": [],
+  "viirs_monthly_raw": [
+   1554,
+   1436,
+   1387,
+   1486,
+   1558,
+   1519,
+   1532,
+   1506,
+   1523,
+   1474,
+   1408,
+   1386
+  ]
+ },
+ "pinacate": {
+  "site": {
+   "id": "pinacate",
+   "group": "analog",
+   "name": "Pinacate volcanic field, Sonora",
+   "lat": 31.8,
+   "lon": -113.5,
+   "coord_source": "frontend/src/data/candidates.json (approximate)",
+   "use": "Apollo astronaut training, cinder cones and maars",
+   "profiles": [
+    "MOON_SURF"
+   ]
+  },
+  "pixels": [
+   {
+    "rc": [
+     1162,
+     1329
+    ],
+    "km2": 26.25,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 62%; Grasslands 19%; Barren 18%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1162,
+     1330
+    ],
+    "km2": 26.25,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 66%; Grasslands 31%; Barren 2%; Closed shrublands 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.008,
+     "other": 0.992
+    }
+   },
+   {
+    "rc": [
+     1163,
+     1328
+    ],
+    "km2": 26.26,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 49%; Barren 43%; Grasslands 8%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1163,
+     1329
+    ],
+    "km2": 26.26,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 68%; Grasslands 26%; Barren 6%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1163,
+     1330
+    ],
+    "km2": 26.26,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 67%; Barren 21%; Grasslands 11%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1163,
+     1331
+    ],
+    "km2": 26.26,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 62%; Open shrublands 31%; Grasslands 7%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1164,
+     1328
+    ],
+    "km2": 26.28,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 50%; Barren 48%; Grasslands 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1164,
+     1329
+    ],
+    "km2": 26.28,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 65%; Grasslands 27%; Barren 8%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1164,
+     1330
+    ],
+    "km2": 26.28,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 46%; Grasslands 27%; Barren 27%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1164,
+     1331
+    ],
+    "km2": 26.28,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 71%; Barren 27%; Grasslands 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1165,
+     1329
+    ],
+    "km2": 26.29,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 56%; Barren 37%; Grasslands 7%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1165,
+     1330
+    ],
+    "km2": 26.29,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 61%; Grasslands 27%; Barren 11%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Open shrublands": 57,
+   "Grasslands": 33,
+   "Barren": 33
+  },
+  "site_pixel_500m_n": 123,
+  "region_500m_composition_km2": {
+   "Closed shrublands": 0.2,
+   "Open shrublands": 182.5,
+   "Grasslands": 50.7,
+   "Barren": 82.0
+  },
+  "region_qc_counts": {
+   "0": 1469
+  },
+  "site_pixel_qc_counts": {
+   "0": 123
+  },
+  "region_barren_patches": [
+   93,
+   54,
+   51,
+   27,
+   25,
+   25,
+   20,
+   17,
+   14,
+   9
+  ],
+  "viirs_monthly_raw": [
+   2219,
+   2362,
+   2558,
+   2124,
+   1659,
+   1566,
+   1569,
+   1601,
+   2001,
+   1858,
+   1750,
+   1731
+  ]
+ },
+ "lut": {
+  "site": {
+   "id": "lut",
+   "group": "analog",
+   "name": "Lut Desert yardangs, Iran",
+   "lat": 30.4,
+   "lon": 58.4,
+   "coord_source": "frontend/src/data/candidates.json (approximate)",
+   "use": "Aeolian yardang terrain",
+   "profiles": [
+    "MARS_DRY"
+   ]
+  },
+  "pixels": [
+   {
+    "rc": [
+     1190,
+     4767
+    ],
+    "km2": 26.64,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1190,
+     4768
+    ],
+    "km2": 26.64,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1191,
+     4766
+    ],
+    "km2": 26.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1191,
+     4767
+    ],
+    "km2": 26.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1191,
+     4768
+    ],
+    "km2": 26.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1191,
+     4769
+    ],
+    "km2": 26.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1192,
+     4766
+    ],
+    "km2": 26.67,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1192,
+     4767
+    ],
+    "km2": 26.67,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1192,
+     4768
+    ],
+    "km2": 26.67,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1192,
+     4769
+    ],
+    "km2": 26.67,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1193,
+     4767
+    ],
+    "km2": 26.68,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1193,
+     4768
+    ],
+    "km2": 26.68,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Barren": 126
+  },
+  "site_pixel_500m_n": 126,
+  "region_500m_composition_km2": {
+   "Barren": 318.8
+  },
+  "region_qc_counts": {
+   "0": 1485
+  },
+  "site_pixel_qc_counts": {
+   "0": 126
+  },
+  "region_barren_patches": [
+   1485
+  ],
+  "viirs_monthly_raw": [
+   818,
+   819,
+   852,
+   837,
+   760,
+   760,
+   768,
+   788,
+   791,
+   801,
+   843,
+   840
+  ]
+ },
+ "dalangtan": {
+  "site": {
+   "id": "dalangtan",
+   "group": "analog",
+   "name": "Dalangtan playa, Qaidam Basin",
+   "lat": 38.45,
+   "lon": 91.9,
+   "coord_source": "frontend/src/data/candidates.json (approximate)",
+   "use": "Hyperarid cold salt playa, sulfates",
+   "profiles": [
+    "MARS_DRY"
+   ]
+  },
+  "pixels": [
+   {
+    "rc": [
+     1029,
+     5437
+    ],
+    "km2": 24.18,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1029,
+     5438
+    ],
+    "km2": 24.18,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1030,
+     5436
+    ],
+    "km2": 24.2,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1030,
+     5437
+    ],
+    "km2": 24.2,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1030,
+     5438
+    ],
+    "km2": 24.2,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1030,
+     5439
+    ],
+    "km2": 24.2,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1031,
+     5436
+    ],
+    "km2": 24.22,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1031,
+     5437
+    ],
+    "km2": 24.22,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1031,
+     5438
+    ],
+    "km2": 24.22,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1031,
+     5439
+    ],
+    "km2": 24.22,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1032,
+     5437
+    ],
+    "km2": 24.23,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1032,
+     5438
+    ],
+    "km2": 24.23,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Barren": 120
+  },
+  "site_pixel_500m_n": 120,
+  "region_500m_composition_km2": {
+   "Barren": 288.5
+  },
+  "region_qc_counts": {
+   "0": 1344
+  },
+  "site_pixel_qc_counts": {
+   "0": 120
+  },
+  "region_barren_patches": [
+   1344
+  ],
+  "viirs_monthly_raw": [
+   372,
+   390,
+   394,
+   498,
+   512,
+   495,
+   431,
+   467,
+   527,
+   544,
+   540,
+   537
+  ]
+ },
+ "dallol": {
+  "site": {
+   "id": "dallol",
+   "group": "analog",
+   "name": "Dallol, Danakil Depression",
+   "lat": 14.24,
+   "lon": 40.3,
+   "coord_source": "frontend/src/data/candidates.json (approximate)",
+   "use": "Hydrothermal acid brines and evaporites",
+   "profiles": [
+    "MARS_DRY"
+   ]
+  },
+  "pixels": [
+   {
+    "rc": [
+     1513,
+     4405
+    ],
+    "km2": 29.95,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1513,
+     4406
+    ],
+    "km2": 29.95,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1514,
+     4404
+    ],
+    "km2": 29.96,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1514,
+     4405
+    ],
+    "km2": 29.96,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1514,
+     4406
+    ],
+    "km2": 29.96,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1514,
+     4407
+    ],
+    "km2": 29.96,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1515,
+     4404
+    ],
+    "km2": 29.96,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1515,
+     4405
+    ],
+    "km2": 29.96,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1515,
+     4406
+    ],
+    "km2": 29.96,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1515,
+     4407
+    ],
+    "km2": 29.96,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1516,
+     4405
+    ],
+    "km2": 29.97,
+    "decision": "kept",
+    "pop_per_km2": 14.2,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1516,
+     4406
+    ],
+    "km2": 29.97,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Barren": 140
+  },
+  "site_pixel_500m_n": 140,
+  "region_500m_composition_km2": {
+   "Barren": 359.8
+  },
+  "region_qc_counts": {
+   "0": 1676
+  },
+  "site_pixel_qc_counts": {
+   "0": 140
+  },
+  "region_barren_patches": [
+   1676
+  ],
+  "viirs_monthly_raw": [
+   744,
+   801,
+   832,
+   59,
+   764,
+   764,
+   672,
+   970,
+   1013,
+   699,
+   621,
+   441
+  ]
+ },
+ "bockfjord": {
+  "site": {
+   "id": "bockfjord",
+   "group": "analog",
+   "name": "Bockfjord volcanic complex, Svalbard",
+   "lat": 79.45,
+   "lon": 13.3,
+   "coord_source": "frontend/src/data/candidates.json (approximate)",
+   "use": "AMASE: Mars carbonate/volcanic analog in a polar setting",
+   "profiles": [
+    "MARS_ICE"
+   ]
+  },
+  "pixels": [
+   {
+    "rc": [
+     209,
+     3861
+    ],
+    "km2": 5.62,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 92%; Permanent snow and ice 8%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     209,
+     3862
+    ],
+    "km2": 5.62,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 78%; Grasslands 22%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     209,
+     3863
+    ],
+    "km2": 5.62,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 54%; Grasslands 42%; Water bodies 4%",
+    "shares": {
+     "water": 0.038,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.962
+    }
+   },
+   {
+    "rc": [
+     209,
+     3864
+    ],
+    "km2": 5.62,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 48%; Barren 44%; Water bodies 8%",
+    "shares": {
+     "water": 0.08,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.92
+    }
+   },
+   {
+    "rc": [
+     209,
+     3865
+    ],
+    "km2": 5.62,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 48%; Water bodies 30%; Barren 15%; Permanent wetlands 4%; Permanent snow and ice 4%",
+    "shares": {
+     "water": 0.296,
+     "built": 0.0,
+     "veg": 0.037,
+     "other": 0.667
+    }
+   },
+   {
+    "rc": [
+     209,
+     3866
+    ],
+    "km2": 5.62,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 54%; Water bodies 35%; Permanent wetlands 8%; Barren 4%",
+    "shares": {
+     "water": 0.346,
+     "built": 0.0,
+     "veg": 0.077,
+     "other": 0.577
+    }
+   },
+   {
+    "rc": [
+     209,
+     3867
+    ],
+    "km2": 5.62,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Water bodies 58%; Grasslands 23%; Permanent wetlands 19%",
+    "shares": {
+     "water": 0.577,
+     "built": 0.0,
+     "veg": 0.192,
+     "other": 0.231
+    }
+   },
+   {
+    "rc": [
+     209,
+     3868
+    ],
+    "km2": 5.62,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Water bodies 96%; Permanent wetlands 4%",
+    "shares": {
+     "water": 0.963,
+     "built": 0.0,
+     "veg": 0.037,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     209,
+     3869
+    ],
+    "km2": 5.62,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Water bodies 100%",
+    "shares": {
+     "water": 1.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     209,
+     3870
+    ],
+    "km2": 5.62,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Water bodies 100%",
+    "shares": {
+     "water": 1.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     210,
+     3857
+    ],
+    "km2": 5.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     210,
+     3858
+    ],
+    "km2": 5.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 88%; Barren 12%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     210,
+     3859
+    ],
+    "km2": 5.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 96%; Barren 4%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     210,
+     3860
+    ],
+    "km2": 5.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 65%; Barren 35%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     210,
+     3861
+    ],
+    "km2": 5.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 70%; Permanent snow and ice 26%; Grasslands 4%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     210,
+     3862
+    ],
+    "km2": 5.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 69%; Permanent snow and ice 31%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     210,
+     3863
+    ],
+    "km2": 5.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 92%; Water bodies 4%; Grasslands 4%",
+    "shares": {
+     "water": 0.038,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.962
+    }
+   },
+   {
+    "rc": [
+     210,
+     3864
+    ],
+    "km2": 5.65,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 41%; Grasslands 33%; Water bodies 26%",
+    "shares": {
+     "water": 0.259,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.741
+    }
+   },
+   {
+    "rc": [
+     210,
+     3865
+    ],
+    "km2": 5.65,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Water bodies 76%; Barren 24%",
+    "shares": {
+     "water": 0.76,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.24
+    }
+   },
+   {
+    "rc": [
+     210,
+     3866
+    ],
+    "km2": 5.65,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Water bodies 85%; Barren 15%",
+    "shares": {
+     "water": 0.852,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.148
+    }
+   },
+   {
+    "rc": [
+     210,
+     3867
+    ],
+    "km2": 5.65,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Water bodies 100%",
+    "shares": {
+     "water": 1.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     210,
+     3868
+    ],
+    "km2": 5.65,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Water bodies 74%; Barren 19%; Grasslands 4%; Permanent wetlands 4%",
+    "shares": {
+     "water": 0.741,
+     "built": 0.0,
+     "veg": 0.037,
+     "other": 0.222
+    }
+   },
+   {
+    "rc": [
+     210,
+     3869
+    ],
+    "km2": 5.65,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Water bodies 46%; Barren 31%; Urban and built-up lands 19%; Permanent snow and ice 4%",
+    "shares": {
+     "water": 0.462,
+     "built": 0.192,
+     "veg": 0.0,
+     "other": 0.346
+    }
+   },
+   {
+    "rc": [
+     210,
+     3870
+    ],
+    "km2": 5.65,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Water bodies 58%; Permanent snow and ice 35%; Barren 8%",
+    "shares": {
+     "water": 0.577,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.423
+    }
+   },
+   {
+    "rc": [
+     210,
+     3871
+    ],
+    "km2": 5.65,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Water bodies 67%; Barren 33%",
+    "shares": {
+     "water": 0.667,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.333
+    }
+   },
+   {
+    "rc": [
+     210,
+     3872
+    ],
+    "km2": 5.65,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Water bodies 92%; Barren 8%",
+    "shares": {
+     "water": 0.923,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.077
+    }
+   },
+   {
+    "rc": [
+     210,
+     3873
+    ],
+    "km2": 5.65,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Water bodies 100%",
+    "shares": {
+     "water": 1.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     210,
+     3874
+    ],
+    "km2": 5.65,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Water bodies 100%",
+    "shares": {
+     "water": 1.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     211,
+     3857
+    ],
+    "km2": 5.67,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     211,
+     3858
+    ],
+    "km2": 5.67,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     211,
+     3859
+    ],
+    "km2": 5.67,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 96%; Barren 4%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     211,
+     3860
+    ],
+    "km2": 5.67,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 78%; Barren 22%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     211,
+     3861
+    ],
+    "km2": 5.67,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 77%; Barren 23%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     211,
+     3862
+    ],
+    "km2": 5.67,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 73%; Barren 23%; Water bodies 4%",
+    "shares": {
+     "water": 0.038,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.962
+    }
+   },
+   {
+    "rc": [
+     211,
+     3863
+    ],
+    "km2": 5.67,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 56%; Barren 44%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     211,
+     3864
+    ],
+    "km2": 5.67,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 54%; Barren 46%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     211,
+     3865
+    ],
+    "km2": 5.67,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 67%; Permanent snow and ice 33%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     211,
+     3866
+    ],
+    "km2": 5.67,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 85%; Grasslands 12%; Permanent snow and ice 4%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     211,
+     3867
+    ],
+    "km2": 5.67,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 54%; Water bodies 15%; Grasslands 15%; Permanent wetlands 8%; Urban and built-up lands 8%",
+    "shares": {
+     "water": 0.154,
+     "built": 0.077,
+     "veg": 0.077,
+     "other": 0.692
+    }
+   },
+   {
+    "rc": [
+     211,
+     3868
+    ],
+    "km2": 5.67,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 41%; Water bodies 33%; Urban and built-up lands 15%; Permanent snow and ice 7%; Permanent wetlands 4%",
+    "shares": {
+     "water": 0.333,
+     "built": 0.148,
+     "veg": 0.037,
+     "other": 0.481
+    }
+   },
+   {
+    "rc": [
+     211,
+     3869
+    ],
+    "km2": 5.67,
+    "decision": "populated",
+    "pop_per_km2": 0.0,
+    "classes": "Urban and built-up lands 73%; Barren 23%; Grasslands 4%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.731,
+     "veg": 0.0,
+     "other": 0.269
+    }
+   },
+   {
+    "rc": [
+     211,
+     3870
+    ],
+    "km2": 5.67,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 52%; Permanent snow and ice 33%; Urban and built-up lands 15%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.148,
+     "veg": 0.0,
+     "other": 0.852
+    }
+   },
+   {
+    "rc": [
+     211,
+     3871
+    ],
+    "km2": 5.67,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 73%; Barren 27%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     211,
+     3872
+    ],
+    "km2": 5.67,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 70%; Permanent snow and ice 30%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     211,
+     3873
+    ],
+    "km2": 5.67,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 81%; Water bodies 15%; Permanent snow and ice 4%",
+    "shares": {
+     "water": 0.154,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.846
+    }
+   },
+   {
+    "rc": [
+     211,
+     3874
+    ],
+    "km2": 5.67,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Water bodies 63%; Barren 33%; Permanent wetlands 4%",
+    "shares": {
+     "water": 0.63,
+     "built": 0.0,
+     "veg": 0.037,
+     "other": 0.333
+    }
+   },
+   {
+    "rc": [
+     212,
+     3861
+    ],
+    "km2": 5.7,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     212,
+     3862
+    ],
+    "km2": 5.7,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 96%; Barren 4%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     212,
+     3863
+    ],
+    "km2": 5.7,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     212,
+     3864
+    ],
+    "km2": 5.7,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 78%; Barren 19%; Water bodies 4%",
+    "shares": {
+     "water": 0.037,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.963
+    }
+   },
+   {
+    "rc": [
+     212,
+     3865
+    ],
+    "km2": 5.7,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 70%; Barren 30%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     212,
+     3866
+    ],
+    "km2": 5.7,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 65%; Permanent snow and ice 35%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     212,
+     3867
+    ],
+    "km2": 5.7,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 93%; Permanent snow and ice 7%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     212,
+     3868
+    ],
+    "km2": 5.7,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 73%; Grasslands 19%; Permanent snow and ice 8%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     212,
+     3869
+    ],
+    "km2": 5.7,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 81%; Urban and built-up lands 19%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.185,
+     "veg": 0.0,
+     "other": 0.815
+    }
+   },
+   {
+    "rc": [
+     212,
+     3870
+    ],
+    "km2": 5.7,
+    "decision": "populated",
+    "pop_per_km2": 0.0,
+    "classes": "Barren 65%; Urban and built-up lands 31%; Permanent snow and ice 4%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.308,
+     "veg": 0.0,
+     "other": 0.692
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Water bodies": 23,
+   "Barren": 4
+  },
+  "site_pixel_500m_n": 27,
+  "region_500m_composition_km2": {
+   "Water bodies": 78.6,
+   "Grasslands": 18.7,
+   "Permanent wetlands": 3.0,
+   "Urban and built-up lands": 10.1,
+   "Permanent snow and ice": 100.7,
+   "Barren": 106.0
+  },
+  "region_qc_counts": {
+   "0": 994,
+   "2": 340,
+   "4": 12,
+   "5": 76,
+   "6": 8,
+   "9": 47
+  },
+  "site_pixel_qc_counts": {
+   "0": 2,
+   "2": 23,
+   "5": 2
+  },
+  "region_barren_patches": [
+   383,
+   66,
+   23,
+   6,
+   2,
+   2,
+   2,
+   1,
+   1,
+   1
+  ],
+  "viirs_monthly_raw": [
+   -12000,
+   -1567,
+   -399,
+   -142,
+   -230,
+   1948,
+   2263,
+   2263,
+   1059,
+   -450,
+   -12000,
+   -12000
+  ]
+ },
+ "lava_beds": {
+  "site": {
+   "id": "lava_beds",
+   "group": "analog",
+   "name": "Lava Beds National Monument, California",
+   "lat": 41.71,
+   "lon": -121.51,
+   "coord_source": "frontend/src/data/candidates.json (approximate)",
+   "use": "Lava tubes (subsurface robotics)",
+   "profiles": [
+    "FIELD_GEO"
+   ]
+  },
+  "pixels": [
+   {
+    "rc": [
+     964,
+     1168
+    ],
+    "km2": 23.05,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     964,
+     1169
+    ],
+    "km2": 23.05,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     964,
+     1170
+    ],
+    "km2": 23.05,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     965,
+     1167
+    ],
+    "km2": 23.07,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     965,
+     1168
+    ],
+    "km2": 23.07,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     965,
+     1169
+    ],
+    "km2": 23.07,
+    "decision": "kept",
+    "pop_per_km2": 0.7,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     965,
+     1170
+    ],
+    "km2": 23.07,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     965,
+     1171
+    ],
+    "km2": 23.07,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     966,
+     1168
+    ],
+    "km2": 23.09,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 79%; Evergreen needleleaf forests 17%; Woody savannas 5%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.215,
+     "other": 0.785
+    }
+   },
+   {
+    "rc": [
+     966,
+     1169
+    ],
+    "km2": 23.09,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 84%; Woody savannas 10%; Evergreen needleleaf forests 6%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.157,
+     "other": 0.843
+    }
+   },
+   {
+    "rc": [
+     966,
+     1170
+    ],
+    "km2": 23.09,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 97%; Savannas 2%; Woody savannas 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.009,
+     "other": 0.991
+    }
+   },
+   {
+    "rc": [
+     966,
+     1171
+    ],
+    "km2": 23.09,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     967,
+     1169
+    ],
+    "km2": 23.11,
+    "decision": "vegetated",
+    "pop_per_km2": 0.0,
+    "classes": "Woody savannas 42%; Evergreen needleleaf forests 31%; Grasslands 14%; Barren 8%; Savannas 6%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.722,
+     "other": 0.278
+    }
+   },
+   {
+    "rc": [
+     967,
+     1170
+    ],
+    "km2": 23.11,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 33%; Woody savannas 28%; Savannas 20%; Barren 19%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.278,
+     "other": 0.722
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Grasslands": 108
+  },
+  "site_pixel_500m_n": 108,
+  "region_500m_composition_km2": {
+   "Evergreen needleleaf forests": 12.2,
+   "Woody savannas": 19.7,
+   "Savannas": 6.4,
+   "Grasslands": 278.6,
+   "Barren": 6.2
+  },
+  "region_qc_counts": {
+   "0": 1421,
+   "2": 85
+  },
+  "site_pixel_qc_counts": {
+   "0": 108
+  },
+  "region_barren_patches": [
+   29
+  ],
+  "viirs_monthly_raw": [
+   1140,
+   1329,
+   2437,
+   2652,
+   2982,
+   3204,
+   2927,
+   2553,
+   2372,
+   2313,
+   2107,
+   2089
+  ]
+ },
+ "lonar": {
+  "site": {
+   "id": "lonar",
+   "group": "analog",
+   "name": "Lonar crater, Maharashtra",
+   "lat": 19.977,
+   "lon": 76.508,
+   "coord_source": "frontend/src/data/candidates.json (approximate)",
+   "use": "Impact crater in basalt (lunar mare analog)",
+   "profiles": [
+    "FIELD_GEO"
+   ]
+  },
+  "pixels": [
+   {
+    "rc": [
+     1399,
+     5129
+    ],
+    "km2": 29.04,
+    "decision": "populated+vegetated",
+    "pop_per_km2": 191.7,
+    "classes": "Croplands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1399,
+     5130
+    ],
+    "km2": 29.04,
+    "decision": "populated+vegetated",
+    "pop_per_km2": 128.5,
+    "classes": "Croplands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1399,
+     5131
+    ],
+    "km2": 29.04,
+    "decision": "populated+vegetated",
+    "pop_per_km2": 146.3,
+    "classes": "Croplands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1400,
+     5128
+    ],
+    "km2": 29.05,
+    "decision": "populated+vegetated",
+    "pop_per_km2": 99.4,
+    "classes": "Croplands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1400,
+     5129
+    ],
+    "km2": 29.05,
+    "decision": "populated+vegetated",
+    "pop_per_km2": 144.9,
+    "classes": "Croplands 98%; Urban and built-up lands 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.022,
+     "veg": 0.978,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1400,
+     5130
+    ],
+    "km2": 29.05,
+    "decision": "populated+vegetated",
+    "pop_per_km2": 1019.2,
+    "classes": "Croplands 87%; Urban and built-up lands 11%; Permanent wetlands 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.111,
+     "veg": 0.889,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1400,
+     5131
+    ],
+    "km2": 29.05,
+    "decision": "populated+vegetated",
+    "pop_per_km2": 171.6,
+    "classes": "Croplands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1401,
+     5129
+    ],
+    "km2": 29.06,
+    "decision": "populated+vegetated",
+    "pop_per_km2": 152.6,
+    "classes": "Croplands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1401,
+     5130
+    ],
+    "km2": 29.06,
+    "decision": "populated+vegetated",
+    "pop_per_km2": 94.0,
+    "classes": "Croplands 99%; Urban and built-up lands 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.015,
+     "veg": 0.985,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1401,
+     5131
+    ],
+    "km2": 29.06,
+    "decision": "populated+vegetated",
+    "pop_per_km2": 99.2,
+    "classes": "Croplands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Permanent wetlands": 3,
+   "Croplands": 117,
+   "Urban and built-up lands": 15
+  },
+  "site_pixel_500m_n": 135,
+  "region_500m_composition_km2": {
+   "Permanent wetlands": 0.6,
+   "Croplands": 285.7,
+   "Urban and built-up lands": 4.3
+  },
+  "region_qc_counts": {
+   "0": 1331,
+   "2": 3,
+   "9": 20
+  },
+  "site_pixel_qc_counts": {
+   "0": 117,
+   "2": 3,
+   "9": 15
+  },
+  "region_barren_patches": [],
+  "viirs_monthly_raw": [
+   4695,
+   3770,
+   2973,
+   2578,
+   2472,
+   2354,
+   5436,
+   7505,
+   7298,
+   5385,
+   4381,
+   4947
+  ]
+ },
+ "rio_tinto": {
+  "site": {
+   "id": "rio_tinto",
+   "group": "analog",
+   "name": "Rio Tinto, Andalusia",
+   "lat": 37.7,
+   "lon": -6.58,
+   "coord_source": "frontend/src/data/candidates.json (approximate)",
+   "use": "Acidic iron-sulfate river, jarosite (Mars aqueous mineralogy)",
+   "profiles": [
+    "FIELD_GEO"
+   ]
+  },
+  "pixels": [
+   {
+    "rc": [
+     1044,
+     3467
+    ],
+    "km2": 24.43,
+    "decision": "kept",
+    "pop_per_km2": 5.7,
+    "classes": "Savannas 93%; Grasslands 7%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1044,
+     3468
+    ],
+    "km2": 24.43,
+    "decision": "kept",
+    "pop_per_km2": 24.3,
+    "classes": "Savannas 97%; Woody savannas 2%; Grasslands 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.018,
+     "other": 0.982
+    }
+   },
+   {
+    "rc": [
+     1044,
+     3469
+    ],
+    "km2": 24.43,
+    "decision": "kept",
+    "pop_per_km2": 8.0,
+    "classes": "Savannas 96%; Grasslands 4%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1045,
+     3466
+    ],
+    "km2": 24.45,
+    "decision": "kept",
+    "pop_per_km2": 2.1,
+    "classes": "Grasslands 64%; Savannas 35%; Woody savannas 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.009,
+     "other": 0.991
+    }
+   },
+   {
+    "rc": [
+     1045,
+     3467
+    ],
+    "km2": 24.45,
+    "decision": "kept",
+    "pop_per_km2": 5.1,
+    "classes": "Savannas 39%; Grasslands 24%; Open shrublands 11%; Urban and built-up lands 11%; Barren 9%; Woody savannas 7%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.106,
+     "veg": 0.071,
+     "other": 0.823
+    }
+   },
+   {
+    "rc": [
+     1045,
+     3468
+    ],
+    "km2": 24.45,
+    "decision": "populated",
+    "pop_per_km2": 24.0,
+    "classes": "Savannas 34%; Grasslands 29%; Urban and built-up lands 26%; Open shrublands 7%; Barren 3%; Woody savannas 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.261,
+     "veg": 0.017,
+     "other": 0.722
+    }
+   },
+   {
+    "rc": [
+     1045,
+     3469
+    ],
+    "km2": 24.45,
+    "decision": "kept",
+    "pop_per_km2": 10.7,
+    "classes": "Savannas 70%; Woody savannas 16%; Grasslands 12%; Urban and built-up lands 2%; Evergreen needleleaf forests 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.018,
+     "veg": 0.17,
+     "other": 0.812
+    }
+   },
+   {
+    "rc": [
+     1045,
+     3470
+    ],
+    "km2": 24.45,
+    "decision": "kept",
+    "pop_per_km2": 0.5,
+    "classes": "Savannas 81%; Woody savannas 10%; Evergreen needleleaf forests 6%; Grasslands 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.165,
+     "other": 0.835
+    }
+   },
+   {
+    "rc": [
+     1046,
+     3466
+    ],
+    "km2": 24.47,
+    "decision": "populated",
+    "pop_per_km2": 69.8,
+    "classes": "Grasslands 49%; Savannas 48%; Croplands 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.035,
+     "other": 0.965
+    }
+   },
+   {
+    "rc": [
+     1046,
+     3467
+    ],
+    "km2": 24.47,
+    "decision": "populated",
+    "pop_per_km2": 84.1,
+    "classes": "Savannas 67%; Grasslands 29%; Urban and built-up lands 2%; Evergreen needleleaf forests 1%; Woody savannas 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.018,
+     "veg": 0.018,
+     "other": 0.965
+    }
+   },
+   {
+    "rc": [
+     1046,
+     3468
+    ],
+    "km2": 24.47,
+    "decision": "populated",
+    "pop_per_km2": 205.2,
+    "classes": "Savannas 55%; Urban and built-up lands 26%; Grasslands 12%; Woody savannas 4%; Open shrublands 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.261,
+     "veg": 0.043,
+     "other": 0.696
+    }
+   },
+   {
+    "rc": [
+     1046,
+     3469
+    ],
+    "km2": 24.47,
+    "decision": "populated",
+    "pop_per_km2": 125.7,
+    "classes": "Savannas 60%; Grasslands 20%; Woody savannas 7%; Urban and built-up lands 5%; Permanent wetlands 4%; Evergreen needleleaf forests 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.053,
+     "veg": 0.133,
+     "other": 0.814
+    }
+   },
+   {
+    "rc": [
+     1046,
+     3470
+    ],
+    "km2": 24.47,
+    "decision": "kept",
+    "pop_per_km2": 1.7,
+    "classes": "Savannas 59%; Grasslands 23%; Woody savannas 8%; Open shrublands 6%; Permanent wetlands 2%; Barren 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.104,
+     "other": 0.896
+    }
+   },
+   {
+    "rc": [
+     1047,
+     3467
+    ],
+    "km2": 24.48,
+    "decision": "kept",
+    "pop_per_km2": 3.3,
+    "classes": "Savannas 83%; Grasslands 15%; Woody savannas 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.018,
+     "other": 0.982
+    }
+   },
+   {
+    "rc": [
+     1047,
+     3468
+    ],
+    "km2": 24.48,
+    "decision": "kept",
+    "pop_per_km2": 2.5,
+    "classes": "Savannas 65%; Grasslands 29%; Woody savannas 6%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.061,
+     "other": 0.939
+    }
+   },
+   {
+    "rc": [
+     1047,
+     3469
+    ],
+    "km2": 24.48,
+    "decision": "kept",
+    "pop_per_km2": 13.1,
+    "classes": "Savannas 73%; Grasslands 24%; Open shrublands 2%; Woody savannas 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.018,
+     "other": 0.982
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Open shrublands": 8,
+   "Woody savannas": 2,
+   "Savannas": 39,
+   "Grasslands": 33,
+   "Urban and built-up lands": 30,
+   "Barren": 3
+  },
+  "site_pixel_500m_n": 115,
+  "region_500m_composition_km2": {
+   "Evergreen needleleaf forests": 2.8,
+   "Open shrublands": 7.1,
+   "Woody savannas": 16.5,
+   "Savannas": 257.8,
+   "Grasslands": 84.4,
+   "Permanent wetlands": 1.3,
+   "Croplands": 0.9,
+   "Urban and built-up lands": 17.6,
+   "Barren": 3.2
+  },
+  "region_qc_counts": {
+   "0": 1764,
+   "2": 6,
+   "9": 54
+  },
+  "site_pixel_qc_counts": {
+   "0": 104,
+   "2": 3,
+   "9": 8
+  },
+  "region_barren_patches": [
+   13,
+   2
+  ],
+  "viirs_monthly_raw": [
+   3494,
+   3335,
+   3400,
+   3087,
+   2698,
+   2344,
+   2472,
+   2383,
+   2531,
+   2733,
+   3525,
+   3817
+  ]
+ },
+ "neg_amazon_forest": {
+  "site": {
+   "id": "neg_amazon_forest",
+   "group": "negative",
+   "name": "Amazon rainforest, Brazil",
+   "lat": -4.6278,
+   "lon": -60.2194,
+   "coord_source": "pipeline/sites.yaml rand_amazon (seeded random land point)",
+   "use": "Dense evergreen broadleaf forest",
+   "profiles": []
+  },
+  "pixels": [
+   {
+    "rc": [
+     1891,
+     2394
+    ],
+    "km2": 30.81,
+    "decision": "vegetated",
+    "pop_per_km2": 0.0,
+    "classes": "Evergreen broadleaf forests 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1891,
+     2395
+    ],
+    "km2": 30.81,
+    "decision": "vegetated",
+    "pop_per_km2": 0.0,
+    "classes": "Evergreen broadleaf forests 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1891,
+     2396
+    ],
+    "km2": 30.81,
+    "decision": "vegetated",
+    "pop_per_km2": 0.0,
+    "classes": "Evergreen broadleaf forests 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1892,
+     2394
+    ],
+    "km2": 30.81,
+    "decision": "vegetated",
+    "pop_per_km2": 0.0,
+    "classes": "Evergreen broadleaf forests 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1892,
+     2395
+    ],
+    "km2": 30.81,
+    "decision": "vegetated",
+    "pop_per_km2": 0.0,
+    "classes": "Evergreen broadleaf forests 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1892,
+     2396
+    ],
+    "km2": 30.81,
+    "decision": "vegetated",
+    "pop_per_km2": 0.0,
+    "classes": "Evergreen broadleaf forests 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1893,
+     2394
+    ],
+    "km2": 30.81,
+    "decision": "vegetated",
+    "pop_per_km2": 0.0,
+    "classes": "Evergreen broadleaf forests 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1893,
+     2395
+    ],
+    "km2": 30.81,
+    "decision": "vegetated",
+    "pop_per_km2": 0.0,
+    "classes": "Evergreen broadleaf forests 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1893,
+     2396
+    ],
+    "km2": 30.81,
+    "decision": "vegetated",
+    "pop_per_km2": 0.0,
+    "classes": "Evergreen broadleaf forests 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Evergreen broadleaf forests": 144
+  },
+  "site_pixel_500m_n": 144,
+  "region_500m_composition_km2": {
+   "Evergreen broadleaf forests": 277.1
+  },
+  "region_qc_counts": {
+   "0": 1291
+  },
+  "site_pixel_qc_counts": {
+   "0": 144
+  },
+  "region_barren_patches": [],
+  "viirs_monthly_raw": [
+   8240,
+   7602,
+   7017,
+   8348,
+   8283,
+   8294,
+   8498,
+   8285,
+   8446,
+   7934,
+   7394,
+   8501
+  ]
+ },
+ "neg_iowa_cropland": {
+  "site": {
+   "id": "neg_iowa_cropland",
+   "group": "negative",
+   "name": "US Corn Belt, Iowa",
+   "lat": 42.0,
+   "lon": -93.5,
+   "coord_source": "Audit reference point (scripts/03_class_areas.py)",
+   "use": "Cropland",
+   "profiles": []
+  },
+  "pixels": [
+   {
+    "rc": [
+     958,
+     1729
+    ],
+    "km2": 22.94,
+    "decision": "vegetated",
+    "pop_per_km2": 4.1,
+    "classes": "Croplands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     958,
+     1730
+    ],
+    "km2": 22.94,
+    "decision": "vegetated",
+    "pop_per_km2": 3.6,
+    "classes": "Croplands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     959,
+     1728
+    ],
+    "km2": 22.96,
+    "decision": "vegetated",
+    "pop_per_km2": 20.4,
+    "classes": "Croplands 92%; Urban and built-up lands 8%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.085,
+     "veg": 0.915,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     959,
+     1729
+    ],
+    "km2": 22.96,
+    "decision": "vegetated",
+    "pop_per_km2": 4.7,
+    "classes": "Croplands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     959,
+     1730
+    ],
+    "km2": 22.96,
+    "decision": "populated+vegetated",
+    "pop_per_km2": 178.5,
+    "classes": "Croplands 95%; Urban and built-up lands 5%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.047,
+     "veg": 0.953,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     959,
+     1731
+    ],
+    "km2": 22.96,
+    "decision": "populated+vegetated",
+    "pop_per_km2": 142.0,
+    "classes": "Croplands 97%; Urban and built-up lands 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.028,
+     "veg": 0.972,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     960,
+     1728
+    ],
+    "km2": 22.98,
+    "decision": "vegetated",
+    "pop_per_km2": 6.6,
+    "classes": "Croplands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     960,
+     1729
+    ],
+    "km2": 22.98,
+    "decision": "vegetated",
+    "pop_per_km2": 3.9,
+    "classes": "Croplands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     960,
+     1730
+    ],
+    "km2": 22.98,
+    "decision": "vegetated",
+    "pop_per_km2": 5.5,
+    "classes": "Croplands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     960,
+     1731
+    ],
+    "km2": 22.98,
+    "decision": "vegetated",
+    "pop_per_km2": 14.9,
+    "classes": "Croplands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     961,
+     1729
+    ],
+    "km2": 23.0,
+    "decision": "vegetated",
+    "pop_per_km2": 19.8,
+    "classes": "Croplands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     961,
+     1730
+    ],
+    "km2": 23.0,
+    "decision": "vegetated",
+    "pop_per_km2": 4.5,
+    "classes": "Croplands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 1.0,
+     "other": 0.0
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Croplands": 107
+  },
+  "site_pixel_500m_n": 107,
+  "region_500m_composition_km2": {
+   "Croplands": 271.3,
+   "Urban and built-up lands": 3.6
+  },
+  "region_qc_counts": {
+   "0": 1265,
+   "9": 16
+  },
+  "site_pixel_qc_counts": {
+   "0": 107
+  },
+  "region_barren_patches": [],
+  "viirs_monthly_raw": [
+   2121,
+   2479,
+   2311,
+   2714,
+   3579,
+   6152,
+   8159,
+   8772,
+   6928,
+   3708,
+   2868,
+   2699
+  ]
+ },
+ "neg_urban_phoenix": {
+  "site": {
+   "id": "neg_urban_phoenix",
+   "group": "negative",
+   "name": "Downtown Phoenix, Arizona",
+   "lat": 33.4484,
+   "lon": -112.074,
+   "coord_source": "Phoenix city centre (Wikipedia, approximate)",
+   "use": "Urban area inside a desert",
+   "profiles": []
+  },
+  "pixels": [
+   {
+    "rc": [
+     1129,
+     1357
+    ],
+    "km2": 25.77,
+    "decision": "populated",
+    "pop_per_km2": 3772.7,
+    "classes": "Urban and built-up lands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 1.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1129,
+     1358
+    ],
+    "km2": 25.77,
+    "decision": "populated",
+    "pop_per_km2": 2630.2,
+    "classes": "Urban and built-up lands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 1.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1129,
+     1359
+    ],
+    "km2": 25.77,
+    "decision": "populated",
+    "pop_per_km2": 1217.5,
+    "classes": "Urban and built-up lands 98%; Grasslands 2%; Open shrublands 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.975,
+     "veg": 0.0,
+     "other": 0.025
+    }
+   },
+   {
+    "rc": [
+     1130,
+     1356
+    ],
+    "km2": 25.78,
+    "decision": "populated",
+    "pop_per_km2": 3517.2,
+    "classes": "Urban and built-up lands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 1.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1130,
+     1357
+    ],
+    "km2": 25.78,
+    "decision": "populated",
+    "pop_per_km2": 2638.2,
+    "classes": "Urban and built-up lands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 1.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1130,
+     1358
+    ],
+    "km2": 25.78,
+    "decision": "populated",
+    "pop_per_km2": 2345.0,
+    "classes": "Urban and built-up lands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 1.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1130,
+     1359
+    ],
+    "km2": 25.78,
+    "decision": "populated",
+    "pop_per_km2": 3558.9,
+    "classes": "Urban and built-up lands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 1.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1130,
+     1360
+    ],
+    "km2": 25.78,
+    "decision": "populated",
+    "pop_per_km2": 2071.8,
+    "classes": "Urban and built-up lands 92%; Grasslands 8%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.925,
+     "veg": 0.0,
+     "other": 0.075
+    }
+   },
+   {
+    "rc": [
+     1131,
+     1356
+    ],
+    "km2": 25.8,
+    "decision": "populated",
+    "pop_per_km2": 342.0,
+    "classes": "Urban and built-up lands 91%; Grasslands 8%; Open shrublands 1%; Croplands 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.908,
+     "veg": 0.008,
+     "other": 0.083
+    }
+   },
+   {
+    "rc": [
+     1131,
+     1357
+    ],
+    "km2": 25.8,
+    "decision": "populated",
+    "pop_per_km2": 1071.7,
+    "classes": "Urban and built-up lands 93%; Grasslands 4%; Barren 2%; Open shrublands 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.933,
+     "veg": 0.0,
+     "other": 0.067
+    }
+   },
+   {
+    "rc": [
+     1131,
+     1358
+    ],
+    "km2": 25.8,
+    "decision": "populated",
+    "pop_per_km2": 1360.9,
+    "classes": "Urban and built-up lands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 1.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1131,
+     1359
+    ],
+    "km2": 25.8,
+    "decision": "populated",
+    "pop_per_km2": 496.2,
+    "classes": "Urban and built-up lands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 1.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1131,
+     1360
+    ],
+    "km2": 25.8,
+    "decision": "populated",
+    "pop_per_km2": 614.2,
+    "classes": "Urban and built-up lands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 1.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1132,
+     1357
+    ],
+    "km2": 25.81,
+    "decision": "populated",
+    "pop_per_km2": 1160.8,
+    "classes": "Urban and built-up lands 55%; Grasslands 31%; Open shrublands 11%; Savannas 2%; Barren 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.55,
+     "veg": 0.0,
+     "other": 0.45
+    }
+   },
+   {
+    "rc": [
+     1132,
+     1358
+    ],
+    "km2": 25.81,
+    "decision": "populated",
+    "pop_per_km2": 2062.1,
+    "classes": "Urban and built-up lands 83%; Grasslands 10%; Open shrublands 5%; Croplands 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.826,
+     "veg": 0.025,
+     "other": 0.149
+    }
+   },
+   {
+    "rc": [
+     1132,
+     1359
+    ],
+    "km2": 25.81,
+    "decision": "populated",
+    "pop_per_km2": 968.9,
+    "classes": "Urban and built-up lands 66%; Grasslands 21%; Open shrublands 12%; Savannas 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.658,
+     "veg": 0.0,
+     "other": 0.342
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Urban and built-up lands": 121
+  },
+  "site_pixel_500m_n": 121,
+  "region_500m_composition_km2": {
+   "Open shrublands": 7.9,
+   "Savannas": 0.6,
+   "Grasslands": 21.3,
+   "Croplands": 0.9,
+   "Urban and built-up lands": 381.0,
+   "Barren": 0.9
+  },
+  "region_qc_counts": {
+   "0": 1882,
+   "9": 40
+  },
+  "site_pixel_qc_counts": {
+   "0": 119,
+   "9": 2
+  },
+  "region_barren_patches": [
+   2,
+   2
+  ],
+  "viirs_monthly_raw": [
+   1437,
+   1672,
+   1531,
+   1481,
+   1436,
+   1366,
+   1350,
+   1394,
+   1358,
+   1419,
+   1440,
+   1345
+  ]
+ },
+ "neg_urban_cairo": {
+  "site": {
+   "id": "neg_urban_cairo",
+   "group": "negative",
+   "name": "Central Cairo, Egypt",
+   "lat": 30.0444,
+   "lon": 31.2357,
+   "coord_source": "Cairo city centre (Wikipedia, approximate)",
+   "use": "Urban area on a desert margin",
+   "profiles": []
+  },
+  "pixels": [
+   {
+    "rc": [
+     1197,
+     4224
+    ],
+    "km2": 26.74,
+    "decision": "populated",
+    "pop_per_km2": 32140.6,
+    "classes": "Urban and built-up lands 94%; Water bodies 4%; Barren 2%",
+    "shares": {
+     "water": 0.04,
+     "built": 0.944,
+     "veg": 0.0,
+     "other": 0.016
+    }
+   },
+   {
+    "rc": [
+     1197,
+     4225
+    ],
+    "km2": 26.74,
+    "decision": "populated",
+    "pop_per_km2": 63320.8,
+    "classes": "Urban and built-up lands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 1.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1198,
+     4223
+    ],
+    "km2": 26.75,
+    "decision": "populated",
+    "pop_per_km2": 40101.2,
+    "classes": "Urban and built-up lands 77%; Croplands 23%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.774,
+     "veg": 0.226,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1198,
+     4224
+    ],
+    "km2": 26.75,
+    "decision": "populated",
+    "pop_per_km2": 61925.3,
+    "classes": "Urban and built-up lands 95%; Water bodies 5%",
+    "shares": {
+     "water": 0.048,
+     "built": 0.952,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1198,
+     4225
+    ],
+    "km2": 26.75,
+    "decision": "populated",
+    "pop_per_km2": 51293.4,
+    "classes": "Urban and built-up lands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 1.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1198,
+     4226
+    ],
+    "km2": 26.75,
+    "decision": "populated",
+    "pop_per_km2": 18223.5,
+    "classes": "Urban and built-up lands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 1.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1199,
+     4223
+    ],
+    "km2": 26.76,
+    "decision": "populated",
+    "pop_per_km2": 60912.4,
+    "classes": "Urban and built-up lands 97%; Croplands 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.968,
+     "veg": 0.032,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1199,
+     4224
+    ],
+    "km2": 26.76,
+    "decision": "populated",
+    "pop_per_km2": 34975.5,
+    "classes": "Urban and built-up lands 94%; Water bodies 6%",
+    "shares": {
+     "water": 0.056,
+     "built": 0.944,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1199,
+     4225
+    ],
+    "km2": 26.76,
+    "decision": "populated",
+    "pop_per_km2": 21764.3,
+    "classes": "Urban and built-up lands 92%; Barren 7%; Grasslands 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.919,
+     "veg": 0.0,
+     "other": 0.081
+    }
+   },
+   {
+    "rc": [
+     1199,
+     4226
+    ],
+    "km2": 26.76,
+    "decision": "populated",
+    "pop_per_km2": 7660.4,
+    "classes": "Urban and built-up lands 82%; Barren 15%; Open shrublands 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.824,
+     "veg": 0.0,
+     "other": 0.176
+    }
+   },
+   {
+    "rc": [
+     1200,
+     4223
+    ],
+    "km2": 26.78,
+    "decision": "populated",
+    "pop_per_km2": 33965.6,
+    "classes": "Urban and built-up lands 96%; Croplands 4%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.96,
+     "veg": 0.04,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1200,
+     4224
+    ],
+    "km2": 26.78,
+    "decision": "populated",
+    "pop_per_km2": 24365.0,
+    "classes": "Urban and built-up lands 96%; Water bodies 4%",
+    "shares": {
+     "water": 0.04,
+     "built": 0.96,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1200,
+     4225
+    ],
+    "km2": 26.78,
+    "decision": "populated",
+    "pop_per_km2": 28693.1,
+    "classes": "Urban and built-up lands 96%; Barren 3%; Water bodies 1%",
+    "shares": {
+     "water": 0.008,
+     "built": 0.96,
+     "veg": 0.0,
+     "other": 0.032
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Water bodies": 7,
+   "Urban and built-up lands": 118
+  },
+  "site_pixel_500m_n": 125,
+  "region_500m_composition_km2": {
+   "Water bodies": 5.2,
+   "Open shrublands": 0.6,
+   "Grasslands": 0.2,
+   "Croplands": 7.9,
+   "Urban and built-up lands": 326.9,
+   "Barren": 7.3
+  },
+  "region_qc_counts": {
+   "0": 1542,
+   "4": 24,
+   "9": 56
+  },
+  "site_pixel_qc_counts": {
+   "0": 118,
+   "4": 7
+  },
+  "region_barren_patches": [
+   18,
+   9,
+   5,
+   2
+  ],
+  "viirs_monthly_raw": [
+   1710,
+   1577,
+   1686,
+   1726,
+   1749,
+   1835,
+   1888,
+   1900,
+   1875,
+   1809,
+   1609,
+   1506
+  ]
+ },
+ "neg_ocean_pacific": {
+  "site": {
+   "id": "neg_ocean_pacific",
+   "group": "negative",
+   "name": "Open Pacific Ocean",
+   "lat": 0.0,
+   "lon": -150.0,
+   "coord_source": "Audit reference point (scripts/03_class_areas.py)",
+   "use": "Ocean",
+   "profiles": []
+  },
+  "pixels": [
+   {
+    "rc": [
+     1798,
+     599
+    ],
+    "km2": 30.91,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Water bodies 100%",
+    "shares": {
+     "water": 1.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1798,
+     600
+    ],
+    "km2": 30.91,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "no data",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1799,
+     598
+    ],
+    "km2": 30.91,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Water bodies 100%",
+    "shares": {
+     "water": 1.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1799,
+     599
+    ],
+    "km2": 30.91,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Water bodies 100%",
+    "shares": {
+     "water": 1.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1799,
+     600
+    ],
+    "km2": 30.91,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "no data",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1799,
+     601
+    ],
+    "km2": 30.91,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "no data",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1800,
+     598
+    ],
+    "km2": 30.91,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Water bodies 100%",
+    "shares": {
+     "water": 1.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1800,
+     599
+    ],
+    "km2": 30.91,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Water bodies 100%",
+    "shares": {
+     "water": 1.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1800,
+     600
+    ],
+    "km2": 30.91,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Water bodies 100%",
+    "shares": {
+     "water": 1.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1800,
+     601
+    ],
+    "km2": 30.91,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Water bodies 100%",
+    "shares": {
+     "water": 1.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1801,
+     599
+    ],
+    "km2": 30.91,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Water bodies 100%",
+    "shares": {
+     "water": 1.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   },
+   {
+    "rc": [
+     1801,
+     600
+    ],
+    "km2": 30.91,
+    "decision": "water",
+    "pop_per_km2": 0.0,
+    "classes": "Water bodies 100%",
+    "shares": {
+     "water": 1.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 0.0
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Water bodies": 144
+  },
+  "site_pixel_500m_n": 144,
+  "region_500m_composition_km2": {
+   "Water bodies": 278.2
+  },
+  "region_qc_counts": {
+   "3": 1296,
+   "255": 432
+  },
+  "site_pixel_qc_counts": {
+   "3": 144
+  },
+  "region_barren_patches": [],
+  "viirs_monthly_raw": [
+   -15000,
+   -15000,
+   -15000,
+   -15000,
+   -15000,
+   -15000,
+   -15000,
+   -15000,
+   -15000,
+   -15000,
+   -15000,
+   -15000
+  ]
+ },
+ "probe_konza_grassland": {
+  "site": {
+   "id": "probe_konza_grassland",
+   "group": "probe",
+   "name": "Konza Prairie, Kansas",
+   "lat": 39.083,
+   "lon": -96.583,
+   "coord_source": "Konza Prairie Biological Station (Wikipedia 39 05'N 96 35'W)",
+   "use": "Tallgrass prairie, grazed; not a Moon/Mars analog",
+   "profiles": []
+  },
+  "pixels": [
+   {
+    "rc": [
+     1017,
+     1666
+    ],
+    "km2": 23.98,
+    "decision": "kept",
+    "pop_per_km2": 17.0,
+    "classes": "Grasslands 61%; Croplands 38%; Urban and built-up lands 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.018,
+     "veg": 0.375,
+     "other": 0.607
+    }
+   },
+   {
+    "rc": [
+     1017,
+     1667
+    ],
+    "km2": 23.98,
+    "decision": "vegetated",
+    "pop_per_km2": 3.9,
+    "classes": "Croplands 52%; Grasslands 48%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.523,
+     "other": 0.477
+    }
+   },
+   {
+    "rc": [
+     1017,
+     1668
+    ],
+    "km2": 23.98,
+    "decision": "kept",
+    "pop_per_km2": 3.1,
+    "classes": "Grasslands 67%; Croplands 33%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.333,
+     "other": 0.667
+    }
+   },
+   {
+    "rc": [
+     1017,
+     1669
+    ],
+    "km2": 23.98,
+    "decision": "kept",
+    "pop_per_km2": 5.1,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1018,
+     1666
+    ],
+    "km2": 24.0,
+    "decision": "kept",
+    "pop_per_km2": 1.7,
+    "classes": "Grasslands 99%; Croplands 1%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.009,
+     "other": 0.991
+    }
+   },
+   {
+    "rc": [
+     1018,
+     1667
+    ],
+    "km2": 24.0,
+    "decision": "kept",
+    "pop_per_km2": 0.5,
+    "classes": "Grasslands 97%; Croplands 3%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.027,
+     "other": 0.973
+    }
+   },
+   {
+    "rc": [
+     1018,
+     1668
+    ],
+    "km2": 24.0,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1018,
+     1669
+    ],
+    "km2": 24.0,
+    "decision": "kept",
+    "pop_per_km2": 0.5,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1018,
+     1670
+    ],
+    "km2": 24.0,
+    "decision": "kept",
+    "pop_per_km2": 0.9,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1019,
+     1667
+    ],
+    "km2": 24.01,
+    "decision": "kept",
+    "pop_per_km2": 1.1,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1019,
+     1668
+    ],
+    "km2": 24.01,
+    "decision": "kept",
+    "pop_per_km2": 0.8,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1019,
+     1669
+    ],
+    "km2": 24.01,
+    "decision": "kept",
+    "pop_per_km2": 0.5,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Grasslands": 113
+  },
+  "site_pixel_500m_n": 113,
+  "region_500m_composition_km2": {
+   "Grasslands": 256.7,
+   "Croplands": 30.3,
+   "Urban and built-up lands": 0.4
+  },
+  "region_qc_counts": {
+   "0": 1336,
+   "2": 1,
+   "9": 2
+  },
+  "site_pixel_qc_counts": {
+   "0": 113
+  },
+  "region_barren_patches": [],
+  "viirs_monthly_raw": [
+   2959,
+   2768,
+   2671,
+   3322,
+   6320,
+   8063,
+   7801,
+   7096,
+   5404,
+   4985,
+   3554,
+   3152
+  ]
+ },
+ "probe_serengeti_savanna": {
+  "site": {
+   "id": "probe_serengeti_savanna",
+   "group": "probe",
+   "name": "Serengeti plains near Seronera, Tanzania",
+   "lat": -2.43,
+   "lon": 34.82,
+   "coord_source": "Seronera, Serengeti NP (approximate)",
+   "use": "Savanna grassland; not a Moon/Mars analog",
+   "profiles": []
+  },
+  "pixels": [
+   {
+    "rc": [
+     1847,
+     4295
+    ],
+    "km2": 30.88,
+    "decision": "kept",
+    "pop_per_km2": 1.9,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1847,
+     4296
+    ],
+    "km2": 30.88,
+    "decision": "kept",
+    "pop_per_km2": 2.2,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1847,
+     4297
+    ],
+    "km2": 30.88,
+    "decision": "kept",
+    "pop_per_km2": 2.7,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1848,
+     4295
+    ],
+    "km2": 30.88,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1848,
+     4296
+    ],
+    "km2": 30.88,
+    "decision": "kept",
+    "pop_per_km2": 27.8,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1848,
+     4297
+    ],
+    "km2": 30.88,
+    "decision": "kept",
+    "pop_per_km2": 17.1,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1849,
+     4295
+    ],
+    "km2": 30.88,
+    "decision": "kept",
+    "pop_per_km2": 1.9,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1849,
+     4296
+    ],
+    "km2": 30.88,
+    "decision": "kept",
+    "pop_per_km2": 0.4,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     1849,
+     4297
+    ],
+    "km2": 30.88,
+    "decision": "kept",
+    "pop_per_km2": 2.0,
+    "classes": "Grasslands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Grasslands": 143
+  },
+  "site_pixel_500m_n": 143,
+  "region_500m_composition_km2": {
+   "Grasslands": 278.0
+  },
+  "region_qc_counts": {
+   "0": 1295
+  },
+  "site_pixel_qc_counts": {
+   "0": 143
+  },
+  "region_barren_patches": [],
+  "viirs_monthly_raw": [
+   5905,
+   4822,
+   5466,
+   6653,
+   6323,
+   4097,
+   2990,
+   2635,
+   3652,
+   3526,
+   7184,
+   7376
+  ]
+ },
+ "probe_toolik_tundra": {
+  "site": {
+   "id": "probe_toolik_tundra",
+   "group": "probe",
+   "name": "Toolik Field Station, Alaska North Slope",
+   "lat": 68.627,
+   "lon": -149.594,
+   "coord_source": "Toolik Field Station (Wikipedia 68 38'N 149 36'W)",
+   "use": "Vegetated Arctic tundra; not a terrain analog",
+   "profiles": []
+  },
+  "pixels": [
+   {
+    "rc": [
+     426,
+     604
+    ],
+    "km2": 11.24,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     426,
+     605
+    ],
+    "km2": 11.24,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     426,
+     606
+    ],
+    "km2": 11.24,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     426,
+     607
+    ],
+    "km2": 11.24,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     426,
+     608
+    ],
+    "km2": 11.24,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     426,
+     609
+    ],
+    "km2": 11.24,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     426,
+     610
+    ],
+    "km2": 11.24,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     426,
+     611
+    ],
+    "km2": 11.24,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     427,
+     603
+    ],
+    "km2": 11.27,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     427,
+     604
+    ],
+    "km2": 11.27,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     427,
+     605
+    ],
+    "km2": 11.27,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     427,
+     606
+    ],
+    "km2": 11.27,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     427,
+     607
+    ],
+    "km2": 11.27,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 98%; Permanent wetlands 2%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.019,
+     "other": 0.981
+    }
+   },
+   {
+    "rc": [
+     427,
+     608
+    ],
+    "km2": 11.27,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     427,
+     609
+    ],
+    "km2": 11.27,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     427,
+     610
+    ],
+    "km2": 11.27,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     427,
+     611
+    ],
+    "km2": 11.27,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     427,
+     612
+    ],
+    "km2": 11.27,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     428,
+     604
+    ],
+    "km2": 11.29,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     428,
+     605
+    ],
+    "km2": 11.29,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     428,
+     606
+    ],
+    "km2": 11.29,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     428,
+     607
+    ],
+    "km2": 11.29,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     428,
+     608
+    ],
+    "km2": 11.29,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     428,
+     609
+    ],
+    "km2": 11.29,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     428,
+     610
+    ],
+    "km2": 11.29,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     428,
+     611
+    ],
+    "km2": 11.29,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Open shrublands 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Open shrublands": 52
+  },
+  "site_pixel_500m_n": 52,
+  "region_500m_composition_km2": {
+   "Open shrublands": 292.4,
+   "Permanent wetlands": 0.2
+  },
+  "region_qc_counts": {
+   "0": 1348,
+   "2": 15
+  },
+  "site_pixel_qc_counts": {
+   "0": 51,
+   "2": 1
+  },
+  "region_barren_patches": [],
+  "viirs_monthly_raw": [
+   -828,
+   -277,
+   -242,
+   -242,
+   3593,
+   6624,
+   6211,
+   5876,
+   6014,
+   218,
+   -913,
+   -12000
+  ]
+ },
+ "probe_concordia_ice": {
+  "site": {
+   "id": "probe_concordia_ice",
+   "group": "probe",
+   "name": "Concordia Station, Dome C, East Antarctica",
+   "lat": -75.1,
+   "lon": 123.333,
+   "coord_source": "Concordia Station (Wikipedia 75 06'S 123 20'E)",
+   "use": "Ice-sheet interior. ESA uses it as a crew-isolation analog, not a surface/terrain analog",
+   "profiles": []
+  },
+  "pixels": [
+   {
+    "rc": [
+     3300,
+     6063
+    ],
+    "km2": 7.99,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3300,
+     6064
+    ],
+    "km2": 7.99,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3300,
+     6065
+    ],
+    "km2": 7.99,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3300,
+     6066
+    ],
+    "km2": 7.99,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3300,
+     6067
+    ],
+    "km2": 7.99,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3300,
+     6068
+    ],
+    "km2": 7.99,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3300,
+     6069
+    ],
+    "km2": 7.99,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3300,
+     6070
+    ],
+    "km2": 7.99,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3301,
+     6060
+    ],
+    "km2": 7.96,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3301,
+     6061
+    ],
+    "km2": 7.96,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3301,
+     6062
+    ],
+    "km2": 7.96,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3301,
+     6063
+    ],
+    "km2": 7.96,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3301,
+     6064
+    ],
+    "km2": 7.96,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3301,
+     6065
+    ],
+    "km2": 7.96,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3301,
+     6066
+    ],
+    "km2": 7.96,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3301,
+     6067
+    ],
+    "km2": 7.96,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3301,
+     6068
+    ],
+    "km2": 7.96,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3301,
+     6069
+    ],
+    "km2": 7.96,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3301,
+     6070
+    ],
+    "km2": 7.96,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3301,
+     6071
+    ],
+    "km2": 7.96,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3301,
+     6072
+    ],
+    "km2": 7.96,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3302,
+     6060
+    ],
+    "km2": 7.94,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3302,
+     6061
+    ],
+    "km2": 7.94,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3302,
+     6062
+    ],
+    "km2": 7.94,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3302,
+     6063
+    ],
+    "km2": 7.94,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3302,
+     6064
+    ],
+    "km2": 7.94,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3302,
+     6065
+    ],
+    "km2": 7.94,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3302,
+     6066
+    ],
+    "km2": 7.94,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3302,
+     6067
+    ],
+    "km2": 7.94,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3302,
+     6068
+    ],
+    "km2": 7.94,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3302,
+     6069
+    ],
+    "km2": 7.94,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3302,
+     6070
+    ],
+    "km2": 7.94,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3302,
+     6071
+    ],
+    "km2": 7.94,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3302,
+     6072
+    ],
+    "km2": 7.94,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3303,
+     6063
+    ],
+    "km2": 7.91,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3303,
+     6064
+    ],
+    "km2": 7.91,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3303,
+     6065
+    ],
+    "km2": 7.91,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3303,
+     6066
+    ],
+    "km2": 7.91,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3303,
+     6067
+    ],
+    "km2": 7.91,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3303,
+     6068
+    ],
+    "km2": 7.91,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3303,
+     6069
+    ],
+    "km2": 7.91,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   },
+   {
+    "rc": [
+     3303,
+     6070
+    ],
+    "km2": 7.91,
+    "decision": "kept",
+    "pop_per_km2": 0.0,
+    "classes": "Permanent snow and ice 100%",
+    "shares": {
+     "water": 0.0,
+     "built": 0.0,
+     "veg": 0.0,
+     "other": 1.0
+    }
+   }
+  ],
+  "site_pixel_500m_composition": {
+   "Permanent snow and ice": 37
+  },
+  "site_pixel_500m_n": 37,
+  "region_500m_composition_km2": {
+   "Permanent snow and ice": 334.0
+  },
+  "region_qc_counts": {
+   "6": 1556
+  },
+  "site_pixel_qc_counts": {
+   "6": 37
+  },
+  "region_barren_patches": [],
+  "viirs_monthly_raw": [
+   -14000,
+   -14000,
+   -14000,
+   -14000,
+   -14000,
+   -14000,
+   -14000,
+   -14000,
+   -14000,
+   -14000,
+   -14000,
+   -14000
+  ]
+ }
+}

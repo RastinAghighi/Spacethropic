@@ -1,0 +1,9 @@
+removed_by,barren_km2_in_removed_pixels,pixels_with_ge_24_barren_500m,flagged_pixel_area_km2,barren_km2_in_flagged_pixels,r7_cells_to_refine_approx
+water >= 0.5,35447,1722,44139,14980,8552
+built >= 0.25,11872,777,21085,9493,4086
+vegetation >= 0.5,14492,220,5748,1491,1114
+mixed >= 0.5,9014,312,8163,2484,1582
+ALL (land-cover reasons),70824,3031,79136,28447,15333
+reference: barren in kept pixels,20276658,,,,
+reference: barren on all NE land,20347483,,,,
+alt flag: removed pixels with barren share >= 10%,,11936,199434,,38642
