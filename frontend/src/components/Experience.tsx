@@ -11,6 +11,7 @@ import { Mirror } from "./search/Mirror";
 import { RefinePanel } from "./research/RefinePanel";
 import { ResearchTrail } from "./research/ResearchTrail";
 import { research } from "@/lib/research";
+import { Toast } from "./Toast";
 
 const GlobeScene = dynamic(() => import("./globe/GlobeScene"), { ssr: false });
 
@@ -105,6 +106,7 @@ export default function Experience() {
       <RefinePanel />
       <Chrome />
       <Mirror />
+      <Toast />
       <Loader />
     </main>
   );

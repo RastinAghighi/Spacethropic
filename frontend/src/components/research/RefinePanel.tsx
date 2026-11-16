@@ -16,6 +16,7 @@ import {
   passes,
   poolFor,
   sameFilters,
+  targetValue,
   targetOf,
   traits,
   type Dim,
@@ -34,7 +35,7 @@ export const TABS: { id: Tab; label: string; icon: string; fields: NumKey[]; mor
   { id: "terrain", label: "Terrain", icon: "M1.5 13.5l4.25-7.5 3 5 2-3 3.75 5.5z", fields: ["slope", "relief", "roughness", "elevation"], more: [], dims: ["terrain"] },
   { id: "geology", label: "Geology", icon: "M8 1.75l5.75 4.5L8 14.25 2.25 6.25z M2.25 6.25h11.5 M6 6.25L8 14.25l2-8", fields: [], more: [], dims: ["geology"], hidden: true }, // no geology dataset yet
   { id: "thermal", label: "Thermal", icon: "M8 2.25c.83 0 1.5.67 1.5 1.5v5.6a3 3 0 1 1-3 0v-5.6c0-.83.67-1.5 1.5-1.5z M8 7v4", fields: ["meanTemp", "dayNight", "coldMin"], more: [], dims: ["thermal"] },
-  { id: "weather", label: "Weather", icon: "M4.75 12.5h6.5a2.75 2.75 0 0 0 .4-5.47A3.75 3.75 0 0 0 4.5 8a2.25 2.25 0 0 0 .25 4.5z", fields: ["solar", "cloud", "dust", "humidity", "wind"], more: [], dims: ["sun"] },
+  { id: "weather", label: "Weather", icon: "M4.75 12.5h6.5a2.75 2.75 0 0 0 .4-5.47A3.75 3.75 0 0 0 4.5 8a2.25 2.25 0 0 0 .25 4.5z", fields: ["solar", "cloud", "dust", "humidity", "wind"], more: [], dims: ["sun"], hidden: true }, // 10° grid only so far
 ];
 const tabById = (id: Tab) => TABS.find((t) => t.id === id)!;
 
@@ -119,9 +120,8 @@ function GeologyPicker({ draft, c, q, tint }: { draft: Filters; c: Candidate; q:
   );
 }
 
-function Drawer({ tab, c, q, draft, applied, pool }: { tab: Tab; c: Candidate; q: AnalogQuery; draft: Filters; applied: Filters; pool: Candidate[] }) {
+function Drawer({ tab, c, q, draft, applied, pool, live }: { tab: Tab; c: Candidate; q: AnalogQuery; draft: Filters; applied: Filters; pool: Candidate[]; live: boolean }) {
   const def = tabById(tab);
-  const { profile } = targetOf(q);
   const tint = BODY[q.target].tint;
   const field = (k: NumKey) => (
     <RangeField
@@ -130,7 +130,7 @@ function Drawer({ tab, c, q, draft, applied, pool }: { tab: Tab; c: Candidate; q
       value={draft.ranges[k]}
       onChange={(r) => research.setRange(k, r)}
       tint={tint}
-      target={FIELDS[k].target?.(profile)}
+      target={targetValue(k, c, q)}
       dots={pool.map((s) => ({ id: s.id, name: s.name, v: FIELDS[k].get(s), pass: passes(s, draft), current: s.id === c.id }))}
     />
   );
@@ -145,7 +145,8 @@ function Drawer({ tab, c, q, draft, applied, pool }: { tab: Tab; c: Candidate; q
         </div>
       </section>
 
-      {def.dims.length > 0 && (
+      {/* Weights only re-rank the bundled sample sites; live search ranks on terrain shape */}
+      {def.dims.length > 0 && !live && (
         <section className="mt-6 space-y-3 border-t border-white/[0.06] pt-4">
           {def.dims.map((d) => (
             <WeightControl key={d} dim={d} value={draft.weights[d]} />
@@ -272,7 +273,7 @@ export function RefinePanel() {
           </header>
 
           <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-5 pb-5 [scrollbar-width:thin]">
-            <Drawer key={shownTab} tab={shownTab} c={c} q={query} draft={draft} applied={applied} pool={pool} />
+            <Drawer key={shownTab} tab={shownTab} c={c} q={query} draft={draft} applied={applied} pool={pool} live={source === "live"} />
           </div>
 
           {/* Live consequence of the draft, and the step that runs it */}

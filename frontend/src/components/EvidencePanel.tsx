@@ -69,6 +69,24 @@ function Delta({ value, className }: { value: number | null; className?: string 
   );
 }
 
+/** Plain-language gaps between a site and the target's measured values (search service results). */
+function measuredGaps(c: Candidate, t: Record<string, number>, short: string): string[] {
+  const v = (k: NumKey) => FIELDS[k].get(c);
+  const out: string[] = [];
+  const cap = short[0].toUpperCase() + short.slice(1);
+  if (t.slope !== undefined && Math.abs(v("slope") - t.slope) >= 2)
+    out.push(`${v("slope") > t.slope ? "Steeper" : "Gentler"} than ${short}: ${v("slope").toFixed(1)}° slopes against ${t.slope.toFixed(1)}°.`);
+  if (t.meanTemp !== undefined) {
+    const d = Math.round(v("meanTemp") - t.meanTemp);
+    if (Math.abs(d) >= 5) out.push(`${Math.abs(d)} °C ${d > 0 ? "warmer" : "colder"} on average than ${short}'s surface. Pair field work with a thermal-vacuum test.`);
+  }
+  if (t.dayNight !== undefined && Math.abs(v("dayNight") - t.dayNight) >= 10)
+    out.push(`${cap} swings ${Math.round(t.dayNight)} °C between day and night; here it's ${Math.round(v("dayNight"))} °C.`);
+  if (t.dust !== undefined && Number.isFinite(v("dust")) && t.dust > 2 * v("dust"))
+    out.push(`Dustier sky on ${short}: optical depth ${t.dust.toFixed(2)} against ${v("dust").toFixed(2)} here.`);
+  return out;
+}
+
 function Body({
   c,
   index,
@@ -87,7 +105,8 @@ function Body({
   const tint = BODY[q.target].tint;
   const target = targetOf(q);
   // Where it differs: the measured gaps against the target, then what the data can't speak to
-  const differs = [...matchProfile(c, q).flatMap((m) => (m.gap && m.dim !== "geology" ? [m.gap] : [])), ...c.breaks];
+  const gaps = c.targetMetrics ? measuredGaps(c, c.targetMetrics, target.short) : matchProfile(c, q).flatMap((m) => (m.gap && m.dim !== "geology" ? [m.gap] : []));
+  const differs = [...gaps, ...c.breaks];
   const scoreDelta = prev ? pct(overallScore(c, q)) - pct(overallScore(prev.c, prev.q)) : null;
 
   return (

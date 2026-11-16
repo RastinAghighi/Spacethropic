@@ -56,7 +56,8 @@ export async function searchAnalogs(query: AnalogQuery, signal?: AbortSignal): P
   // 404/405: no route; 500/502/504: the dev proxy couldn't reach the service
   if ([404, 405, 500, 502, 503, 504].includes(res.status)) throw new SearchUnavailableError();
   if (!res.ok) throw new Error(`Search failed (${res.status})`);
-  return ((await res.json()) as { sites: Candidate[] }).sites;
+  const data = (await res.json()) as { sites: Candidate[]; target?: { metrics?: Record<string, number> } };
+  return data.sites.map((s) => ({ ...s, targetMetrics: data.target?.metrics }));
 }
 
 export type Source = "live" | "sample";

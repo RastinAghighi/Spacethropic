@@ -1,23 +1,23 @@
 "use client";
 
 import type { Candidate } from "@/lib/candidates";
-import { FIELDS, formatField, targetOf, type NumKey, type Tab } from "@/lib/profile";
+import { FIELDS, formatField, targetOf, targetValue, type NumKey, type Tab } from "@/lib/profile";
 import { research } from "@/lib/research";
 import type { AnalogQuery } from "@/lib/search";
 
 const GROUPS: { tab: Tab; label: string; keys: NumKey[] }[] = [
   { tab: "terrain", label: "Terrain", keys: ["slope", "relief", "roughness", "elevation"] },
   { tab: "thermal", label: "Thermal", keys: ["meanTemp", "dayNight", "coldMin"] },
-  { tab: "weather", label: "Weather", keys: ["solar", "cloud", "dust", "humidity", "wind"] },
+  // Weather is hidden until it has data finer than the 10° grid
 ];
 
 /** Each measured value as a small gauge on its field's full range, with the target's value marked. */
 export function Measurements({ c, q, tint }: { c: Candidate; q: AnalogQuery; tint: string }) {
-  const { profile, short } = targetOf(q);
+  const { short } = targetOf(q);
   return (
     <div className="space-y-4">
       {GROUPS.map((g, gi) => {
-        const rows = g.keys.map((k) => ({ k, v: FIELDS[k].get(c), t: FIELDS[k].target?.(profile) })).filter((r) => Number.isFinite(r.v));
+        const rows = g.keys.map((k) => ({ k, v: FIELDS[k].get(c), t: targetValue(k, c, q) })).filter((r) => Number.isFinite(r.v));
         if (!rows.length) return null;
         return (
           <div key={g.tab}>

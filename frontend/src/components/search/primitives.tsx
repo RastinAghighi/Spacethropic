@@ -162,10 +162,11 @@ export function Label({ children, className }: { children: React.ReactNode; clas
 }
 
 /** Runs a query through the shared choreography: fold to a loading bar → dive (or punch-slide in the site view). */
-/** Fetch the top result's image and every thumbnail into the browser cache (bounded wait). */
+/** Fetch what the dive needs first into the browser cache: the top image and the first three
+ * thumbnails (the rest load behind the tray's spinners). Bounded wait. */
 async function preloadImagery(candidates: Candidate[], signal: AbortSignal) {
   const get = (url: string) => fetch(url, { signal }).then((r) => r.blob()).catch(() => null);
-  const all = Promise.all([...(candidates[0] ? [get(imageUrl(candidates[0].id))] : []), ...candidates.map((c) => get(thumbUrl(c.id)))]);
+  const all = Promise.all([...(candidates[0] ? [get(imageUrl(candidates[0].id))] : []), ...candidates.slice(0, 3).map((c) => get(thumbUrl(c.id)))]);
   await Promise.race([all, new Promise((r) => setTimeout(r, 15000))]);
 }
 
@@ -193,6 +194,7 @@ export function useRunSearch() {
       await preloadImagery(candidates, controller.signal);
       if (controller.signal.aborted) return;
       ui.setProgress(1);
+      if (source === "sample") ui.notify("Search service offline. Showing bundled sample sites.");
       await new Promise((r) => setTimeout(r, 280));
       ui.showResults(candidates, source);
       if (!candidates.length) setError("No candidates matched — try loosening a limit.");

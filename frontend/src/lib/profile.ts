@@ -128,6 +128,12 @@ export const FIELDS: Record<NumKey, Field> = {
   solar: { label: "Solar irradiance", unit: "kWh/m²·d", min: 0, max: 11, step: 0.1, digits: 1, get: (s) => s.climate.solarKwhM2Day, target: (p) => p.solar },
 };
 
+/** The target's value for a field: measured (search service) when known, else the indicative profile. */
+export function targetValue(k: NumKey, s: CandidateSite, q: AnalogQuery): number | undefined {
+  if (s.targetMetrics) return s.targetMetrics[k];
+  return FIELDS[k].target?.(targetOf(q).profile);
+}
+
 export function formatField(key: NumKey, v: number) {
   const f = FIELDS[key];
   const n = v.toLocaleString(undefined, { minimumFractionDigits: f.digits, maximumFractionDigits: f.digits });

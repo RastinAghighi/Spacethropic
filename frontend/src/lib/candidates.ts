@@ -41,6 +41,8 @@ export interface CandidateSite {
   missed?: string[];
   /** Measured per-cell values from the search service, keyed like the filter fields */
   metrics?: Record<string, number>;
+  /** The Moon/Mars target's measured values in the same fields (from the search service) */
+  targetMetrics?: Record<string, number>;
 }
 
 export interface Traits {

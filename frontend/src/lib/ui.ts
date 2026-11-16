@@ -35,6 +35,8 @@ interface UiState {
   searchFrom: "globe" | "site";
   /** Where the loading bar is heading, 0..1: search running, imagery loading, done */
   progress: number;
+  /** A short message for the toast, with a serial so a repeat still shows */
+  notice: { text: string; seq: number } | null;
   query: AnalogQuery | null;
   results: Candidate[];
   source: Source;
@@ -58,6 +60,7 @@ let state: UiState = {
   mode: "globe",
   searchFrom: "globe",
   progress: 0,
+  notice: null,
   query: null,
   results: [],
   source: "sample",
@@ -107,6 +110,7 @@ export const ui = {
     set({ mode: "searching", query, searchFrom, progress: 0 });
   },
   setProgress: (progress: number) => set({ progress }),
+  notify: (text: string) => set({ notice: { text, seq: (state.notice?.seq ?? 0) + 1 } }),
 
   searchFailed() {
     set({ mode: state.searchFrom });

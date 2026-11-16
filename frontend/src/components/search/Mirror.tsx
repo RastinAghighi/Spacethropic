@@ -2,12 +2,11 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { BODY, formatLatLon, targetById, targetsFor, type Target } from "@/lib/catalog";
-import { rockList, targetOf } from "@/lib/profile";
 import type { AnalogTarget } from "@/lib/search";
 import { useUi } from "@/lib/ui";
 import { SearchDock } from "./SearchDock";
 import { MirrorLens, type View } from "./MirrorLens";
-import { BodyToggle, DiscoveryToggle, FindButton, useRunSearch } from "./primitives";
+import { BodyToggle, FindButton, useRunSearch } from "./primitives";
 
 const CUSTOM = "custom";
 
@@ -19,24 +18,46 @@ function Chevron({ open }: { open: boolean }) {
   );
 }
 
-/** The four numbers Earth is matched against: what the search will look for. */
-function Profile({ body, place }: { body: AnalogTarget; place: string }) {
-  const p = targetOf({ text: "", target: body, place }).profile;
+type Metrics = Record<string, number>;
+
+/** The target's measured values at a point, from the search service (null while loading or offline). */
+function useTargetMetrics(body: AnalogTarget, lat: number, lon: number) {
+  const key = `${body}:${lat.toFixed(3)},${lon.toFixed(3)}`;
+  const [got, setGot] = useState<{ key: string; m: Metrics | null } | null>(null);
+  useEffect(() => {
+    const ctl = new AbortController();
+    fetch(`/api/target?body=${body}&lat=${lat}&lon=${lon}`, { signal: ctl.signal })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => setGot({ key, m: d?.metrics ?? null }))
+      .catch((e) => e.name !== "AbortError" && setGot({ key, m: null }));
+    return () => ctl.abort();
+  }, [body, lat, lon, key]);
+  return got?.key === key ? { loading: false, m: got.m } : { loading: true, m: null };
+}
+
+/** What the search will look for: the target's own measured terrain and surface temperatures. */
+function Profile({ body, lat, lon }: { body: AnalogTarget; lat: number; lon: number }) {
+  const { loading, m } = useTargetMetrics(body, lat, lon);
+  const f = (v: number | undefined, d = 0) => (v === undefined ? "—" : v.toFixed(d).replace("-", "−"));
   const cells = [
-    { label: "Slope", value: `${p.slope}°` },
-    { label: "Mean temp", value: `${p.meanTemp}`.replace("-", "−"), unit: "°C" },
-    { label: "Sunlight", value: p.solar.toFixed(1), unit: "kWh/m²" },
-    { label: "Rock", value: rockList(p.geology) },
+    { label: "Slope", value: f(m?.slope, 1), unit: "°" },
+    { label: "Relief", value: f(m?.relief), unit: "m" },
+    { label: "Surface temp", value: f(m?.meanTemp), unit: "°C" },
+    { label: "Day–night", value: f(m?.dayNight), unit: "°C" },
   ];
   return (
-    <div key={place} className="grid grid-cols-[auto_auto_auto_1fr] gap-x-5">
+    <div className="grid grid-cols-4 gap-x-4" title={m ? "Measured at this point: LOLA / HRSC-MOLA terrain, Diviner / MCD surface temperatures" : undefined}>
       {cells.map((c, i) => (
-        <div key={c.label} className="min-w-0" style={{ animation: `rise-in .5s var(--ease-out-expo) ${i * 0.04}s both` }}>
-          <p className="text-[10px] uppercase tracking-[0.12em] text-white/35">{c.label}</p>
-          <p className="mt-1 truncate text-[15px] font-medium tracking-[-0.01em] text-white tabular-nums">
-            {c.value}
-            {c.unit && <span className="ml-0.5 text-[10.5px] font-normal text-white/40">{c.unit}</span>}
-          </p>
+        <div key={c.label} className="min-w-0">
+          <p className="truncate text-[10px] uppercase tracking-[0.12em] text-white/35">{c.label}</p>
+          {loading ? (
+            <span className="mt-1.5 block h-[15px] w-12 animate-pulse rounded bg-white/[0.08]" />
+          ) : (
+            <p className="mt-1 truncate text-[15px] font-medium tracking-[-0.01em] text-white tabular-nums" style={{ animation: `rise-in .5s var(--ease-out-expo) ${i * 0.04}s both` }}>
+              {c.value}
+              {c.value !== "—" && <span className="ml-0.5 text-[10.5px] font-normal text-white/40">{c.unit}</span>}
+            </p>
+          )}
         </div>
       ))}
     </div>
@@ -44,7 +65,7 @@ function Profile({ body, place }: { body: AnalogTarget; place: string }) {
 }
 
 /** Grouped list of named places. Hovering a row turns the lens to it. */
-function PlaceList({ sites, selected, onPick, onPreview, onClose }: { sites: Target[]; selected: string; onPick: (id: string) => void; onPreview: (id: string | null) => void; onClose: () => void }) {
+function PlaceList({ sites, selected, tint, onPick, onPreview, onClose }: { sites: Target[]; selected: string; tint: string; onPick: (id: string) => void; onPreview: (id: string | null) => void; onClose: () => void }) {
   const list = useRef<HTMLDivElement>(null);
   const [cursor, setCursor] = useState(() => Math.max(0, sites.findIndex((s) => s.id === selected)));
 
@@ -77,12 +98,14 @@ function PlaceList({ sites, selected, onPick, onPreview, onClose }: { sites: Tar
       aria-label="Places"
       onKeyDown={onKey}
       onPointerLeave={() => onPreview(null)}
-      className="absolute inset-0 overflow-y-auto overscroll-contain rounded-xl outline-none [mask-image:linear-gradient(to_bottom,transparent,black_8%,black_85%,transparent)] [scrollbar-width:none]"
+      className="absolute inset-0 overflow-y-auto overscroll-contain outline-none [mask-image:linear-gradient(to_bottom,black_88%,transparent)] [scrollbar-width:none]"
       style={{ animation: "rise-in .35s var(--ease-out-expo) both" }}
     >
       {sites.map((s, i) => (
         <div key={s.id}>
-          {s.group !== sites[i - 1]?.group && <p className="px-2.5 pb-1 pt-2 text-[10px] uppercase tracking-[0.12em] text-white/30 first:pt-0">{s.group}</p>}
+          {s.group !== sites[i - 1]?.group && (
+            <p className="px-2.5 pb-1 pt-3 text-[10px] font-medium uppercase tracking-[0.12em] text-white/35 first:pt-0">{s.group}</p>
+          )}
           <button
             type="button"
             role="option"
@@ -92,10 +115,13 @@ function PlaceList({ sites, selected, onPick, onPreview, onClose }: { sites: Tar
               setCursor(i);
               onPreview(s.id);
             }}
-            className={`flex w-full items-baseline justify-between gap-3 rounded-lg px-2.5 py-1.5 text-left transition-colors ${i === cursor ? "bg-white/[0.07]" : ""}`}
+            className={`flex w-full items-center justify-between gap-3 rounded-lg px-2.5 py-2 text-left transition-colors duration-150 ${i === cursor ? "bg-white/[0.08]" : ""}`}
           >
-            <span className={`truncate text-[13px] ${s.id === selected ? "text-white" : "text-white/70"}`}>{s.name}</span>
-            <span className="shrink-0 font-mono text-[10.5px] text-white/30">{formatLatLon(s.lat, s.lon)}</span>
+            <span className="flex min-w-0 items-center gap-2">
+              <span className="h-1.5 w-1.5 shrink-0 rounded-full transition-opacity" style={{ background: tint, opacity: s.id === selected ? 1 : 0 }} />
+              <span className={`truncate text-[13.5px] ${s.id === selected ? "text-white" : "text-white/75"}`}>{s.name}</span>
+            </span>
+            <span className="shrink-0 font-mono text-[10.5px] tabular-nums text-white/30">{formatLatLon(s.lat, s.lon)}</span>
           </button>
         </div>
       ))}
@@ -111,7 +137,6 @@ export function Mirror() {
   const [selected, setSelected] = useState("shackleton");
   const [pin, setPin] = useState<View | null>(null);
   const [touched, setTouched] = useState(false);
-  const [discovery, setDiscovery] = useState(false);
   const [picking, setPicking] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
   const card = useRef<HTMLDivElement>(null);
@@ -146,7 +171,7 @@ export function Mirror() {
     setPicking(false);
   };
 
-  const submit = () => run({ text: `Earth's mirror of ${name}`, target: body, place, discovery, step: "Physical match" });
+  const submit = () => run({ text: `Earth's mirror of ${name}`, target: body, place, step: "Physical match" });
 
   const editor = (
     <div ref={card} className="flex flex-col items-center gap-4 p-4 sm:flex-row sm:items-stretch sm:gap-6 sm:p-5">
@@ -176,7 +201,7 @@ export function Mirror() {
           <BodyToggle value={body} onChange={switchBody} />
         </div>
 
-        <div className="relative mt-2 flex-1">
+        <div className="relative mt-2 flex-1" style={{ minHeight: picking ? 300 : 0, transition: "min-height .55s var(--ease-out-expo)" }}>
           <div aria-hidden={picking} inert={picking} style={{ opacity: picking ? 0 : 1, transition: "opacity .2s ease" }}>
             <button
               type="button"
@@ -202,14 +227,13 @@ export function Mirror() {
               <span className="truncate">{target ? target.group : "Profile estimated from latitude"}</span>
             </p>
             <div className="mt-4 border-t border-white/[0.06] pt-3">
-              <Profile body={body} place={place} />
+              <Profile body={body} lat={target ? target.lat : pin!.lat} lon={target ? target.lon : pin!.lon} />
             </div>
           </div>
-          {picking && <PlaceList sites={sites} selected={selected} onPick={choose} onPreview={setPreview} onClose={() => setPicking(false)} />}
+          {picking && <PlaceList sites={sites} selected={selected} tint={tint} onPick={choose} onPreview={setPreview} onClose={() => setPicking(false)} />}
         </div>
 
-        <div className="mt-4 flex items-center justify-between gap-3">
-          <DiscoveryToggle on={discovery} onChange={setDiscovery} />
+        <div className="mt-4 flex items-center justify-end">
           <FindButton onClick={submit} label="Find Earth's mirror" />
         </div>
       </div>
