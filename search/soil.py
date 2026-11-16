@@ -58,6 +58,24 @@ class Soil:
         k = int(n.argmax())
         return self.name.get(int(v[k])), float(n[k] / len(w))
 
+    def dominant_many(self, lat: np.ndarray, lon: np.ndarray, radius_km: float = 1.3, chunk: int = 1 << 20):
+        """dominant() for every point at once, as grid values: (most common value, its count, land count).
+
+        0 is no land; ties go to the smaller value, as np.unique + argmax does."""
+        r = max(1, round(radius_km / (111.32 * STEP)))
+        d = np.arange(-r, r + 1)
+        val, cnt, land = (np.zeros(len(lat), np.uint16) for _ in range(3))
+        for s in range(0, len(lat), chunk):
+            i = ((90 - lat[s:s + chunk]) / STEP).astype(np.int64)[:, None, None] + d[None, :, None]
+            j = ((lon[s:s + chunk] + 180) / STEP).astype(np.int64)[:, None, None] + d[None, None, :]
+            ok = (i >= 0) & (i < NROW) & (j >= 0) & (j < NCOL)  # the window, cut at the grid's edges
+            w = np.where(ok, self.grid[i.clip(0, NROW - 1), j.clip(0, NCOL - 1)], 0).reshape(len(ok), -1).astype(np.int64)
+            c = (w[:, :, None] == w[:, None, :]).sum(2) * (w > 0)
+            k = (c * 256 + 255 - w).argmax(1)
+            n = np.arange(len(w))
+            val[s:s + chunk], cnt[s:s + chunk], land[s:s + chunk] = w[n, k] * (c[n, k] > 0), c[n, k], (w > 0).sum(1)
+        return val, cnt, land
+
 
 if __name__ == "__main__":
     build(sys.argv[1])

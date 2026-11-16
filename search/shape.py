@@ -74,14 +74,29 @@ class Index:
         self.n2 = (self.E.astype(np.float64) ** 2).sum(1)
         self.std = np.sqrt(self.n2 / NPIX)
 
-    def exact(self, T: np.ndarray, idx: np.ndarray | None = None) -> tuple[np.ndarray, np.ndarray]:
-        """RMSE (m) and best rotation index for candidates idx (all if None)."""
-        E = self.E if idx is None else self.E[idx]
-        n2 = self.n2 if idx is None else self.n2[idx]
-        # float64: patches are stored as float32, but small RMSEs come from differences of large sums
-        d2 = n2[:, None] + (T ** 2).sum(1)[None, :] - 2.0 * (E.astype(np.float64) @ T.T)
-        best = d2.argmin(1)
-        return np.sqrt(np.maximum(d2[np.arange(len(best)), best], 0) / NPIX), best
+    @classmethod
+    def load(cls, folder) -> "Index":
+        """The index written by build_index.py; E stays on disk, memory-mapped (the OS page cache holds it)."""
+        self = cls.__new__(cls)
+        self.E = np.load(f"{folder}/E.npy", mmap_mode="r")
+        self.n2 = np.load(f"{folder}/n2.npy")
+        self.std = np.load(f"{folder}/std.npy")
+        return self
+
+    def exact(self, T: np.ndarray, idx: np.ndarray | None = None, chunk: int = 1 << 16) -> tuple[np.ndarray, np.ndarray]:
+        """RMSE (m) and best rotation index for candidates idx (all if None), a block of rows at a time."""
+        n = len(self.E) if idx is None else len(idx)
+        rmse, rot = np.empty(n), np.empty(n, np.intp)
+        t2 = (T ** 2).sum(1)[None, :]
+        for s in range(0, n, chunk):
+            b = slice(s, min(s + chunk, n))
+            E = self.E[b] if idx is None else self.E[idx[b]]
+            n2 = self.n2[b] if idx is None else self.n2[idx[b]]
+            # float64: patches are stored as float32, but small RMSEs come from differences of large sums
+            d2 = n2[:, None] + t2 - 2.0 * (E.astype(np.float64) @ T.T)
+            best = d2.argmin(1)
+            rmse[b], rot[b] = np.sqrt(np.maximum(d2[np.arange(len(best)), best], 0) / NPIX), best
+        return rmse, rot
 
     def search(self, T: np.ndarray, k: int = 50, allowed: np.ndarray | None = None, prune: bool = True, chunk: int = 4096):
         """Top-k (indices, rmse, rotation index); `allowed` is a boolean pre-filter.
@@ -95,8 +110,8 @@ class Index:
         ts = np.sqrt((T ** 2).sum(1) / NPIX)  # target std per rotation
         lo, hi = ts.min(), ts.max()
         lb = np.maximum(0, np.maximum(lo - self.std[cand], self.std[cand] - hi))  # distance to [lo, hi]
-        order = cand[np.argsort(lb)]
-        lb_sorted = np.sort(lb)
+        o = np.argsort(lb)
+        order, lb_sorted = cand[o], lb[o]
         best_i = np.empty(0, int)
         best_r = np.empty(0)
         best_rot = np.empty(0, int)

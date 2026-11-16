@@ -2,14 +2,16 @@
 Analog search API: a Moon or Mars point -> Earth sites with the closest terrain shape.
 
     .venv/Scripts/python -m uvicorn api:app --port 8787
+    SEARCH_INDEX=out/global .venv/bin/python -m uvicorn api:app --port 8788   # another index (the global mask)
 
 POST /search   {"body": "moon"|"mars", "lat": .., "lon": .., "filters": {...}?}
                -> {"target": {...}, "sites": [Candidate-shaped objects]}
 GET  /imagery/{h3}.jpg, /imagery/{h3}_thumb.jpg   Sentinel-2 cloudless around the cell
 
-The candidate set is whatever out/nevada_patches.npz holds (Nevada for now; the
-eligible-land cells later). Target terrain is read at query time from the global
-USGS DEM mosaics, so any point works, not just named sites.
+The candidate set is out/index/ as written by build_index.py (memory-mapped, so it
+starts in seconds at any size), else out/nevada_patches.npz read whole (Nevada for
+now; the eligible-land cells later). Target terrain is read at query time from the
+global USGS DEM mosaics, so any point works, not just named sites.
 """
 
 from __future__ import annotations
@@ -38,8 +40,9 @@ from PIL import Image
 from pydantic import BaseModel
 from pyproj import Transformer
 
+from build_index import ENV as ENV_COLS, TERRAIN, terrain
 from compare import compare
-from shape import ANGLES, MASK, NPIX, PX_M, Index, bilinear, target_variants
+from shape import ANGLES, MASK, NPIX, PX_M, SIZE, Index, bilinear, target_variants
 from soil import Soil
 
 import sys
@@ -74,9 +77,30 @@ UA = {"User-Agent": "spacethropic/1.0 (NASA Space Apps prototype)"}
 
 
 # --- candidates ---------------------------------------------------------------
-d = np.load(ROOT / "out" / "nevada_patches.npz")
-CELLS, LAT, LON, PATCHES = d["h3"], d["lat"], d["lon"], d["patches"].astype(np.float64)
-INDEX = Index(PATCHES)
+# Cells are uint64 h3 ids; cell_id(i) makes the string only where one cell's id goes out
+IDX = Path(os.environ.get("SEARCH_INDEX") or ROOT / "out" / "index")
+if (IDX / "E.npy").exists():
+    INDEX = Index.load(IDX)
+    CELLS, LAT, LON = (np.load(IDX / f"{k}.npy") for k in ("h3", "lat", "lon"))
+    PIX = np.load(IDX / "pix.npy", mmap_mode="r")  # raw disk heights, read only for the cells a response shows
+    TERRAIN_FIELD = {k: np.load(IDX / f"{k}.npy", mmap_mode="r") for k in TERRAIN}
+else:  # no index built: the patches file, read whole (fine for Nevada)
+    d = np.load(ROOT / "out" / "nevada_patches.npz")
+    _p = d["patches"].astype(np.float64)
+    CELLS, LAT, LON = np.array([h3.str_to_int(str(c)) for c in d["h3"]], np.uint64), d["lat"], d["lon"]
+    INDEX, PIX, TERRAIN_FIELD = Index(_p), _p[:, MASK], terrain(_p)
+    del _p
+
+
+def cell_id(i: int) -> str:
+    return h3.int_to_str(int(CELLS[i]))
+
+
+def patch(i: int) -> np.ndarray:
+    """Cell i's patch; only its disk pixels are kept (grid() shows no others)."""
+    p = np.zeros((SIZE, SIZE))
+    p[MASK] = PIX[i]
+    return p
 
 
 def _slope(p):
@@ -115,34 +139,42 @@ def _rough(p):
     return np.concatenate([a, b]).mean()
 
 
-con = duckdb.connect(str(DB), read_only=True)
-_cols = [c[0] for c in con.execute("SELECT * FROM cells LIMIT 0").description]
-_rows = {r[_cols.index("h3")]: dict(zip(_cols, r)) for r in con.execute("SELECT * FROM cells WHERE body = 'earth'").fetchall()}
-con.close()
-ENV = [_rows.get(h3.str_to_int(str(c))) for c in CELLS]
+if (IDX / "env_tair_mean.npy").exists():  # global index: climate from the 10-degree grid, written by build_index.py
+    ENV = {k: np.load(IDX / f"env_{k}.npy") for k in ENV_COLS}
+else:
+    con = duckdb.connect(str(DB), read_only=True)
+    _env = con.execute("SELECT h3, tair_mean, tsurf_min, tsurf_max, rh, wind, sw, tair_range, dust_conc, ps, cloud, dust_aod "
+                       "FROM cells WHERE body = 'earth' ORDER BY h3").fetchnumpy()
+    con.close()
+    _at = np.searchsorted(_env["h3"], CELLS).clip(0, len(_env["h3"]) - 1)
+    if (_lost := int((_env["h3"][_at] != CELLS).sum())):
+        raise RuntimeError(f"{_lost:,} cells have no Earth row in {DB}")
+    ENV = {k: np.ma.filled(np.ma.asarray(v).astype(np.float64), np.nan)[_at] for k, v in _env.items() if k != "h3"}
+    del _env, _at
 # Per-cell values the refine drawers can limit on (same units as the frontend's FIELDS)
 FIELD = {
-    "slope": np.array([_slope(p) for p in PATCHES]),
-    "roughness": np.array([_rough(p) for p in PATCHES]),
-    "elevation": np.array([p[MASK].mean() for p in PATCHES]),
-    "meanTemp": np.array([e["tair_mean"] - 273.15 for e in ENV]),
-    "coldMin": np.array([e["tsurf_min"] - 273.15 for e in ENV]),
-    "humidity": np.array([e["rh"] for e in ENV]),
-    "wind": np.array([e["wind"] for e in ENV]),
-    "solar": np.array([e["sw"] * 24 / 1000 for e in ENV]),
+    "slope": TERRAIN_FIELD["slope"],
+    "roughness": TERRAIN_FIELD["roughness"],
+    "elevation": TERRAIN_FIELD["elevation"],
+    "meanTemp": ENV["tair_mean"] - 273.15,
+    "coldMin": ENV["tsurf_min"] - 273.15,
+    "humidity": ENV["rh"],
+    "wind": ENV["wind"],
+    "solar": ENV["sw"] * 24 / 1000,
     "relief": INDEX.std.copy(),
-    "slopeMax": np.array([_slope_p90(p) for p in PATCHES]),
-    "flatGround": np.array([_flat(p) for p in PATCHES]),
-    "airDayNight": np.array([e["tair_range"] for e in ENV]),
-    "dustConc": np.array([e["dust_conc"] for e in ENV]),
-    "heightRange": np.array([_range(p) for p in PATCHES]),
-    "concavity": np.array([_concavity(p) for p in PATCHES]),
-    "hotMax": np.array([e["tsurf_max"] - 273.15 for e in ENV]),
-    "pressure": np.array([e["ps"] / 1000 for e in ENV]),
-    "dayNight": np.array([e["tsurf_max"] - e["tsurf_min"] for e in ENV]),
-    "cloud": np.array([e["cloud"] for e in ENV]),
-    "dust": np.array([e["dust_aod"] for e in ENV]),
+    "slopeMax": TERRAIN_FIELD["slopeMax"],
+    "flatGround": TERRAIN_FIELD["flatGround"],
+    "airDayNight": ENV["tair_range"],
+    "dustConc": ENV["dust_conc"],
+    "heightRange": TERRAIN_FIELD["heightRange"],
+    "concavity": TERRAIN_FIELD["concavity"],
+    "hotMax": ENV["tsurf_max"] - 273.15,
+    "pressure": ENV["ps"] / 1000,
+    "dayNight": ENV["tsurf_max"] - ENV["tsurf_min"],
+    "cloud": ENV["cloud"],
+    "dust": ENV["dust_aod"],
 }
+del ENV
 
 # Surface material: WRB 2006 soil group -> what it offers as a Moon or Mars analog
 MATERIAL = {
@@ -157,19 +189,33 @@ MATERIAL = {
     "Durisols": ("hardpan", "A layer cemented by silica"),
     "Vertisols": ("clay", "Smectite-rich clay that cracks and swells"),
     "Cryosols": ("ice", "Permafrost within 1 m of the surface"),
+    "Ice": ("ice", "Glacier or ice sheet: no soil, the mask's ICE cells"),
 }
+ICE = 255  # soil value of the mask's ICE cells (the WRB grid's own values stop at 30)
 SOIL = Soil()
-_soil = [SOIL.dominant(float(a), float(b)) for a, b in zip(LAT, LON)]
-GROUP = np.array([g or "" for g, _ in _soil])
-MAT = np.array([MATERIAL.get(g, ("soil", ""))[0] if g else "" for g in GROUP])
+# Per cell as small codes, not strings: the soil grid value of the dominant group, its count, the land count
+SOIL_VAL, SOIL_N, SOIL_LAND = SOIL.dominant_many(LAT, LON)
+SOIL.name[ICE] = "Ice"
+if (IDX / "wrb.npy").exists():
+    _ice = np.load(IDX / "wrb.npy") == 255
+    SOIL_VAL[_ice], SOIL_N[_ice], SOIL_LAND[_ice] = ICE, 1, 1
+MAT_NAMES = np.array(["", *dict.fromkeys(m for m, _ in MATERIAL.values()), "soil"])  # MAT indexes this
+MAT_CODE = {str(m): c for c, m in enumerate(MAT_NAMES)}
+_mat_of = np.zeros(65536, np.uint8)  # soil grid value -> material code
+for _v, _g in SOIL.name.items():
+    if _g:
+        _mat_of[_v] = MAT_CODE[MATERIAL.get(_g, ("soil", ""))[0]]
+MAT = _mat_of[SOIL_VAL]
 # How many cells of each material the whole search area holds (a filter for one with none can't be met)
-MATERIALS = {str(k): int(n) for k, n in zip(*np.unique(MAT[MAT != ""], return_counts=True))}
+_n = np.bincount(MAT, minlength=len(MAT_NAMES))
+MATERIALS = {m: int(_n[MAT_CODE[m]]) for m in sorted(str(m) for m in MAT_NAMES) if m and _n[MAT_CODE[m]]}
 
 
 def soil_info(i: int) -> dict | None:
-    g, share = _soil[i]
+    g = SOIL.name.get(int(SOIL_VAL[i]))
     if not g:
         return None
+    share = int(SOIL_N[i]) / int(SOIL_LAND[i])
     key, note = MATERIAL.get(g, ("soil", "Organic-rich or leached soil with no lunar or Martian counterpart"))
     return {"group": g, "share": round(share, 2), "material": key, "note": note}
 
@@ -354,7 +400,7 @@ def search(q: Query):
         miss += over / SPAN[k]
         missed[k] = over > 0
     geo = [g for g in ((q.filters or {}).get("geology") or []) if isinstance(g, str)]
-    geo_miss = ~np.isin(MAT, geo) if geo else np.zeros(len(CELLS), bool)
+    geo_miss = ~np.isin(MAT, [MAT_CODE[g] for g in geo if g in MAT_CODE]) if geo else np.zeros(len(CELLS), bool)
     miss += geo_miss  # a whole span: the wrong material is a full miss
     allowed = miss == 0
 
@@ -381,15 +427,16 @@ def search(q: Query):
         cost = miss + np.maximum(m_min - score_all, 0) + SHAPE_WEIGHT_RELAXED * rmse_all / max(t_std, 1e-6)
         taken = {i for i, *_ in picks}
         cost[list(taken)] = np.inf
-        order = [i for i in np.argsort(cost) if np.isfinite(cost[i])]
+        order = np.argsort(cost)
+        order = order[np.isfinite(cost[order])]
         picks = distinct(order, rmse_all, rot_all, picks, strict=False)
 
     # Imagery starts downloading now; the browser's image requests wait on it
     for i, *_ in picks:
-        _img_pool.submit(ensure_imagery, str(CELLS[i]), float(LAT[i]), float(LON[i]))
+        _img_pool.submit(ensure_imagery, cell_id(i), float(LAT[i]), float(LON[i]))
     sites = []
     for i, e, o, relaxed in picks:
-        cell, env, p = str(CELLS[i]), ENV[i], PATCHES[i]
+        cell, p = cell_id(i), patch(i)
         name, region = place(float(LAT[i]), float(LON[i]))
         sites.append({
             "id": f"cell-{cell}",
@@ -414,7 +461,7 @@ def search(q: Query):
                 "elevationM": round(float(FIELD["elevation"][i]), 1),
                 "meanTempC": round(float(FIELD["meanTemp"][i]), 1),
                 "coldestMonthMinC": round(float(FIELD["coldMin"][i]), 1),
-                "hottestMonthMaxC": round(env["tsurf_max"] - 273.15, 1),
+                "hottestMonthMaxC": round(float(FIELD["hotMax"][i]), 1),
                 "precipMmYr": 200,
                 "solarKwhM2Day": round(float(FIELD["solar"][i]), 2),
                 "humidityPct": round(float(FIELD["humidity"][i])),
@@ -423,7 +470,7 @@ def search(q: Query):
                 "period": "2025 sample weeks",
             },
             "traits": {"slope": round(float(FIELD["slope"][i]), 1), "roughness": round(float(FIELD["roughness"][i]), 1),
-                       "geology": [MAT[i]] if MAT[i] else [], "roadKm": 10, "protectedArea": False, "access": "Not assessed yet"},
+                       "geology": [str(MAT_NAMES[MAT[i]])] if MAT[i] else [], "roadKm": 10, "protectedArea": False, "access": "Not assessed yet"},
             "missed": ([k for k in ranges if missed[k][i]] + (["geology"] if geo_miss[i] else []) + (["match"] if e > rmse_cap else [])) if relaxed else [],
             "metrics": {k: round(float(v[i]), 3) for k, v in FIELD.items()},
             "shape": {"rmseM": round(e, 2), "rotationDeg": int(ANGLES[o]), "score": round(float(np.exp(-((e / max(t_std, 1e-6)) ** 2))), 3),
