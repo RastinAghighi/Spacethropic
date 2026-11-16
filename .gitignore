@@ -8,9 +8,12 @@ Thumbs.db
 .venv/
 __pycache__/
 .pytest_cache/
+<<<<<<< HEAD
 *.egg-info/
 *.duckdb
 *.duckdb.wal
 *.parquet
 research/nasadem_h3_pilot/benchmarks/
 research/nasadem_h3_pilot/local/
+=======
+>>>>>>> 60f743b (Add resumable global H3 r7 filter and validated regional handoff)

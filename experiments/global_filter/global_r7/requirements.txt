@@ -1,0 +1,12 @@
+numpy>=2.2
+h3>=4.3,<5
+rasterio>=1.4
+pyarrow>=19
+pyshp>=2.3
+requests>=2.32
+psutil>=6
+pyhdf>=0.11
+pytest>=8
+shapely>=2
+pyproj>=3.6
+contourpy>=1.3

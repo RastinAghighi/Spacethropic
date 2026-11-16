@@ -49,6 +49,7 @@ def utm_grid(half_m=2500, px=10.0):
 
 def args_for(raster, output, **kw):
     argv = ["--raster", str(raster), "--lat", str(LAT), "--lon", str(LON),
+            "--resolution", str(kw.pop("resolution", 8)),
             "--ring", str(kw.pop("ring", 1)), "--scheme", kw.pop("scheme", "dynamic_world"),
             "--mission", kw.pop("mission", "mars_dry"),
             "--source-asset-id", SYNTHETIC_ID, "--source-version", "test",
@@ -64,12 +65,13 @@ def args_for(raster, output, **kw):
 # ----------------------------------------------------------------- H3 r8 generation
 
 
-def test_ring_cells_are_valid_r8_cells():
-    centre = h3.latlng_to_cell(LAT, LON, 8)
-    one, seven = pilot.ring_cells(LAT, LON, 0), pilot.ring_cells(LAT, LON, 1)
+@pytest.mark.parametrize("resolution", [7, 8])
+def test_ring_cells_are_valid_cells(resolution):
+    centre = h3.latlng_to_cell(LAT, LON, resolution)
+    one, seven = pilot.ring_cells(LAT, LON, 0, resolution), pilot.ring_cells(LAT, LON, 1, resolution)
     assert one == [centre]
     assert len(seven) == 7 and centre in seven and set(one) < set(seven)
-    assert all(h3.is_valid_cell(c) and h3.get_resolution(c) == 8 for c in seven)
+    assert all(h3.is_valid_cell(c) and h3.get_resolution(c) == resolution for c in seven)
     assert len(pilot.ring_cells(LAT, LON, 5)) == 91
     with pytest.raises(ValueError):
         pilot.ring_cells(LAT, LON, 6)
@@ -77,8 +79,20 @@ def test_ring_cells_are_valid_r8_cells():
         pilot.ring_cells(LON, LAT, 0)  # swapped arguments: latitude out of range
 
 
+def test_r7_default_run_metadata(tmp_path):
+    transform, n, _, _ = utm_grid(half_m=4000, px=100)
+    tif = write_tif(tmp_path / "r7.tif", np.full((n,n), DW["bare"], np.uint8), transform, nodata=255)
+    args = args_for(tif, tmp_path / "r7", resolution=7, ring=0)
+    manifest = pilot.run(args)
+    assert manifest["h3_resolution"] == 7
+    row = pilot.read_cells(tmp_path / "r7").to_pylist()[0]
+    assert row["resolution"] == 7 and h3.get_resolution(row["h3_cell"]) == 7
+    assert row["cell_area_km2"] > 4
+    assert pilot.ring_cells(LAT,LON,0) == [h3.latlng_to_cell(LAT,LON,7)]
+
+
 def test_cell_polygon_matches_h3_geometry_and_area():
-    for cell in pilot.ring_cells(LAT, LON, 1):
+    for cell in pilot.ring_cells(LAT, LON, 1, resolution=8):
         poly = pilot.cell_polygon(cell)
         ref = shapely.geometry.shape(h3.cells_to_geo([cell]))
         assert poly.normalize().equals_exact(ref.normalize(), 1e-12)
@@ -131,7 +145,7 @@ def test_uniform_raster_conserves_area_over_seven_cells(tmp_path):
     transform, n, _, _ = utm_grid()
     tif = write_tif(tmp_path / "bare.tif", np.full((n, n), DW["bare"], np.uint8), transform)
     with rasterio.open(tif) as src:
-        for cell in pilot.ring_cells(LAT, LON, 1):
+        for cell in pilot.ring_cells(LAT, LON, 1, resolution=8):
             lat, lon = h3.cell_to_latlng(cell)
             p = pilot.aggregate_polygon(src, pilot.cell_polygon(cell), lat, lon, "dynamic_world")
             assert p["bare"] == pytest.approx(100, abs=1e-5)
@@ -219,7 +233,7 @@ def test_run_writes_partitioned_parquet_and_manifest(tmp_path):
     # Trees west of a north-south line just east of the westernmost cell, bare east of
     # it: that cell is wholly trees (excluded), the eastern cells wholly bare (retained).
     east_edge = min(max(TO_UTM.transform(lon, lat)[0] for lat, lon in h3.cell_to_boundary(c))
-                    for c in pilot.ring_cells(LAT, LON, 1))
+                    for c in pilot.ring_cells(LAT, LON, 1, resolution=8))
     arr = np.where(xs[None, :] < east_edge + 20, DW["trees"], DW["bare"]).astype(np.uint8).repeat(n, 0)
     tif = write_tif(tmp_path / "scene.tif", arr, transform, nodata=255)
     out = tmp_path / "run"

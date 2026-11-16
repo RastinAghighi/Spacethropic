@@ -8,7 +8,8 @@ NASA hackathon team repo.
 |-------------|----------------------------------------|
 | `frontend/` | Next.js app (TypeScript, Tailwind, App Router) |
 | `pipeline/` | Python data pipeline: analog calibration dataset on an H3 grid |
-| `regional_pilot/` | Standalone H3 r8 land-cover prefilter pilot (exact area-weighted class fractions, mission decisions, Parquet + manifest). See [regional_pilot/README.md](regional_pilot/README.md) |
+| `regional_pilot/` | Configurable H3 land-cover pilot (default r7; separate mission policy). See [regional_pilot/README.md](regional_pilot/README.md) |
+| `global_r7/` | Resumable MODIS/GHSL/Natural Earth filter, partitioned Parquet and optional contours. [Execution report](global_r7/RUN_REPORT.md); global data await MODIS transfer |
 
 ## Frontend
 
