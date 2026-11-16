@@ -21,6 +21,9 @@ export function CandidateTray() {
   const previewing = !sameFilters(next, applied);
   const items = useRef<(HTMLButtonElement | null)[]>([]);
   const [hovered, setHovered] = useState<number | null>(null);
+  // Live results' imagery arrives after the results do: spin until each thumbnail loads
+  const [loaded, setLoaded] = useState<Set<string>>(() => new Set());
+  const markLoaded = (id: string) => setLoaded((s) => (s.has(id) ? s : new Set(s).add(id)));
   const shown = mode === "site" || mode === "diving" || mode === "surfacing" || (mode === "searching" && searchFrom === "site");
   const leaving = mode === "surfacing";
 
@@ -135,9 +138,22 @@ export function CandidateTray() {
                 src={thumbUrl(c.id)}
                 alt=""
                 draggable={false}
+                ref={(el) => {
+                  if (el?.complete && el.naturalWidth) markLoaded(c.id);
+                }}
+                onLoad={() => markLoaded(c.id)}
+                onError={() => markLoaded(c.id)}
                 className="h-full w-full object-cover"
-                style={{ filter: cut ? "grayscale(1) brightness(.45)" : "none", transition: "filter .4s ease" }}
+                style={{ filter: cut ? "grayscale(1) brightness(.45)" : "none", opacity: loaded.has(c.id) ? 1 : 0, transition: "filter .4s ease, opacity .5s ease" }}
               />
+              {!loaded.has(c.id) && (
+                <span aria-label="Loading imagery" className="absolute inset-0 grid place-items-center" style={{ background: `rgb(${r} ${g} ${b} / 0.35)` }}>
+                  <svg width="16" height="16" viewBox="0 0 16 16" className="animate-spin" aria-hidden>
+                    <circle cx="8" cy="8" r="6" fill="none" stroke="rgb(255 255 255 / 0.18)" strokeWidth="1.6" />
+                    <path d="M8 2a6 6 0 0 1 6 6" fill="none" stroke="white" strokeWidth="1.6" strokeLinecap="round" />
+                  </svg>
+                </span>
+              )}
               {cut && (
                 <span aria-hidden className="absolute inset-0 grid place-items-center" style={{ animation: "rise-in .3s var(--ease-out-expo) both" }}>
                   <svg width="16" height="16" viewBox="0 0 16 16">

@@ -96,7 +96,7 @@ export function targetOf(q: AnalogQuery) {
 
 // ── Numeric fields: drawer readouts and limit sliders ───────────────────────
 
-export type NumKey = "slope" | "roughness" | "elevation" | "meanTemp" | "coldMin" | "humidity" | "wind" | "solar";
+export type NumKey = "slope" | "roughness" | "relief" | "elevation" | "meanTemp" | "coldMin" | "dayNight" | "solar" | "humidity" | "cloud" | "wind" | "dust";
 
 interface Field {
   label: string;
@@ -114,10 +114,15 @@ interface Field {
 
 export const FIELDS: Record<NumKey, Field> = {
   slope: { label: "Slope", unit: "°", min: 0, max: 30, step: 1, digits: 0, get: (s) => traits(s).slope, target: (p) => p.slope },
-  roughness: { label: "Roughness", unit: "m", min: 0, max: 4, step: 0.1, digits: 1, get: (s) => traits(s).roughness },
+  // Mean height step between neighbouring 200 m samples
+  roughness: { label: "Roughness", unit: "m", min: 0, max: 30, step: 0.5, digits: 1, get: (s) => s.metrics?.roughness ?? traits(s).roughness },
+  relief: { label: "Relief", unit: "m", min: 0, max: 150, step: 1, digits: 0, get: (s) => s.metrics?.relief ?? s.shape?.reliefM ?? NaN },
   elevation: { label: "Elevation", unit: "m", min: 0, max: 3500, step: 50, digits: 0, get: (s) => s.climate.elevationM },
   meanTemp: { label: "Mean temperature", unit: "°C", min: -30, max: 35, step: 1, digits: 1, get: (s) => s.climate.meanTempC, target: (p) => p.meanTemp },
   coldMin: { label: "Coldest-month low", unit: "°C", min: -60, max: 15, step: 1, digits: 1, get: (s) => s.climate.coldestMonthMinC },
+  dayNight: { label: "Day–night swing", unit: "°C", min: 0, max: 40, step: 1, digits: 0, get: (s) => s.metrics?.dayNight ?? s.climate.hottestMonthMaxC - s.climate.coldestMonthMinC },
+  cloud: { label: "Cloud cover", unit: "%", min: 0, max: 100, step: 1, digits: 0, get: (s) => s.metrics?.cloud ?? NaN },
+  dust: { label: "Dust and haze", unit: "AOD", min: 0, max: 0.5, step: 0.01, digits: 2, get: (s) => s.metrics?.dust ?? NaN },
   humidity: { label: "Humidity", unit: "%", min: 0, max: 100, step: 1, digits: 0, get: (s) => s.climate.humidityPct },
   wind: { label: "Wind", unit: "m/s", min: 0, max: 6, step: 0.1, digits: 1, get: (s) => s.climate.windMs },
   solar: { label: "Solar irradiance", unit: "kWh/m²·d", min: 0, max: 11, step: 0.1, digits: 1, get: (s) => s.climate.solarKwhM2Day, target: (p) => p.solar },
@@ -179,6 +184,10 @@ export function limitsIn(tab: Tab, f: Filters) {
 export const FIELD_TAB: Record<NumKey, Tab> = {
   slope: "terrain",
   roughness: "terrain",
+  relief: "terrain",
+  dayNight: "thermal",
+  cloud: "weather",
+  dust: "weather",
   elevation: "terrain",
   meanTemp: "thermal",
   coldMin: "thermal",

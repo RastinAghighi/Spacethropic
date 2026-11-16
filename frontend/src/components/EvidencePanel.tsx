@@ -1,15 +1,14 @@
 "use client";
 
 import { DIVE, useUi } from "@/lib/ui";
-import { research, useResearch } from "@/lib/research";
 import { formatCoord, type Candidate } from "@/lib/candidates";
 import { BODY } from "@/lib/catalog";
-import { DIMS, FIELDS, matchProfile, overallScore, targetOf, type DimMatch, type Filters, type NumKey, type Tab } from "@/lib/profile";
+import { FIELDS, matchProfile, overallScore, targetOf, type NumKey } from "@/lib/profile";
 import type { AnalogQuery, Source } from "@/lib/search";
 import { Label } from "./search/primitives";
 import { ShapeCompare } from "./ShapeCompare";
+import { Measurements } from "./Measurements";
 
-const AMBER = "#f3b453";
 const pct = (v: number) => Math.round(v * 100);
 
 function Ticker({ value, className }: { value: number; className?: string }) {
@@ -70,76 +69,12 @@ function Delta({ value, className }: { value: number | null; className?: string 
   );
 }
 
-const COLS = "grid grid-cols-[76px_minmax(0,1fr)_minmax(0,1fr)_40px_52px] items-center gap-x-2.5";
-
-/** Measured values side by side: the site, the target, and how close they are. */
-function MatchTable({ match, weights, target, tint, deltas, hover }: { match: DimMatch[]; weights: Filters["weights"]; target: string; tint: string; deltas: (number | null)[]; hover: Tab | null }) {
-  return (
-    <div role="table" aria-label={`Measured values against ${target}`}>
-      <div role="row" className={`${COLS} pb-1.5 text-[10px] font-medium uppercase tracking-[0.12em] text-white/35`}>
-        <span role="columnheader" />
-        <span role="columnheader">Here</span>
-        <span role="columnheader" title={target}>
-          Target
-        </span>
-        <span role="columnheader" className="col-span-2 text-right">
-          Match
-        </span>
-      </div>
-      {match.map((m, i) => {
-        const ignored = weights[m.dim] === 0;
-        const short = !!m.gap && !ignored;
-        const tab = DIMS[m.dim].tab;
-        return (
-          <button
-            key={m.dim}
-            type="button"
-            role="row"
-            onClick={() => research.open(tab)}
-            onPointerEnter={() => research.hover(tab)}
-            onPointerLeave={() => research.hover(null)}
-            onFocus={() => research.hover(tab)}
-            onBlur={() => research.hover(null)}
-            title={m.gap ?? `Refine on ${DIMS[m.dim].label.toLowerCase()}`}
-            className={`${COLS} -mx-2 w-[calc(100%+16px)] rounded-lg px-2 py-[7px] text-left transition-colors duration-200 focus-visible:outline-none ${hover === tab ? "bg-white/[0.06]" : "hover:bg-white/[0.04]"} ${ignored ? "opacity-35" : ""}`}
-          >
-            <span role="cell" className="flex items-center gap-1.5 text-[12px] text-white/50">
-              {DIMS[m.dim].metric}
-              {weights[m.dim] === 2 && <span title="Prioritised" className="h-1 w-1 rounded-full" style={{ background: tint }} />}
-            </span>
-            <span role="cell" title={m.earth} className="truncate text-[13px] tabular-nums" style={{ color: short ? AMBER : "rgb(255 255 255 / 0.92)" }}>
-              {m.earth}
-            </span>
-            <span role="cell" title={m.target} className="truncate text-[13px] tabular-nums text-white/40">
-              {m.target}
-            </span>
-            <span role="cell" aria-hidden className="relative h-[3px] overflow-hidden rounded-full bg-white/[0.07]">
-              <span
-                className="absolute inset-y-0 left-0 rounded-full"
-                style={{ width: `${pct(m.score)}%`, background: short ? AMBER : tint, transformOrigin: "0 50%", animation: `bar-in .9s var(--ease-out-expo) ${0.2 + i * 0.05}s both` }}
-              />
-            </span>
-            <span role="cell" className="flex items-center justify-end gap-1">
-              <Delta value={deltas[i]} />
-              <span className="font-mono text-[11px] tabular-nums" style={{ color: short ? AMBER : "rgb(255 255 255 / 0.55)" }}>
-                {ignored ? "—" : pct(m.score)}
-              </span>
-            </span>
-          </button>
-        );
-      })}
-    </div>
-  );
-}
-
 function Body({
   c,
   index,
   total,
   q,
   source,
-  applied,
-  hover,
   prev,
 }: {
   c: Candidate;
@@ -147,15 +82,12 @@ function Body({
   total: number;
   q: AnalogQuery;
   source: Source;
-  applied: Filters;
-  hover: Tab | null;
   prev: { c: Candidate; q: AnalogQuery } | null;
 }) {
   const tint = BODY[q.target].tint;
   const target = targetOf(q);
-  const match = matchProfile(c, q);
-  const before = prev ? matchProfile(prev.c, prev.q) : null;
-  const deltas = match.map((m, i) => (before ? pct(m.score) - pct(before[i].score) : null));
+  // Where it differs: the measured gaps against the target, then what the data can't speak to
+  const differs = [...matchProfile(c, q).flatMap((m) => (m.gap && m.dim !== "geology" ? [m.gap] : [])), ...c.breaks];
   const scoreDelta = prev ? pct(overallScore(c, q)) - pct(overallScore(prev.c, prev.q)) : null;
 
   return (
@@ -199,37 +131,44 @@ function Body({
         </div>
       )}
 
-      <section className="mt-6" style={{ animation: "rise-in .6s var(--ease-out-expo) .1s both" }}>
-        <MatchTable match={match} weights={applied.weights} target={target.short} tint={tint} deltas={deltas} hover={hover} />
+      {/* Reasoning, up front: why it's an analog and where the analogy breaks */}
+      <section className="mt-6 space-y-4 text-[12.5px]" style={{ animation: "rise-in .6s var(--ease-out-expo) .12s both" }}>
+        <div>
+          <Label className="mb-2">Why it&apos;s an analog</Label>
+          <ul className="space-y-1.5">
+            {c.why.map((w) => (
+              <li key={w} className="flex gap-2.5 leading-snug text-white/75">
+                <span className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: tint }} aria-hidden />
+                {w}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <Label className="mb-2">Where it differs</Label>
+          <ul className="space-y-1.5">
+            {differs.map((b) => (
+              <li key={b} className="flex gap-2.5 leading-snug text-white/55">
+                <span className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#f3b453]" aria-hidden />
+                {b}
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
 
-      <details className="group mt-6 border-t border-white/[0.06] pt-4 text-[12px]" style={{ animation: "rise-in .6s var(--ease-out-expo) .4s both" }}>
-        <summary className="flex cursor-pointer list-none items-center justify-between text-white/40 transition-colors hover:text-white/70 [&::-webkit-details-marker]:hidden">
-          About this site
+      <details className="group mt-6 border-t border-white/[0.06] pt-4 text-[12px]" style={{ animation: "rise-in .6s var(--ease-out-expo) .2s both" }}>
+        <summary className="flex cursor-pointer list-none items-center justify-between text-white/45 transition-colors hover:text-white/75 [&::-webkit-details-marker]:hidden">
+          Measured values
           <svg width="10" height="10" viewBox="0 0 10 10" className="transition-transform group-open:rotate-90" aria-hidden>
             <path d="M3.5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </summary>
-        <p className="mt-3 text-[13px] leading-relaxed text-white/70">{c.summary}</p>
-        <ul className="mt-3 space-y-1.5">
-          {c.why.map((w) => (
-            <li key={w} className="flex gap-2.5 leading-snug text-white/55">
-              <span className="mt-[8px] h-px w-2 shrink-0 bg-white/30" aria-hidden />
-              {w}
-            </li>
-          ))}
-        </ul>
-        <Label className="mt-4">Where it differs</Label>
-        <ul className="mt-1.5 space-y-1.5">
-          {c.breaks.map((b) => (
-            <li key={b} className="flex gap-2.5 leading-snug text-white/45">
-              <span className="mt-[8px] h-px w-2 shrink-0 bg-white/20" aria-hidden />
-              {b}
-            </li>
-          ))}
-        </ul>
+        <div className="mt-4">
+          <Measurements c={c} q={q} tint={tint} />
+        </div>
         <p className="mt-4 text-[10.5px] leading-relaxed text-white/30">
-          Imagery: NASA HLS via GIBS, {c.imagery.date}. Climate: NASA POWER climatology. Target values are indicative.
+          Imagery: {c.imagery.source}. Climate: {c.climate.source}. Target values are indicative.
         </p>
       </details>
     </div>
@@ -239,7 +178,6 @@ function Body({
 /** Right-third panel: the terrain shape match, and measured values against the target. */
 export function EvidencePanel() {
   const { mode, results, active, query, source, searchFrom, trail, trailAt } = useUi();
-  const { applied, hover } = useResearch();
   const c = results[active];
   const shown = mode === "site" || mode === "diving" || mode === "surfacing" || (mode === "searching" && searchFrom === "site");
   if (!c || !query || !shown) return null;
@@ -258,7 +196,7 @@ export function EvidencePanel() {
       }}
     >
       <div className="min-h-0 overflow-y-auto overscroll-contain rounded-[22px] border border-white/[0.08] bg-[rgb(10_11_14/0.62)] p-5 shadow-[0_30px_80px_-30px_rgb(0_0_0/0.9),inset_0_1px_0_rgb(255_255_255/0.05)] backdrop-blur-2xl backdrop-saturate-150 [scrollbar-width:none]">
-        <Body key={`${c.id}:${trailAt}`} c={c} index={active} total={results.length} q={query} source={source} applied={applied} hover={hover} prev={prev} />
+        <Body key={`${c.id}:${trailAt}`} c={c} index={active} total={results.length} q={query} source={source} prev={prev} />
       </div>
     </aside>
   );

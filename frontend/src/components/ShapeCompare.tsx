@@ -34,15 +34,21 @@ function ReliefDisk({ grid, lim, pxM, size }: { grid: Grid; lim: number; pxM: nu
     const canvas = ref.current;
     if (!canvas) return;
     const n = grid.length;
-    canvas.width = canvas.height = n;
-    const ctx = canvas.getContext("2d")!;
-    const img = ctx.createImageData(n, n);
+    const img = new ImageData(n, n);
     const at = (i: number, j: number, v: number) => grid[i]?.[j] ?? v;
+    // Cells just outside the sampled disk borrow their nearest inside neighbour (toward the centre)
+    const inside = (i: number, j: number) => {
+      const m = (n - 1) / 2;
+      for (let t = 0.1; t <= 1; t += 0.1) {
+        const w = grid[Math.round(i + (m - i) * t)][Math.round(j + (m - j) * t)];
+        if (w !== null) return w;
+      }
+      return 0;
+    };
     const [lx, ly, lz] = [-0.6, 0.6, 0.53]; // toward the light: west, north, up (~32°)
     for (let i = 0; i < n; i++) {
       for (let j = 0; j < n; j++) {
-        const v = grid[i][j];
-        if (v === null) continue;
+        const v = grid[i][j] ?? inside(i, j);
         // Relief exaggerated 3x for the shading so gentle ground still reads; rows run south
         const gx = ((at(i, j + 1, v) - at(i, j - 1, v)) / (2 * pxM)) * 3;
         const gy = ((at(i + 1, j, v) - at(i - 1, j, v)) / (2 * pxM)) * 3;
@@ -56,9 +62,25 @@ function ReliefDisk({ grid, lim, pxM, size }: { grid: Grid; lim: number; pxM: nu
         img.data[o + 3] = 255;
       }
     }
-    ctx.putImageData(img, 0, 0);
-  }, [grid, lim, pxM]);
-  return <canvas ref={ref} style={{ width: size, height: size, imageRendering: "pixelated" }} className="block" aria-hidden />;
+    // Scale up so square samples fill a smooth circle: the circle sits just inside the sampled disk
+    const src = document.createElement("canvas");
+    src.width = src.height = n;
+    src.getContext("2d")!.putImageData(img, 0, 0);
+    const dpr = window.devicePixelRatio || 1;
+    const S = Math.round(size * dpr);
+    const R = 5.9; // grid px; the sampled disk reaches ~6.4
+    canvas.width = canvas.height = S;
+    const out = canvas.getContext("2d")!;
+    out.imageSmoothingEnabled = false;
+    const c = n / 2;
+    const span = (S / (2 * R)) * n; // drawn size of the whole grid
+    out.drawImage(src, S / 2 - (c / n) * span, S / 2 - (c / n) * span, span, span);
+    out.globalCompositeOperation = "destination-in";
+    out.beginPath();
+    out.arc(S / 2, S / 2, S / 2, 0, Math.PI * 2);
+    out.fill();
+  }, [grid, lim, pxM, size]);
+  return <canvas ref={ref} style={{ width: size, height: size }} className="block" aria-hidden />;
 }
 
 /** The target's terrain beside this site's, turned to fit: the shape match, shown. */

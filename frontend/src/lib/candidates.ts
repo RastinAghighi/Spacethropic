@@ -39,6 +39,8 @@ export interface CandidateSite {
   shape?: ShapeMatch;
   /** Limits this site falls outside of: returned only when too few sites met them all */
   missed?: string[];
+  /** Measured per-cell values from the search service, keyed like the filter fields */
+  metrics?: Record<string, number>;
 }
 
 export interface Traits {

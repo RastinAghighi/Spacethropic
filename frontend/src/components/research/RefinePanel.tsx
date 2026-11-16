@@ -31,10 +31,10 @@ import { RangeField } from "./RangeField";
 /** `fields` lead each drawer; `more` waits behind a disclosure with the weights. `hidden` drawers
  * stay wired up but off the rail until their data exists. */
 export const TABS: { id: Tab; label: string; icon: string; fields: NumKey[]; more: NumKey[]; dims: Dim[]; hidden?: boolean }[] = [
-  { id: "terrain", label: "Terrain", icon: "M1.5 13.5l4.25-7.5 3 5 2-3 3.75 5.5z", fields: ["slope"], more: ["roughness", "elevation"], dims: ["terrain"] },
+  { id: "terrain", label: "Terrain", icon: "M1.5 13.5l4.25-7.5 3 5 2-3 3.75 5.5z", fields: ["slope", "relief", "roughness", "elevation"], more: [], dims: ["terrain"] },
   { id: "geology", label: "Geology", icon: "M8 1.75l5.75 4.5L8 14.25 2.25 6.25z M2.25 6.25h11.5 M6 6.25L8 14.25l2-8", fields: [], more: [], dims: ["geology"], hidden: true }, // no geology dataset yet
-  { id: "thermal", label: "Thermal", icon: "M8 2.25c.83 0 1.5.67 1.5 1.5v5.6a3 3 0 1 1-3 0v-5.6c0-.83.67-1.5 1.5-1.5z M8 7v4", fields: ["meanTemp"], more: ["coldMin"], dims: ["thermal"] },
-  { id: "weather", label: "Weather", icon: "M4.75 12.5h6.5a2.75 2.75 0 0 0 .4-5.47A3.75 3.75 0 0 0 4.5 8a2.25 2.25 0 0 0 .25 4.5z", fields: ["solar"], more: ["humidity", "wind"], dims: ["sun"] },
+  { id: "thermal", label: "Thermal", icon: "M8 2.25c.83 0 1.5.67 1.5 1.5v5.6a3 3 0 1 1-3 0v-5.6c0-.83.67-1.5 1.5-1.5z M8 7v4", fields: ["meanTemp", "dayNight", "coldMin"], more: [], dims: ["thermal"] },
+  { id: "weather", label: "Weather", icon: "M4.75 12.5h6.5a2.75 2.75 0 0 0 .4-5.47A3.75 3.75 0 0 0 4.5 8a2.25 2.25 0 0 0 .25 4.5z", fields: ["solar", "cloud", "dust", "humidity", "wind"], more: [], dims: ["sun"] },
 ];
 const tabById = (id: Tab) => TABS.find((t) => t.id === id)!;
 
@@ -48,9 +48,9 @@ function WeightControl({ dim, value }: { dim: Dim; value: Weight }) {
     { w: 2, label: "Priority" },
   ];
   return (
-    <div className="flex items-center justify-between gap-3">
-      <p className="text-[12.5px] text-white/70">{DIMS[dim].label} in the match</p>
-      <div role="radiogroup" aria-label={`${DIMS[dim].label} weight`} className="relative flex rounded-full bg-white/[0.04] p-[3px] ring-1 ring-white/[0.07]">
+    <div>
+      <p className="mb-2 text-[12.5px] text-white/75">{DIMS[dim].label} weight</p>
+      <div role="radiogroup" aria-label={`${DIMS[dim].label} weight`} className="relative flex w-fit rounded-full bg-white/[0.04] p-[3px] ring-1 ring-white/[0.07]">
         <span
           aria-hidden
           className="absolute bottom-[3px] left-[3px] top-[3px] w-[64px] rounded-full bg-white/[0.1] shadow-[inset_0_1px_0_rgb(255_255_255/0.08)]"
@@ -123,8 +123,6 @@ function Drawer({ tab, c, q, draft, applied, pool }: { tab: Tab; c: Candidate; q
   const def = tabById(tab);
   const { profile } = targetOf(q);
   const tint = BODY[q.target].tint;
-  // Secondary limits start open only when something in them is already set.
-  const [moreOpen, setMoreOpen] = useState(() => def.more.some((k) => draft.ranges[k]) || def.dims.some((d) => draft.weights[d] !== 1));
   const field = (k: NumKey) => (
     <RangeField
       key={k}
@@ -141,38 +139,18 @@ function Drawer({ tab, c, q, draft, applied, pool }: { tab: Tab; c: Candidate; q
     <div key={tab} style={{ animation: "rise-in .45s var(--ease-out-expo) both" }}>
       <section>
         {tab === "geology" && <Label className="mb-3">Require any of</Label>}
-        <div className="space-y-5">
+        <div className="space-y-4">
           {def.fields.map(field)}
           {tab === "geology" && <GeologyPicker draft={draft} c={c} q={q} tint={tint} />}
         </div>
       </section>
 
-      {(def.more.length > 0 || def.dims.length > 0) && (
-        <section className="mt-5 border-t border-white/[0.06] pt-1">
-          <button
-            type="button"
-            onClick={() => setMoreOpen((v) => !v)}
-            aria-expanded={moreOpen}
-            className="flex w-full items-center justify-between py-2.5 text-[12px] text-white/45 transition-colors hover:text-white/80 focus-visible:outline-none focus-visible:text-white"
-          >
-            <span>{def.more.length ? `${def.more.map((k, i) => (i ? FIELDS[k].label.toLowerCase() : FIELDS[k].label)).join(", ")} and weight` : "Weight in the match"}</span>
-            <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden style={{ transform: moreOpen ? "rotate(90deg)" : "none", transition: "transform .3s var(--ease-out-expo)" }}>
-              <path d="M3.5 2l3 3-3 3" stroke="currentColor" strokeWidth="1.4" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </button>
-          <div className="grid transition-[grid-template-rows] duration-500" style={{ gridTemplateRows: moreOpen ? "1fr" : "0fr", transitionTimingFunction: "var(--ease-out-expo)" }}>
-            <div className="min-h-0 overflow-hidden" inert={!moreOpen}>
-              <div className="space-y-5 pb-1 pt-2">
-                {def.more.map(field)}
-                {def.dims.map((d) => (
-                  <WeightControl key={d} dim={d} value={draft.weights[d]} />
-                ))}
-                {def.dims.some((d) => draft.weights[d] !== applied.weights[d]) && (
-                  <p className="-mt-3 text-[10.5px] text-white/35">Weights re-rank the candidates; they don&apos;t remove any.</p>
-                )}
-              </div>
-            </div>
-          </div>
+      {def.dims.length > 0 && (
+        <section className="mt-6 space-y-3 border-t border-white/[0.06] pt-4">
+          {def.dims.map((d) => (
+            <WeightControl key={d} dim={d} value={draft.weights[d]} />
+          ))}
+          {def.dims.some((d) => draft.weights[d] !== applied.weights[d]) && <p className="text-[10.5px] text-white/35">Weights re-rank the candidates; they don&apos;t remove any.</p>}
         </section>
       )}
     </div>

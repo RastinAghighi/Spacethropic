@@ -3,6 +3,8 @@
 import { useRef, useState } from "react";
 import { FIELDS, formatField, type NumKey } from "@/lib/profile";
 
+const INSET = 7; // thumb radius: thumbs never leave the track
+
 export interface Dot {
   id: string;
   name: string;
@@ -50,9 +52,10 @@ export function RangeField({
     const hi = Math.max(next[0], next[1]);
     onChange(lo <= f.min && hi >= f.max ? null : [+lo.toFixed(f.digits), +hi.toFixed(f.digits)]);
   };
+  // Thumbs sit inside the track: positions map onto [INSET, width - INSET]
   const pointAt = (clientX: number) => {
     const b = track.current!.getBoundingClientRect();
-    return valueAt((clientX - b.left) / b.width);
+    return valueAt((clientX - b.left - INSET) / (b.width - 2 * INSET));
   };
 
   const onDown = (e: React.PointerEvent) => {
@@ -84,25 +87,15 @@ export function RangeField({
     commit(thumb === 0 ? [Math.min(v, r[1]), r[1]] : [r[0], Math.max(v, r[0])]);
   };
 
-  // Stack dots that would overlap into up to three rows.
-  const placed = [...dots]
-    .sort((a, b) => a.v - b.v)
-    .reduce<(Dot & { x: number; row: number })[]>((acc, d) => {
-      const x = pos(d.v);
-      let row = 0;
-      while (row < 2 && acc.some((o) => o.row === row && Math.abs(o.x - x) < 0.035)) row++;
-      acc.push({ ...d, x, row });
-      return acc;
-    }, []);
-
   const offScale = target !== undefined && (target < f.min || target > f.max);
   const readout = !value ? "Any" : r[0] <= f.min ? `≤ ${formatField(k, r[1])}` : r[1] >= f.max ? `≥ ${formatField(k, r[0])}` : `${formatField(k, r[0])} – ${formatField(k, r[1])}`;
+  const x = (v: number) => `calc(${INSET}px + ${pos(v)} * (100% - ${2 * INSET}px))`;
 
   return (
     <div className="group/field">
-      <div className="flex items-baseline justify-between gap-3">
-        <p className="text-[12.5px] text-white/70">{f.label}</p>
-        <div className="flex items-center gap-1.5">
+      <div className="flex h-5 items-center justify-between gap-3">
+        <p className="truncate text-[12.5px] text-white/75">{f.label}</p>
+        <div className="flex shrink-0 items-center gap-1.5">
           <span key={readout} className={`font-mono text-[11.5px] tabular-nums ${value ? "text-white" : "text-white/35"}`}>
             {readout}
           </span>
@@ -128,54 +121,37 @@ export function RangeField({
         onPointerUp={() => setDrag(null)}
         onPointerCancel={() => setDrag(null)}
         onLostPointerCapture={() => setDrag(null)}
-        className="relative mt-1.5 h-[46px] cursor-pointer touch-none select-none"
+        className="relative mt-2 h-8 cursor-pointer touch-none select-none"
       >
-        {/* Selected band behind the dots */}
-        <div
-          aria-hidden
-          className="absolute bottom-[7px] top-1 rounded-md bg-white/[0.035] transition-opacity"
-          style={{ left: `${pos(r[0]) * 100}%`, right: `${(1 - pos(r[1])) * 100}%`, opacity: value ? 1 : 0 }}
-        />
-
-        {/* Target value */}
-        {target !== undefined && (
-          <div aria-hidden className="absolute bottom-[7px] top-0" style={{ left: `${pos(target) * 100}%` }}>
-            <span className="absolute bottom-0 top-3 w-px -translate-x-1/2" style={{ background: `linear-gradient(to top, ${tint}, transparent)` }} />
-            <span
-              className={`absolute top-0 whitespace-nowrap text-[9.5px] font-medium tracking-[0.04em] ${pos(target) > 0.8 ? "right-1" : pos(target) < 0.2 ? "left-1" : "-translate-x-1/2"}`}
-              style={{ color: tint }}
-            >
-              {offScale ? (target! < f.min ? `◂ Target ${formatField(k, target!)}` : `Target ${formatField(k, target!)} ▸`) : "Target"}
-            </span>
-          </div>
-        )}
-
-        {/* Candidate pool */}
-        {placed.map((d) => (
+        {/* Candidates as a rug of ticks: bright if they pass the draft limits, the site on screen tallest */}
+        {dots.map((d) => (
           <span
             key={d.id}
             title={`${d.name} · ${formatField(k, d.v)}`}
-            className="absolute rounded-full"
+            className="absolute bottom-[13px] w-[2px] -translate-x-1/2 rounded-full transition-[background-color,height] duration-300"
             style={{
-              left: `${d.x * 100}%`,
-              bottom: 13 + d.row * 8,
-              width: d.current ? 9 : 6,
-              height: d.current ? 9 : 6,
-              transform: "translate(-50%, 50%)",
-              background: d.current ? "transparent" : d.pass ? "rgb(255 255 255 / 0.85)" : "rgb(255 255 255 / 0.16)",
-              boxShadow: d.current ? `0 0 0 1.5px ${d.pass ? "#fff" : "rgb(255 255 255 / 0.4)"}, 0 0 10px rgb(255 255 255 / 0.35)` : undefined,
-              transition: "background-color .25s ease, box-shadow .25s ease",
+              left: x(d.v),
+              height: d.current ? 14 : 9,
+              background: d.current ? "#fff" : d.pass ? "rgb(255 255 255 / 0.6)" : "rgb(255 255 255 / 0.15)",
+              boxShadow: d.current ? "0 0 8px rgb(255 255 255 / 0.5)" : undefined,
             }}
           />
         ))}
 
-        {/* Track and thumbs */}
-        <div aria-hidden className="absolute inset-x-0 bottom-[6px] h-[2px] rounded-full bg-white/10" />
+        {/* Track, selection and target */}
+        <div aria-hidden className="absolute bottom-[7px] h-[2px] rounded-full bg-white/10" style={{ left: INSET, right: INSET }} />
         <div
           aria-hidden
-          className="absolute bottom-[6px] h-[2px] rounded-full transition-colors"
-          style={{ left: `${pos(r[0]) * 100}%`, right: `${(1 - pos(r[1])) * 100}%`, background: value ? "rgb(255 255 255 / 0.75)" : "rgb(255 255 255 / 0.18)" }}
+          className="absolute bottom-[7px] h-[2px] rounded-full transition-colors"
+          style={{ left: x(r[0]), width: `calc(${pos(r[1]) - pos(r[0])} * (100% - ${2 * INSET}px))`, background: value ? "rgb(255 255 255 / 0.8)" : "rgb(255 255 255 / 0.2)" }}
         />
+        {target !== undefined && (
+          <span aria-hidden className="absolute bottom-0 -translate-x-1/2" style={{ left: x(Math.min(f.max, Math.max(f.min, target))) }}>
+            <svg width="8" height="5" viewBox="0 0 8 5" className="block">
+              <path d="M4 0L8 5H0z" fill={tint} />
+            </svg>
+          </span>
+        )}
         {([0, 1] as const).map((t) => (
           <span
             key={t}
@@ -187,9 +163,9 @@ export function RangeField({
             aria-valuenow={r[t]}
             aria-valuetext={formatField(k, r[t])}
             onKeyDown={onKey(t)}
-            className="absolute bottom-[7px] h-3.5 w-3.5 rounded-full bg-white shadow-[0_1px_4px_rgb(0_0_0/0.5)] outline-none transition-[transform,opacity] duration-200 focus-visible:ring-2 focus-visible:ring-white/50 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+            className="absolute bottom-[8px] h-3.5 w-3.5 rounded-full bg-white shadow-[0_1px_4px_rgb(0_0_0/0.5)] outline-none transition-[transform,opacity] duration-200 focus-visible:ring-2 focus-visible:ring-white/50"
             style={{
-              left: `${pos(r[t]) * 100}%`,
+              left: x(r[t]),
               transform: `translate(-50%, 50%) scale(${drag === t ? 1.2 : value ? 1 : 0.72})`,
               opacity: value || drag !== null ? 1 : 0.55,
             }}
@@ -197,8 +173,14 @@ export function RangeField({
         ))}
       </div>
 
-      <div aria-hidden className="mt-0.5 flex justify-between font-mono text-[9.5px] text-white/20">
+      <div aria-hidden className="mt-1 flex items-center justify-between font-mono text-[9.5px] tabular-nums text-white/25" style={{ paddingInline: INSET - 3 }}>
         <span>{formatField(k, f.min)}</span>
+        {target !== undefined && (
+          <span style={{ color: tint }}>
+            {offScale ? (target < f.min ? "◂ " : "") : ""}target {formatField(k, target)}
+            {offScale && target > f.max ? " ▸" : ""}
+          </span>
+        )}
         <span>{formatField(k, f.max)}</span>
       </div>
     </div>
