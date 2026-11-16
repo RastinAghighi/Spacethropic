@@ -6,16 +6,38 @@ import type { AnalogQuery, AnalogTarget } from "./search";
 // refine → re-rank loop behaves sensibly end to end; the backend owns real per-cell
 // profiles, similarity and constraint filtering.
 
-export type Geology = "basalt" | "impact" | "sedimentary" | "evaporite" | "sulfate" | "ice";
+export type Geology =
+  | "rock"
+  | "regolith"
+  | "sand"
+  | "basalt"
+  | "evaporite"
+  | "sulfate"
+  | "carbonate"
+  | "clay"
+  | "hardpan"
+  | "ice"
+  | "soil"
+  | "impact"
+  | "sedimentary";
 
 export const GEOLOGY: Record<Geology, { label: string; short: string; note: string }> = {
-  basalt: { label: "Basalt", short: "Basalt", note: "Volcanic flows, like the lunar maria" },
+  rock: { label: "Bare rock", short: "Rock", note: "Thin soil over hard rock (WRB Leptosols)" },
+  regolith: { label: "Loose debris", short: "Debris", note: "Weakly developed mineral debris, like regolith (WRB Regosols)" },
+  sand: { label: "Sand", short: "Sand", note: "Loose sand: dunes and wheel traction (WRB Arenosols)" },
+  basalt: { label: "Volcanic", short: "Volcanic", note: "Basalt and volcanic ash, like the lunar maria (WRB Andosols)" },
+  evaporite: { label: "Salts", short: "Salts", note: "Salt crusts left by drying brines (WRB Solonchaks, Solonetz)" },
+  sulfate: { label: "Gypsum · sulfate", short: "Sulfates", note: "Like Mars's sulfate-bearing layers (WRB Gypsisols)" },
+  carbonate: { label: "Carbonate", short: "Carbonate", note: "Like the carbonates in Jezero crater (WRB Calcisols)" },
+  clay: { label: "Swelling clay", short: "Clay", note: "Smectite clays, like Mars's phyllosilicates (WRB Vertisols)" },
+  hardpan: { label: "Silica hardpan", short: "Hardpan", note: "Cemented duricrust (WRB Durisols)" },
+  ice: { label: "Permafrost", short: "Ice", note: "Ground ice near the surface (WRB Cryosols)" },
+  soil: { label: "Developed soil", short: "Soil", note: "Biologically developed soil, unlike the Moon or Mars" },
   impact: { label: "Impact breccia", short: "Breccia", note: "Shocked, brecciated crater rock" },
   sedimentary: { label: "Sedimentary", short: "Sediment", note: "Water-laid clays, mudstones, deltas" },
-  evaporite: { label: "Evaporite", short: "Salts", note: "Salts left by drying brines" },
-  sulfate: { label: "Sulfate · acid", short: "Sulfates", note: "Jarosite and hematite from acid water" },
-  ice: { label: "Ground ice", short: "Ice", note: "Permafrost or buried ice" },
 };
+/** Materials the soil map can tell apart, most analog-relevant first (the filter's options for live search). */
+export const MEASURED_GEOLOGY: Geology[] = ["rock", "regolith", "sand", "basalt", "evaporite", "sulfate", "carbonate", "clay", "hardpan", "ice", "soil"];
 export const rockList = (gs: Geology[]) => gs.map((g, i) => (i ? GEOLOGY[g].short.toLowerCase() : GEOLOGY[g].short)).join(", ");
 
 /** Left-rail drawers. */
@@ -76,8 +98,8 @@ const PROFILES: Record<string, TargetProfile> = {
   "apollo-16": { ...MARE, slope: 8, geology: ["impact"] },
   "apollo-17": { ...MARE, slope: 7 },
   "apollo-11": { ...MARE, slope: 2, geology: ["basalt"] },
-  jezero: { slope: 5, geology: ["sedimentary"], meanTemp: -50, solar: 3 },
-  gale: { slope: 8, geology: ["sedimentary", "sulfate"], meanTemp: -48, solar: 3.2 },
+  jezero: { slope: 5, geology: ["sedimentary", "carbonate", "clay"], meanTemp: -50, solar: 3 },
+  gale: { slope: 8, geology: ["sedimentary", "sulfate", "clay"], meanTemp: -48, solar: 3.2 },
   arcadia: ICY_MARS,
   phoenix: { ...ICY_MARS, slope: 1, geology: ["ice", "evaporite"], meanTemp: -80, solar: 2 },
   utopia: ICY_MARS,

@@ -46,7 +46,7 @@ export async function searchAnalogs(query: AnalogQuery, signal?: AbortSignal): P
     res = await fetch("/api/search", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ body: query.target, lat: at.lat, lon: at.lon, filters: query.filters }),
+      body: JSON.stringify({ body: query.target, lat: at.lat, lon: at.lon, name: query.place && targetById(query.place)?.name, filters: query.filters }),
       signal,
     });
   } catch (e) {
@@ -58,6 +58,34 @@ export async function searchAnalogs(query: AnalogQuery, signal?: AbortSignal): P
   if (!res.ok) throw new Error(`Search failed (${res.status})`);
   const data = (await res.json()) as { sites: Candidate[]; target?: { metrics?: Record<string, number> } };
   return data.sites.map((s) => ({ ...s, targetMetrics: data.target?.metrics }));
+}
+
+/** Where the analogy holds and breaks, written by the language model from the measured values. */
+export interface Analysis {
+  verdict: string;
+  holds: string[];
+  breaks: string[];
+  test: string;
+  model: string;
+}
+
+const analyses = new Map<string, Promise<Analysis>>();
+
+export function analyse(c: Candidate, body: AnalogTarget): Promise<Analysis> {
+  const key = `${body}:${c.targetLat}:${c.targetLon}:${c.id}`;
+  let p = analyses.get(key);
+  if (!p) {
+    // The elevation grids aren't needed for the reasoning, just the measured numbers
+    const site = { ...c, shape: c.shape && { ...c.shape, target: [], match: [] } };
+    p = fetch("/api/compare", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ body, targetName: c.targetName ?? "the target", targetMetrics: c.targetMetrics ?? {}, site }),
+    }).then((r) => (r.ok ? (r.json() as Promise<Analysis>) : Promise.reject(new Error(String(r.status)))));
+    p.catch(() => analyses.delete(key));
+    analyses.set(key, p);
+  }
+  return p;
 }
 
 export type Source = "live" | "sample";

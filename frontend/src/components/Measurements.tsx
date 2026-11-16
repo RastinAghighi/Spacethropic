@@ -1,7 +1,7 @@
 "use client";
 
 import type { Candidate } from "@/lib/candidates";
-import { FIELDS, formatField, targetOf, targetValue, type NumKey, type Tab } from "@/lib/profile";
+import { FIELDS, GEOLOGY, formatField, targetOf, targetValue, type NumKey, type Tab } from "@/lib/profile";
 import { research } from "@/lib/research";
 import type { AnalogQuery } from "@/lib/search";
 
@@ -16,6 +16,24 @@ export function Measurements({ c, q, tint }: { c: Candidate; q: AnalogQuery; tin
   const { short } = targetOf(q);
   return (
     <div className="space-y-4">
+      {c.soil && (
+        <div title={c.soil.note}>
+          <button
+            type="button"
+            onClick={() => research.open("geology")}
+            className="mb-1.5 text-[10px] font-medium uppercase tracking-[0.12em] text-white/35 transition-colors hover:text-white/70"
+            title="Refine on surface material"
+          >
+            Surface
+          </button>
+          <p className="flex items-baseline justify-between gap-2 text-[11px] text-white/45">
+            <span className="truncate">
+              {c.soil.group} · {Math.round(c.soil.share * 100)}% of the cell
+            </span>
+            <span className="shrink-0 text-[12.5px] font-medium text-white">{GEOLOGY[c.soil.material]?.label ?? c.soil.material}</span>
+          </p>
+        </div>
+      )}
       {GROUPS.map((g, gi) => {
         const rows = g.keys.map((k) => ({ k, v: FIELDS[k].get(c), t: targetValue(k, c, q) })).filter((r) => Number.isFinite(r.v));
         if (!rows.length) return null;

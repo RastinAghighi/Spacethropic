@@ -43,6 +43,12 @@ export interface CandidateSite {
   metrics?: Record<string, number>;
   /** The Moon/Mars target's measured values in the same fields (from the search service) */
   targetMetrics?: Record<string, number>;
+  /** The point this site was matched against (search service) */
+  targetName?: string;
+  targetLat?: number;
+  targetLon?: number;
+  /** Dominant WRB 2006 soil group over the cell, and what it offers as an analog */
+  soil?: { group: string; share: number; material: Geology; note: string } | null;
 }
 
 export interface Traits {

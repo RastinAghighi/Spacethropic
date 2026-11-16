@@ -1,10 +1,11 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { DIVE, useUi } from "@/lib/ui";
 import { formatCoord, type Candidate } from "@/lib/candidates";
 import { BODY } from "@/lib/catalog";
 import { FIELDS, matchProfile, overallScore, targetOf, type NumKey } from "@/lib/profile";
-import type { AnalogQuery, Source } from "@/lib/search";
+import { analyse, type Analysis, type AnalogQuery, type Source } from "@/lib/search";
 import { Label } from "./search/primitives";
 import { ShapeCompare } from "./ShapeCompare";
 import { Measurements } from "./Measurements";
@@ -87,6 +88,55 @@ function measuredGaps(c: Candidate, t: Record<string, number>, short: string): s
   return out;
 }
 
+/** The model's reading of this site against the target: pending, done, or failed (fall back to the measured text). */
+function useAnalysis(c: Candidate, q: AnalogQuery, live: boolean): Analysis | "pending" | null {
+  const [state, setState] = useState<{ id: string; a: Analysis | "pending" | null }>({ id: "", a: null });
+  useEffect(() => {
+    if (!live) return;
+    let on = true;
+    analyse(c, q.target).then(
+      (a) => on && setState({ id: c.id, a }),
+      () => on && setState({ id: c.id, a: null }),
+    );
+    return () => {
+      on = false;
+    };
+  }, [c, q.target, live]);
+  return live && state.id === c.id ? state.a : live ? "pending" : null;
+}
+
+function Bullets({ items, dot, tone }: { items: string[]; dot: string; tone: string }) {
+  return (
+    <ul className="space-y-1.5">
+      {items.map((w, i) => (
+        <li key={w} className={`flex gap-2.5 leading-snug ${tone}`} style={{ animation: `rise-in .5s var(--ease-out-expo) ${0.05 * i}s both` }}>
+          <span className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: dot }} aria-hidden />
+          {w}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function Thinking() {
+  return (
+    <div className="space-y-4" aria-label="Analysing the measurements">
+      <p className="flex items-center gap-2 text-[11px] text-white/40">
+        <span className="h-3 w-3 rounded-full border-[1.5px] border-white/15 border-t-white/60" style={{ animation: "orbit .8s linear infinite" }} aria-hidden />
+        Weighing the measurements against the target
+      </p>
+      {[0, 1].map((g) => (
+        <div key={g} className="space-y-2">
+          <div className="h-2 w-24 animate-pulse rounded-full bg-white/[0.07]" />
+          {[92, 78, 85].map((w, i) => (
+            <div key={i} className="h-2.5 animate-pulse rounded-full bg-white/[0.05]" style={{ width: `${w - g * 6}%`, animationDelay: `${0.1 * (g * 3 + i)}s` }} />
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function Body({
   c,
   index,
@@ -107,6 +157,8 @@ function Body({
   // Where it differs: the measured gaps against the target, then what the data can't speak to
   const gaps = c.targetMetrics ? measuredGaps(c, c.targetMetrics, target.short) : matchProfile(c, q).flatMap((m) => (m.gap && m.dim !== "geology" ? [m.gap] : []));
   const differs = [...gaps, ...c.breaks];
+  const analysis = useAnalysis(c, q, source === "live" && !!c.shape);
+  const ai = analysis && analysis !== "pending" ? analysis : null;
   const scoreDelta = prev ? pct(overallScore(c, q)) - pct(overallScore(prev.c, prev.q)) : null;
 
   return (
@@ -152,28 +204,33 @@ function Body({
 
       {/* Reasoning, up front: why it's an analog and where the analogy breaks */}
       <section className="mt-6 space-y-4 text-[12.5px]" style={{ animation: "rise-in .6s var(--ease-out-expo) .12s both" }}>
-        <div>
-          <Label className="mb-2">Why it&apos;s an analog</Label>
-          <ul className="space-y-1.5">
-            {c.why.map((w) => (
-              <li key={w} className="flex gap-2.5 leading-snug text-white/75">
-                <span className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: tint }} aria-hidden />
-                {w}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <Label className="mb-2">Where it differs</Label>
-          <ul className="space-y-1.5">
-            {differs.map((b) => (
-              <li key={b} className="flex gap-2.5 leading-snug text-white/55">
-                <span className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full bg-[#f3b453]" aria-hidden />
-                {b}
-              </li>
-            ))}
-          </ul>
-        </div>
+        {analysis === "pending" ? (
+          <Thinking />
+        ) : (
+          <>
+            {ai && (
+              <p className="text-[14px] leading-snug tracking-[-0.01em] text-white/90" style={{ animation: "rise-in .6s var(--ease-out-expo) both" }}>
+                {ai.verdict}.
+              </p>
+            )}
+            <div>
+              <Label className="mb-2">Why it&apos;s an analog</Label>
+              <Bullets items={ai ? ai.holds : c.why} dot={tint} tone="text-white/75" />
+            </div>
+            <div>
+              <Label className="mb-2">Where it differs</Label>
+              <Bullets items={ai ? ai.breaks : differs} dot="#f3b453" tone="text-white/55" />
+            </div>
+            {ai?.test && (
+              <div>
+                <Label className="mb-2">Rehearse here</Label>
+                <p className="leading-snug text-white/75" style={{ animation: "rise-in .5s var(--ease-out-expo) .1s both" }}>
+                  {ai.test}
+                </p>
+              </div>
+            )}
+          </>
+        )}
       </section>
 
       <details className="group mt-6 border-t border-white/[0.06] pt-4 text-[12px]" style={{ animation: "rise-in .6s var(--ease-out-expo) .2s both" }}>
@@ -187,7 +244,8 @@ function Body({
           <Measurements c={c} q={q} tint={tint} />
         </div>
         <p className="mt-4 text-[10.5px] leading-relaxed text-white/30">
-          Imagery: {c.imagery.source}. Climate: {c.climate.source}. Target values are indicative.
+          Imagery: {c.imagery.source}. Climate: {c.climate.source}.{c.soil && " Surface material: WRB 2006 world soil map."}
+          {ai && ` Reasoning written by ${ai.model} from these measured values only.`}
         </p>
       </details>
     </div>
