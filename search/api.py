@@ -146,17 +146,17 @@ FIELD = {
 
 # Surface material: WRB 2006 soil group -> what it offers as a Moon or Mars analog
 MATERIAL = {
-    "Leptosols": ("rock", "Thin soil over hard rock: the nearest Earth surface to regolith over bedrock"),
-    "Regosols": ("regolith", "Loose, weakly developed mineral debris, like unconsolidated regolith"),
-    "Arenosols": ("sand", "Loose sand: dune fields, wheel traction and wind transport"),
-    "Andosols": ("basalt", "Volcanic ash and glass, like basaltic mare and Martian plains"),
-    "Solonchaks": ("evaporite", "Salt crusts left by evaporating brines, like Martian chloride deposits"),
-    "Solonetz": ("evaporite", "Sodium-rich salty clay"),
-    "Gypsisols": ("sulfate", "Gypsum accumulation, like Mars's sulfate-bearing layers"),
-    "Calcisols": ("carbonate", "Carbonate accumulation, like the carbonates in Jezero crater"),
-    "Durisols": ("hardpan", "Silica-cemented hardpan, a duricrust analog"),
-    "Vertisols": ("clay", "Swelling smectite clays, like Mars's phyllosilicate terrains"),
-    "Cryosols": ("ice", "Permafrost: ground ice within 1 m of the surface"),
+    "Leptosols": ("rock", "Shallow or very stony soil over hard rock"),
+    "Regosols": ("regolith", "Loose mineral material barely altered by soil formation"),
+    "Arenosols": ("sand", "Sandy soil"),
+    "Andosols": ("basalt", "Soil formed in volcanic ash and glass"),
+    "Solonchaks": ("evaporite", "Soluble salts concentrated at the surface"),
+    "Solonetz": ("sodic", "Dense clay subsoil rich in sodium"),
+    "Gypsisols": ("sulfate", "Accumulated gypsum (calcium sulfate)"),
+    "Calcisols": ("carbonate", "Accumulated secondary calcium carbonate"),
+    "Durisols": ("hardpan", "A layer cemented by silica"),
+    "Vertisols": ("clay", "Smectite-rich clay that cracks and swells"),
+    "Cryosols": ("ice", "Permafrost within 1 m of the surface"),
 }
 SOIL = Soil()
 _soil = [SOIL.dominant(float(a), float(b)) for a, b in zip(LAT, LON)]
@@ -170,7 +170,7 @@ def soil_info(i: int) -> dict | None:
     g, share = _soil[i]
     if not g:
         return None
-    key, note = MATERIAL.get(g, ("soil", "Biologically developed soil, unlike any lunar or Martian surface"))
+    key, note = MATERIAL.get(g, ("soil", "Organic-rich or leached soil with no lunar or Martian counterpart"))
     return {"group": g, "share": round(share, 2), "material": key, "note": note}
 
 

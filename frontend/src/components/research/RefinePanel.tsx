@@ -34,7 +34,7 @@ import { RangeField } from "./RangeField";
  * stay wired up but off the rail until their data exists. */
 export const TABS: { id: Tab; label: string; icon: string; fields: NumKey[]; more: NumKey[]; dims: Dim[]; hidden?: boolean }[] = [
   { id: "terrain", label: "Terrain", icon: "M1.5 13.5l4.25-7.5 3 5 2-3 3.75 5.5z", fields: ["match", "slope", "flatGround", "elevation", "relief", "slopeMax", "heightRange", "roughness", "concavity"], more: [], dims: ["terrain"] },
-  { id: "geology", label: "Geology", icon: "M8 1.75l5.75 4.5L8 14.25 2.25 6.25z M2.25 6.25h11.5 M6 6.25L8 14.25l2-8", fields: [], more: [], dims: ["geology"] },
+  { id: "geology", label: "Surface", icon: "M8 1.75l5.75 4.5L8 14.25 2.25 6.25z M2.25 6.25h11.5 M6 6.25L8 14.25l2-8", fields: [], more: [], dims: ["geology"] },
   { id: "thermal", label: "Thermal", icon: "M8 2.25c.83 0 1.5.67 1.5 1.5v5.6a3 3 0 1 1-3 0v-5.6c0-.83.67-1.5 1.5-1.5z M8 7v4", fields: ["meanTemp", "coldMin", "hotMax", "dayNight", "airDayNight"], more: [], dims: ["thermal"] },
   { id: "weather", label: "Atmosphere", icon: "M4.75 12.5h6.5a2.75 2.75 0 0 0 .4-5.47A3.75 3.75 0 0 0 4.5 8a2.25 2.25 0 0 0 .25 4.5z", fields: ["solar", "wind", "humidity", "cloud", "dust", "dustConc", "pressure"], more: [], dims: ["sun"] },
 ];
@@ -110,7 +110,10 @@ function GeologyPicker({ draft, c, q, tint, live }: { draft: Filters; c: Candida
               }`}
             >
               <span className="flex items-center justify-between gap-2">
-                <span className={`truncate text-[12.5px] ${on ? "text-white" : "text-white/75"}`}>{GEOLOGY[g].label}</span>
+                <span className="min-w-0">
+                  <span className={`block truncate text-[12.5px] ${on ? "text-white" : "text-white/75"}`}>{GEOLOGY[g].label}</span>
+                  {live && GEOLOGY[g].wrb && <span className="block truncate text-[10px] text-white/35">{GEOLOGY[g].wrb}</span>}
+                </span>
                 <span className="flex items-center gap-1">
                   {here.includes(g) && <span title="At this site" className="h-[6px] w-[6px] rounded-full bg-white/80" />}
                   {profile.geology.includes(g) && <span title="At the target" className="h-[7px] w-[7px] rounded-full" style={{ boxShadow: `inset 0 0 0 1.5px ${tint}` }} />}
@@ -120,7 +123,7 @@ function GeologyPicker({ draft, c, q, tint, live }: { draft: Filters; c: Candida
           );
         })}
       </div>
-      {live && <p className="mt-3 text-[10.5px] leading-relaxed text-white/30">Dominant surface material over each cell, from the WRB 2006 world soil map at 0.02°.</p>}
+      {live && <p className="mt-3 text-[10.5px] leading-relaxed text-white/30">Most common soil group over each cell, from the WRB 2006 world soil map at 0.02°. A soil map, not bedrock geology.</p>}
     </>
   );
 }

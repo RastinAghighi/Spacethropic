@@ -28,6 +28,7 @@ SYSTEM = """You are a planetary scientist on a NASA analog-site selection team. 
 
 Rules:
 - Each point is an object: "point" is a plain claim of 2 to 5 words (e.g. "Same relief", "Far warmer", "Carbonate soils"), no numbers; "evidence" is the supporting figures only, at most 10 words, site value first then the target's, e.g. "16.1 m here, 16.2 m at the target" or "17.9 °C against -49.6 °C".
+- Soil is a soil classification, not bedrock geology or measured mineralogy. Link it to lunar or Martian materials only as a hedged inference ("may resemble", "shares"), never as a match.
 - Never invent measurements, place facts, missions, or history. Do not name the Earth site.
 - Plain, exact language for an expert reader. No hype, no hedging filler, no exclamation marks.
 - "holds": the 3 strongest reasons this site is a useful analog, strongest first. Terrain shape first if the match is good.
@@ -76,7 +77,7 @@ def _facts(body: str, target_name: str, tm: dict, site: dict) -> str:
         f"Terrain shape over the same 5.16 km² disk at 200 m pixels: RMSE {sh.get('rmseM')} m after turning the target "
         f"{sh.get('rotationDeg')}°, match score {round(100 * sh.get('score', 0))}% (score = exp(-(RMSE/target relief)^2)); "
         f"site relief {sh.get('reliefM')} m, target relief {sh.get('targetReliefM')} m.",
-        f"Dominant soil (WRB 2006, 0.02° grid): {soil['group']} over {round(100 * soil['share'])}% of the cell. {soil['note']}" if soil else "Soil: no data.",
+        f"Most common soil group (WRB 2006 soil map, 0.02° grid): {soil['group']} over {round(100 * soil['share'])}% of the cell, defined as: {soil['note']}." if soil else "Soil: no data.",
         "Measured values:",
         *rows,
         "Climate on Earth is from a coarse 10° reanalysis grid; Moon and Mars temperatures are surface temperatures.",

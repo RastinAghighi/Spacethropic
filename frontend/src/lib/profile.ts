@@ -12,6 +12,7 @@ export type Geology =
   | "sand"
   | "basalt"
   | "evaporite"
+  | "sodic"
   | "sulfate"
   | "carbonate"
   | "clay"
@@ -21,23 +22,26 @@ export type Geology =
   | "impact"
   | "sedimentary";
 
-export const GEOLOGY: Record<Geology, { label: string; short: string; note: string }> = {
-  rock: { label: "Bare rock", short: "Rock", note: "Thin soil over hard rock (WRB Leptosols)" },
-  regolith: { label: "Loose debris", short: "Debris", note: "Weakly developed mineral debris, like regolith (WRB Regosols)" },
-  sand: { label: "Sand", short: "Sand", note: "Loose sand: dunes and wheel traction (WRB Arenosols)" },
-  basalt: { label: "Volcanic", short: "Volcanic", note: "Basalt and volcanic ash, like the lunar maria (WRB Andosols)" },
-  evaporite: { label: "Salts", short: "Salts", note: "Salt crusts left by drying brines (WRB Solonchaks, Solonetz)" },
-  sulfate: { label: "Gypsum · sulfate", short: "Sulfates", note: "Like Mars's sulfate-bearing layers (WRB Gypsisols)" },
-  carbonate: { label: "Carbonate", short: "Carbonate", note: "Like the carbonates in Jezero crater (WRB Calcisols)" },
-  clay: { label: "Swelling clay", short: "Clay", note: "Smectite clays, like Mars's phyllosilicates (WRB Vertisols)" },
-  hardpan: { label: "Silica hardpan", short: "Hardpan", note: "Cemented duricrust (WRB Durisols)" },
-  ice: { label: "Permafrost", short: "Ice", note: "Ground ice near the surface (WRB Cryosols)" },
-  soil: { label: "Developed soil", short: "Soil", note: "Biologically developed soil, unlike the Moon or Mars" },
+/** Surface materials. The measured ones are WRB 2006 soil groups (`wrb`): a soil map, not bedrock geology,
+ * so each note gives the WRB definition and, at most, why it is worth a look for the Moon or Mars. */
+export const GEOLOGY: Record<Geology, { label: string; short: string; note: string; wrb?: string }> = {
+  rock: { label: "Thin over rock", short: "Rock", wrb: "Leptosols", note: "Shallow or very stony soil over hard rock; the nearest to thin regolith over bedrock" },
+  regolith: { label: "Little weathered", short: "Raw ground", wrb: "Regosols", note: "Loose mineral material barely altered by soil formation" },
+  sand: { label: "Sand", short: "Sand", wrb: "Arenosols", note: "Sandy soils; useful for dune, traction and wind-transport tests" },
+  basalt: { label: "Volcanic ash", short: "Volcanic", wrb: "Andosols", note: "Soils formed in volcanic ash and glass; basaltic material, as on the maria and Martian plains" },
+  evaporite: { label: "Saline", short: "Salts", wrb: "Solonchaks", note: "Soluble salts concentrated at the surface; relevant to brines and evaporites" },
+  sodic: { label: "Sodic clay", short: "Sodic", wrb: "Solonetz", note: "Dense clay subsoil rich in sodium" },
+  sulfate: { label: "Gypsum", short: "Gypsum", wrb: "Gypsisols", note: "Accumulated gypsum, a calcium sulfate; Mars has sulfate-bearing layers" },
+  carbonate: { label: "Carbonate", short: "Carbonate", wrb: "Calcisols", note: "Accumulated calcium carbonate; Mars has carbonates, though formed differently" },
+  clay: { label: "Swelling clay", short: "Clay", wrb: "Vertisols", note: "Smectite clays that crack and swell; Mars has smectite-bearing terrains" },
+  hardpan: { label: "Silica hardpan", short: "Hardpan", wrb: "Durisols", note: "A layer cemented by silica" },
+  ice: { label: "Permafrost", short: "Ice", wrb: "Cryosols", note: "Permafrost within 1 m of the surface; ground ice as at high Martian latitudes" },
+  soil: { label: "Other soils", short: "Soil", wrb: "19 other groups", note: "Organic-rich or leached soils with no lunar or Martian counterpart" },
   impact: { label: "Impact breccia", short: "Breccia", note: "Shocked, brecciated crater rock" },
   sedimentary: { label: "Sedimentary", short: "Sediment", note: "Water-laid clays, mudstones, deltas" },
 };
 /** Materials the soil map can tell apart, most analog-relevant first (the filter's options for live search). */
-export const MEASURED_GEOLOGY: Geology[] = ["rock", "regolith", "sand", "basalt", "evaporite", "sulfate", "carbonate", "clay", "hardpan", "ice", "soil"];
+export const MEASURED_GEOLOGY: Geology[] = ["rock", "regolith", "sand", "basalt", "evaporite", "sodic", "sulfate", "carbonate", "clay", "hardpan", "ice", "soil"];
 export const rockList = (gs: Geology[]) => gs.map((g, i) => (i ? GEOLOGY[g].short.toLowerCase() : GEOLOGY[g].short)).join(", ");
 
 /** Left-rail drawers. */
