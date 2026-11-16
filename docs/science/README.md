@@ -35,7 +35,7 @@ Each Earth candidate is an H3 hexagon at resolution 7 (average area 5.16 km²). 
 
 The distance between a target *T* and an Earth cell *c* is
 
-> d(T, c) = min over θ of RMSE(t_θ, c),  with θ = 0°, 15°, …, 345°
+> d(T, c) = min over θ of RMSE(t<sub>�</sub>�, c),  with θ = 0°, 15°, …, 345°
 
 that is, the target is turned in 15° steps and the best fit is kept. The result is in metres and is easy to read: "the two surfaces differ by 5 m on average over the disk".
 
@@ -86,9 +86,9 @@ When the original is not ranked first, the cell above it always fits at least as
 
 **Takeaway: a simple inequality lets the search skip most of the work and still return exactly the same answer.**
 
-Comparing 137 heights at 24 rotations against every cell is wasteful. Two quantities help: the relief of the target, σ_T, and the relief of each cell, σ_c, both computed in advance. For patterns with their average removed, the triangle inequality gives
+Comparing 137 heights at 24 rotations against every cell is wasteful. Two quantities help: the relief of the target, σ<sub>T</sub>, and the relief of each cell, σ<sub>c</sub>, both computed in advance. For patterns with their average removed, the triangle inequality gives
 
-> RMSE(T, c) ≥ | σ_T − σ_c |
+> RMSE(T, c) ≥ | σ<sub>T</sub> − σ<sub>c</sub> |
 
 A cell whose relief is very different from the target's cannot be a close match. The search therefore visits cells in order of this lower bound and stops as soon as the bound exceeds the 50th-best distance found so far.
 
@@ -139,7 +139,7 @@ That earlier study ranked Earth places by temperature alone. It showed why tempe
 
 The match is shown as a percentage, scaled by the target's own relief:
 
-> score = exp( −RMSE² / σ_T² )
+> score = exp( −RMSE² / σ<sub>T</sub>² )
 
 Matching a flat plain to within 5 m is unremarkable; matching a 30 m rim to within 5 m is close. When a user asks for "match ≥ 90%", the limit becomes a cap on RMSE for that particular target, and the search applies it directly.
 
