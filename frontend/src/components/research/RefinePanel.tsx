@@ -95,15 +95,18 @@ function GeologyPicker({ draft, c, q, tint, live }: { draft: Filters; c: Candida
       <div className="grid grid-cols-2 gap-1.5">
         {(live ? MEASURED_GEOLOGY : (Object.keys(GEOLOGY) as Geology[])).map((g) => {
           const on = draft.geology.includes(g);
+          // None anywhere in the searched area: the limit could never be met
+          const none = live && !!c.area && !c.area.materials[g] && !on;
           return (
             <button
               key={g}
               type="button"
               aria-pressed={on}
-              title={GEOLOGY[g].note}
+              title={none ? `${GEOLOGY[g].note}. None in the searched area yet.` : GEOLOGY[g].note}
+              disabled={none}
               onClick={() => research.toggleGeology(g)}
               className={`rounded-xl border px-3 py-2 text-left transition-[background-color,border-color] duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40 ${
-                on ? "border-white/30 bg-white/[0.09]" : "border-white/[0.07] bg-white/[0.02] hover:border-white/15"
+                on ? "border-white/30 bg-white/[0.09]" : none ? "cursor-default border-white/[0.04] opacity-35" : "border-white/[0.07] bg-white/[0.02] hover:border-white/15"
               }`}
             >
               <span className="flex items-center justify-between gap-2">
@@ -175,6 +178,8 @@ export function RefinePanel() {
   // Live results are the candidates on hand; the sample model ranks its whole bundled pool
   const pool = source === "live" ? results : poolFor(query);
   const passing = pool.filter((s) => passes(s, draft));
+  // Live refines search every cell, not just these results, so none passing here is fine
+  const blocked = !passing.length && source !== "live";
   const dirty = !sameFilters(draft, applied);
   const shortTabs = new Set(matchProfile(c, query).flatMap((m) => (m.gap && applied.weights[m.dim] ? [DIMS[m.dim].tab] : [])));
   const open = drawer !== null && mode !== "surfacing";
@@ -296,7 +301,7 @@ export function RefinePanel() {
                   <span className={passing.length ? "text-white" : ""} style={passing.length ? undefined : { color: AMBER }}>
                     {passing.length} of {pool.length}
                   </span>{" "}
-                  {passing.length ? "pass" : "pass · loosen a limit"}
+                  {passing.length ? "pass" : blocked ? "pass · loosen a limit" : "here · refine searches every cell"}
                 </p>
               </div>
               <div className="flex shrink-0 items-center gap-1">
@@ -309,7 +314,7 @@ export function RefinePanel() {
                     Undo
                   </button>
                 )}
-                <FindButton onClick={refine} disabled={!dirty || !passing.length || busy} label="Refine search" />
+                <FindButton onClick={refine} disabled={!dirty || blocked || busy} label="Refine search" />
               </div>
             </div>
           </footer>

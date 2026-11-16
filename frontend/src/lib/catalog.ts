@@ -1,6 +1,6 @@
 import type { AnalogTarget } from "./search";
 
-// The Moon and Mars places Mirror search can start from. UI data only: the backend owns the
+// The Moon and Mars places an analog search can start from. UI data only: the backend owns the
 // real per-cell profiles and scoring.
 
 export const BODY: Record<AnalogTarget, { label: string; long: string; tint: string; texture: string }> = {

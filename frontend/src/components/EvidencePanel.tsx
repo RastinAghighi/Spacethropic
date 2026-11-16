@@ -5,7 +5,7 @@ import { DIVE, useUi } from "@/lib/ui";
 import { formatCoord, type Candidate } from "@/lib/candidates";
 import { BODY } from "@/lib/catalog";
 import { FIELDS, matchProfile, overallScore, targetOf, type NumKey } from "@/lib/profile";
-import { analyse, type Analysis, type AnalogQuery, type Source } from "@/lib/search";
+import { analyse, type Analysis, type AnalogQuery, type Point, type Source } from "@/lib/search";
 import { Label } from "./search/primitives";
 import { ShapeCompare } from "./ShapeCompare";
 import { Measurements } from "./Measurements";
@@ -105,13 +105,20 @@ function useAnalysis(c: Candidate, q: AnalogQuery, live: boolean): Analysis | "p
   return live && state.id === c.id ? state.a : live ? "pending" : null;
 }
 
-function Bullets({ items, dot, tone }: { items: string[]; dot: string; tone: string }) {
+function Bullets({ items, dot, tone }: { items: (string | Point)[]; dot: string; tone: string }) {
   return (
-    <ul className="space-y-1.5">
+    <ul className="space-y-2.5">
       {items.map((w, i) => (
-        <li key={w} className={`flex gap-2.5 leading-snug ${tone}`} style={{ animation: `rise-in .5s var(--ease-out-expo) ${0.05 * i}s both` }}>
+        <li key={typeof w === "string" ? w : w.point} className="flex gap-2.5 leading-snug" style={{ animation: `rise-in .5s var(--ease-out-expo) ${0.05 * i}s both` }}>
           <span className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: dot }} aria-hidden />
-          {w}
+          {typeof w === "string" ? (
+            <span className={tone}>{w}</span>
+          ) : (
+            <span className="min-w-0">
+              <span className="block text-[13px] text-white/90">{w.point}</span>
+              <span className="mt-0.5 block text-[11.5px] tabular-nums text-white/45">{w.evidence}</span>
+            </span>
+          )}
         </li>
       ))}
     </ul>

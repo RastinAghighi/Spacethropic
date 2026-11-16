@@ -47,6 +47,8 @@ export interface CandidateSite {
   targetName?: string;
   targetLat?: number;
   targetLon?: number;
+  /** The whole area the search covers: its cell count and cells per surface material */
+  area?: { cells: number; materials: Record<string, number> };
   /** Dominant WRB 2006 soil group over the cell, and what it offers as an analog */
   soil?: { group: string; share: number; material: Geology; note: string } | null;
 }

@@ -43,7 +43,7 @@ export function ResearchTrail() {
     >
       <p className="flex shrink-0 items-center gap-2 whitespace-nowrap text-[13px] font-medium tracking-[-0.01em] text-white/90">
         <span className="h-[7px] w-[7px] rounded-full" style={{ background: tint, boxShadow: `0 0 8px ${tint}` }} />
-        Earth&apos;s mirror of {targetOf(first).short}
+        Analog candidates for {targetOf(first).short}
         {trail.length === 1 && !pending && <span className="font-normal text-white/35">· {trail[0].results.length} sites</span>}
       </p>
       {(trail.length > 1 || pending) && (

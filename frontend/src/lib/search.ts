@@ -56,15 +56,22 @@ export async function searchAnalogs(query: AnalogQuery, signal?: AbortSignal): P
   // 404/405: no route; 500/502/504: the dev proxy couldn't reach the service
   if ([404, 405, 500, 502, 503, 504].includes(res.status)) throw new SearchUnavailableError();
   if (!res.ok) throw new Error(`Search failed (${res.status})`);
-  const data = (await res.json()) as { sites: Candidate[]; target?: { metrics?: Record<string, number> } };
-  return data.sites.map((s) => ({ ...s, targetMetrics: data.target?.metrics }));
+  const data = (await res.json()) as { sites: Candidate[]; target?: { metrics?: Record<string, number> }; cells?: number; materials?: Record<string, number> };
+  const area = data.cells ? { cells: data.cells, materials: data.materials ?? {} } : undefined;
+  return data.sites.map((s) => ({ ...s, targetMetrics: data.target?.metrics, area }));
+}
+
+/** A short claim and the figures behind it. */
+export interface Point {
+  point: string;
+  evidence: string;
 }
 
 /** Where the analogy holds and breaks, written by the language model from the measured values. */
 export interface Analysis {
   verdict: string;
-  holds: string[];
-  breaks: string[];
+  holds: Point[];
+  breaks: Point[];
   test: string;
   model: string;
 }

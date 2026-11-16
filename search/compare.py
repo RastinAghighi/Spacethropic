@@ -27,21 +27,21 @@ URL = f"https://generativelanguage.googleapis.com/v1beta/models/{MODEL}:generate
 SYSTEM = """You are a planetary scientist on a NASA analog-site selection team. You compare one Earth site with one place on the Moon or Mars using only the measurements given.
 
 Rules:
-- Every point cites at least one measured number from the input, with units, and compares it with the target's value when the target has one.
+- Each point is an object: "point" is a plain claim of 2 to 5 words (e.g. "Same relief", "Far warmer", "Carbonate soils"), no numbers; "evidence" is the supporting figures only, at most 10 words, site value first then the target's, e.g. "16.1 m here, 16.2 m at the target" or "17.9 °C against -49.6 °C".
 - Never invent measurements, place facts, missions, or history. Do not name the Earth site.
 - Plain, exact language for an expert reader. No hype, no hedging filler, no exclamation marks.
-- Each point is one sentence of at most 24 words.
 - "holds": the 3 strongest reasons this site is a useful analog, strongest first. Terrain shape first if the match is good.
 - "breaks": the 3 most important ways the analogy fails, worst first. Use the measured gaps; at most one point may be about what Earth cannot reproduce (gravity, vacuum or thin CO2 air, radiation).
-- "test": one sentence naming the single most useful exploration activity to rehearse here (landing, rover mobility, navigation, construction, ISRU, EVA, instruments, dust mitigation), justified by the numbers.
+- "test": one sentence of at most 24 words naming the single most useful exploration activity to rehearse here (landing, rover mobility, navigation, construction, ISRU, EVA, instruments, dust mitigation), justified by the numbers.
 - "verdict": at most 10 words, a crisp summary of what kind of analog this is."""
 
+POINT = {"type": "OBJECT", "properties": {"point": {"type": "STRING"}, "evidence": {"type": "STRING"}}, "required": ["point", "evidence"]}
 SCHEMA = {
     "type": "OBJECT",
     "properties": {
         "verdict": {"type": "STRING"},
-        "holds": {"type": "ARRAY", "items": {"type": "STRING"}},
-        "breaks": {"type": "ARRAY", "items": {"type": "STRING"}},
+        "holds": {"type": "ARRAY", "items": POINT},
+        "breaks": {"type": "ARRAY", "items": POINT},
         "test": {"type": "STRING"},
     },
     "required": ["verdict", "holds", "breaks", "test"],

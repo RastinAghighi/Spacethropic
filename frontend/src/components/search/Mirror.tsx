@@ -171,7 +171,7 @@ export function Mirror() {
     setPicking(false);
   };
 
-  const submit = () => run({ text: `Earth's mirror of ${name}`, target: body, place, step: "Physical match" });
+  const submit = () => run({ text: `Analog candidates for ${name}`, target: body, place, step: "Physical match" });
 
   const editor = (
     <div ref={card} className="flex flex-col items-center gap-4 p-4 sm:flex-row sm:items-stretch sm:gap-6 sm:p-5">
@@ -234,11 +234,11 @@ export function Mirror() {
         </div>
 
         <div className="mt-4 flex items-center justify-end">
-          <FindButton onClick={submit} label="Find Earth's mirror" />
+          <FindButton onClick={submit} label="Find Earth analogs" />
         </div>
       </div>
     </div>
   );
 
-  return <SearchDock label="Mirror search" width={660} editor={editor} error={error} tint={tint} />;
+  return <SearchDock label="Analog search" width={660} editor={editor} error={error} tint={tint} />;
 }

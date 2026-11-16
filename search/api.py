@@ -1,5 +1,5 @@
 """
-Mirror search API: a Moon or Mars point -> Earth sites with the closest terrain shape.
+Analog search API: a Moon or Mars point -> Earth sites with the closest terrain shape.
 
     .venv/Scripts/python -m uvicorn api:app --port 8787
 
@@ -162,6 +162,8 @@ SOIL = Soil()
 _soil = [SOIL.dominant(float(a), float(b)) for a, b in zip(LAT, LON)]
 GROUP = np.array([g or "" for g, _ in _soil])
 MAT = np.array([MATERIAL.get(g, ("soil", ""))[0] if g else "" for g in GROUP])
+# How many cells of each material the whole search area holds (a filter for one with none can't be met)
+MATERIALS = {str(k): int(n) for k, n in zip(*np.unique(MAT[MAT != ""], return_counts=True))}
 
 
 def soil_info(i: int) -> dict | None:
@@ -325,7 +327,7 @@ class Query(BaseModel):
     filters: dict | None = None
 
 
-app = FastAPI(title="Spacethropic mirror search")
+app = FastAPI(title="Spacethropic analog search")
 
 
 @app.get("/health")
@@ -433,7 +435,7 @@ def search(q: Query):
     for site in sites[:3]:
         _llm_pool.submit(_safe_compare, q.body, site["targetName"], tm, site)
     return {"target": {"reliefM": round(t_std, 1), "dem": DEMS[q.body][2], "metrics": tm},
-            "evaluated": evaluated, "sites": sites}
+            "evaluated": evaluated, "cells": len(CELLS), "materials": MATERIALS, "sites": sites}
 
 
 _llm_pool = ThreadPoolExecutor(4)
