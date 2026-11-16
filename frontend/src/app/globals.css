@@ -131,6 +131,24 @@ body {
   }
 }
 
+/* Laid out for ~1920x1080; smaller desktop viewports (e.g. 1280x720 at 150% display scaling) zoom the interface down. */
+.ui-scale {
+  zoom: var(--ui-zoom, 1);
+}
+
+@media (min-width: 768px) and ((max-width: 1700px) or (max-height: 960px)) {
+  :root { --ui-zoom: 0.9; }
+}
+@media (min-width: 768px) and ((max-width: 1500px) or (max-height: 860px)) {
+  :root { --ui-zoom: 0.8; }
+}
+@media (min-width: 768px) and ((max-width: 1340px) or (max-height: 780px)) {
+  :root { --ui-zoom: 0.72; }
+}
+@media (min-width: 768px) and ((max-width: 1180px) or (max-height: 680px)) {
+  :root { --ui-zoom: 0.64; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

@@ -257,7 +257,7 @@ export function RefinePanel() {
         aria-label={`${tabById(shownTab).label} refine`}
         aria-hidden={!open}
         inert={!open}
-        className="fixed left-[84px] top-[72px] z-20 flex max-h-[calc(100vh-170px)] w-[var(--drawer-w)] flex-col"
+        className="fixed left-[84px] top-[72px] z-20 flex max-h-[calc((100vh-170px)/var(--ui-zoom,1))] w-[var(--drawer-w)] flex-col"
         style={{
           opacity: open ? 1 : 0,
           transform: open ? "none" : "translateX(-14px) scale(0.985)",

@@ -102,12 +102,15 @@ export default function Experience() {
       <GlobeScene />
       <SiteRenderer />
       <SiteView />
-      <EvidencePanel />
-      <RefinePanel />
-      <Chrome />
-      <Mirror />
-      <Toast />
-      <Loader />
+      {/* Interface layer scales with the viewport so small laptop screens keep the same proportions */}
+      <div className="ui-scale">
+        <EvidencePanel />
+        <RefinePanel />
+        <Chrome />
+        <Mirror />
+        <Toast />
+        <Loader />
+      </div>
     </main>
   );
 }

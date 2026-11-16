@@ -271,7 +271,7 @@ export function EvidencePanel() {
   return (
     <aside
       aria-label="Candidate evidence"
-      className="fixed right-6 top-[72px] z-20 hidden max-h-[calc(100vh-96px)] w-[min(420px,33vw)] flex-col md:flex"
+      className="fixed right-6 top-[72px] z-20 hidden max-h-[calc((100vh-96px)/var(--ui-zoom,1))] w-[min(420px,33vw)] flex-col md:flex"
       style={{
         animation: mode === "diving" ? `rise-in .9s var(--ease-out-expo) ${DIVE.panel}s both` : undefined,
         opacity: mode === "surfacing" ? 0 : 1,
