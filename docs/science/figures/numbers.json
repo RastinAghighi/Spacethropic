@@ -1,0 +1,101 @@
+{
+ "target_fetch_s": [
+  3.96,
+  1.87,
+  1.7,
+  1.9,
+  1.45,
+  0.85,
+  1.81
+ ],
+ "descriptor": {
+  "target": "Jezero delta",
+  "rmse_m": 5.05,
+  "rotation": 210,
+  "cell": "8729804d6ffffff"
+ },
+ "matches": {
+  "Shackleton rim": {
+   "relief_m": 32.2,
+   "best_m": [
+    15.59,
+    16.05,
+    16.16
+   ],
+   "median_m": 30.6,
+   "pct_below_best2x": 53.11
+  },
+  "Hadley Rille (Apollo 15)": {
+   "relief_m": 11.7,
+   "best_m": [
+    2.34,
+    2.38,
+    2.4
+   ],
+   "median_m": 26.1,
+   "pct_below_best2x": 3.86
+  },
+  "Jezero delta": {
+   "relief_m": 16.2,
+   "best_m": [
+    5.05,
+    5.41,
+    5.49
+   ],
+   "median_m": 24.8,
+   "pct_below_best2x": 12.06
+  }
+ },
+ "recovery": {
+  "top1": 0.85,
+  "top10": 0.917,
+  "fits_as_well": 1.0,
+  "by_relief_top1": [
+   36.0,
+   68.8,
+   78.6,
+   99.4
+  ],
+  "n": [
+   25,
+   32,
+   84,
+   159
+  ]
+ },
+ "bound_violations": 0,
+ "pruning": {
+  "work_pct": {
+   "Shackleton rim": 46.5,
+   "Hadley Rille (Apollo 15)": 15.5,
+   "Descartes (Apollo 16)": 31.0,
+   "Jezero delta": 23.2,
+   "Gale crater": 7.7,
+   "Meridiani Planum": 7.7,
+   "Utopia Planitia": 7.7
+  },
+  "identical": true,
+  "ms_pruned_median": 9.7,
+  "ms_brute_median": 46.0
+ },
+ "latency_s": {
+  "dem": 1.03,
+  "search": 0.016,
+  "imagery": 4.35,
+  "llm": 6.0
+ },
+ "materials": {
+  "soil": 39167,
+  "carbonate": 8606,
+  "evaporite": 32,
+  "sodic": 3826,
+  "regolith": 932,
+  "sulfate": 242,
+  "rock": 3
+ },
+ "score": {
+  "sigma": 16.2,
+  "n_ge_90": 1,
+  "n_ge_50": 13753
+ }
+}
