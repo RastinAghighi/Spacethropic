@@ -13,7 +13,6 @@ import {
   MEASURED_GEOLOGY,
   describeChange,
   limitsIn,
-  matchProfile,
   passes,
   poolFor,
   sameFilters,
@@ -184,7 +183,6 @@ export function RefinePanel() {
   // Live refines search every cell, not just these results, so none passing here is fine
   const blocked = !passing.length && source !== "live";
   const dirty = !sameFilters(draft, applied);
-  const shortTabs = new Set(matchProfile(c, query).flatMap((m) => (m.gap && applied.weights[m.dim] ? [DIMS[m.dim].tab] : [])));
   const open = drawer !== null && mode !== "surfacing";
   const leaving = mode === "surfacing";
 
@@ -210,7 +208,6 @@ export function RefinePanel() {
           {TABS.filter((t) => !t.hidden).map((t) => {
             const on = drawer === t.id;
             const n = limitsIn(t.id, draft);
-            const short = shortTabs.has(t.id);
             const lit = hover === t.id && !on;
             return (
               <button
@@ -219,7 +216,7 @@ export function RefinePanel() {
                 aria-expanded={on}
                 aria-controls="refine-drawer"
                 onClick={() => research.toggle(t.id)}
-                aria-label={short ? `${t.label}: this site falls short` : t.label}
+                aria-label={t.label}
                 className={`group relative grid h-10 w-10 place-items-center rounded-[14px] transition-[background-color,color,box-shadow] duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/40 ${
                   on ? "bg-white text-black" : lit ? "bg-white/[0.1] text-white shadow-[0_0_0_1px_rgb(255_255_255/0.18)]" : "text-white/50 hover:bg-white/[0.06] hover:text-white"
                 }`}
@@ -233,9 +230,7 @@ export function RefinePanel() {
                   } -translate-x-1`}
                 >
                   {t.label}
-                  {short && <span style={{ color: AMBER }}> · falls short</span>}
                 </span>
-                {short && <span aria-hidden className="absolute right-[7px] top-[7px] h-[4px] w-[4px] rounded-full" style={{ background: AMBER, boxShadow: `0 0 6px ${AMBER}` }} />}
                 {n > 0 && (
                   <span
                     key={n}
