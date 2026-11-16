@@ -2,6 +2,7 @@
 Analog search API: a Moon or Mars point -> Earth sites with the closest terrain shape.
 
     .venv/Scripts/python -m uvicorn api:app --port 8787
+    SEARCH_INDEX=out/global .venv/bin/python -m uvicorn api:app --port 8788   # another index (the global mask)
 
 POST /search   {"body": "moon"|"mars", "lat": .., "lon": .., "filters": {...}?}
                -> {"target": {...}, "sites": [Candidate-shaped objects]}
@@ -39,7 +40,7 @@ from PIL import Image
 from pydantic import BaseModel
 from pyproj import Transformer
 
-from build_index import TERRAIN, terrain
+from build_index import ENV as ENV_COLS, TERRAIN, terrain
 from compare import compare
 from shape import ANGLES, MASK, NPIX, PX_M, SIZE, Index, bilinear, target_variants
 from soil import Soil
@@ -77,7 +78,7 @@ UA = {"User-Agent": "spacethropic/1.0 (NASA Space Apps prototype)"}
 
 # --- candidates ---------------------------------------------------------------
 # Cells are uint64 h3 ids; cell_id(i) makes the string only where one cell's id goes out
-IDX = ROOT / "out" / "index"
+IDX = Path(os.environ.get("SEARCH_INDEX") or ROOT / "out" / "index")
 if (IDX / "E.npy").exists():
     INDEX = Index.load(IDX)
     CELLS, LAT, LON = (np.load(IDX / f"{k}.npy") for k in ("h3", "lat", "lon"))
@@ -138,15 +139,18 @@ def _rough(p):
     return np.concatenate([a, b]).mean()
 
 
-con = duckdb.connect(str(DB), read_only=True)
-_env = con.execute("SELECT h3, tair_mean, tsurf_min, tsurf_max, rh, wind, sw, tair_range, dust_conc, ps, cloud, dust_aod "
-                   "FROM cells WHERE body = 'earth' ORDER BY h3").fetchnumpy()
-con.close()
-_at = np.searchsorted(_env["h3"], CELLS).clip(0, len(_env["h3"]) - 1)
-if (_lost := int((_env["h3"][_at] != CELLS).sum())):
-    raise RuntimeError(f"{_lost:,} cells have no Earth row in {DB}")
-ENV = {k: np.ma.filled(np.ma.asarray(v).astype(np.float64), np.nan)[_at] for k, v in _env.items() if k != "h3"}
-del _env, _at
+if (IDX / "env_tair_mean.npy").exists():  # global index: climate from the 10-degree grid, written by build_index.py
+    ENV = {k: np.load(IDX / f"env_{k}.npy") for k in ENV_COLS}
+else:
+    con = duckdb.connect(str(DB), read_only=True)
+    _env = con.execute("SELECT h3, tair_mean, tsurf_min, tsurf_max, rh, wind, sw, tair_range, dust_conc, ps, cloud, dust_aod "
+                       "FROM cells WHERE body = 'earth' ORDER BY h3").fetchnumpy()
+    con.close()
+    _at = np.searchsorted(_env["h3"], CELLS).clip(0, len(_env["h3"]) - 1)
+    if (_lost := int((_env["h3"][_at] != CELLS).sum())):
+        raise RuntimeError(f"{_lost:,} cells have no Earth row in {DB}")
+    ENV = {k: np.ma.filled(np.ma.asarray(v).astype(np.float64), np.nan)[_at] for k, v in _env.items() if k != "h3"}
+    del _env, _at
 # Per-cell values the refine drawers can limit on (same units as the frontend's FIELDS)
 FIELD = {
     "slope": TERRAIN_FIELD["slope"],
@@ -185,10 +189,16 @@ MATERIAL = {
     "Durisols": ("hardpan", "A layer cemented by silica"),
     "Vertisols": ("clay", "Smectite-rich clay that cracks and swells"),
     "Cryosols": ("ice", "Permafrost within 1 m of the surface"),
+    "Ice": ("ice", "Glacier or ice sheet: no soil, the mask's ICE cells"),
 }
+ICE = 255  # soil value of the mask's ICE cells (the WRB grid's own values stop at 30)
 SOIL = Soil()
 # Per cell as small codes, not strings: the soil grid value of the dominant group, its count, the land count
 SOIL_VAL, SOIL_N, SOIL_LAND = SOIL.dominant_many(LAT, LON)
+SOIL.name[ICE] = "Ice"
+if (IDX / "wrb.npy").exists():
+    _ice = np.load(IDX / "wrb.npy") == 255
+    SOIL_VAL[_ice], SOIL_N[_ice], SOIL_LAND[_ice] = ICE, 1, 1
 MAT_NAMES = np.array(["", *dict.fromkeys(m for m, _ in MATERIAL.values()), "soil"])  # MAT indexes this
 MAT_CODE = {str(m): c for c, m in enumerate(MAT_NAMES)}
 _mat_of = np.zeros(65536, np.uint8)  # soil grid value -> material code
