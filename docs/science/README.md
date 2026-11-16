@@ -6,7 +6,9 @@
 
 ## In one paragraph
 
-Given any point on the Moon or Mars, the system finds places on Earth where the ground has the same shape at the same physical scale, then measures how each place compares in climate and surface material. Shape is compared over a 5.16 km² disk, as the root-mean-square height difference after rotating the target to fit. The search is exact, takes about 10 ms over 52,852 Earth cells, and reads the planetary terrain live from 8–11 GB global elevation models in about one second. Each result states where the analogy holds and where it breaks, in measured units.
+Given any point on the Moon or Mars, the system finds places on Earth where the ground has the same shape at the same physical scale, then measures how each place compares in climate and surface material. Shape is compared over a 5.16 km² disk, as the root-mean-square height difference after rotating the target to fit. The search is exact, costs about 0.2 µs per Earth cell, and reads the planetary terrain live from 8–11 GB global elevation models in about one second. Each result states where the analogy holds and where it breaks, in measured units.
+
+*Numbers quoted below are measured on a test region of 52,852 cells (Nevada). Nothing in the method is specific to it.*
 
 ![Method](figures/01_method.png)
 *Figure 1. The method in five steps. A target point becomes a set of rotated height patterns; Earth cells that pass the user's limits are ranked by their distance to the closest rotation; the best distinct sites are reported with their measured differences.*
@@ -38,7 +40,7 @@ The distance between a target *T* and an Earth cell *c* is
 that is, the target is turned in 15° steps and the best fit is kept. The result is in metres and is easy to read: "the two surfaces differ by 5 m on average over the disk".
 
 ![Descriptor](figures/02_descriptor.png)
-*Figure 2. (a) The Jezero delta target, from the HRSC + MOLA elevation model. (b) The same disk at several rotations. (c) The closest Nevada cell fits the target turned 210° to within 5.0 m, against 16.2 m of relief in the target itself.*
+*Figure 2. (a) The Jezero delta target, from the HRSC + MOLA elevation model. (b) The same disk at several rotations. (c) The closest Earth cell fits the target turned 210° to within 5.0 m, against 16.2 m of relief in the target itself.*
 
 Design choices, briefly:
 - **Same physical size on every body.** Using Earth-sized cells everywhere keeps the comparison in real metres.
@@ -51,19 +53,19 @@ Design choices, briefly:
 
 **Takeaway: strong matches stand out clearly, and weak ones are reported as weak.**
 
-The pilot searches all of Nevada: 52,852 cells.
+Measured on the test region of 52,852 cells.
 
 ![Matches](figures/03_matches.png)
-*Figure 3. Three targets and their three closest Nevada cells, at least 25 km apart and drawn on the same height scale. Below each Earth cell: its RMSE and its score.*
+*Figure 3. Three targets and their three closest Earth cells, at least 25 km apart and drawn on the same height scale. Below each Earth cell: its RMSE and its score.*
 
-| Target | Target relief σ | Best match | Typical Nevada cell | Score |
+| Target | Target relief σ | Best match | Typical cell | Score |
 |---|---:|---:|---:|---:|
 | Hadley Rille, Moon | 11.7 m | 2.3 m | 26.1 m | 96% |
 | Jezero delta, Mars | 16.2 m | 5.0 m | 24.8 m | 91% |
 | Shackleton rim, Moon | 32.2 m | 15.6 m | 30.6 m | 79% |
 
 - **Hadley Rille** has a highly specific match: the best cell is eleven times closer than a typical one, and fewer than 4% of cells come within twice that distance.
-- **Shackleton** does not. The best cell is only twice as close as a typical one. Nevada has no ground shaped like a south-polar crater rim at this scale, and the lower score says so.
+- **Shackleton** does not. The best cell is only twice as close as a typical one. The test region has no ground shaped like a south-polar crater rim at this scale, and the lower score says so.
 
 ---
 
@@ -71,7 +73,7 @@ The pilot searches all of Nevada: 52,852 cells.
 
 **Takeaway: given a place it should find, it finds it 85% of the time, and 99% of the time when the ground has real relief.**
 
-To test this we need a case where the correct answer is known. We took 300 random Nevada cells, turned each by a random angle, added 2 m of random height noise, and searched for them among all 52,852.
+To test this we need a case where the correct answer is known. We took 300 random cells from the test region, turned each by a random angle, added 2 m of random height noise, and searched for them among all of its cells.
 
 ![Recovery](figures/04_recovery.png)
 *Figure 4. How often the original cell comes back first (bars) or in the top 10 (marks), by how much relief the cell has.*
@@ -91,16 +93,16 @@ Comparing 137 heights at 24 rotations against every cell is wasteful. Two quanti
 A cell whose relief is very different from the target's cannot be a close match. The search therefore visits cells in order of this lower bound and stops as soon as the bound exceeds the 50th-best distance found so far.
 
 ![Pruning](figures/05_pruning.png)
-*Figure 5. (a) For every Nevada cell, the bound never exceeds the true distance (no exceptions among 52,852). Only cells left of the dashed line (green) need to be compared. (b) The share of cells compared exactly, for seven targets. The search works in blocks of 4,096 cells, so 8% is the minimum.*
+*Figure 5. (a) For every test cell, the bound never exceeds the true distance (no exceptions among 52,852). Only cells left of the dashed line (green) need to be compared. (b) The share of cells compared exactly, for seven targets. The search works in blocks of 4,096 cells, so 8% is the minimum.*
 
-The results are identical to comparing every cell, for all seven targets. The comparison itself is a single matrix product in double precision; single precision was tried and gave slightly different rankings, because small distances come from subtracting large sums.
+The results are identical to comparing every cell, for all seven targets. Cost grows linearly with the number of cells: about 0.9 µs per cell when every cell is compared, and 0.2 µs with the bound. The comparison itself is a single matrix product in double precision; single precision was tried and gave slightly different rankings, because small distances come from subtracting large sums.
 
 ### Reading the Moon and Mars on demand
 
 The global elevation models are single files of 8.5 GB (Moon) and 11.4 GB (Mars). A standard windowed read over the web took 40 to 80 seconds per target. Because both files store each image row uncompressed, one after another, the position of any pixel in the file can be calculated directly. The system downloads only the 40–60 short row segments it needs, in parallel.
 
 ![Speed](figures/06_speed.png)
-*Figure 6. (a) Reading one target's terrain. (b) Ranking every Nevada cell at every rotation, with and without the bound.*
+*Figure 6. (a) Reading one target's terrain. (b) Ranking every test cell at every rotation, with and without the bound.*
 
 As a result, **any** point on either body can be searched, not only a prepared list, and no planetary data has to be stored.
 
@@ -111,7 +113,7 @@ As a result, **any** point on either body can be searched, not only a prepared l
 **Takeaway: each candidate also carries measurements that can be compared with the target's directly.**
 
 ![Layers](figures/07_layers.png)
-*Figure 7. Three of the per-cell measurements across Nevada.*
+*Figure 7. Three of the per-cell measurements, across the test region.*
 
 | Dimension | Earth | Moon and Mars |
 |---|---|---|
@@ -142,7 +144,7 @@ The match is shown as a percentage, scaled by the target's own relief:
 Matching a flat plain to within 5 m is unremarkable; matching a 30 m rim to within 5 m is close. When a user asks for "match ≥ 90%", the limit becomes a cap on RMSE for that particular target, and the search applies it directly.
 
 ![Score](figures/08_score.png)
-*Figure 9. The score as a function of RMSE, and the RMSE cap each limit implies. Against Jezero, only 1 Nevada cell reaches 90% and 13,753 reach 50%.*
+*Figure 9. The score as a function of RMSE, and the RMSE cap each limit implies. Against Jezero, only 1 test cell reaches 90% and 13,753 reach 50%.*
 
 ### Filters first, then near misses
 
@@ -163,15 +165,14 @@ If the model is unavailable, the panel falls back to rule-based text built from 
 *Figure 10. Choosing a target: a named site or any point dropped on the globe.*
 
 ![A result](figures/11_app_site.jpg)
-*Figure 11. A result: Sentinel-2 imagery of the Nevada site with the matched disk outlined; the two terrain disks side by side; the verdict, with where the analogy holds and breaks.*
+*Figure 11. A result: Sentinel-2 imagery of the site with the matched disk outlined; the two terrain disks side by side; the verdict, with where the analogy holds and breaks.*
 
 ---
 
 ## 8. Limitations
 
-- **One region so far.** The candidates are Nevada's 52,852 cells. Extending to the world needs the team's land mask (cells free of water, dense vegetation and human footprint). The method and code do not change; search time grows with the number of cells and is reduced by the bound.
 - **One scale.** With 200 m pixels over a 2.6 km disk, the method sees landforms from roughly 400 m to 2.5 km. It misses boulders, small craters and narrow channels, and anything larger than a cell.
-- **Elevation quality varies.** Where HRSC coverage is missing, the Mars model falls back to MOLA at about 460 m. Copernicus GLO-90 is a surface model that includes vegetation and buildings; this matters little in Nevada, more elsewhere.
+- **Elevation quality varies.** Where HRSC coverage is missing, the Mars model falls back to MOLA at about 460 m. Copernicus GLO-90 is a surface model that includes vegetation and buildings; this matters little on bare arid ground, more where there is vegetation.
 - **Coarse climate.** Earth climate is a 10° grid. It contrasts a region with the target well but cannot separate neighbouring sites.
 - **Soil, not rock.** WRB groups describe soil formation. Linking them to planetary materials is an interpretation and is labelled as one.
 - **Flat ground is ambiguous.** Below about 3 m of relief, many places match equally well (section 4).

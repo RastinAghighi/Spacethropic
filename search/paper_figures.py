@@ -3,7 +3,7 @@ Figures for the research write-up, generated from the live search code and data.
 
     .venv/Scripts/python -X utf8 paper_figures.py   # -> ../docs/science/figures/*.png, numbers.json
 
-Every number in the figures is measured here, on the same 52,852 Nevada cells the app searches.
+Every number in the figures is measured here, on the test region the app searches (52,852 Earth cells).
 One idea per figure; equations are typeset where they carry the idea.
 """
 
@@ -118,7 +118,7 @@ def fig_method():
     stages = [
         ("Target", "any point on the Moon or Mars", [r"$z_T(\varphi, \lambda)$"]),
         ("Descriptor", "5.16 km² disk of 200 m pixels", [r"$\mathbf{t}_\theta = z_T - \bar{z}_T$", r"$\theta = 0°, 15°, \ldots, 345°$"]),
-        ("Filter", "limits on 52,852 Earth cells", [r"$\ell_k \leq x_{c,k} \leq u_k$"]),
+        ("Filter", "limits on measured Earth values", [r"$\ell_k \leq x_{c,k} \leq u_k$"]),
         ("Rank", "best rotation, smallest distance", [r"$d(T,c) = \min_\theta\, \mathrm{RMSE}(\mathbf{t}_\theta, \mathbf{c})$"]),
         ("Report", "8 sites, at least 25 km apart", ["holds and breaks,", "in measured units"]),
     ]
@@ -152,7 +152,7 @@ def fig_descriptor():
         if k == 0:
             fig.text(axr.get_position().x0, 0.97, r"$\mathbf{b}$   Rotations, every 15° (6 of 24 shown)", fontsize=11, va="top")
     axm = fig.add_subplot(gs[0, 9]); disk(axm, api.PATCHES[i], lim, ring=EARTH, lw=1.0)
-    fig.text(axm.get_position().x0, 0.97, r"$\mathbf{c}$   Closest Nevada cell", fontsize=11, va="top")
+    fig.text(axm.get_position().x0, 0.97, r"$\mathbf{c}$   Closest Earth cell", fontsize=11, va="top")
     under(axm, f"RMSE {e:.1f} m at θ = {int(ANGLES[o])}°", f"{api.LAT[i]:.2f}° N, {abs(api.LON[i]):.2f}° W")
     eq = fig.add_subplot(gs[1, 2:8]); eq.axis("off")
     eq.text(0.5, 0.35, r"$d(T,c) \;=\; \min_{\theta}\ \sqrt{\frac{1}{N}\sum_{i=1}^{N}\left(t_\theta(i) - c(i)\right)^2}, \qquad N = 137$",
@@ -186,7 +186,7 @@ def fig_matches():
             axs.append(ax)
         if r == 0:
             ax0.set_title("Target", loc="left")
-            axs[0].set_title("Three closest distinct Nevada cells, RMSE", loc="left")
+            axs[0].set_title("Three closest distinct Earth cells", loc="left")
         NUM["matches"][name] = {"relief_m": round(s, 1), "best_m": [round(e, 2) for _, e, _ in best],
                                 "median_m": round(float(np.median(all_r)), 1), "pct_within_2x_best": round(float((all_r < 2 * best[0][1]).mean() * 100), 2)}
     save(fig, "03_matches.png")
@@ -224,7 +224,7 @@ def fig_recovery():
     ax.set_ylim(0, 105), ax.set_ylabel("share of queries (%)")
     ax.set_xlabel(r"relief of the query cell, $\sigma$")
     ax.legend(loc="upper left")
-    ax.set_title("A rotated, noisy cell finds itself among 52,852", loc="left")
+    ax.set_title("A rotated, noisy cell finds itself", loc="left")
     save(fig, "04_recovery.png")
     NUM["recovery"] = {"top1": round(float(np.mean(ranks == 1)), 3), "top10": round(float(np.mean(ranks <= 10)), 3),
                        "fits_as_well": round(float(np.mean(fit)), 3), "by_relief_top1": [round(v, 1) for v in t1], "n": ns}
@@ -288,7 +288,7 @@ def fig_speed():
     for ax, vals, labs, unit, title, letter, txt in [
         (a, [60, t_dem], ["Windowed read (GDAL)", "Ranged row reads"], "seconds", "Reading one target from an 8.5–11.4 GB global DEM", "a",
          ["40–80 s", f"{t_dem:.1f} s"]),
-        (b, [pr["ms_brute_median"], pr["ms_pruned_median"]], ["Every cell", "Bound-ordered"], "milliseconds", "Ranking 52,852 cells × 24 rotations", "b",
+        (b, [pr["ms_brute_median"], pr["ms_pruned_median"]], ["Every cell", "Bound-ordered"], "milliseconds", "Ranking every test cell at 24 rotations", "b",
          [f"{pr['ms_brute_median']:.0f} ms", f"{pr['ms_pruned_median']:.0f} ms"]),
     ]:
         ax.barh([1, 0], vals, color=[LIGHT, EARTH], height=0.5)
