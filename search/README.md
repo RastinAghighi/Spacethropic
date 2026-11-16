@@ -6,12 +6,13 @@ Click a Moon or Mars point → Earth cells whose terrain has nearly the same sha
 py -3.12 -m venv .venv && .venv/Scripts/python -m pip install -r requirements.txt
 .venv/Scripts/python prepare.py       # 20 s: Nevada GLO-90 tiles (dem/) -> out/nevada_patches.npz
 .venv/Scripts/python soil.py wrb2006_points_0.02deg.csv   # 1 min: WRB soil map -> out/wrb_0.02deg.npz
+.venv/Scripts/python build_index.py   # 2 s (~8 min for 10M cells): out/nevada_patches.npz -> out/index/, memory-mapped by the API
 .venv/Scripts/python test_nevada.py   # 25 s: proofs -> figures/
 echo GEMINI_API_KEY=... > .env        # analog reasoning (POST /compare); search works without it
 .venv/Scripts/python -m uvicorn api:app --port 8787   # the frontend proxies /api/* here
 ```
 
-`dem/`, `out/`, `cache/` and `geonames/` are local data and not committed. The API also reads `../db/out/analogs.duckdb` for climate.
+`dem/`, `out/`, `cache/` and `geonames/` are local data and not committed. Without `out/index/` the API reads the patches file whole (fine for Nevada, not for 10M cells); rebuild the index whenever the patches file changes. For another patches file: `build_index.py <patches.npz> out/index`. The API also reads `../db/out/analogs.duckdb` for climate.
 
 ## Method (`shape.py`)
 
