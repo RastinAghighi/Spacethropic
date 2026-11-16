@@ -35,7 +35,7 @@ Each Earth candidate is an H3 hexagon at resolution 7 (average area 5.16 km²). 
 
 The distance between a target *T* and an Earth cell *c* is
 
-> d(T, c) = min over θ of RMSE(t<sub>�</sub>�, c),  with θ = 0°, 15°, …, 345°
+> d(T, c) = min over θ of RMSE(t<sub>θ</sub>, c),  with θ = 0°, 15°, …, 345°
 
 that is, the target is turned in 15° steps and the best fit is kept. The result is in metres and is easy to read: "the two surfaces differ by 5 m on average over the disk".
 
