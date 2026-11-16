@@ -206,6 +206,14 @@ for _v, _g in SOIL.name.items():
     if _g:
         _mat_of[_v] = MAT_CODE[MATERIAL.get(_g, ("soil", ""))[0]]
 MAT = _mat_of[SOIL_VAL]
+# Ice-sheet cells show only white imagery: never offered as sites
+SHEET = SOIL_VAL == ICE
+# Surface materials each body's geology plausibly offers; on an unfiltered search these rank ahead of equal terrain
+BODY_MATERIALS = {
+    "moon": ["basalt", "regolith", "rock", "sand"],
+    "mars": ["basalt", "regolith", "rock", "sand", "sulfate", "clay", "carbonate", "evaporite", "ice"],
+}
+GEO_PREFER = 1.25  # off-body materials rank as if their RMSE were this much worse
 # How many cells of each material the whole search area holds (a filter for one with none can't be met)
 _n = np.bincount(MAT, minlength=len(MAT_NAMES))
 MATERIALS = {m: int(_n[MAT_CODE[m]]) for m in sorted(str(m) for m in MAT_NAMES) if m and _n[MAT_CODE[m]]}
@@ -402,14 +410,15 @@ def search(q: Query):
     geo = [g for g in ((q.filters or {}).get("geology") or []) if isinstance(g, str)]
     geo_miss = ~np.isin(MAT, [MAT_CODE[g] for g in geo if g in MAT_CODE]) if geo else np.zeros(len(CELLS), bool)
     miss += geo_miss  # a whole span: the wrong material is a full miss
-    allowed = miss == 0
+    allowed = (miss == 0) & ~SHEET
+    on_body = np.isin(MAT, [MAT_CODE[g] for g in BODY_MATERIALS[q.body] if g in MAT_CODE])
 
     def distinct(order, rmse_of, rot_of, picks, strict):
         for i in order:
             if len(picks) == SITES:
                 break
             if strict and rmse_of[i] > rmse_cap:
-                break  # ranked by rmse: nothing further meets the match limit
+                continue  # outside the match limit
             if all(km((LAT[i], LON[i]), (LAT[j], LON[j])) >= MIN_SEP_KM for j, *_ in picks):
                 picks.append((int(i), float(rmse_of[i]), int(rot_of[i]), not allowed[i] or rmse_of[i] > rmse_cap))
         return picks
@@ -418,6 +427,9 @@ def search(q: Query):
     if allowed.any():
         top, rmse, rot, evaluated = INDEX.search(T, k=min(1500, int(allowed.sum())), allowed=allowed)
         r_of, o_of = dict(zip(top, rmse)), dict(zip(top, rot))
+        if not geo:
+            # No surface filter: among the closest shapes, the body's own materials come first
+            top = sorted(top, key=lambda i: r_of[i] * (1 if on_body[i] else GEO_PREFER))
         picks = distinct(top, r_of, o_of, picks, strict=True)
     if len(picks) < MIN_RESULTS:
         # Too specific: weaken the terrain match and rank on hitting the mission's limits
@@ -427,6 +439,7 @@ def search(q: Query):
         cost = miss + np.maximum(m_min - score_all, 0) + SHAPE_WEIGHT_RELAXED * rmse_all / max(t_std, 1e-6)
         taken = {i for i, *_ in picks}
         cost[list(taken)] = np.inf
+        cost[SHEET] = np.inf
         order = np.argsort(cost)
         order = order[np.isfinite(cost[order])]
         picks = distinct(order, rmse_all, rot_all, picks, strict=False)
