@@ -28,3 +28,13 @@ results/*
 !results/global_landcover_broad_area.csv
 !results/filter_policy_comparison.csv
 !results/filter_policy_kept_composition.csv
+!results/site_validation.csv
+!results/site_validation_detail.json
+!results/qc_sampled_tiles.csv
+!results/qc_flip_summary.csv
+!results/mixed_pixel_barren.csv
+!results/mixed_pixel_flag_examples.csv
+!results/ndvi_gate_global.csv
+!results/r7_hex_filter_sites.csv
+!results/r7_drumheller_terrain.csv
+!results/r7_pilot_smoketest.csv

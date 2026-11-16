@@ -1,0 +1,28 @@
+tile,label,pixels_with_qc1,qc1_km2,kept_to_removed_if_missing,removed_to_kept_if_missing,kept_to_removed_if_nonanalog,kept_to_removed_if_nonanalog_km2,pixels_all_qc1
+h02v08,site: neg_ocean_pacific,33,68.0,1,0,1,30.9,0
+h03v07,"site: mauna_kea_summit, mauna_kea_hale_pohaku",6,1.7,0,0,0,0.0,0
+h08v04,site: lava_beds,2,0.4,0,0,0,0.0,0
+h08v05,"site: black_point, dumont, kilbourne_hole, pinacate, neg_urban_phoenix",30,36.3,0,0,0,0.0,0
+h09v04,site: craters_of_the_moon,49,35.2,0,0,0,0.0,0
+h09v05,site: hanksville_mdrs,29,249.6,0,0,10,259.4,0
+h10v02,Canadian Arctic / NWT,238,379.9,0,0,9,132.9,0
+h10v03,site: drumheller,209,180.7,0,0,2,31.9,0
+h10v05,site: probe_konza_grassland,2,2.6,0,0,0,0.0,0
+h11v11,site: atacama_yungay,68,149.8,0,0,1,27.7,0
+h12v13,Patagonia,369,1423.4,28,0,76,1638.8,8
+h15v01,site: haughton,20,7.5,0,0,0,0.0,0
+h16v01,Greenland ice sheet,24,7.3,0,0,0,0.0,0
+h17v02,Iceland,54,24.0,0,0,0,0.0,0
+h17v05,site: rio_tinto,1,0.2,0,0,0,0.0,0
+h20v05,site: neg_urban_cairo; Anatolia / Mediterranean,53,23.2,1,0,1,24.9,0
+h20v08,Congo basin,8,14.0,0,0,0,0.0,0
+h21v07,site: dallol,27,13.5,0,0,0,0.0,0
+h21v09,site: probe_serengeti_savanna,6,4.1,0,0,0,0.0,0
+h22v07,Rub al Khali,19,27.9,0,0,0,0.0,0
+h23v05,site: lut,148,1212.0,1,0,41,1079.3,5
+h25v04,Gobi,66,162.7,0,0,3,70.8,0
+h25v05,site: dalangtan; Tibetan Plateau,99,428.7,0,0,10,242.8,0
+h25v06,Himalaya / Ganges,91,264.9,1,0,4,109.4,0
+h25v07,site: lonar,18,16.7,0,0,0,0.0,0
+h29v08,Borneo,185,212.5,2,0,2,61.8,0
+h31v09,New Guinea,201,392.8,0,0,1,30.8,0

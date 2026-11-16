@@ -6,6 +6,8 @@ land-cover class on Earth and re-applies the filter's land-cover rule, then stri
 vegetation policies, from the raw 2023 MODIS files.
 
 - **Findings:** [REPORT.md](REPORT.md)
+- **Prefilter validation (analog sites, negative controls, QC flags, mixed pixels, r7 readiness):**
+  [VALIDATION_REPORT.md](VALIDATION_REPORT.md)
 - **H3 resolution 7:** [H3_RESOLUTION_7_INVENTORY.md](H3_RESOLUTION_7_INVENTORY.md) lists the
   places in the code where r8 is hard-coded. This analysis itself has no H3 dependency.
 
@@ -21,6 +23,16 @@ The teammate's pipeline is read, never changed. Raw datasets stay outside Git in
 | `scripts/02_mcd12q1_tiles.py` | MCD12Q1 500 m tiles: exact class areas, plus per-class counts binned to 0.05° the same way `landcover_fractions.py` does |
 | `scripts/03_class_areas.py` | MCD12C1 class areas (area-weighted), checks on how the percent layers are read, MCD12Q1 cross-check |
 | `scripts/04_policy_scenarios.py` | The v2 land-cover rule and stricter policies, with both MODIS products |
+| `scripts/validation_sites.py` | 30 validation points: analogs (documented coordinates, use, mission profile), negative controls, probes |
+| `scripts/05_site_validation.py` | v2 decision (MODIS-only + GHSL + NE) per site pixel and 10 km region, 500 m classes and QC, VIIRS peak NDVI, stricter policies |
+| `scripts/06_qc_and_mixed_pixels.py` | QC flags in 39 sampled tiles, barren inside removed pixels (global, cached counts), NDVI gate |
+| `scripts/07_export_pilot_rasters.py` | Small MCD12Q1 GeoTIFFs (native sinusoidal + UTM 100 m nearest) for script 08 |
+| `scripts/08_r7_readiness.py` | Runs in the regional pilot's venv: hex filter at r7 vs r8, Drumheller terrain, pilot smoke test at r7 |
+| `results/site_validation.csv` (+ `_detail.json`) | Per-site decisions, composition, missing data, policies |
+| `results/qc_sampled_tiles.csv`, `qc_flip_summary.csv` | QC counts per sampled tile; decision flips if QC=1 were missing / non-analog |
+| `results/mixed_pixel_barren.csv`, `mixed_pixel_flag_examples.csv` | Barren in removed pixels by reason; flagged pixels in sampled tiles |
+| `results/ndvi_gate_global.csv` | P1 vs P1 + peak NDVI < 0.5 |
+| `results/r7_*.csv` | r7 readiness checks |
 | `results/dataset_validation_report.md` (+ `.json`) | Validation report |
 | `results/global_landcover_class_area.csv` | Every original IGBP class, no-data, totals |
 | `results/global_landcover_broad_area.csv` | The requested categories (barren, grassland, …) |

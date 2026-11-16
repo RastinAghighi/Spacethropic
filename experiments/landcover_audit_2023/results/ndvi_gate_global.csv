@@ -1,0 +1,25 @@
+quantity,km2
+"P1 kept (land-cover rule only; audit value 94,029,740)",94029740
+P1 kept south of 60S,12247354
+"P1 AND peak NDVI < 0.5 kept (missing NDVI kept, as in v1)",55837251
+  of which south of 60S,12247354
+  of which has no valid NDVI month,12597166
+Removed by the NDVI gate,38192489
+  barren 500 m area inside those pixels,67329
+"  NDVI-gate removal, class Grasslands",16818339
+"  NDVI-gate removal, class Savannas",12623277
+"  NDVI-gate removal, class Open shrublands",4917324
+"  NDVI-gate removal, class Woody savannas",1266657
+"  NDVI-gate removal, class Croplands",809572
+"  NDVI-gate removal, class Evergreen broadleaf forests",320547
+"  NDVI-gate removal, class Permanent wetlands",299752
+"  NDVI-gate removal, class Deciduous broadleaf forests",267173
+"  NDVI-gate removal, class Water bodies",183066
+"  NDVI-gate removal, class Mixed forests",168540
+"  NDVI-gate removal, class Cropland/natural vegetation mosaics",135494
+"  NDVI-gate removal, class Closed shrublands",112634
+"  NDVI-gate removal, class Evergreen needleleaf forests",83396
+"  NDVI-gate removal, class Barren",67337
+"  NDVI-gate removal, class Urban and built-up lands",63665
+"  NDVI-gate removal, class Deciduous needleleaf forests",43807
+"  NDVI-gate removal, class Permanent snow and ice",11746
