@@ -37,6 +37,19 @@ SOURCES = {
                   "targets.csv": HF + "targets.csv", "ai_twins.parquet": HF + "ai_twins.parquet",
                   "README.md": HF + "README.md"},
     },
+    "shadowastra_caves": {
+        "title": "ShadowAstra cave layer: Mars MGC3 cave candidates (Cushing 2015, USGS) and LROC lunar pits "
+                 "(Wagner & Robinson, ASU), as exported by pipeline/s25_caves.py",
+        "licence": "MIT (repository); underlying catalogues USGS / ASU",
+        "citation": "Team ShadowAstra; Cushing 2015 MGC3 (USGS); Wagner & Robinson LROC lunar pit atlas (ASU)",
+        "files": {"caves.json": "https://raw.githubusercontent.com/ABRUBAB/ShadowAstra_Atlas/main/public/data/caves.json"},
+    },
+    "terranova": {
+        "title": "TerraNova curated lava tubes and caves (hand-curated, approximate coordinates)",
+        "licence": "Apache-2.0",
+        "citation": "Team DaRK_MATTER, TerraNova, github.com/Yakiyo/terra-nova",
+        "files": {"caves.json": "https://raw.githubusercontent.com/Yakiyo/terra-nova/main/data/caves.json"},
+    },
     "nasc": {
         "title": "Analog Atlas Earth feature grid (pipeline/build.py output)",
         "licence": "MIT",

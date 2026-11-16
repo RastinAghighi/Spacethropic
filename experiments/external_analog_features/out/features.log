@@ -55,3 +55,105 @@
 2026-11-15 18:10:24 earth: 10600/22056 tiles, 7,645,859 kept cells, 66 s, eta 1.2 min
 2026-11-15 18:10:26 earth: 10800/22056 tiles, 7,925,811 kept cells, 67 s, eta 1.2 min
 2026-11-15 18:10:28 earth: 11000/22056 tiles, 8,198,018 kept cells, 69 s, eta 1.2 min
+2026-11-15 18:10:30 earth: 11200/22056 tiles, 8,481,211 kept cells, 71 s, eta 1.2 min
+2026-11-15 18:10:32 earth: 11400/22056 tiles, 8,775,564 kept cells, 73 s, eta 1.1 min
+2026-11-15 18:10:34 earth: 11600/22056 tiles, 9,044,504 kept cells, 75 s, eta 1.1 min
+2026-11-15 18:10:36 earth: 11800/22056 tiles, 9,287,881 kept cells, 77 s, eta 1.1 min
+2026-11-15 18:10:38 earth: 12000/22056 tiles, 9,593,570 kept cells, 79 s, eta 1.1 min
+2026-11-15 18:10:40 earth: 12200/22056 tiles, 9,820,845 kept cells, 81 s, eta 1.1 min
+2026-11-15 18:10:41 earth: 12400/22056 tiles, 10,017,242 kept cells, 83 s, eta 1.1 min
+2026-11-15 18:10:43 earth: 12600/22056 tiles, 10,123,255 kept cells, 84 s, eta 1.1 min
+2026-11-15 18:10:45 earth: 12800/22056 tiles, 10,261,984 kept cells, 86 s, eta 1.0 min
+2026-11-15 18:10:46 earth: 13000/22056 tiles, 10,442,638 kept cells, 88 s, eta 1.0 min
+2026-11-15 18:10:48 earth: 13200/22056 tiles, 10,624,603 kept cells, 89 s, eta 1.0 min
+2026-11-15 18:10:49 earth: 13400/22056 tiles, 10,819,069 kept cells, 91 s, eta 1.0 min
+2026-11-15 18:10:51 earth: 13600/22056 tiles, 11,092,156 kept cells, 93 s, eta 1.0 min
+2026-11-15 18:10:53 earth: 13800/22056 tiles, 11,387,991 kept cells, 94 s, eta 0.9 min
+2026-11-15 18:10:55 earth: 14000/22056 tiles, 11,709,733 kept cells, 96 s, eta 0.9 min
+2026-11-15 18:10:57 earth: 14200/22056 tiles, 12,049,920 kept cells, 98 s, eta 0.9 min
+2026-11-15 18:10:59 earth: 14400/22056 tiles, 12,415,001 kept cells, 101 s, eta 0.9 min
+2026-11-15 18:11:01 earth: 14600/22056 tiles, 12,742,913 kept cells, 103 s, eta 0.9 min
+2026-11-15 18:11:03 earth: 14800/22056 tiles, 13,071,159 kept cells, 105 s, eta 0.9 min
+2026-11-15 18:11:05 earth: 15000/22056 tiles, 13,399,006 kept cells, 106 s, eta 0.8 min
+2026-11-15 18:11:07 earth: 15200/22056 tiles, 13,607,394 kept cells, 108 s, eta 0.8 min
+2026-11-15 18:11:08 earth: 15400/22056 tiles, 13,801,074 kept cells, 110 s, eta 0.8 min
+2026-11-15 18:11:10 earth: 15600/22056 tiles, 13,905,922 kept cells, 111 s, eta 0.8 min
+2026-11-15 18:11:11 earth: 15800/22056 tiles, 14,024,949 kept cells, 112 s, eta 0.7 min
+2026-11-15 18:11:12 earth: 16000/22056 tiles, 14,164,721 kept cells, 113 s, eta 0.7 min
+2026-11-15 18:11:13 earth: 16200/22056 tiles, 14,280,358 kept cells, 114 s, eta 0.7 min
+2026-11-15 18:11:14 earth: 16400/22056 tiles, 14,413,707 kept cells, 116 s, eta 0.7 min
+2026-11-15 18:11:15 earth: 16600/22056 tiles, 14,528,790 kept cells, 116 s, eta 0.6 min
+2026-11-15 18:11:16 earth: 16800/22056 tiles, 14,637,928 kept cells, 117 s, eta 0.6 min
+2026-11-15 18:11:17 earth: 17000/22056 tiles, 14,743,874 kept cells, 118 s, eta 0.6 min
+2026-11-15 18:11:18 earth: 17200/22056 tiles, 14,859,028 kept cells, 119 s, eta 0.6 min
+2026-11-15 18:11:19 earth: 17400/22056 tiles, 14,967,583 kept cells, 120 s, eta 0.5 min
+2026-11-15 18:11:20 earth: 17600/22056 tiles, 15,065,523 kept cells, 121 s, eta 0.5 min
+2026-11-15 18:11:21 earth: 17800/22056 tiles, 15,159,932 kept cells, 122 s, eta 0.5 min
+2026-11-15 18:11:22 earth: 18000/22056 tiles, 15,254,295 kept cells, 123 s, eta 0.5 min
+2026-11-15 18:11:22 earth: 18200/22056 tiles, 15,335,920 kept cells, 124 s, eta 0.4 min
+2026-11-15 18:11:23 earth: 18400/22056 tiles, 15,411,810 kept cells, 125 s, eta 0.4 min
+2026-11-15 18:11:24 earth: 18600/22056 tiles, 15,491,786 kept cells, 126 s, eta 0.4 min
+2026-11-15 18:11:25 earth: 18800/22056 tiles, 15,554,434 kept cells, 126 s, eta 0.4 min
+2026-11-15 18:11:26 earth: 19000/22056 tiles, 15,623,474 kept cells, 127 s, eta 0.3 min
+2026-11-15 18:11:26 earth: 19200/22056 tiles, 15,687,990 kept cells, 128 s, eta 0.3 min
+2026-11-15 18:11:27 earth: 19400/22056 tiles, 15,739,344 kept cells, 129 s, eta 0.3 min
+2026-11-15 18:11:28 earth: 19600/22056 tiles, 15,795,017 kept cells, 130 s, eta 0.3 min
+2026-11-15 18:11:29 earth: 19800/22056 tiles, 15,843,204 kept cells, 130 s, eta 0.2 min
+2026-11-15 18:11:30 earth: 20000/22056 tiles, 15,888,086 kept cells, 131 s, eta 0.2 min
+2026-11-15 18:11:30 earth: 20200/22056 tiles, 15,930,058 kept cells, 132 s, eta 0.2 min
+2026-11-15 18:11:31 earth: 20400/22056 tiles, 15,967,577 kept cells, 132 s, eta 0.2 min
+2026-11-15 18:11:32 earth: 20600/22056 tiles, 16,002,768 kept cells, 133 s, eta 0.2 min
+2026-11-15 18:11:32 earth: 20800/22056 tiles, 16,030,205 kept cells, 134 s, eta 0.1 min
+2026-11-15 18:11:33 earth: 21000/22056 tiles, 16,056,896 kept cells, 135 s, eta 0.1 min
+2026-11-15 18:11:34 earth: 21200/22056 tiles, 16,075,835 kept cells, 135 s, eta 0.1 min
+2026-11-15 18:11:34 earth: 21400/22056 tiles, 16,092,986 kept cells, 136 s, eta 0.1 min
+2026-11-15 18:11:35 earth: 21600/22056 tiles, 16,104,416 kept cells, 136 s, eta 0.0 min
+2026-11-15 18:11:36 earth: 21800/22056 tiles, 16,112,076 kept cells, 137 s, eta 0.0 min
+2026-11-15 18:11:36 earth: 22000/22056 tiles, 16,115,915 kept cells, 137 s, eta 0.0 min
+2026-11-15 18:11:36 earth: 22056/22056 tiles, 16,117,005 kept cells, 138 s, eta 0.0 min
+2026-11-15 18:11:36 earth: building earth_features
+2026-11-15 18:12:41 earth: done {"rows": 16117005, "rows_without_primary_source": 287512, "duplicate_h3_cells": 0, "columns": 111, "rows_without_nasc": 64740, "cells_s": 137.7, "features_s": 65.3}
+2026-11-15 18:12:41 moon: 122 base cells, 0 done, 122 to do (r6, 14,117,882 cells total)
+2026-11-15 18:12:45 moon: 10/122 base cells, 1,156,882 cells, 3 s, eta 0.6 min
+2026-11-15 18:12:48 moon: 20/122 base cells, 2,313,764 cells, 7 s, eta 0.6 min
+2026-11-15 18:12:51 moon: 30/122 base cells, 3,470,646 cells, 10 s, eta 0.5 min
+2026-11-15 18:12:55 moon: 40/122 base cells, 4,627,528 cells, 13 s, eta 0.4 min
+2026-11-15 18:12:58 moon: 50/122 base cells, 5,784,410 cells, 16 s, eta 0.4 min
+2026-11-15 18:13:01 moon: 60/122 base cells, 6,941,292 cells, 20 s, eta 0.3 min
+2026-11-15 18:13:04 moon: 70/122 base cells, 8,098,174 cells, 23 s, eta 0.3 min
+2026-11-15 18:13:07 moon: 80/122 base cells, 9,255,056 cells, 26 s, eta 0.2 min
+2026-11-15 18:13:11 moon: 90/122 base cells, 10,411,938 cells, 29 s, eta 0.2 min
+2026-11-15 18:13:14 moon: 100/122 base cells, 11,568,820 cells, 32 s, eta 0.1 min
+2026-11-15 18:13:17 moon: 110/122 base cells, 12,725,702 cells, 35 s, eta 0.1 min
+2026-11-15 18:13:20 moon: 120/122 base cells, 13,882,584 cells, 39 s, eta 0.0 min
+2026-11-15 18:13:21 moon: 122/122 base cells, 14,117,882 cells, 39 s, eta 0.0 min
+2026-11-15 18:13:21 moon: building moon_features
+2026-11-15 18:13:36 moon: done {"rows": 14117882, "rows_without_primary_source": 0, "duplicate_h3_cells": 0, "columns": 22, "cells_s": 39.2, "features_s": 14.9}
+2026-11-15 18:13:36 mars: 122 base cells, 0 done, 122 to do (r6, 14,117,882 cells total)
+2026-11-15 18:13:39 mars: 10/122 base cells, 1,156,882 cells, 3 s, eta 0.6 min
+2026-11-15 18:13:42 mars: 20/122 base cells, 2,313,764 cells, 6 s, eta 0.5 min
+2026-11-15 18:13:45 mars: 30/122 base cells, 3,470,646 cells, 9 s, eta 0.5 min
+2026-11-15 18:13:48 mars: 40/122 base cells, 4,627,528 cells, 13 s, eta 0.4 min
+2026-11-15 18:13:51 mars: 50/122 base cells, 5,784,410 cells, 16 s, eta 0.4 min
+2026-11-15 18:13:54 mars: 60/122 base cells, 6,941,292 cells, 19 s, eta 0.3 min
+2026-11-15 18:13:57 mars: 70/122 base cells, 8,098,174 cells, 22 s, eta 0.3 min
+2026-11-15 18:14:00 mars: 80/122 base cells, 9,255,056 cells, 25 s, eta 0.2 min
+2026-11-15 18:14:04 mars: 90/122 base cells, 10,411,938 cells, 28 s, eta 0.2 min
+2026-11-15 18:14:07 mars: 100/122 base cells, 11,568,820 cells, 31 s, eta 0.1 min
+2026-11-15 18:14:10 mars: 110/122 base cells, 12,725,702 cells, 34 s, eta 0.1 min
+2026-11-15 18:14:13 mars: 120/122 base cells, 13,882,584 cells, 37 s, eta 0.0 min
+2026-11-15 18:14:13 mars: 122/122 base cells, 14,117,882 cells, 38 s, eta 0.0 min
+2026-11-15 18:14:13 mars: building mars_features
+2026-11-15 18:14:31 mars: done {"rows": 14117882, "rows_without_primary_source": 0, "duplicate_h3_cells": 0, "columns": 22, "cells_s": 37.6, "features_s": 18.1}
+2026-11-15 18:14:34 all done in 5.3 min, 3.69 GB
+2026-11-15 18:41:46 sources loaded (0.9 s)
+2026-11-15 18:42:07 earth: caves for 16,117,005 cells against 12 points in 20.7 s
+2026-11-15 18:42:07 earth: building earth_features
+2026-11-15 18:42:56 earth: done {"rows": 16117005, "rows_without_primary_source": 287512, "duplicate_h3_cells": 0, "columns": 115, "rows_without_nasc": 64740, "cells_s": 0.0, "features_s": 70.0}
+2026-11-15 18:43:23 moon: caves for 14,117,882 cells against 278 points in 26.3 s
+2026-11-15 18:43:23 moon: building moon_features
+2026-11-15 18:43:39 moon: done {"rows": 14117882, "rows_without_primary_source": 0, "duplicate_h3_cells": 0, "columns": 29, "cells_s": 0.0, "features_s": 42.5}
+2026-11-15 18:44:18 mars: caves for 14,117,882 cells against 1062 points in 39.6 s
+2026-11-15 18:44:19 mars: building mars_features
+2026-11-15 18:44:39 mars: done {"rows": 14117882, "rows_without_primary_source": 0, "duplicate_h3_cells": 0, "columns": 28, "cells_s": 0.0, "features_s": 60.6}
+2026-11-15 18:44:42 all done in 3.0 min, 5.37 GB

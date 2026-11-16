@@ -157,6 +157,74 @@ def load_sources(conn, records: list[dict]) -> None:
     conn.execute(f"CREATE OR REPLACE TABLE ext_shadowastra_targets AS SELECT * FROM read_csv_auto('{sa}/targets.csv')")
 
 
+# ------------------------------------------------------------------ caves (point catalogues)
+CAVE_RADIUS_KM = 100.0  # "candidates within 100 km", as ShadowAstra's s13 counts them
+CHUNK = 50_000
+
+
+def cave_points(body: str) -> tuple[np.ndarray, np.ndarray, dict[str, np.ndarray]]:
+    """lat, lon and per-point attributes. Moon/Mars: ShadowAstra caves.json; Earth: TerraNova's curated tubes."""
+    if body == "earth":
+        sites = json.loads((ef.DATA / "terranova" / "caves.json").read_text(encoding="utf-8"))["sites"]
+        lat = np.array([s["lat"] for s in sites], float)
+        lon = np.array([s["lon"] for s in sites], float)
+        return lat, lon, {"lava_tube_nearest_name": np.array([s["name"] for s in sites], object),
+                          "lava_tube_nearest_kind": np.array([s["kind"] for s in sites], object)}
+    d = json.loads((ef.DATA / "shadowastra_caves" / "caves.json").read_text(encoding="utf-8"))
+    rows = d[body]
+    lat = np.array([r[0] for r in rows], float)
+    lon = np.array([r[1] for r in rows], float)
+    f = lambda i: np.array([np.nan if r[i] is None else r[i] for r in rows], float)
+    if body == "mars":  # [lat, lon, type code, priority, diameter_m, depth_m]
+        types = d["types"]
+        return lat, lon, {"cave_nearest_type": np.array([types.get(r[2], r[2]) for r in rows], object),
+                          "cave_nearest_priority": f(3), "cave_nearest_diameter_m": f(4), "cave_nearest_depth_m": f(5)}
+    # moon: [lat, lon, name, terrain, diameter_m, depth_m, overhang]
+    return lat, lon, {"cave_nearest_name": np.array([r[2] for r in rows], object),
+                      "cave_nearest_terrain": np.array([r[3] for r in rows], object),
+                      "cave_nearest_diameter_m": f(4), "cave_nearest_depth_m": f(5),
+                      "cave_nearest_overhang": np.array([bool(r[6]) for r in rows])}
+
+
+def unit(lat: np.ndarray, lon: np.ndarray, dtype=np.float64) -> np.ndarray:
+    la, lo = np.radians(lat), np.radians(lon)
+    return np.stack([np.cos(la) * np.cos(lo), np.cos(la) * np.sin(lo), np.sin(la)], axis=1).astype(dtype)
+
+
+def cave_table(conn, body: str) -> None:
+    """Nearest cave (distance on the body's own radius, km) and count within CAVE_RADIUS_KM, per H3 cell.
+
+    Brute force, chunked: float32 dot products pick the nearest point and the count; the nearest distance is
+    then recomputed in float64 (float32 alone would err by up to ~1-2 km near a point).
+    """
+    t0 = time.time()
+    plat, plon, attrs = cave_points(body)
+    prefix = "lava_tube" if body == "earth" else "cave"
+    cells = conn.execute(f"SELECT h3_cell, centre_lat_deg, centre_lon_deg FROM {body}_cells").fetchnumpy()
+    n, R = len(cells["h3_cell"]), RADIUS_KM[body]
+    P32, P64 = unit(plat, plon, np.float32), unit(plat, plon)
+    cos_r = np.float32(math.cos(CAVE_RADIUS_KM / R))
+    near = np.empty(n, np.int32)
+    dist = np.empty(n, np.float64)
+    count = np.empty(n, np.int32)
+    for s in range(0, n, CHUNK):
+        e = min(s + CHUNK, n)
+        C = unit(cells["centre_lat_deg"][s:e], cells["centre_lon_deg"][s:e])
+        dots = C.astype(np.float32) @ P32.T
+        idx = dots.argmax(axis=1)
+        near[s:e] = idx
+        count[s:e] = (dots >= cos_r).sum(axis=1)
+        dist[s:e] = R * np.arccos(np.clip(np.einsum("ij,ij->i", C, P64[idx]), -1, 1))
+    cols = {"h3_cell": cells["h3_cell"], f"{prefix}_nearest_km": dist.astype(np.float32),
+            f"{prefix}s_within_{int(CAVE_RADIUS_KM)}km": count}
+    for k, v in attrs.items():
+        cols[k] = v[near].astype(str) if v.dtype == object else v[near]
+    conn.register("cv", cols)
+    conn.execute(f"CREATE OR REPLACE TABLE {body}_caves AS SELECT * FROM cv")
+    conn.unregister("cv")
+    log(f"{body}: caves for {n:,} cells against {len(plat)} points in {time.time() - t0:.1f} s")
+
+
 def snap(col: str, deg: float) -> str:
     return f"floor({col} / {deg}) * {deg} + {deg / 2}"
 
@@ -166,11 +234,13 @@ def earth_features(conn) -> None:
         WITH l AS (SELECT h3_cell, centre_lat_deg, centre_lon_deg, {snap('centre_lat_deg', 0.5)} AS g_lat,
                    {snap('centre_lon_deg', 0.5)} AS g_lon FROM earth_cells)
         SELECT l.h3_cell, l.centre_lat_deg, l.centre_lon_deg, l.g_lat AS ext_grid_lat, l.g_lon AS ext_grid_lon,
-               p.* EXCLUDE (grid_lat, grid_lon), s.* EXCLUDE (sa_cell), n.* EXCLUDE (grid_lat, grid_lon)
+               p.* EXCLUDE (grid_lat, grid_lon), s.* EXCLUDE (sa_cell), n.* EXCLUDE (grid_lat, grid_lon),
+               cv.* EXCLUDE (h3_cell)
         FROM l
         LEFT JOIN ext_shadowastra_places p ON l.g_lat = p.grid_lat AND l.g_lon = p.grid_lon
         LEFT JOIN ext_shadowastra_scores s ON p.sa_cell = s.sa_cell
         LEFT JOIN ext_nasc_cells n ON l.g_lat = n.grid_lat AND l.g_lon = n.grid_lon
+        LEFT JOIN earth_caves cv ON l.h3_cell = cv.h3_cell
         ORDER BY l.h3_cell""")
 
 
@@ -189,10 +259,11 @@ def planet_features(conn, body: str) -> None:
               GROUP BY h3_cell)
         SELECT l.h3_cell, l.centre_lat_deg, l.centre_lon_deg, l.g_lat AS ext_grid_lat, l.g_lon AS ext_grid_lon,
                w.* EXCLUDE (body, grid_lat, grid_lon), d.nearest_target AS sa_nearest_target,
-               d.nearest_target_km AS sa_nearest_target_km
+               d.nearest_target_km AS sa_nearest_target_km, cv.* EXCLUDE (h3_cell)
         FROM l
         LEFT JOIN ext_shadowastra_twins w ON w.body = '{body}' AND l.g_lat = w.grid_lat AND l.g_lon = w.grid_lon
         LEFT JOIN d USING (h3_cell)
+        LEFT JOIN {body}_caves cv USING (h3_cell)
         ORDER BY l.h3_cell""")
 
 
@@ -238,6 +309,7 @@ def main() -> int:
             else:
                 planet_cells(conn, body, a.planet_res, a.max_batches)
         t2 = time.time()
+        cave_table(conn, body)
         log(f"{body}: building {body}_features")
         (earth_features if body == "earth" else lambda c: planet_features(c, body))(conn)
         conn.execute("CHECKPOINT")
