@@ -1,0 +1,11 @@
+numpy
+h3
+duckdb
+rasterio
+pyproj
+pillow
+pandas
+fastapi
+uvicorn
+tifffile
+matplotlib

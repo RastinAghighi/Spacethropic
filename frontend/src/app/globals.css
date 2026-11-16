@@ -1,8 +1,37 @@
 @import "tailwindcss";
 
+/* Environment-reactive glow for the search bar: driven by the sun on the globe and
+   by the imagery's tone in the satellite view. Registered so they transition. */
+@property --glow-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgb(150 190 255);
+}
+@property --glow-strength {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+@property --glow-x {
+  syntax: "<percentage>";
+  inherits: true;
+  initial-value: 50%;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Room the search bar leaves for the evidence panel in the satellite view. */
+  --panel-space: 0px;
+  /* Refine drawer width, capped by the room between the rail column and the evidence panel. */
+  --drawer-w: min(304px, 100vw - var(--panel-space) - 132px);
+  interpolate-size: allow-keywords;
+  transition:
+    --glow-color 1.2s ease,
+    --glow-strength 1.2s ease,
+    --glow-x 1.2s ease;
+  color-scheme: dark;
+  --background: #030406;
+  --foreground: #ececef;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @theme inline {
@@ -12,15 +41,157 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv11";
+}
+
+::selection {
+  background: rgb(255 255 255 / 0.18);
+}
+
+/* Spinner rotation */
+@keyframes orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Loader: moon on a tilted orbit. Transform/opacity only, so the compositor keeps it
+   smooth while the main thread is busy uploading textures and compiling shaders.
+   Phase φ: x' = -A·cos 2πφ (along the diagonal), y' = B·sin 2πφ (depth). */
+@keyframes loader-x {
+  0%, 100% { transform: translateX(calc(var(--orbit-a) * -1)); }
+  50% { transform: translateX(var(--orbit-a)); }
+}
+@keyframes loader-y {
+  0%, 100% { transform: translateY(var(--orbit-b)); }
+  50% { transform: translateY(calc(var(--orbit-b) * -1)); }
+}
+@keyframes loader-depth {
+  0%, 100% { scale: 1.16; }
+  50% { scale: 0.84; }
+}
+@keyframes loader-near {
+  0% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+@keyframes loader-far {
+  0% { opacity: 0; }
+  50%, 100% { opacity: 1; }
+}
+
+/* Satellite view: slow drift so the still image breathes */
+@keyframes drift {
+  from { transform: scale(1); }
+  to { transform: scale(1.04) translate(-0.6%, 0.4%); }
+}
+
+/* Searching: loading bar sweep */
+
+
+/* Staggered entrance */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(10px); filter: blur(4px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+
+/* Search: rotating example prompts */
+@keyframes prompt-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+    filter: blur(3px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
+/* Search: travelling highlight on the border while a query runs */
+@keyframes sweep {
+  to {
+    --sweep-angle: 360deg;
+  }
+}
+
+@property --sweep-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --panel-space: calc(min(420px, 33vw) + 24px);
+  }
+}
+
+/* Laid out for ~1920x1080; smaller desktop viewports (e.g. 1280x720 at 150% display scaling) zoom the interface down. */
+.ui-scale {
+  zoom: var(--ui-zoom, 1);
+}
+
+@media (min-width: 768px) and ((max-width: 1700px) or (max-height: 960px)) {
+  :root { --ui-zoom: 0.9; }
+}
+@media (min-width: 768px) and ((max-width: 1500px) or (max-height: 860px)) {
+  :root { --ui-zoom: 0.8; }
+}
+@media (min-width: 768px) and ((max-width: 1340px) or (max-height: 780px)) {
+  :root { --ui-zoom: 0.72; }
+}
+@media (min-width: 768px) and ((max-width: 1180px) or (max-height: 680px)) {
+  :root { --ui-zoom: 0.64; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Mirror lens: pulse around the selected site */
+@keyframes ping-ring {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+/* Evidence panel: match bars and score ring fill in */
+@keyframes bar-in {
+  from { transform: scaleX(0); }
+}
+@keyframes ring-in {
+  from { stroke-dashoffset: var(--circ); }
+}
+
+/* Rolling numbers: animate an integer custom property and print it with a counter */
+@property --num {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+.ticker {
+  counter-reset: num var(--num);
+  transition: --num 0.9s var(--ease-out-expo);
+}
+.ticker::after {
+  content: counter(num);
+}
+@keyframes count-up {
+  from { --num: 0; }
+}
+
+/* Suggested next step: one soft highlight travels the border when it appears */
+@keyframes suggest-sheen {
+  from { background-position: 200% 0; }
+  to { background-position: -100% 0; }
 }
