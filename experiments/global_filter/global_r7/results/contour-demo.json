@@ -1,0 +1,26 @@
+{
+  "status": "complete",
+  "config": {
+    "cells_sha256": "8e4d0102383b7a5590fb4d67b6bdaf26e6c63f9e1489184ebfc066e5db5a0179",
+    "dem_sha256": "2921f2e863fc2cbd9c3e2f76a64a3e31695af0e0de8410653db90be879b95590",
+    "interval_m": 20.0,
+    "code_sha256": "5f8c47e022d63ffbeb28feb310a4a978cc9abffa5e69b5b1b7e497e0512b0f9a"
+  },
+  "coverage": {
+    "covered": 10,
+    "no_dem_coverage": 76
+  },
+  "lines": 74,
+  "coordinate_crs_wkt": "GEOGCS[\"WGS 84\",DATUM[\"WGS_1984\",SPHEROID[\"WGS 84\",6378137,298.257223563,AUTHORITY[\"EPSG\",\"7030\"]],AUTHORITY[\"EPSG\",\"6326\"]],PRIMEM[\"Greenwich\",0,AUTHORITY[\"EPSG\",\"8901\"]],UNIT[\"degree\",0.0174532925199433,AUTHORITY[\"EPSG\",\"9122\"]],AXIS[\"Latitude\",NORTH],AXIS[\"Longitude\",EAST],AUTHORITY[\"EPSG\",\"4326\"]]",
+  "z_units": "meters; caller must verify source vertical datum",
+  "seconds": 0.11102810001466423,
+  "files": {
+    "lines.parquet": "2b84166d790f2595a9175b6f502e911b2b1f1d9e7c25afa327834d0fd60b9a2b",
+    "coverage.parquet": "cd6f71e89bbc9fbcc987a2cbcc070edecddfda4c894a133e1cc2d55b8ee50552"
+  },
+  "limits": [
+    "masked DEM pixel centers; no interpolation across missing data",
+    "partial coverage does not remove candidate",
+    "local DEM only; polar/date-line needs dedicated mosaic"
+  ]
+}

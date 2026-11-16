@@ -4,6 +4,25 @@ Read this before changing anything in `pipeline/`. [README.md](README.md) is the
 reproduction guide; this file records state, decisions, pitfalls, and what's next.
 Last updated: 2026-11-15.
 
+## Global r7 implementation update (2026-11-15)
+
+The user's execution request supersedes earlier audit-only restrictions.
+`../global_r7/` now implements the permissive v2 MODIS-only geographic policy,
+configurable resolution (default 7), bounded spherical quadrature, checksummed
+parent partitions, restart, and optional local DEM contours. See its
+[run report](../global_r7/RUN_REPORT.md) and [transfer request](../global_r7/TRANSFER_REQUEST.md).
+Natural Earth v5.1.1 and GHSL E2020 were downloaded on this PC and reproduce
+the audit totals. Global MODIS is absent: **no completed global candidate dataset**.
+The committed real audit observations produced 95 r7 cells / 86 candidates;
+a real Copernicus crop produced 74 contour segments at Drumheller.
+39 tests pass across the new global and regional suites. `regional_pilot` now
+defaults to r7 and supports explicit r8; its mission policy stays separate.
+Large files are outside Git under `W:\Spacethropic-data`. No NDVI tightening,
+ranking, database ingestion, or full global elevation integration was added.
+Next: obtain Q1 counts, run full-input site validation and a representative
+benchmark, then launch/restart the global command. States below are historical;
+this standalone addition does not change the calibration pipeline.
+
 **Standing rule (from the user): after every completed step, update this file and
 `README.md` before reporting back.**
 - This file: state, decisions, open questions, next steps, pitfalls, and the date above.

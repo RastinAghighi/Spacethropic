@@ -1,4 +1,4 @@
-"""Spacethropic small-region H3 r8 land-cover aggregation prototype.
+"""Spacethropic small-region land-cover aggregation prototype (default H3 r7).
 
 Purposefully independent from the legacy global mask. No network or Git operations.
 This exact pixel-polygon intersection algorithm is for small regions, NOT a global run.
@@ -65,7 +65,7 @@ def _reproject(geom, fn):
     return shapely.transform(geom, lambda xy: np.column_stack(fn(xy[:, 0], xy[:, 1])))
 
 
-def ring_cells(latitude: float, longitude: float, ring: int, resolution: int = 8) -> list[str]:
+def ring_cells(latitude: float, longitude: float, ring: int, resolution: int = 7) -> list[str]:
     """The H3 cell holding (lat, lon) plus ``ring`` rings of neighbours, sorted.
 
     ring 0 -> 1 cell, ring 1 -> 7 cells (away from pentagons). Latitude comes first:
@@ -306,7 +306,7 @@ def run(args) -> dict:
     if obs_start > obs_end:
         raise ValueError("Observation dates out of order")
     decision({"unknown": 0.0}, args.mission, args.threshold, args.min_observed)  # validates
-    cell_ids = ring_cells(args.lat, args.lon, args.ring)
+    cell_ids = ring_cells(args.lat, args.lon, args.ring, resolution=args.resolution)
     output = Path(args.output)
     if output.exists():
         raise FileExistsError(f"Refusing to overwrite: {output}")
@@ -321,7 +321,7 @@ def run(args) -> dict:
             pcts = aggregate_polygon(src, geometry, lat, lon, args.scheme, args.nodata)
             status, reason = decision(pcts, args.mission, args.threshold,
                                       args.min_observed)
-            row = dict(h3_cell=cid, resolution=8, mission=args.mission,
+            row = dict(h3_cell=cid, resolution=args.resolution, mission=args.mission,
                        decision=status, reason=reason,
                        # H3's spherical area (authalic sphere), for reference;
                        # percentages use the WGS 84 equal-area polygon area.
@@ -350,9 +350,9 @@ def run(args) -> dict:
     parquet_files = write_partitioned(records, output)
     counts = dict(Counter(r["decision"] for r in records))
     manifest = dict(
-        program="spacethropic_r8_regional_pilot", schema_version=PARQUET_SCHEMA_VERSION,
+        program="spacethropic_regional_pilot", schema_version=PARQUET_SCHEMA_VERSION,
         created_utc=datetime.now(timezone.utc).isoformat(),
-        h3_resolution=8, center_lat=args.lat, center_lon=args.lon, ring=args.ring,
+        h3_resolution=args.resolution, center_lat=args.lat, center_lon=args.lon, ring=args.ring,
         cells_count=len(records), cells=cell_ids, decision_counts=counts,
         parquet_layout="hive: cells/mission=<m>/decision=<d>/part-0.parquet",
         parquet_files=parquet_files,
@@ -386,6 +386,7 @@ def parse(argv=None):
     p.add_argument("--lat", required=True, type=float)
     p.add_argument("--lon", required=True, type=float)
     p.add_argument("--ring", type=int, default=1, help="0 = one cell, 1 = seven cells")
+    p.add_argument("--resolution", type=int, choices=range(16), default=7)
     p.add_argument("--scheme", required=True, choices=sorted(CLASS_MAPS))
     p.add_argument("--mission", default="mars_dry", choices=sorted(MISSIONS))
     p.add_argument("--threshold", type=float, default=80.0)

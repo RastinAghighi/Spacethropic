@@ -1,0 +1,39 @@
+{
+  "status": "complete",
+  "config": {
+    "stage": "public_v1",
+    "natural_earth": {
+      "path": "W:\\Spacethropic-data\\raw\\natural-earth\\ne_10m_land.zip",
+      "bytes": 3269070,
+      "sha256": "e547d749445eaa0964aba76738090ec88f5e63c4585122170f98c67a7ea922dc"
+    },
+    "ghsl": {
+      "path": "W:\\Spacethropic-data\\raw\\ghsl\\GHS_POP_E2020_GLOBE_R2023A_4326_30ss_V1_0.tif",
+      "bytes": 382936052,
+      "sha256": "630f8b250246bdb9b49e2e1e7b72d572cba9e30d1d53998a13015161c4735e43"
+    }
+  },
+  "files": {
+    "land.npy": {
+      "path": "W:\\Spacethropic-data\\prepared-public\\land.npy",
+      "bytes": 25920128,
+      "sha256": "d7f9beb94e24094fff905be6cd74bcc176fe05d6c239bb97ae6800171fd74a9d"
+    },
+    "density.npy": {
+      "path": "W:\\Spacethropic-data\\prepared-public\\density.npy",
+      "bytes": 207360128,
+      "sha256": "8b9229161cb0f9e27c16c23e02496c29bfacbc4d6276597a083c6c9cf42748b9"
+    },
+    "people.npy": {
+      "path": "W:\\Spacethropic-data\\prepared-public\\people.npy",
+      "bytes": 207360128,
+      "sha256": "0d034353c8b078f9fda5e6d62cbc517d0b1aefecda93a73b69840b857c3c33a7"
+    }
+  },
+  "summary": {
+    "ne_land_km2": 146735718.31512514,
+    "people": 7840952947.013648,
+    "land_population_unknown_km2": 31462.764971175115,
+    "seconds": 17.612411699985387
+  }
+}

@@ -1,5 +1,14 @@
 # Analog calibration pipeline
 
+**2026-11-15 global r7 update:** the separate [global_r7 pipeline](../global_r7/README.md)
+preserves the permissive v2 MODIS-only policy with explicit uncertainty, partitioned
+Parquet/checkpoints and optional local DEM contours. Public global inputs are ready;
+MODIS is still missing. The observed regional run produced 86 candidates from 95
+cells and 74 real Drumheller contour segments. See [execution/validation report](../global_r7/RUN_REPORT.md)
+and [teammate transfer request](../global_r7/TRANSFER_REQUEST.md). No completed global
+candidate dataset is claimed. Global/regional verification: 39 tests pass.
+This calibration pipeline's existing computations are unchanged.
+
 Builds the calibration dataset for Spacethropic's analog searcher. Three Earth sites that NASA
 actually used as Moon/Mars analogs are paired with their planetary counterparts. Open Earth,
 Moon and Mars data around all eight sites is summarised onto a shared [H3](https://h3geo.org)

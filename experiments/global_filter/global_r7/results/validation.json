@@ -1,0 +1,190 @@
+{
+  "status": "passed_snapshot_regression",
+  "provenance_id": "03ee75dcc1a1f318184f07ed823dcff7063105242db3b76cefad512bb14b463a",
+  "source": "C:\\Users\\orjue\\Documents\\Spacethropic\\experiments\\landcover_audit_2023\\results\\site_validation_detail.json",
+  "source_type": "real committed rounded audit observations, not newly read MODIS",
+  "sites": [
+    {
+      "site": "drumheller",
+      "site_h3": "8712ebc76ffffff",
+      "site_decision": "excluded",
+      "expected_site_kept": false,
+      "site_matches_audit": true,
+      "cells": 19,
+      "eligible": 6,
+      "uncertain": 4,
+      "excluded": 9,
+      "complete_observation_cells": 15,
+      "expected_original_kept_of_19": 9,
+      "max_fraction_change_8_to_16": 0.005859291610823408,
+      "decision_changes_8_to_16": 0
+    },
+    {
+      "site": "atacama_yungay",
+      "site_h3": "87b220cdbffffff",
+      "site_decision": "eligible",
+      "expected_site_kept": true,
+      "site_matches_audit": true,
+      "cells": 19,
+      "eligible": 19,
+      "uncertain": 0,
+      "excluded": 0,
+      "complete_observation_cells": 19,
+      "expected_original_kept_of_19": 19,
+      "max_fraction_change_8_to_16": 0.0,
+      "decision_changes_8_to_16": 0
+    },
+    {
+      "site": "hanksville_mdrs",
+      "site_h3": "87299261affffff",
+      "site_decision": "eligible",
+      "expected_site_kept": true,
+      "site_matches_audit": true,
+      "cells": 19,
+      "eligible": 19,
+      "uncertain": 0,
+      "excluded": 0,
+      "complete_observation_cells": 19,
+      "expected_original_kept_of_19": 19,
+      "max_fraction_change_8_to_16": 0.0,
+      "decision_changes_8_to_16": 0
+    },
+    {
+      "site": "mcmurdo_beacon",
+      "site_h3": "87ed4b261ffffff",
+      "site_decision": "eligible",
+      "expected_site_kept": true,
+      "site_matches_audit": true,
+      "cells": 19,
+      "eligible": 19,
+      "uncertain": 0,
+      "excluded": 0,
+      "complete_observation_cells": 19,
+      "expected_original_kept_of_19": 19,
+      "max_fraction_change_8_to_16": 0.0,
+      "decision_changes_8_to_16": 0
+    },
+    {
+      "site": "mcmurdo_don_juan",
+      "site_h3": "87ed4b304ffffff",
+      "site_decision": "eligible",
+      "expected_site_kept": true,
+      "site_matches_audit": true,
+      "cells": 19,
+      "eligible": 19,
+      "uncertain": 0,
+      "excluded": 0,
+      "complete_observation_cells": 19,
+      "expected_original_kept_of_19": 19,
+      "max_fraction_change_8_to_16": 0.0,
+      "decision_changes_8_to_16": 0
+    }
+  ],
+  "geometry": [
+    {
+      "cell": "870326233ffffff",
+      "relative_area_error": 6.773336003185193e-09
+    },
+    {
+      "cell": "87f29380effffff",
+      "relative_area_error": 5.206945985491984e-13
+    },
+    {
+      "cell": "877eb5722ffffff",
+      "relative_area_error": 4.693916588749403e-09
+    },
+    {
+      "cell": "870800000ffffff",
+      "relative_area_error": 2.8659696837962656e-10
+    },
+    {
+      "cell": "871c00000ffffff",
+      "relative_area_error": 3.5727463210122323e-09
+    },
+    {
+      "cell": "873000000ffffff",
+      "relative_area_error": 1.8598071971354102e-09
+    },
+    {
+      "cell": "874c00000ffffff",
+      "relative_area_error": 2.4794669650773926e-09
+    },
+    {
+      "cell": "876200000ffffff",
+      "relative_area_error": 1.0193423882753905e-09
+    },
+    {
+      "cell": "877400000ffffff",
+      "relative_area_error": 5.571876293686273e-12
+    },
+    {
+      "cell": "877e00000ffffff",
+      "relative_area_error": 4.3358650003710864e-11
+    },
+    {
+      "cell": "879000000ffffff",
+      "relative_area_error": 1.6460369733906077e-09
+    },
+    {
+      "cell": "87a600000ffffff",
+      "relative_area_error": 2.09160855302315e-09
+    },
+    {
+      "cell": "87c200000ffffff",
+      "relative_area_error": 9.052249394514433e-09
+    },
+    {
+      "cell": "87d600000ffffff",
+      "relative_area_error": 3.5652064633850955e-09
+    },
+    {
+      "cell": "87ea00000ffffff",
+      "relative_area_error": 7.352249919989617e-10
+    }
+  ],
+  "benchmark": {
+    "measured_evaluations": 9500,
+    "seconds": 4.6036565999966115,
+    "cells_per_second": 2063.577027010875,
+    "naive_all_earth_hours": 13.30283945283726,
+    "peak_rss_bytes": 53469184,
+    "scope": "Repeated real audit windows, single process; excludes global mmap I/O and output overhead",
+    "global_feasibility": "Not established without global MODIS; extrapolation is not a global benchmark"
+  },
+  "public_data_comparisons": [
+    {
+      "site": "drumheller",
+      "max_density_difference_from_rounded_audit": 0.04162871769089116,
+      "all_observed_pixels_on_ne_land": true
+    },
+    {
+      "site": "atacama_yungay",
+      "max_density_difference_from_rounded_audit": 0.020541314510715836,
+      "all_observed_pixels_on_ne_land": true
+    },
+    {
+      "site": "hanksville_mdrs",
+      "max_density_difference_from_rounded_audit": 0.040437624726982924,
+      "all_observed_pixels_on_ne_land": true
+    },
+    {
+      "site": "mcmurdo_beacon",
+      "max_density_difference_from_rounded_audit": 0.0,
+      "all_observed_pixels_on_ne_land": true
+    },
+    {
+      "site": "mcmurdo_don_juan",
+      "max_density_difference_from_rounded_audit": 0.0,
+      "all_observed_pixels_on_ne_land": true
+    }
+  ],
+  "sample_rows": 95,
+  "sample_candidates": 86,
+  "sample_parquet_bytes": 20126,
+  "limitations": [
+    "Sparse observation footprint; unknown outside it",
+    "Detailed IGBP fractions null, only reported groups known",
+    "Original QC not present; snow/ice remains permissive",
+    "Full global execution and fresh MODIS validation blocked by missing input"
+  ]
+}

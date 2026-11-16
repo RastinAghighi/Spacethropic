@@ -1,4 +1,14 @@
-# Spacethropic H3-r8 regional land-cover pilot
+# Spacethropic regional land-cover pilot (default H3 r7)
+
+**2026-11-15 r7 integration:** the CLI accepts `--resolution` (default **7**);
+rows and manifests use that resolution. Pass `--resolution 8` to reproduce the
+historical commands/results below. The program name is now
+`spacethropic_regional_pilot`. The 80% mission policy and categorical input
+contract are unchanged; this is not the v2 global baseline.
+The [separate global pipeline](../global_r7/README.md) implements that baseline,
+with GHSL, MODIS fractions, checkpoints and uncertainty. Its real observations
+and contour results are in [the run report](../global_r7/RUN_REPORT.md).
+Current verification: 39 tests pass (28 regional, 11 global).
 
 **Status (2026-11-15):** integrated under `experiments/global_filter/regional_pilot`
 and tested locally on real H3 resolution-8 geometry with **synthetic** rasters

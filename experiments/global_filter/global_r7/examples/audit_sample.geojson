@@ -1,0 +1,362 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.78761940103279,
+              51.45210143078426
+            ],
+            [
+              -112.79562141192342,
+              51.440938956705835
+            ],
+            [
+              -112.78383966269156,
+              51.43027619129602
+            ],
+            [
+              -112.76405786520066,
+              51.43077151644295
+            ],
+            [
+              -112.75604706521325,
+              51.441931777643894
+            ],
+            [
+              -112.76782684794271,
+              51.452598927340155
+            ],
+            [
+              -112.78761940103279,
+              51.45210143078426
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3_cell": "8712ebc08ffffff",
+        "resolution": 7,
+        "site": "drumheller",
+        "decision": "excluded",
+        "cell_area_km2": 5.014338501660057,
+        "eligible_fraction": 0.0833399713720388,
+        "uncertain_fraction": 0.0,
+        "excluded_fraction": 0.9166600286279621,
+        "reason_bits": 16,
+        "data_scope": "committed audit observations only",
+        "provenance_id": "03ee75dcc1a1f318184f07ed823dcff7063105242db3b76cefad512bb14b463a"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.79140336621006,
+              51.47393007279833
+            ],
+            [
+              -112.79940864184069,
+              51.46276481107473
+            ],
+            [
+              -112.78761940103279,
+              51.45210143078426
+            ],
+            [
+              -112.76782684794271,
+              51.452598927340155
+            ],
+            [
+              -112.75981277241733,
+              51.46376197635584
+            ],
+            [
+              -112.77160004599988,
+              51.47442974228899
+            ],
+            [
+              -112.79140336621006,
+              51.47393007279833
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3_cell": "8712ebc0cffffff",
+        "resolution": 7,
+        "site": "drumheller",
+        "decision": "eligible",
+        "cell_area_km2": 5.015553157338754,
+        "eligible_fraction": 0.9999999999999994,
+        "uncertain_fraction": 0.0,
+        "excluded_fraction": 0.0,
+        "reason_bits": 0,
+        "data_scope": "committed audit observations only",
+        "provenance_id": "03ee75dcc1a1f318184f07ed823dcff7063105242db3b76cefad512bb14b463a"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -112.76735683306599,
+              51.50743257364835
+            ],
+            [
+              -112.77537746641505,
+              51.49626395546065
+            ],
+            [
+              -112.76358269268769,
+              51.48559557696797
+            ],
+            [
+              -112.74376926213873,
+              51.48609142950266
+            ],
+            [
+              -112.73573981819996,
+              51.49725783087999
+            ],
+            [
+              -112.74753261150906,
+              51.50793059729808
+            ],
+            [
+              -112.76735683306599,
+              51.50743257364835
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3_cell": "8712ebc28ffffff",
+        "resolution": 7,
+        "site": "drumheller",
+        "decision": "uncertain",
+        "cell_area_km2": 5.018919379827752,
+        "eligible_fraction": 0.4504853159070463,
+        "uncertain_fraction": 0.3229373424931314,
+        "excluded_fraction": 0.2265773415998225,
+        "reason_bits": 200,
+        "data_scope": "committed audit observations only",
+        "provenance_id": "03ee75dcc1a1f318184f07ed823dcff7063105242db3b76cefad512bb14b463a"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -69.93644466180022,
+              -24.045833087453424
+            ],
+            [
+              -69.94429169339745,
+              -24.05680190102036
+            ],
+            [
+              -69.93820238264227,
+              -24.06795256708508
+            ],
+            [
+              -69.92426648480577,
+              -24.06813388488089
+            ],
+            [
+              -69.91642116672787,
+              -24.05716564503096
+            ],
+            [
+              -69.92251003256776,
+              -24.046015513734925
+            ],
+            [
+              -69.93644466180022,
+              -24.045833087453424
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3_cell": "87b220529ffffff",
+        "resolution": 7,
+        "site": "atacama_yungay",
+        "decision": "eligible",
+        "cell_area_km2": 5.2255139785188405,
+        "eligible_fraction": 0.9999999999999999,
+        "uncertain_fraction": 0.0,
+        "excluded_fraction": 0.0,
+        "reason_bits": 0,
+        "data_scope": "committed audit observations only",
+        "provenance_id": "03ee75dcc1a1f318184f07ed823dcff7063105242db3b76cefad512bb14b463a"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              -110.77330283748798,
+              38.3466039288204
+            ],
+            [
+              -110.76411661346883,
+              38.35776455731538
+            ],
+            [
+              -110.77212848271856,
+              38.36931061997185
+            ],
+            [
+              -110.78932841058905,
+              38.3696952044654
+            ],
+            [
+              -110.79851273569504,
+              38.358533853563046
+            ],
+            [
+              -110.79049903301886,
+              38.34698864060717
+            ],
+            [
+              -110.77330283748798,
+              38.3466039288204
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3_cell": "872992611ffffff",
+        "resolution": 7,
+        "site": "hanksville_mdrs",
+        "decision": "eligible",
+        "cell_area_km2": 5.685819137774981,
+        "eligible_fraction": 0.9999999999999994,
+        "uncertain_fraction": 0.0,
+        "excluded_fraction": 0.0,
+        "reason_bits": 0,
+        "data_scope": "committed audit observations only",
+        "provenance_id": "03ee75dcc1a1f318184f07ed823dcff7063105242db3b76cefad512bb14b463a"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              160.5628883202322,
+              -77.78340652012555
+            ],
+            [
+              160.50876342480848,
+              -77.7833580951389
+            ],
+            [
+              160.47988434938378,
+              -77.79422316320856
+            ],
+            [
+              160.50518126890537,
+              -77.80514366053197
+            ],
+            [
+              160.55940034969353,
+              -77.80519076742497
+            ],
+            [
+              160.5882282202432,
+              -77.7943186958531
+            ],
+            [
+              160.5628883202322,
+              -77.78340652012555
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3_cell": "87ed4b244ffffff",
+        "resolution": 7,
+        "site": "mcmurdo_beacon",
+        "decision": "eligible",
+        "cell_area_km2": 4.628130697215937,
+        "eligible_fraction": 0.9999999999999997,
+        "uncertain_fraction": 0.0,
+        "excluded_fraction": 0.0,
+        "reason_bits": 0,
+        "data_scope": "committed audit observations only",
+        "provenance_id": "03ee75dcc1a1f318184f07ed823dcff7063105242db3b76cefad512bb14b463a"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              161.07549069287342,
+              -77.56559194289639
+            ],
+            [
+              161.02237719997848,
+              -77.56562355003136
+            ],
+            [
+              160.9944735550646,
+              -77.57652786923146
+            ],
+            [
+              161.0197340441143,
+              -77.58740733492988
+            ],
+            [
+              161.07293828335557,
+              -77.58737422040886
+            ],
+            [
+              161.10079118764105,
+              -77.57646314853642
+            ],
+            [
+              161.07549069287342,
+              -77.56559194289639
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "h3_cell": "87ed4b300ffffff",
+        "resolution": 7,
+        "site": "mcmurdo_don_juan",
+        "decision": "eligible",
+        "cell_area_km2": 4.6199500800797,
+        "eligible_fraction": 1.0000000000000002,
+        "uncertain_fraction": 0.0,
+        "excluded_fraction": 0.0,
+        "reason_bits": 0,
+        "data_scope": "committed audit observations only",
+        "provenance_id": "03ee75dcc1a1f318184f07ed823dcff7063105242db3b76cefad512bb14b463a"
+      }
+    }
+  ]
+}
