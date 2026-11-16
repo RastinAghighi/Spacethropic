@@ -90,10 +90,7 @@ body {
 }
 
 /* Searching: loading bar sweep */
-@keyframes load-sweep {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(250%); }
-}
+
 
 /* Staggered entrance */
 @keyframes rise-in {

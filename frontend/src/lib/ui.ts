@@ -33,6 +33,8 @@ interface UiState {
   mode: Mode;
   /** Mode the current search started from. */
   searchFrom: "globe" | "site";
+  /** Where the loading bar is heading, 0..1: search running, imagery loading, done */
+  progress: number;
   query: AnalogQuery | null;
   results: Candidate[];
   source: Source;
@@ -55,6 +57,7 @@ let state: UiState = {
   landed: false,
   mode: "globe",
   searchFrom: "globe",
+  progress: 0,
   query: null,
   results: [],
   source: "sample",
@@ -101,8 +104,9 @@ export const ui = {
     clearTimeout(timer);
     const searchFrom = state.mode === "site" ? "site" : "globe";
     if (searchFrom === "globe") research.load(query.filters);
-    set({ mode: "searching", query, searchFrom });
+    set({ mode: "searching", query, searchFrom, progress: 0 });
   },
+  setProgress: (progress: number) => set({ progress }),
 
   searchFailed() {
     set({ mode: state.searchFrom });

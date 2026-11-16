@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { findCandidates, type AnalogQuery, type AnalogTarget } from "@/lib/search";
 import { ui, useUi } from "@/lib/ui";
 import { BODY } from "@/lib/catalog";
+import { imageUrl, thumbUrl, type Candidate } from "@/lib/candidates";
 
 export function Icon({ d, size = 16, className, strokeWidth = 1.3 }: { d: string; size?: number; className?: string; strokeWidth?: number }) {
   return (
@@ -13,13 +14,18 @@ export function Icon({ d, size = 16, className, strokeWidth = 1.3 }: { d: string
   );
 }
 
-/** Indeterminate loading bar: a lit segment sweeping a hairline track. */
+/**
+ * Loading bar that fills as the search moves through its stages. Each stage sets where the bar
+ * is heading; a long ease-out creeps toward it, so it keeps moving while a stage runs.
+ */
 export function LoadingBar({ className }: { className?: string }) {
+  const { progress } = useUi();
+  const done = progress >= 1;
   return (
     <span aria-hidden className={`relative block h-[3px] overflow-hidden rounded-full bg-white/[0.1] ${className ?? ""}`}>
       <span
-        className="absolute inset-y-0 left-0 w-2/5 rounded-full bg-white shadow-[0_0_8px_rgb(255_255_255/0.6)]"
-        style={{ animation: "load-sweep 1.15s cubic-bezier(.65,0,.35,1) infinite" }}
+        className="load-fill absolute inset-y-0 left-0 rounded-full bg-white shadow-[0_0_8px_rgb(255_255_255/0.6)]"
+        style={{ width: `${progress * 100}%`, transition: `width ${done ? ".25s ease-out" : "4s cubic-bezier(.08,.7,.2,1)"}` }}
       />
     </span>
   );
@@ -156,6 +162,13 @@ export function Label({ children, className }: { children: React.ReactNode; clas
 }
 
 /** Runs a query through the shared choreography: fold to a loading bar → dive (or punch-slide in the site view). */
+/** Fetch the top result's image and every thumbnail into the browser cache (bounded wait). */
+async function preloadImagery(candidates: Candidate[], signal: AbortSignal) {
+  const get = (url: string) => fetch(url, { signal }).then((r) => r.blob()).catch(() => null);
+  const all = Promise.all([...(candidates[0] ? [get(imageUrl(candidates[0].id))] : []), ...candidates.map((c) => get(thumbUrl(c.id)))]);
+  await Promise.race([all, new Promise((r) => setTimeout(r, 15000))]);
+}
+
 export function useRunSearch() {
   const { mode } = useUi();
   const abort = useRef<AbortController | null>(null);
@@ -171,7 +184,16 @@ export function useRunSearch() {
     (document.activeElement as HTMLElement | null)?.blur?.();
     ui.startSearch(q);
     try {
+      // Stage 1: the search itself (the bar creeps toward 55% meanwhile)
+      // (after the bar has painted empty, so it visibly fills)
+      setTimeout(() => ui.get().mode === "searching" && ui.get().progress < 0.55 && ui.setProgress(0.55), 80);
       const { candidates, source } = await findCandidates(q, controller.signal);
+      // Stage 2: the imagery the dive lands on, so the clouds part onto a finished image
+      ui.setProgress(0.92);
+      await preloadImagery(candidates, controller.signal);
+      if (controller.signal.aborted) return;
+      ui.setProgress(1);
+      await new Promise((r) => setTimeout(r, 280));
       ui.showResults(candidates, source);
       if (!candidates.length) setError("No candidates matched — try loosening a limit.");
     } catch (e) {
