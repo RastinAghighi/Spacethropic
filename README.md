@@ -18,3 +18,5 @@ cd frontend
 npm install
 npm run dev   # http://localhost:3000
 ```
+
+I too, am in this repo
