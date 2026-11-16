@@ -6,9 +6,9 @@ import { research } from "@/lib/research";
 import type { AnalogQuery } from "@/lib/search";
 
 const GROUPS: { tab: Tab; label: string; keys: NumKey[] }[] = [
-  { tab: "terrain", label: "Terrain", keys: ["slope", "relief", "roughness", "elevation"] },
-  { tab: "thermal", label: "Thermal", keys: ["meanTemp", "dayNight", "coldMin"] },
-  // Weather is hidden until it has data finer than the 10° grid
+  { tab: "terrain", label: "Terrain", keys: ["slope", "slopeMax", "relief", "heightRange", "concavity", "roughness", "elevation"] },
+  { tab: "thermal", label: "Thermal", keys: ["meanTemp", "dayNight", "coldMin", "hotMax"] },
+  { tab: "weather", label: "Atmosphere", keys: ["solar", "cloud", "dust", "humidity", "wind", "pressure"] },
 ];
 
 /** Each measured value as a small gauge on its field's full range, with the target's value marked. */

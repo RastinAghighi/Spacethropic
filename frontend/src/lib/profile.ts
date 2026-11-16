@@ -96,7 +96,24 @@ export function targetOf(q: AnalogQuery) {
 
 // ── Numeric fields: drawer readouts and limit sliders ───────────────────────
 
-export type NumKey = "slope" | "roughness" | "relief" | "elevation" | "meanTemp" | "coldMin" | "dayNight" | "solar" | "humidity" | "cloud" | "wind" | "dust";
+export type NumKey =
+  | "slope"
+  | "slopeMax"
+  | "roughness"
+  | "relief"
+  | "heightRange"
+  | "concavity"
+  | "elevation"
+  | "meanTemp"
+  | "coldMin"
+  | "hotMax"
+  | "dayNight"
+  | "solar"
+  | "humidity"
+  | "cloud"
+  | "wind"
+  | "dust"
+  | "pressure";
 
 interface Field {
   label: string;
@@ -117,9 +134,15 @@ export const FIELDS: Record<NumKey, Field> = {
   // Mean height step between neighbouring 200 m samples
   roughness: { label: "Roughness", unit: "m", min: 0, max: 30, step: 0.5, digits: 1, get: (s) => s.metrics?.roughness ?? traits(s).roughness },
   relief: { label: "Relief", unit: "m", min: 0, max: 150, step: 1, digits: 0, get: (s) => s.metrics?.relief ?? s.shape?.reliefM ?? NaN },
+  slopeMax: { label: "Steepest slope", unit: "°", min: 0, max: 45, step: 1, digits: 0, get: (s) => s.metrics?.slopeMax ?? NaN },
+  heightRange: { label: "Height range", unit: "m", min: 0, max: 800, step: 10, digits: 0, get: (s) => s.metrics?.heightRange ?? NaN },
+  // Centre minus rim: negative is a bowl (crater, basin), positive a dome (mound, ridge)
+  concavity: { label: "Bowl ↔ dome", unit: "m", min: -150, max: 150, step: 5, digits: 0, get: (s) => s.metrics?.concavity ?? NaN },
   elevation: { label: "Elevation", unit: "m", min: 0, max: 3500, step: 50, digits: 0, get: (s) => s.climate.elevationM },
   meanTemp: { label: "Mean temperature", unit: "°C", min: -30, max: 35, step: 1, digits: 1, get: (s) => s.climate.meanTempC, target: (p) => p.meanTemp },
   coldMin: { label: "Coldest-month low", unit: "°C", min: -60, max: 15, step: 1, digits: 1, get: (s) => s.climate.coldestMonthMinC },
+  hotMax: { label: "Hottest-month high", unit: "°C", min: -10, max: 60, step: 1, digits: 0, get: (s) => s.metrics?.hotMax ?? s.climate.hottestMonthMaxC },
+  pressure: { label: "Air pressure", unit: "kPa", min: 0, max: 110, step: 1, digits: 1, get: (s) => s.metrics?.pressure ?? NaN },
   dayNight: { label: "Day–night swing", unit: "°C", min: 0, max: 40, step: 1, digits: 0, get: (s) => s.metrics?.dayNight ?? s.climate.hottestMonthMaxC - s.climate.coldestMonthMinC },
   cloud: { label: "Cloud cover", unit: "%", min: 0, max: 100, step: 1, digits: 0, get: (s) => s.metrics?.cloud ?? NaN },
   dust: { label: "Dust and haze", unit: "AOD", min: 0, max: 0.5, step: 0.01, digits: 2, get: (s) => s.metrics?.dust ?? NaN },
@@ -191,6 +214,11 @@ export const FIELD_TAB: Record<NumKey, Tab> = {
   slope: "terrain",
   roughness: "terrain",
   relief: "terrain",
+  slopeMax: "terrain",
+  heightRange: "terrain",
+  concavity: "terrain",
+  hotMax: "thermal",
+  pressure: "weather",
   dayNight: "thermal",
   cloud: "weather",
   dust: "weather",
