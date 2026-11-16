@@ -97,6 +97,10 @@ export function targetOf(q: AnalogQuery) {
 // ── Numeric fields: drawer readouts and limit sliders ───────────────────────
 
 export type NumKey =
+  | "match"
+  | "flatGround"
+  | "airDayNight"
+  | "dustConc"
   | "slope"
   | "slopeMax"
   | "roughness"
@@ -130,6 +134,11 @@ interface Field {
 }
 
 export const FIELDS: Record<NumKey, Field> = {
+  match: { label: "Shape match", unit: "%", min: 0, max: 100, step: 1, digits: 0, get: (s) => (s.shape ? s.shape.score * 100 : NaN) },
+  // Share of the cell under 5° slope: room to land, drive or build
+  flatGround: { label: "Flat ground", unit: "%", min: 0, max: 100, step: 1, digits: 0, get: (s) => s.metrics?.flatGround ?? NaN },
+  airDayNight: { label: "Air day–night swing", unit: "°C", min: 0, max: 30, step: 1, digits: 0, get: (s) => s.metrics?.airDayNight ?? NaN },
+  dustConc: { label: "Near-surface dust", unit: "µg/m³", min: 0, max: 100, step: 1, digits: 0, get: (s) => s.metrics?.dustConc ?? NaN },
   slope: { label: "Slope", unit: "°", min: 0, max: 30, step: 1, digits: 0, get: (s) => traits(s).slope, target: (p) => p.slope },
   // Mean height step between neighbouring 200 m samples
   roughness: { label: "Roughness", unit: "m", min: 0, max: 30, step: 0.5, digits: 1, get: (s) => s.metrics?.roughness ?? traits(s).roughness },
@@ -214,6 +223,10 @@ export const FIELD_TAB: Record<NumKey, Tab> = {
   slope: "terrain",
   roughness: "terrain",
   relief: "terrain",
+  match: "terrain",
+  flatGround: "terrain",
+  airDayNight: "thermal",
+  dustConc: "weather",
   slopeMax: "terrain",
   heightRange: "terrain",
   concavity: "terrain",

@@ -32,10 +32,10 @@ import { RangeField } from "./RangeField";
 /** `fields` lead each drawer; `more` waits behind a disclosure with the weights. `hidden` drawers
  * stay wired up but off the rail until their data exists. */
 export const TABS: { id: Tab; label: string; icon: string; fields: NumKey[]; more: NumKey[]; dims: Dim[]; hidden?: boolean }[] = [
-  { id: "terrain", label: "Terrain", icon: "M1.5 13.5l4.25-7.5 3 5 2-3 3.75 5.5z", fields: ["slope", "slopeMax", "relief", "heightRange", "concavity", "roughness", "elevation"], more: [], dims: ["terrain"] },
+  { id: "terrain", label: "Terrain", icon: "M1.5 13.5l4.25-7.5 3 5 2-3 3.75 5.5z", fields: ["match", "slope", "flatGround", "elevation", "relief", "slopeMax", "heightRange", "roughness", "concavity"], more: [], dims: ["terrain"] },
   { id: "geology", label: "Geology", icon: "M8 1.75l5.75 4.5L8 14.25 2.25 6.25z M2.25 6.25h11.5 M6 6.25L8 14.25l2-8", fields: [], more: [], dims: ["geology"], hidden: true }, // no geology dataset yet
-  { id: "thermal", label: "Thermal", icon: "M8 2.25c.83 0 1.5.67 1.5 1.5v5.6a3 3 0 1 1-3 0v-5.6c0-.83.67-1.5 1.5-1.5z M8 7v4", fields: ["meanTemp", "dayNight", "coldMin", "hotMax"], more: [], dims: ["thermal"] },
-  { id: "weather", label: "Atmosphere", icon: "M4.75 12.5h6.5a2.75 2.75 0 0 0 .4-5.47A3.75 3.75 0 0 0 4.5 8a2.25 2.25 0 0 0 .25 4.5z", fields: ["solar", "cloud", "dust", "humidity", "wind", "pressure"], more: [], dims: ["sun"] },
+  { id: "thermal", label: "Thermal", icon: "M8 2.25c.83 0 1.5.67 1.5 1.5v5.6a3 3 0 1 1-3 0v-5.6c0-.83.67-1.5 1.5-1.5z M8 7v4", fields: ["meanTemp", "coldMin", "hotMax", "dayNight", "airDayNight"], more: [], dims: ["thermal"] },
+  { id: "weather", label: "Atmosphere", icon: "M4.75 12.5h6.5a2.75 2.75 0 0 0 .4-5.47A3.75 3.75 0 0 0 4.5 8a2.25 2.25 0 0 0 .25 4.5z", fields: ["solar", "wind", "humidity", "cloud", "dust", "dustConc", "pressure"], more: [], dims: ["sun"] },
 ];
 const tabById = (id: Tab) => TABS.find((t) => t.id === id)!;
 

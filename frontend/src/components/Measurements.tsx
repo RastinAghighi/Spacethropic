@@ -6,9 +6,9 @@ import { research } from "@/lib/research";
 import type { AnalogQuery } from "@/lib/search";
 
 const GROUPS: { tab: Tab; label: string; keys: NumKey[] }[] = [
-  { tab: "terrain", label: "Terrain", keys: ["slope", "slopeMax", "relief", "heightRange", "concavity", "roughness", "elevation"] },
-  { tab: "thermal", label: "Thermal", keys: ["meanTemp", "dayNight", "coldMin", "hotMax"] },
-  { tab: "weather", label: "Atmosphere", keys: ["solar", "cloud", "dust", "humidity", "wind", "pressure"] },
+  { tab: "terrain", label: "Terrain", keys: ["slope", "flatGround", "elevation", "relief", "slopeMax", "heightRange", "roughness", "concavity"] },
+  { tab: "thermal", label: "Thermal", keys: ["meanTemp", "coldMin", "hotMax", "dayNight", "airDayNight"] },
+  { tab: "weather", label: "Atmosphere", keys: ["solar", "wind", "humidity", "cloud", "dust", "dustConc", "pressure"] },
 ];
 
 /** Each measured value as a small gauge on its field's full range, with the target's value marked. */
